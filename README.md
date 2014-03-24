@@ -1,6 +1,6 @@
 # Xamarin.Robotics
 
-
+![Xamarin Robotics](https://raw.githubusercontent.com/xamarin/Xamarin.Robotics/master/Support%20Files/Images/Xamarin.Robotics_Small.png?token=947633__eyJzY29wZSI6IlJhd0Jsb2I6eGFtYXJpbi9YYW1hcmluLlJvYm90aWNzL21hc3Rlci9TdXBwb3J0IEZpbGVzL0ltYWdlcy9YYW1hcmluLlJvYm90aWNzX1NtYWxsLnBuZyIsImV4cGlyZXMiOjEzOTYyODUyMzR9--1139997ccc7d85ad5fc868fc7aeff965a0bb3f83)
 
 
 ## Sample Projects
