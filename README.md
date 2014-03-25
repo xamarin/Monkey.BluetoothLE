@@ -14,4 +14,4 @@
 
 ### 04 - Autonomous Flying Drone
 
-### 05 - Chicken Coop Opene	r
+### 05 - Chicken Coop Opener
