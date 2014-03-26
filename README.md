@@ -33,3 +33,6 @@ Xamarin Robotics is a full-stack framework for [the development and communicatio
 ### 04 - Autonomous Flying Drone
 
 ### 05 - Chicken Coop Opener
+
+# Authors
+Bryan Costanich, Frank Krueger
