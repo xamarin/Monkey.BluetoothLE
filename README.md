@@ -1,6 +1,6 @@
 # Xamarin.Robotics
 
-![Xamarin Robotics](https://raw.githubusercontent.com/xamarin/Xamarin.Robotics/master/Support%20Files/Images/Xamarin.Robotics%20Overview_Thumb.png?token=947633__eyJzY29wZSI6IlJhd0Jsb2I6eGFtYXJpbi9YYW1hcmluLlJvYm90aWNzL21hc3Rlci9TdXBwb3J0IEZpbGVzL0ltYWdlcy9YYW1hcmluLlJvYm90aWNzIE92ZXJ2aWV3X1RodW1iLnBuZyIsImV4cGlyZXMiOjEzOTYzNzMzMjF9--f129392756a2ce1ab588d7fafd5c49a4df2aa862)
+![Xamarin Robotics](https://raw.githubusercontent.com/xamarin/Xamarin.Robotics/master/Support%20Files/Images/Xamarin.Robotics%20Overview_Thumb.png?token=947633__eyJzY29wZSI6IlJhd0Jsb2I6eGFtYXJpbi9YYW1hcmluLlJvYm90aWNzL21hc3Rlci9TdXBwb3J0IEZpbGVzL0ltYWdlcy9YYW1hcmluLlJvYm90aWNzIE92ZXJ2aWV3X1RodW1iLnBuZyIsImV4cGlyZXMiOjEzOTY0NDc1OTh9--a410410ad33db89d01859ce97e1acfdafb6b454d)
 
 Xamarin Robotics is a full-stack framework for [the development and communication with robotic projects]
 [includes]
