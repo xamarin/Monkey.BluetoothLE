@@ -26,13 +26,17 @@ Xamarin Robotics is a full-stack framework for [the development and communicatio
 ### [01 - Plant Waterer](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/01%20-%20Plant%20Waterer)
 ![Plant Waterer](https://raw.githubusercontent.com/xamarin/Xamarin.Robotics/master/Projects/01%20-%20Plant%20Waterer/Images/Illustration_Thumb.png?token=947633__eyJzY29wZSI6IlJhd0Jsb2I6eGFtYXJpbi9YYW1hcmluLlJvYm90aWNzL21hc3Rlci9Qcm9qZWN0cy8wMSAtIFBsYW50IFdhdGVyZXIvSW1hZ2VzL0lsbHVzdHJhdGlvbl9UaHVtYi5wbmciLCJleHBpcmVzIjoxMzk2MjgzOTk2fQ%3D%3D--800e036130dddf96ee606358c417315c723f8623)
 
-### 02 - BBQ Temp Control
+### [02 - BBQ Temp Control](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/02%20-%20BBQ%20Temp%20Control)
+![BBQ Temp Control](https://raw.githubusercontent.com/xamarin/Xamarin.Robotics/master/Projects/02%20-%20BBQ%20Temp%20Control/Images/Illustration_thumb.png?token=947633__eyJzY29wZSI6IlJhd0Jsb2I6eGFtYXJpbi9YYW1hcmluLlJvYm90aWNzL21hc3Rlci9Qcm9qZWN0cy8wMiAtIEJCUSBUZW1wIENvbnRyb2wvSW1hZ2VzL0lsbHVzdHJhdGlvbl90aHVtYi5wbmciLCJleHBpcmVzIjoxMzk2NTQ4MzY2fQ%3D%3D--4db67af1134de2666883bb01344dd175bd540b5b)
 
-### 03 - Mobile Control RC Car
+### [03 - Mobile Control RC Car](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/03%20-%20Mobile%20Control%20Car)
+![Mobile Control Car](https://raw.githubusercontent.com/xamarin/Xamarin.Robotics/master/Projects/03%20-%20Mobile%20Control%20Car/Images/Illustration_thumb.png?token=947633__eyJzY29wZSI6IlJhd0Jsb2I6eGFtYXJpbi9YYW1hcmluLlJvYm90aWNzL21hc3Rlci9Qcm9qZWN0cy8wMyAtIE1vYmlsZSBDb250cm9sIENhci9JbWFnZXMvSWxsdXN0cmF0aW9uX3RodW1iLnBuZyIsImV4cGlyZXMiOjEzOTY1NDg0MDJ9--d175270f63e5abb0d44d2bd35904defa0f49e504)
 
-### 04 - Autonomous Flying Drone
+### [04 - Autonomous Flying Drone](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/04%20-%20Semi%20Autonomous%20Drone)
+![Drone](https://raw.githubusercontent.com/xamarin/Xamarin.Robotics/master/Projects/04%20-%20Semi%20Autonomous%20Drone/Images/Illustration_thumb.png?token=947633__eyJzY29wZSI6IlJhd0Jsb2I6eGFtYXJpbi9YYW1hcmluLlJvYm90aWNzL21hc3Rlci9Qcm9qZWN0cy8wNCAtIFNlbWkgQXV0b25vbW91cyBEcm9uZS9JbWFnZXMvSWxsdXN0cmF0aW9uX3RodW1iLnBuZyIsImV4cGlyZXMiOjEzOTY1NDg0Njd9--daf1d45ba7398de292e9c54209747b7720c8d2d1)
 
-### 05 - Chicken Coop Opener
+### [05 - Chicken Coop Opener](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/05%20-%20Chicken%20Coop%20Opener)
+![Coop](https://raw.githubusercontent.com/xamarin/Xamarin.Robotics/master/Projects/05%20-%20Chicken%20Coop%20Opener/Images/Illustration_thumb.png?token=947633__eyJzY29wZSI6IlJhd0Jsb2I6eGFtYXJpbi9YYW1hcmluLlJvYm90aWNzL21hc3Rlci9Qcm9qZWN0cy8wNSAtIENoaWNrZW4gQ29vcCBPcGVuZXIvSW1hZ2VzL0lsbHVzdHJhdGlvbl90aHVtYi5wbmciLCJleHBpcmVzIjoxMzk2NTQ4NTMzfQ%3D%3D--185910bf17c76d65df03136983a72f44e398f21f)
 
 # Authors
 Bryan Costanich, Frank Krueger
