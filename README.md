@@ -18,7 +18,7 @@ Xamarin Robotics is a full-stack framework for [the development and communicatio
  * **Sensor and Peripheral Library** - Strongly typed libraries that do the heavy lifting of integration with hundreds of popular sensors spanning the gamut from Alcohol Sensors to 3-axis Accelerometers.
 
 
-[image of layer breakout]
+
 
 
 # Sample Projects
