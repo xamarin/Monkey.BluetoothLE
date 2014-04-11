@@ -19,15 +19,16 @@ The following diagram illustrates the topology of the entire stack:
 
 The Mobile stack consists of three different parts:
 
-th * **Low-level Bluetooth LE and WiFi API** - [cross platform (only BLE exists right now)]
- * **Messaging Framework** - [high level protocol agnostic API for communicating between mobile devices and peripherals via wifi or Bluetooth LE][can talk to either peripherals or microcontrollers]
- * **Peripheral Libraries** - [strongly typed libraries for various peripherals from health monitoring devices to smart watches]
+ * **Low-level Bluetooth LE (BLE) API** - A cross-platform API (iOS and Android only right now) that supports communicating with BLE devices.
+ * **Low-Level Wifi API** - A cross-platform API (iOS and Android only right now) that supports connecting to WiFi enabled devices.
+ * **Messaging Framework** - A high-level cross-platform protocol for messaging peripherals via WiFi or BLE.
+ * **Peripheral Libraries** - Strongly typed libraries for communicating with various vendor-specific peripherals such as health monitoring devices, smart watches, and the like.
 
 ### Microcontroller Stack
 
-[C#/.NET MicroFramework based for microcontrollers]
+The Microcontroller stack consists of two parts:
 
- * **Modular Architecture** - Based on _blocks_ and _scopes_ that blah
+ * **Low-level Hardware Abstraction** - This is a modular/compositable based on the concept of _blocks_ and _scopes_ that represent devices and listeners, accordingly.
  * **Sensor and Peripheral Library** - Strongly typed libraries that do the heavy lifting of integration with hundreds of popular sensors spanning the gamut from Alcohol Sensors to 3-axis Accelerometers.
 
 # Sample Projects
