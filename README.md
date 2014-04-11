@@ -13,7 +13,7 @@ It is split into two major platform stacks:
  
 The following diagram illustrates the topology of the entire stack:
 
-![Stack Topography](https://raw.githubusercontent.com/xamarin/Xamarin.Robotics/master/Support%20Files/Images/Xamarin.Robotics%20Stack%20Topography_Thumb.png?token=947633__eyJzY29wZSI6IlJhd0Jsb2I6eGFtYXJpbi9YYW1hcmluLlJvYm90aWNzL21hc3Rlci9TdXBwb3J0IEZpbGVzL0ltYWdlcy9YYW1hcmluLlJvYm90aWNzIFN0YWNrIFRvcG9ncmFwaHlfVGh1bWIucG5nIiwiZXhwaXJlcyI6MTM5Njk4OTUzNH0%3D--2c7aa2e23a6ab1264da8d8091c011243ee98c379)
+![Stack Topography](https://github.com/xamarin/Xamarin.Robotics/raw/master/Support%20Files/Images/Xamarin.Robotics%20Stack%20Topography_Thumb.png)
 
 ### Mobile Stack
 
