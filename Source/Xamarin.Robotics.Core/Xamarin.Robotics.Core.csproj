@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{01A55C54-6F55-4743-BEA1-C88220673E05}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Xamarin.Robotics</RootNamespace>
