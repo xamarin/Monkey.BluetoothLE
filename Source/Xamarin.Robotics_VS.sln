@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.Device.Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.Device.CoreLib.Netduino2Tests", "Xamarin.Robotics.Device.CoreLib.Netduino2Tests\Xamarin.Robotics.Device.CoreLib.Netduino2Tests.csproj", "{C12A111F-28FB-45AB-8F7E-609255CD2D7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.Core.Contracts", "Xamarin.Robotics.Core.Contracts\Xamarin.Robotics.Core.Contracts.csproj", "{65733427-B647-4556-A87C-20937496780A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.Core", "Xamarin.Robotics.Core\Xamarin.Robotics.Core.csproj", "{65733427-B647-4556-A87C-20937496780A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.Core.Droid", "Xamarin.Robotics.Core.Droid\Xamarin.Robotics.Core.Droid.csproj", "{0040B1B9-6E22-438A-A6A7-A5A00B2B89B1}"
 EndProject

@@ -67,9 +67,9 @@
     <Folder Include="Bluetooth\LE\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xamarin.Robotics.Core.Contracts\Xamarin.Robotics.Core.Contracts.csproj">
+    <ProjectReference Include="..\Xamarin.Robotics.Core.Contracts\Xamarin.Robotics.Core.csproj">
       <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
-      <Name>Xamarin.Robotics.Core.Contracts</Name>
+      <Name>Xamarin.Robotics.Core</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

@@ -163,9 +163,9 @@
       <Project>{453394D3-F7E4-49E4-8FAE-36F1D988AE15}</Project>
       <Name>Xamarin.Robotics.Core.iOS</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Xamarin.Robotics.Core.Contracts\Xamarin.Robotics.Core.Contracts.csproj">
+    <ProjectReference Include="..\Xamarin.Robotics.Core.Contracts\Xamarin.Robotics.Core.csproj">
       <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
-      <Name>Xamarin.Robotics.Core.Contracts</Name>
+      <Name>Xamarin.Robotics.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
