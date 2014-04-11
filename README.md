@@ -17,15 +17,14 @@ The following diagram illustrates the topology of the entire stack:
 
 ### Mobile Stack
 
-The Mobile stack consists of three
+The Mobile stack consists of three different parts:
 
-[C# iOS, Android, Windows Phone libraries for communicating with various peripherals such as Netduino, Wearables (Agent Watch, Bluetooth Heartrate Monitors, etc.)]
-
- * **Low-level Bluetooth LE and WiFi API** - [cross platform (only BLE exists right now)]
+th * **Low-level Bluetooth LE and WiFi API** - [cross platform (only BLE exists right now)]
  * **Messaging Framework** - [high level protocol agnostic API for communicating between mobile devices and peripherals via wifi or Bluetooth LE][can talk to either peripherals or microcontrollers]
  * **Peripheral Libraries** - [strongly typed libraries for various peripherals from health monitoring devices to smart watches]
 
 ### Microcontroller Stack
+
 [C#/.NET MicroFramework based for microcontrollers]
 
  * **Modular Architecture** - Based on _blocks_ and _scopes_ that blah
