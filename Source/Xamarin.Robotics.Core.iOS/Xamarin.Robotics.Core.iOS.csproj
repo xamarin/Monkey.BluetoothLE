@@ -54,6 +54,7 @@
     <None Include="..\Xamarin.Robotics.Core.Contracts\BLE API Notes.md">
       <Link>BLE API Notes.md</Link>
     </None>
+    <None Include="BluetoothLE\Readme.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Robotics.Core.Contracts\Xamarin.Robotics.Core.Contracts.csproj">
