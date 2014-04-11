@@ -28,7 +28,7 @@ The Mobile stack consists of three different parts:
 
 The Microcontroller stack consists of two parts:
 
- * **Low-level Hardware Abstraction** - This is a modular/compositable based on the concept of _blocks_ and _scopes_ that represent devices and listeners, accordingly.
+ * **Low-level Hardware Abstraction** - This is a modular/compositable based on the concept of _Blocks_ and _Scopes_ that represent devices and listeners, accordingly.
  * **Sensor and Peripheral Library** - Strongly typed libraries that do the heavy lifting of integration with hundreds of popular sensors spanning the gamut from Alcohol Sensors to 3-axis Accelerometers.
 
 # Sample Projects
@@ -36,17 +36,37 @@ The Microcontroller stack consists of two parts:
 ### [01 - Plant Waterer](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/01%20-%20Plant%20Waterer)
 ![Plant Waterer](https://github.com/xamarin/Xamarin.Robotics/raw/master/Projects/01%20-%20Plant%20Waterer/Images/Illustration_Thumb.png)
 
+Level: **Beginner** 
+
+A simple robot that monitors soil moisture, waters when needed, and logs and reports moisture and watering. 
+
 ### [02 - BBQ Temp Control](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/02%20-%20BBQ%20Temp%20Control)
 ![BBQ Temp Control](https://github.com/xamarin/Xamarin.Robotics/raw/master/Projects/02%20-%20BBQ%20Temp%20Control/Images/Illustration_thumb.png)
 
-### [03 - Mobile Control RC Car](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/03%20-%20Mobile%20Control%20Car)
+Level: **Beginner**
+
+A simple robot that monitors the temperature inside a BBQ/Smoker, adds oxygen as necessary to increase temperature, and logs and reports its progress.
+
+### [03 - Chicken Coop Opener](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/03%20-%20Chicken%20Coop%20Opener)
+![Coop](https://github.com/xamarin/Xamarin.Robotics/raw/master/Projects/05%20-%20Chicken%20Coop%20Opener/Images/Illustration_thumb.png)
+
+Level: **Intermediate**
+
+A relatively simple robot that opens and closes a chicken coop based on sunlight/time of day.
+
+### [04 - Mobile Control RC Car](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/04%20-%20Mobile%20Control%20Car)
 ![Mobile Control Car](https://github.com/xamarin/Xamarin.Robotics/raw/master/Projects/03%20-%20Mobile%20Control%20Car/Images/Illustration_thumb.png)
 
-### [04 - Autonomous Flying Drone](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/04%20-%20Semi%20Autonomous%20Drone)
+Level: **Intermediate**
+
+An RC car that is controllable via a mobile device via BLE or WiFi.
+
+### [05 - Autonomous Flying Drone](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/05%20-%20Semi%20Autonomous%20Drone)
 ![Drone](https://github.com/xamarin/Xamarin.Robotics/raw/master/Projects/04%20-%20Semi%20Autonomous%20Drone/Images/Illustration_thumb.png)
 
-### [05 - Chicken Coop Opener](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/05%20-%20Chicken%20Coop%20Opener)
-![Coop](https://github.com/xamarin/Xamarin.Robotics/raw/master/Projects/05%20-%20Chicken%20Coop%20Opener/Images/Illustration_thumb.png)
+Level: **Advanced**
+
+An semi-advanced robot that can perform basic collision avoidance and can be optionally controlled by a mobile device.
 
 # Authors
 Bryan Costanich, Frank Krueger
