@@ -7,8 +7,12 @@ By putting it in a separate project, we ensure that there will be no circular re
 TODO: rename to Core and get rid of the other core project
 
 Device
+
  |-> one or more services [broad features]
+
    |-> one or more characteristics [different values within that feature]
+
      |-> values that can be read/notified/written
+
      |-> one or more descriptors that describe a characteristic
 
