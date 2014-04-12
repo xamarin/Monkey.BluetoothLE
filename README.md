@@ -48,21 +48,21 @@ Level: **Beginner**
 A simple robot that monitors the temperature inside a BBQ/Smoker, adds oxygen as necessary to increase temperature, and logs and reports its progress.
 
 ### [03 - Chicken Coop Opener](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/03%20-%20Chicken%20Coop%20Opener)
-![Coop](https://github.com/xamarin/Xamarin.Robotics/raw/master/Projects/05%20-%20Chicken%20Coop%20Opener/Images/Illustration_thumb.png)
+![Coop](https://github.com/xamarin/Xamarin.Robotics/raw/master/Projects/03%20-%20Chicken%20Coop%20Opener/Images/Illustration_thumb.png)
 
 Level: **Intermediate**
 
 A relatively simple robot that opens and closes a chicken coop based on sunlight/time of day.
 
 ### [04 - Mobile Control RC Car](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/04%20-%20Mobile%20Control%20Car)
-![Mobile Control Car](https://github.com/xamarin/Xamarin.Robotics/raw/master/Projects/03%20-%20Mobile%20Control%20Car/Images/Illustration_thumb.png)
+![Mobile Control Car](https://github.com/xamarin/Xamarin.Robotics/raw/master/Projects/04%20-%20Mobile%20Control%20Car/Images/Illustration_thumb.png)
 
 Level: **Intermediate**
 
 An RC car that is controllable via a mobile device via BLE or WiFi.
 
 ### [05 - Autonomous Flying Drone](https://github.com/xamarin/Xamarin.Robotics/tree/master/Projects/05%20-%20Semi%20Autonomous%20Drone)
-![Drone](https://github.com/xamarin/Xamarin.Robotics/raw/master/Projects/04%20-%20Semi%20Autonomous%20Drone/Images/Illustration_thumb.png)
+![Drone](https://github.com/xamarin/Xamarin.Robotics/raw/master/Projects/05%20-%20Semi%20Autonomous%20Drone/Images/Illustration_thumb.png)
 
 Level: **Advanced**
 
