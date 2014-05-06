@@ -29,9 +29,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="Mono.Cecil, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ByteCode.cs" />
+    <Compile Include="AssemblyImport.cs" />
+    <Compile Include="Linker.cs" />
+    <Compile Include="ClrRecordAssembly.cs" />
+    <Compile Include="MetaDataProcessor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
