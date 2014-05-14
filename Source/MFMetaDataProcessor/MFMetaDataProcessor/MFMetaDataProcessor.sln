@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFMetaDataProcessor.Core", "MFMetaDataProcessor.Core\MFMetaDataProcessor.Core.csproj", "{F2091C30-CFDD-4D2B-9B49-3B148C3F63EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFMetaDataProcessor.Console", "MFMetaDataProcessor.Console\MFMetaDataProcessor.Console.csproj", "{A7984C3F-C1E3-4CC8-8668-32531AEDA8B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFMetaDataProcessor.Tests", "MFMetaDataProcessor.Tests\MFMetaDataProcessor.Tests.csproj", "{4F5BFF9C-65C5-4EC2-ABC8-26DF8FE84BF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +15,21 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A7984C3F-C1E3-4CC8-8668-32531AEDA8B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7984C3F-C1E3-4CC8-8668-32531AEDA8B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7984C3F-C1E3-4CC8-8668-32531AEDA8B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7984C3F-C1E3-4CC8-8668-32531AEDA8B6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F2091C30-CFDD-4D2B-9B49-3B148C3F63EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F2091C30-CFDD-4D2B-9B49-3B148C3F63EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2091C30-CFDD-4D2B-9B49-3B148C3F63EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2091C30-CFDD-4D2B-9B49-3B148C3F63EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7984C3F-C1E3-4CC8-8668-32531AEDA8B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7984C3F-C1E3-4CC8-8668-32531AEDA8B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7984C3F-C1E3-4CC8-8668-32531AEDA8B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7984C3F-C1E3-4CC8-8668-32531AEDA8B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F5BFF9C-65C5-4EC2-ABC8-26DF8FE84BF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F5BFF9C-65C5-4EC2-ABC8-26DF8FE84BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F5BFF9C-65C5-4EC2-ABC8-26DF8FE84BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F5BFF9C-65C5-4EC2-ABC8-26DF8FE84BF1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = MFMetaDataProcessor.Core\MFMetaDataProcessor.Core.csproj
