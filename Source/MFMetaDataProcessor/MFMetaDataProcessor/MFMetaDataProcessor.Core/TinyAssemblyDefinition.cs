@@ -1,11 +1,15 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using Mono.Cecil;
 
 namespace MFMetaDataProcessor
 {
     public sealed class TinyAssemblyDefinition
     {
+        private const UInt32 FLAGS_BIG_ENDIAN = 0x80000080;
+        private const UInt32 FLAGS_LITTLE_ENDIAN = 0x00000000;
+
         private readonly AssemblyDefinition _assemblyDefinition;
 
         private readonly TinyStringTable _stringTable;
@@ -28,7 +32,8 @@ namespace MFMetaDataProcessor
             writer.WriteString("MSSpot1");
             writer.WriteUInt32(0); // header CRC
             writer.WriteUInt32(0); // assembly CRC
-            writer.WriteUInt32(0); // flags
+            // TODO: add another flags (patch and reboot)
+            writer.WriteUInt32(writer.IsBigEndian ? FLAGS_BIG_ENDIAN : FLAGS_LITTLE_ENDIAN);
 
             // TODO: calculate this field (at least for Big Endian)
             writer.WriteUInt32(0); // Native methods checksum
@@ -72,13 +77,19 @@ namespace MFMetaDataProcessor
         }
 
         public void UpdateCrc(
-            TinyBinaryWriter binaryWriter)
+            TinyBinaryWriter binaryWriter,
+            UInt32 nativeMethodsCrc)
         {
-
             var assemblyCrc32 = ComputeCrc32(binaryWriter.BaseStream,
                 _paddingsOffset, binaryWriter.BaseStream.Length - _paddingsOffset);
             binaryWriter.BaseStream.Seek(12, SeekOrigin.Begin); // assembly CRC offset
             binaryWriter.WriteUInt32(assemblyCrc32);
+
+            if (binaryWriter.IsBigEndian) // This CRC calculated only for BE assemblies!!!
+            {
+                binaryWriter.BaseStream.Seek(20, SeekOrigin.Begin); // native methods CRC offset
+                binaryWriter.WriteUInt32(nativeMethodsCrc);
+            }
 
             var headerCrc32 = ComputeCrc32(binaryWriter.BaseStream, 0, _paddingsOffset);
             binaryWriter.BaseStream.Seek(8, SeekOrigin.Begin); // header CRC offset

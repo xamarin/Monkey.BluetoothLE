@@ -13,6 +13,7 @@ namespace MFMetaDataProcessor
         {
             _primitiveTypes.Add("System.Void", TinyDataType.DATATYPE_VOID);
             _primitiveTypes.Add("System.Int32", TinyDataType.DATATYPE_I4);
+            _primitiveTypes.Add("System.Boolean", TinyDataType.DATATYPE_BOOLEAN);
         }
 
         public static Byte GetDataType(

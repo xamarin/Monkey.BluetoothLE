@@ -5,8 +5,21 @@ using Mono.Cecil;
 namespace MFMetaDataProcessor
 {
     public sealed class TinyMemberReferenceTable :
-        TinySimpleListTableBase<MemberReference>
+        TinyReferenceTableBase<MemberReference>
     {
+        private sealed class MemberReferenceComparer : IEqualityComparer<MemberReference>
+        {
+            public Boolean Equals(MemberReference lhs, MemberReference rhs)
+            {
+                return String.Equals(lhs.FullName, rhs.FullName, StringComparison.Ordinal);
+            }
+
+            public Int32 GetHashCode(MemberReference that)
+            {
+                return that.FullName.GetHashCode();
+            }
+        }
+
         private readonly TinySignaturesTable _signatures;
 
         private readonly TinyTypeReferenceTable _typeReferences;
@@ -16,10 +29,17 @@ namespace MFMetaDataProcessor
             TinyStringTable stringTable,
             TinySignaturesTable signatures,
             TinyTypeReferenceTable typeReferences)
-            : base(items, stringTable)
+            : base(items, new MemberReferenceComparer(), stringTable)
         {
             _signatures = signatures;
             _typeReferences = typeReferences;
+        }
+
+        public Boolean TryGetMethodReferenceId(
+            MethodReference methodReference,
+            out UInt16 referenceId)
+        {
+            return TryGetIdByValue(methodReference, out referenceId);
         }
 
         protected override void WriteSingleItem(

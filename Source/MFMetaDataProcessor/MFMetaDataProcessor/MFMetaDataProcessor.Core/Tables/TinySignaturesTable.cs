@@ -9,27 +9,28 @@ namespace MFMetaDataProcessor
 {
     public sealed class TinySignaturesTable : ITinyTable
     {
+        private sealed class ByteArrayComparer : IEqualityComparer<Byte[]>
+        {
+            public Boolean Equals(Byte[] lhs, Byte[] rhs)
+            {
+                return (lhs.Length == rhs.Length && lhs.SequenceEqual(rhs));
+            }
+
+            public Int32 GetHashCode(Byte[] value)
+            {
+                return value.Aggregate(37, (hash, item) => item ^ hash); // TODO: profile
+            }
+        }
+
         private readonly IDictionary<Byte[], UInt16> _idsBySignatures =
-            new Dictionary<Byte[], UInt16>();
+            new Dictionary<Byte[], UInt16>(new ByteArrayComparer());
 
         private UInt16 _lastAvailableId;
 
         public UInt16 GetOrCreateSignatureId(
             MethodDefinition methodDefinition)
         {
-            var signature = GetSignature(methodDefinition);
-
-            UInt16 id;
-            if (_idsBySignatures.TryGetValue(signature, out id))
-            {
-                return id;
-            }
-
-            id = _lastAvailableId;
-            _idsBySignatures.Add(signature, id);
-            _lastAvailableId += (UInt16)signature.Length;
-
-            return id;
+            return GetOrCreateSignatureId(GetSignature(methodDefinition));
         }
 
         public UInt16 GetOrCreateSignatureId(
@@ -39,9 +40,15 @@ namespace MFMetaDataProcessor
         }
 
         public UInt16 GetOrCreateSignatureId(
-            MemberReference methodDefinition)
+            MemberReference memberReference)
         {
-            return 0x0000; // TODO: implement logic here
+            var methodReference = memberReference as MethodReference;
+            if (methodReference == null)
+            {
+                return 0x0000; // TODO: implement logic here
+            }
+
+            return GetOrCreateSignatureId(GetSignature(methodReference));
         }
 
         public void Write(
@@ -56,29 +63,39 @@ namespace MFMetaDataProcessor
         }
 
         private Byte[] GetSignature(
-            MethodDefinition methodDefinition)
+            MethodReference methodDefinition)
         {
             using (var buffer = new MemoryStream())
             using (var writer = new BinaryWriter(buffer)) // Only Write(Byte) will be used
             {
-                writer.Write((Byte)(methodDefinition.IsConstructor ? 0x20 : 0x00)); // TODO: remove this workaround
-                
-                WriteTypeInfo(methodDefinition.ReturnType, writer);
+                writer.Write((Byte)(methodDefinition.Name == ".ctor" ? 0x20 : 0x00)); // TODO: remove this workaround
 
-                if (methodDefinition.HasParameters)
+                writer.Write((Byte)(methodDefinition.Parameters.Count));
+
+                WriteTypeInfo(methodDefinition.ReturnType, writer);
+                foreach (var parameter in methodDefinition.Parameters)
                 {
-                    foreach (var parameter in methodDefinition.Parameters)
-                    {
-                        WriteTypeInfo(parameter.ParameterType, writer);
-                    }
-                }
-                else
-                {
-                    writer.Write((Byte)0); // void
+                    WriteTypeInfo(parameter.ParameterType, writer);
                 }
 
                 return buffer.ToArray();
             }
+        }
+
+        private UInt16 GetOrCreateSignatureId(
+            Byte[] signature)
+        {
+            UInt16 id;
+            if (_idsBySignatures.TryGetValue(signature, out id))
+            {
+                return id;
+            }
+
+            id = _lastAvailableId;
+            _idsBySignatures.Add(signature, id);
+            _lastAvailableId += (UInt16)signature.Length;
+
+            return id;
         }
 
         private void WriteTypeInfo(

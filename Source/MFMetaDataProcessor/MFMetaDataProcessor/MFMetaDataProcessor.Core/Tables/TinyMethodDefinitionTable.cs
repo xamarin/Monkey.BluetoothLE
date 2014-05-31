@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 
 namespace MFMetaDataProcessor
 {
@@ -39,7 +40,7 @@ namespace MFMetaDataProcessor
             writer.WriteByte(TinyDataTypeConvertor.GetDataType(item.ReturnType.Resolve()));
             writer.WriteByte(parametersCount);
             writer.WriteByte((Byte)item.Body.Variables.Count);
-            writer.WriteByte(parametersCount); // TODO: calculste length eval stack correctly
+            writer.WriteByte(CodeWriter.CalculateStackSize(item.Body));
 
             writer.WriteUInt16(0xFFFF); // locals
             writer.WriteUInt16(_signatures.GetOrCreateSignatureId(item));

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Mono.Cecil;
 
@@ -9,37 +8,48 @@ namespace MFMetaDataProcessor
     public sealed class TinyAssemblyBuilder
     {
         private readonly AssemblyDefinition _assemblyDefinition;
+        private readonly HashSet<String> _assemblyAttributes;
 
         public TinyAssemblyBuilder(
             AssemblyDefinition assemblyDefinition)
         {
             _assemblyDefinition = assemblyDefinition;
+
+            _assemblyAttributes = new HashSet<String>(
+                _assemblyDefinition.CustomAttributes.Select(item => item.AttributeType.FullName),
+                StringComparer.Ordinal);
+            _assemblyAttributes.Add("System.Reflection.AssemblyCultureAttribute");
+            _assemblyAttributes.Add("System.Reflection.AssemblyVersionAttribute");
         }
 
         public void Write(
             TinyBinaryWriter binaryWriter)
         {
+            var nativeMethodsCrc = new NativeMethodsCrc(_assemblyDefinition);
+
             var stringsTable = new TinyStringTable();
 
             var header = new TinyAssemblyDefinition(_assemblyDefinition, stringsTable);
             header.Write(binaryWriter);
 
-            foreach (var table in GetTables(stringsTable))
+            foreach (var table in GetTables(stringsTable, nativeMethodsCrc, binaryWriter))
             {
                 var tableBegin = (binaryWriter.BaseStream.Position + 3) & 0xFFFFFFFC;
                 table.Write(binaryWriter);
 
                 var padding = (binaryWriter.BaseStream.Position - tableBegin) & 0x3;
-                binaryWriter.WriteBytes(new byte[padding]);
+                binaryWriter.WriteBytes(new Byte[padding]);
 
                 header.UpdateTableOffset(binaryWriter, tableBegin, padding);
             }
 
-            header.UpdateCrc(binaryWriter);
+            header.UpdateCrc(binaryWriter, nativeMethodsCrc.Current);
         }
 
         private IEnumerable<ITinyTable> GetTables(
-            TinyStringTable stringTable)
+            TinyStringTable stringTable,
+            NativeMethodsCrc nativeMethodsCrc,
+            TinyBinaryWriter writer)
         {
             var mainModule = _assemblyDefinition.MainModule;
 
@@ -48,10 +58,10 @@ namespace MFMetaDataProcessor
             var assemblyRef = new TinyAssemblyReferenceTable(mainModule.AssemblyReferences, stringTable);
 
             var typeReferences = mainModule.GetTypeReferences()
-                .Where(item => item.Resolve().BaseType == null) // TODO: remove this workaround!!!
+                .Where(item => !IsAttribute(item) )
                 .ToList();
 
-            var typeRef = new TinyTypeReferenceTable(typeReferences, stringTable);
+            var typeRef = new TinyTypeReferenceTable(typeReferences, assemblyRef, stringTable);
 
             var memberReferences = mainModule.GetMemberReferences()
                 .Where(item => !item.DeclaringType.Name.EndsWith("Attribute")) // TODO: remove this workaround!!!
@@ -60,8 +70,6 @@ namespace MFMetaDataProcessor
             var types = mainModule.GetTypes()
                 .Where(item => item.BaseType != null) // TODO: remove this workaround!!!
                 .ToList();
-
-            var byteCodeTable = new TinyByteCodeTable();
 
             yield return assemblyRef;
 
@@ -73,11 +81,15 @@ namespace MFMetaDataProcessor
                 signaturesTable,
                 typeRef);
 
-            yield return new TinyMemberReferenceTable(
+            var methodReferenceTable = new TinyMemberReferenceTable(
                 memberReferences.OfType<MethodReference>(),
                 stringTable,
                 signaturesTable,
                 typeRef);
+
+            yield return methodReferenceTable;
+
+            var byteCodeTable = new TinyByteCodeTable(nativeMethodsCrc, writer, methodReferenceTable);
 
             yield return new TinyTypeDefinitionTable(types, stringTable, byteCodeTable, typeRef);
 
@@ -107,6 +119,14 @@ namespace MFMetaDataProcessor
             yield return TinyEmptyTable.Instance; // ResourceFiles
 
             yield return TinyEmptyTable.Instance;
+        }
+
+        private Boolean IsAttribute(
+            MemberReference typeReference)
+        {
+            return _assemblyAttributes.Contains(typeReference.FullName) || 
+                (typeReference.DeclaringType != null &&
+                    _assemblyAttributes.Contains(typeReference.DeclaringType.FullName));
         }
     }
 }
