@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Mono.Cecil;
 
 namespace MFMetaDataProcessor.Tests
@@ -7,16 +8,27 @@ namespace MFMetaDataProcessor.Tests
     {
         static void Main()
         {
-            var assemblyDefinition =  AssemblyDefinition.ReadAssembly(@"Data\NetduinoOne\NetduinoOne.exe");
+            TestSingleAssembly("NetduinoOne");
+            TestSingleAssembly("NetduinoTwo");
+        }
 
-            using (var stream = File.Open(@"Data\NetduinoOne\le\NetduinoOne.pex", FileMode.Create, FileAccess.ReadWrite))
+        private static void TestSingleAssembly(String name)
+        {
+            var assemblyDefinition = AssemblyDefinition.ReadAssembly(
+                String.Format(@"Data\{0}\{0}.exe", name));
+
+            using (var stream = File.Open(
+                String.Format(@"Data\{0}\le\{0}.pex", name),
+                FileMode.Create, FileAccess.ReadWrite))
             using (var writer = new BinaryWriter(stream))
             {
                 var leBuilder = new TinyAssemblyBuilder(assemblyDefinition);
                 leBuilder.Write(TinyBinaryWriter.CreateLittleEndianBinaryWriter(writer));
             }
 
-            using (var stream = File.Open(@"Data\NetduinoOne\be\NetduinoOne.pex", FileMode.Create, FileAccess.ReadWrite))
+            using (var stream = File.Open(
+                String.Format(@"Data\{0}\be\{0}.pex", name),
+                FileMode.Create, FileAccess.ReadWrite))
             using (var writer = new BinaryWriter(stream))
             {
                 var leBuilder = new TinyAssemblyBuilder(assemblyDefinition);

@@ -6,7 +6,7 @@ namespace MFMetaDataProcessor
 {
     public abstract class TinyBinaryWriter
     {
-        private sealed class BigEndianBinaryWriter : TinyBinaryWriter 
+        private sealed class BigEndianBinaryWriter : TinyBinaryWriter
         {
             public BigEndianBinaryWriter(
                 BinaryWriter baseWriter)
@@ -27,6 +27,12 @@ namespace MFMetaDataProcessor
                 _baseWriter.Write((Byte)((value >> 8) & 0xFF));
                 _baseWriter.Write((Byte)(value & 0xFF));
             }
+
+            public override TinyBinaryWriter GetMemoryBasedClone(
+                MemoryStream stream)
+            {
+                return new BigEndianBinaryWriter(new BinaryWriter(stream));
+            }
         }
 
         private sealed class LittleEndianBinaryWriter : TinyBinaryWriter
@@ -45,6 +51,12 @@ namespace MFMetaDataProcessor
             public override void WriteUInt32(UInt32 value)
             {
                 _baseWriter.Write(value);
+            }
+
+            public override TinyBinaryWriter GetMemoryBasedClone(
+                MemoryStream stream)
+            {
+                return new LittleEndianBinaryWriter(new BinaryWriter(stream));
             }
         }
 
@@ -73,6 +85,11 @@ namespace MFMetaDataProcessor
             _baseWriter.Write(value);
         }
 
+        public void WriteSByte(SByte value)
+        {
+            _baseWriter.Write(value);
+        }
+
         public void WriteVersion(Version value)
         {
             WriteUInt16((UInt16)value.Major);
@@ -92,10 +109,24 @@ namespace MFMetaDataProcessor
             _baseWriter.Write(value);
         }
 
+        public void WriteInt16(Int16 value)
+        {
+            WriteUInt16((UInt16)value);
+        }
+
+        public void WriteInt32(Int32 value)
+        {
+            WriteUInt32((UInt32)value);
+        }
+
         public abstract void WriteUInt16(UInt16 value);
 
         public abstract void WriteUInt32(UInt32 value);
 
+        public abstract TinyBinaryWriter GetMemoryBasedClone(MemoryStream stream);
+
         public Stream BaseStream { get { return _baseWriter.BaseStream; } }
+
+        public Boolean IsBigEndian { get { return (this is BigEndianBinaryWriter); } }
     }
 }

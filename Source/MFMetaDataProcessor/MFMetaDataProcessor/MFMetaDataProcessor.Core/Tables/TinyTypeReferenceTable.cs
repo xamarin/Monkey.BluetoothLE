@@ -7,6 +7,8 @@ namespace MFMetaDataProcessor
     public sealed class TinyTypeReferenceTable :
         TinyReferenceTableBase<TypeReference>
     {
+        private readonly TinyAssemblyReferenceTable _assemblyReferences;
+
         private sealed class TypeReferenceEqualityComparer : IEqualityComparer<TypeReference>
         {
             public Boolean Equals(TypeReference lhs, TypeReference rhs)
@@ -22,9 +24,11 @@ namespace MFMetaDataProcessor
 
         public TinyTypeReferenceTable(
             IEnumerable<TypeReference> items,
+            TinyAssemblyReferenceTable assemblyReferences,
             TinyStringTable stringTable)
             : base(items, new TypeReferenceEqualityComparer(), stringTable)
         {
+            _assemblyReferences = assemblyReferences;
         }
 
 
@@ -48,8 +52,23 @@ namespace MFMetaDataProcessor
             WriteStringReference(writer, item.Name);
             WriteStringReference(writer, item.Namespace);
 
-            writer.WriteUInt16(0); // scope - TBL_AssemblyRef | TBL_TypeRef // 0x8000
+            writer.WriteUInt16(GetScope(item.Scope)); // scope - TBL_AssemblyRef | TBL_TypeRef // 0x8000
             writer.WriteUInt16(0); // padding
+        }
+
+        private UInt16 GetScope(
+            IMetadataScope scope)
+        {
+            switch (scope.MetadataScopeType)
+            {
+                case MetadataScopeType.AssemblyNameReference:
+                    return _assemblyReferences.GetReferenceId(scope as AssemblyNameReference);
+                case MetadataScopeType.ModuleDefinition:
+                case MetadataScopeType.ModuleReference:
+                    return 0;
+                default:
+                    return 0;
+            }
         }
     }
 }

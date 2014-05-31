@@ -9,6 +9,11 @@ namespace MFMetaDataProcessor
 {
     public sealed class TinyByteCodeTable : ITinyTable
     {
+        private readonly NativeMethodsCrc _nativeMethodsCrc;
+
+        private readonly TinyBinaryWriter _writer;
+        private readonly TinyMemberReferenceTable _methodReferenceTable;
+
         private readonly IDictionary<Byte[], UInt16> _idsByMethods =
             new Dictionary<Byte[], UInt16>();
 
@@ -17,12 +22,24 @@ namespace MFMetaDataProcessor
 
         private UInt16 _lastAvailableId;
 
+        public TinyByteCodeTable(
+            NativeMethodsCrc nativeMethodsCrc,
+            TinyBinaryWriter writer,
+            TinyMemberReferenceTable methodReferenceTable)
+        {
+            _nativeMethodsCrc = nativeMethodsCrc;
+            _writer = writer;
+            _methodReferenceTable = methodReferenceTable;
+        }
+
         public UInt16 GetMethodId(
             MethodDefinition method)
         {
             var id = _lastAvailableId;
 
-            var byteCode = CreateByteCode(method.Body.Instructions.Select(item => item.OpCode));
+            _nativeMethodsCrc.UpdateCrc(method);
+            var byteCode = CreateByteCode(method);
+
             _idsByMethods.Add(byteCode, id);
             _rvasByMethodNames.Add(method.FullName, id);
 
@@ -48,35 +65,14 @@ namespace MFMetaDataProcessor
         }
 
         private Byte[] CreateByteCode(
-            IEnumerable<OpCode> opCodes)
+            MethodDefinition method)
         {
             using(var stream = new MemoryStream())
-            using (var writer = new BinaryWriter(stream))
             {
-                foreach (var opCode in opCodes)
-                {
-                    if (opCode.Size == 1)
-                    {
-                        writer.Write(opCode.Op2);
-                    }
-                    else
-                    {
-                        writer.Write(opCode.Op2);
-                        writer.Write(opCode.Op1);
-                    }
-
-                    switch (opCode.OperandType)
-                    {
-                        case OperandType.InlineNone:
-                            break;
-                        default:
-                            // TODO: temporary workaround
-                            writer.Write((Byte)0x00);
-                            writer.Write((Byte)0x80);
-                            break;
-                    }
-                }
-
+                var writer = new  CodeWriter(
+                    method, _writer.GetMemoryBasedClone(stream),
+                    _methodReferenceTable);
+                writer.WriteMethodBody();
                 return stream.ToArray();
             }
         }
