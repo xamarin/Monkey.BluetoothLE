@@ -4,8 +4,18 @@ using System.Linq;
 
 namespace MFMetaDataProcessor
 {
+    /// <summary>
+    /// Helper class for storing list of 'predefined' string constants which encoded in
+    /// .NET Mirco Framework assembly metadata using special notation (highest possible values).
+    /// </summary>
     internal static class TinyStringsConstants
     {
+        /// <summary>
+        /// Gets string reference identifier for passed string from constants table.
+        /// </summary>
+        /// <param name="value">String value for lookup.</param>
+        /// <param name="index">String reference identifier.</param>
+        /// <returns>Returns <c>true</c> if string found in constants talbe, <c>false</c> overwise.</returns>
         public static Boolean TryGetStringIndex(
             String value,
             out UInt16 index)

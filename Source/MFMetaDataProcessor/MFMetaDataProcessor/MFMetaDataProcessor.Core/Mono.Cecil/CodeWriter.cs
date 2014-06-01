@@ -1,17 +1,38 @@
 using System;
-using MFMetaDataProcessor;
+using Mono.Cecil;
+using Mono.Cecil.Cil;
 
-using RVA = System.UInt32;
+namespace MFMetaDataProcessor {
 
-namespace Mono.Cecil.Cil {
-
+    /// <summary>
+    /// Encaplulates logic related for writing correct byte code and calculating stack size.
+    /// </summary>
+    /// <remarks>
+    /// This class initially copy-pasted from Mono.Cecil codebase but changed a lot.
+    /// </remarks>
 	internal sealed class CodeWriter
     {
+        /// <summary>
+        /// Original method body information in Mono.Cecil format.
+        /// </summary>
+        private readonly MethodBody _body;
+
+        /// <summary>
+        /// Binary writer for writing byte code in correct endianess.
+        /// </summary>
 	    private readonly TinyBinaryWriter _writer;
-	    private readonly TinyMemberReferenceTable _methodReferenceTable;
 
-	    private readonly MethodBody _body;
+        /// <summary>
+        /// Methods references table (used for obtaining method reference id).
+        /// </summary>
+        private readonly TinyMemberReferenceTable _methodReferenceTable;
 
+        /// <summary>
+        /// Creates new instance of <see cref="Mono.Cecil.Cil.CodeWriter"/> object.
+        /// </summary>
+        /// <param name="method">Original method body in Mono.Cecil format.</param>
+        /// <param name="writer">Binary writer for writing byte code in correct endianess.</param>
+        /// <param name="methodReferenceTable">External methods references table.</param>
 	    public CodeWriter(
 	        MethodDefinition method,
             TinyBinaryWriter writer,
@@ -22,6 +43,9 @@ namespace Mono.Cecil.Cil {
 	        _body = method.Body;
         }
 
+        /// <summary>
+        /// Writes method body into binary writer originally passed into constructor.
+        /// </summary>
         public void WriteMethodBody()
         {
             foreach (var instruction in _body.Instructions)
@@ -31,6 +55,11 @@ namespace Mono.Cecil.Cil {
             }
         }
 
+        /// <summary>
+        /// Calculates method stack size for passed <paramref name="methodBody"/> method.
+        /// </summary>
+        /// <param name="methodBody">Method body in Mono.Cecil format.</param>
+        /// <returns>Maximal evaluated stack size for passed method body.</returns>
 	    public static Byte CalculateStackSize(
 	        MethodBody methodBody)
 	    {
@@ -51,7 +80,8 @@ namespace Mono.Cecil.Cil {
 	        return size;
 	    }
 
-	    private void WriteOpCode (OpCode opcode)
+	    private void WriteOpCode (
+            OpCode opcode)
 		{
 			if (opcode.Size == 1)
             {
@@ -64,13 +94,16 @@ namespace Mono.Cecil.Cil {
 			}
 		}
 
-		private void WriteOperand (Instruction instruction)
+		private void WriteOperand (
+            Instruction instruction)
 		{
             var opcode = instruction.OpCode;
 			var operandType = opcode.OperandType;
 
-			if (operandType == OperandType.InlineNone)
-				return;
+		    if (operandType == OperandType.InlineNone)
+		    {
+                return;
+		    }
 
 			var operand = instruction.Operand;
 		    if (operand == null)
@@ -85,9 +118,9 @@ namespace Mono.Cecil.Cil {
 		            var targets = (Instruction[]) operand;
                     _writer.WriteInt32(targets.Length);
 		            var diff = instruction.Offset + opcode.Size + (4*(targets.Length + 1));
-		            for (int i = 0; i < targets.Length; i++)
+		            foreach (var item in targets)
 		            {
-                        _writer.WriteInt32(GetTargetOffset(targets[i]) - diff);
+		                _writer.WriteInt32(GetTargetOffset(item) - diff);
 		            }
 		            break;
 		        }
@@ -121,12 +154,16 @@ namespace Mono.Cecil.Cil {
 		            break;
 		        case OperandType.ShortInlineI:
 		            if (opcode == OpCodes.Ldc_I4_S)
-                        _writer.WriteSByte((sbyte)operand);
+		            {
+                        _writer.WriteSByte((SByte)operand);
+		            }
 		            else
-                        _writer.WriteByte((byte)operand);
+		            {
+                        _writer.WriteByte((Byte)operand);
+                    }
 		            break;
 		        case OperandType.InlineI:
-                    _writer.WriteInt32((int)operand);
+                    _writer.WriteInt32((Int32)operand);
 		            break;
 		        case OperandType.InlineI8:
                     // TODO: implement it later
@@ -144,7 +181,7 @@ namespace Mono.Cecil.Cil {
 		            WriteMetadataToken(
 		                new MetadataToken(
 		                    TokenType.String,
-		                    GetUserStringIndex((string) operand)));
+		                    GetUserStringIndex((String) operand)));
 		            break;
                 case OperandType.InlineMethod:
                     // TODO: implement it correctly!!!
@@ -168,9 +205,11 @@ namespace Mono.Cecil.Cil {
 		    }
 		}
 
-		private int GetTargetOffset (Instruction instruction)
+		private Int32 GetTargetOffset (
+            Instruction instruction)
 		{
-			if (instruction == null) {
+			if (instruction == null)
+            {
 				var last = _body.Instructions [_body.Instructions.Count - 1];
 				return last.Offset + last.GetSize ();
 			}
@@ -178,22 +217,27 @@ namespace Mono.Cecil.Cil {
 			return instruction.Offset;
 		}
 
-		private uint GetUserStringIndex (string @string)
+		private UInt32 GetUserStringIndex (
+            String @string)
 		{
-			if (@string == null)
-				return 0;
+		    if (@string == null)
+		    {
+                return 0;
+		    }
 
             // TODO: implement this using TinyStringTalbe
 			// return metadata.user_string_heap.GetStringIndex (@string);
 		    return 0;
 		}
 
-		private static int GetVariableIndex (VariableDefinition variable)
+		private static Int32 GetVariableIndex (
+            VariableDefinition variable)
 		{
 			return variable.Index;
 		}
 
-		private int GetParameterIndex (ParameterDefinition parameter)
+		private Int32 GetParameterIndex (
+            ParameterDefinition parameter)
 		{
 			if (_body.Method.HasThis) {
 				if (parameter == _body.ThisParameter)
@@ -205,7 +249,8 @@ namespace Mono.Cecil.Cil {
 			return parameter.Index;
 		}
 
-		private void WriteMetadataToken (MetadataToken token)
+		private void WriteMetadataToken (
+            MetadataToken token)
 		{
             _writer.WriteUInt32(token.ToUInt32());
 		}

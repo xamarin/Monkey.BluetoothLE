@@ -1,17 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using Mono.Cecil;
-using Mono.Cecil.Cil;
 
 namespace MFMetaDataProcessor
 {
+    /// <summary>
+    /// Encapsulates logic for storing methods definitions list and writing
+    /// this collected list into target assembly in .NET Micro Framework format.
+    /// </summary>
     public sealed class TinyMethodDefinitionTable :
         TinySimpleListTableBase<MethodDefinition>
     {
+        /// <summary>
+        /// Byte code table for obtaining byte code identifiers and RVAs.
+        /// </summary>
         private readonly TinyByteCodeTable _byteCodeTable;
 
+        /// <summary>
+        /// Signatures table (for obtaining signature ID).
+        /// </summary>
         private readonly TinySignaturesTable _signatures;
 
+        /// <summary>
+        /// Creates new instance of <see cref="TinyMethodDefinitionTable"/> object.
+        /// </summary>
+        /// <param name="items">List of methods definitions in Mono.Cecil format.</param>
+        /// <param name="stringTable">String references table (for obtaining string ID).</param>
+        /// <param name="byteCodeTable">Byte code table (for obtaining method RVA).</param>
+        /// <param name="signatures">Signatures table (for obtaining signature ID).</param>
         public TinyMethodDefinitionTable(
             IEnumerable<MethodDefinition> items,
             TinyStringTable stringTable,
@@ -23,6 +39,7 @@ namespace MFMetaDataProcessor
             _signatures = signatures;
         }
 
+        /// <inheritdoc/>
         protected override void WriteSingleItem(
             TinyBinaryWriter writer,
             MethodDefinition item)

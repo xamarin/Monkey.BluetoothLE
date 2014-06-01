@@ -5,6 +5,11 @@ using Mono.Cecil;
 
 namespace MFMetaDataProcessor
 {
+    /// <summary>
+    /// Helper class for calculating native methods CRC value. Really caclulates CRC32 value
+    /// for native method signatures (not methods itself) and signatures treated as string
+    /// values, formatted by weird rules incompartible with all rest codebase.
+    /// </summary>
     public sealed class NativeMethodsCrc
     {
         private readonly Byte[] _null = Encoding.ASCII.GetBytes("NULL");
@@ -66,10 +71,6 @@ namespace MFMetaDataProcessor
                     yield return GetParameterType(item.ParameterType);
                 }
             }
-            //else
-            //{
-            //    yield return "VOID";
-            //}
         }
 
         private String GetParameterType(

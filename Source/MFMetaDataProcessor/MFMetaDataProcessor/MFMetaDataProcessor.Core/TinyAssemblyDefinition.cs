@@ -1,23 +1,49 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using Mono.Cecil;
 
 namespace MFMetaDataProcessor
 {
+    /// <summary>
+    /// Encapsulates logic for assebmly definition (header) writing.
+    /// </summary>
     public sealed class TinyAssemblyDefinition
     {
+        /// <summary>
+        /// Header flag for big endian platform.
+        /// </summary>
         private const UInt32 FLAGS_BIG_ENDIAN = 0x80000080;
+
+        /// <summary>
+        /// Header flag for little endian platform.
+        /// </summary>
         private const UInt32 FLAGS_LITTLE_ENDIAN = 0x00000000;
 
+        /// <summary>
+        /// Original assembly definition in Mono.Cecil format.
+        /// </summary>
         private readonly AssemblyDefinition _assemblyDefinition;
 
+        /// <summary>
+        /// String refernces table (for writing assembly name).
+        /// </summary>
         private readonly TinyStringTable _stringTable;
 
+        /// <summary>
+        /// Offset for current table address writing.
+        /// </summary>
         private Int64 _tablesOffset;
 
+        /// <summary>
+        /// Offset for current table padding writing.
+        /// </summary>
         private Int64 _paddingsOffset;
 
+        /// <summary>
+        /// Creates new instance of <see cref="TinyAssemblyDefinition"/> object.
+        /// </summary>
+        /// <param name="assemblyDefinition">Original assembly definition in Mono.Cecil format.</param>
+        /// <param name="stringTable">String refernces table (for writing assembly name).</param>
         public TinyAssemblyDefinition(
             AssemblyDefinition assemblyDefinition,
             TinyStringTable stringTable)
@@ -26,6 +52,10 @@ namespace MFMetaDataProcessor
             _stringTable = stringTable;
         }
 
+        /// <summary>
+        /// Writes header information into output stream (w/o CRC and table offsets/paddings).
+        /// </summary>
+        /// <param name="writer">Binary writer with correct endianness.</param>
         public void Write(
             TinyBinaryWriter writer)
         {
@@ -60,10 +90,17 @@ namespace MFMetaDataProcessor
             }
         }
 
+        /// <summary>
+        /// Updates tables offest value and padding value for current table and
+        /// advance writing position for next method call (filling tables info).
+        /// </summary>
+        /// <param name="writer">Binary writer with correct endianness.</param>
+        /// <param name="tableBegin">Table beginning address (offset).</param>
+        /// <param name="padding">Table padding value.</param>
         public void UpdateTableOffset(
             TinyBinaryWriter writer,
             Int64 tableBegin,
-            long padding)
+            Int64 padding)
         {
             writer.BaseStream.Seek(_tablesOffset, SeekOrigin.Begin);
             writer.WriteUInt32((UInt32)tableBegin);
@@ -76,6 +113,11 @@ namespace MFMetaDataProcessor
             writer.BaseStream.Seek(0, SeekOrigin.End);
         }
 
+        /// <summary>
+        /// Updates CRC values inside header (called after writing all tables data).
+        /// </summary>
+        /// <param name="binaryWriter">Binary writer with correct endianness.</param>
+        /// <param name="nativeMethodsCrc">Helper class with stored native methods CRC.</param>
         public void UpdateCrc(
             TinyBinaryWriter binaryWriter,
             UInt32 nativeMethodsCrc)

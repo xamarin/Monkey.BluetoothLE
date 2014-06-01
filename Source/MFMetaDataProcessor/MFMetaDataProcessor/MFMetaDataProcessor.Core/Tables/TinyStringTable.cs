@@ -4,18 +4,39 @@ using System.Linq;
 
 namespace MFMetaDataProcessor
 {
+    /// <summary>
+    /// Encapsulates logic for storing strings list and writing this
+    /// list into target assembly in .NET Micro Framework format.
+    /// </summary>
     public sealed class TinyStringTable : ITinyTable
     {
+        /// <summary>
+        /// Maps for each unique string and related identifier (offset in strings table).
+        /// </summary>
         private readonly Dictionary<String, UInt16> _idsByStrings =
             new Dictionary<String, UInt16>(StringComparer.Ordinal);
 
+        /// <summary>
+        /// Last available string identifier.
+        /// </summary>
         private UInt16 _lastAvailableId;
 
+        /// <summary>
+        /// Creates new instance of <see cref="TinyStringTable"/> object.
+        /// </summary>
         public TinyStringTable()
         {
             GetOrCreateStringId(String.Empty); // First item in string table always empty string
         }
 
+        /// <summary>
+        /// Gets existing or creates new string reference identifier related to passed string value.
+        /// </summary>
+        /// <remarks>
+        /// Identifier is offset in strings table or just number from table of pre-defined constants.
+        /// </remarks>
+        /// <param name="value">String value for obtaining identifier.</param>
+        /// <returns>Existing identifier if string already in table or new one.</returns>
         public UInt16 GetOrCreateStringId(
             String value)
         {
@@ -33,6 +54,7 @@ namespace MFMetaDataProcessor
             return id;
         }
 
+        /// <inheritdoc/>
         public void Write(
             TinyBinaryWriter writer)
         {

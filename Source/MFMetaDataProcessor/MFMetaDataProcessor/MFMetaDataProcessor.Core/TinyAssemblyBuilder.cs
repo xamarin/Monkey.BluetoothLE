@@ -5,11 +5,26 @@ using Mono.Cecil;
 
 namespace MFMetaDataProcessor
 {
+    /// <summary>
+    /// Main metadata transformation class - builds .NET Micro Framework assebmly
+    /// from full .NET Framework assembly metadata represented in Mono.Cecil format.
+    /// </summary>
     public sealed class TinyAssemblyBuilder
     {
+        /// <summary>
+        /// Original assembly metadata in Mono.Cecil format.
+        /// </summary>
         private readonly AssemblyDefinition _assemblyDefinition;
+
+        /// <summary>
+        /// List of assembly attributes (by default filtered).
+        /// </summary>
         private readonly HashSet<String> _assemblyAttributes;
 
+        /// <summary>
+        /// Creates new instance of <see cref="TinyAssemblyBuilder"/> object.
+        /// </summary>
+        /// <param name="assemblyDefinition">Original assembly metadata in Mono.Cecil format.</param>
         public TinyAssemblyBuilder(
             AssemblyDefinition assemblyDefinition)
         {
@@ -22,6 +37,10 @@ namespace MFMetaDataProcessor
             _assemblyAttributes.Add("System.Reflection.AssemblyVersionAttribute");
         }
 
+        /// <summary>
+        /// Writes all .NET Micro Framework metadata into output stream.
+        /// </summary>
+        /// <param name="binaryWriter">Binary writer with correct endianness.</param>
         public void Write(
             TinyBinaryWriter binaryWriter)
         {

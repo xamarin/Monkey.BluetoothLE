@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace MFMetaDataProcessor
 {
+    /// <summary>
+    /// Helper class for calculating CRC32 value according IEEE 802 standard (ZModem protocol).
+    /// </summary>
     internal static class Crc32
     {
         //
@@ -45,6 +48,10 @@ namespace MFMetaDataProcessor
             0xAFB010B1, 0xAB710D06, 0xA6322BDF, 0xA2F33668, 0xBCB4666D, 0xB8757BDA, 0xB5365D03, 0xB1F740B4
         };
 
+        /// <summary>
+        /// Calculates CRC32 value for passsed byte array <paramref name="buffer"/> using
+        /// initial value of <paramref name="crc"/> parameter as base for CRC calculation.
+        /// </summary>
         public static UInt32 Compute(Byte[] buffer, UInt32 crc = 0)
         {
             return buffer.Aggregate(crc,
