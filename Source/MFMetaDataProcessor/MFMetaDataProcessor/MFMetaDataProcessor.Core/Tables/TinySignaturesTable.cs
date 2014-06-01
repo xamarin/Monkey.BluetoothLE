@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using Mono.Cecil;
 
-
+// TODO: implement this class according original C++ code
 namespace MFMetaDataProcessor
 {
     public sealed class TinySignaturesTable : ITinyTable
