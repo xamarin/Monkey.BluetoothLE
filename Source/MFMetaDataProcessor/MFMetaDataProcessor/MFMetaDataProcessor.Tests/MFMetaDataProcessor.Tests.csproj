@@ -49,6 +49,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Data\NetduinoGo\be\NetduinoGo.pe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\NetduinoGo\le\NetduinoGo.pe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\NetduinoOne\be\NetduinoOne.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -69,6 +75,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\NetduinoGo\NetduinoGo.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\NetduinoTwo\NetduinoTwo.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

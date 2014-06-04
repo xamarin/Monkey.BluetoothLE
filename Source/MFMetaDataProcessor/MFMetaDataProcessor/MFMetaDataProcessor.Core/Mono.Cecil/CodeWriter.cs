@@ -23,24 +23,40 @@ namespace MFMetaDataProcessor {
 	    private readonly TinyBinaryWriter _writer;
 
         /// <summary>
-        /// Methods references table (used for obtaining method reference id).
+        /// String literals table (used for obtaining string literal ID).
+        /// </summary>
+        private readonly TinyStringTable _stringTable;
+
+        /// <summary>
+        /// Methods references table (used for obtaining method reference ID).
         /// </summary>
         private readonly TinyMemberReferenceTable _methodReferenceTable;
+
+        /// <summary>
+        /// Methods definitions table (used for obtaining method reference ID).
+        /// </summary>
+        private readonly TinyMethodDefinitionTable _methodDefinitionTable;
 
         /// <summary>
         /// Creates new instance of <see cref="Mono.Cecil.Cil.CodeWriter"/> object.
         /// </summary>
         /// <param name="method">Original method body in Mono.Cecil format.</param>
         /// <param name="writer">Binary writer for writing byte code in correct endianess.</param>
+        /// <param name="stringTable">String references table (for obtaining string ID).</param>
         /// <param name="methodReferenceTable">External methods references table.</param>
-	    public CodeWriter(
+        /// <param name="methodDefinitionTable">Internal methods definition table.</param>
+        public CodeWriter(
 	        MethodDefinition method,
             TinyBinaryWriter writer,
-            TinyMemberReferenceTable methodReferenceTable)
+            TinyStringTable stringTable,
+            TinyMemberReferenceTable methodReferenceTable,
+            TinyMethodDefinitionTable methodDefinitionTable)
 	    {
 	        _writer = writer;
-	        _methodReferenceTable = methodReferenceTable;
-	        _body = method.Body;
+            _stringTable = stringTable;
+            _methodReferenceTable = methodReferenceTable;
+            _methodDefinitionTable = methodDefinitionTable;
+            _body = method.Body;
         }
 
         /// <summary>
@@ -63,21 +79,43 @@ namespace MFMetaDataProcessor {
 	    public static Byte CalculateStackSize(
 	        MethodBody methodBody)
 	    {
-            Console.WriteLine(methodBody.Method.FullName);
-	        Byte size = 0;
+            var size = 0;
+            var maxSize = 0;
 	        foreach (var instruction in methodBody.Instructions)
 	        {
-                Console.WriteLine(instruction.OpCode.StackBehaviourPush);
-                switch (instruction.OpCode.StackBehaviourPush)
+                // TODO: add stack reset condition here
+
+	            var diff = 0;
+	            switch (instruction.OpCode.StackBehaviourPush)
 	            {
 	                case StackBehaviour.Push1:
                     case StackBehaviour.Pushi:
-                        size += 1;
+                    case StackBehaviour.Pushi8:
+                    case StackBehaviour.Pushr4:
+                    case StackBehaviour.Pushr8:
+                    case StackBehaviour.Pushref:
+	                    diff += 1;
                         break;
 	            }
+
+                switch (instruction.OpCode.StackBehaviourPop)
+                {
+                    case StackBehaviour.Pop1:
+                    case StackBehaviour.Popi:
+                    case StackBehaviour.Popi_pop1:
+                    case StackBehaviour.Popi_popi8:
+                    case StackBehaviour.Popi_popr4:
+                    case StackBehaviour.Popi_popr8:
+                    case StackBehaviour.Popref:
+                        diff -= 1;
+                        break;
+                }
+
+	            size += diff;
+	            maxSize = Math.Max(maxSize, size);
 	        }
-            Console.WriteLine();
-	        return size;
+
+	        return (Byte)maxSize;
 	    }
 
 	    private void WriteOpCode (
@@ -166,22 +204,17 @@ namespace MFMetaDataProcessor {
                     _writer.WriteInt32((Int32)operand);
 		            break;
 		        case OperandType.InlineI8:
-                    // TODO: implement it later
-                    //_writer.WriteInt64((long)operand);
+                    _writer.WriteInt64((Int64)operand);
 		            break;
 		        case OperandType.ShortInlineR:
-                    // TODO: implement it later
-                    //_writer.WriteSingle((float)operand);
+                    _writer.WriteSingle((Single)operand);
 		            break;
 		        case OperandType.InlineR:
-                    // TODO: implement it later
-                    //_writer.WriteDouble((double)operand);
+                    _writer.WriteDouble((Double)operand);
 		            break;
 		        case OperandType.InlineString:
-		            WriteMetadataToken(
-		                new MetadataToken(
-		                    TokenType.String,
-		                    GetUserStringIndex((String) operand)));
+		            var stringReferenceId = _stringTable.GetOrCreateStringId((String) operand);
+                    _writer.WriteUInt16(stringReferenceId);
 		            break;
                 case OperandType.InlineMethod:
                     // TODO: implement it correctly!!!
@@ -190,6 +223,10 @@ namespace MFMetaDataProcessor {
 		            if (_methodReferenceTable.TryGetMethodReferenceId(methodReference, out referenceId))
 		            {
 		                referenceId |= 0x8000; // External method reference
+		            }
+		            else
+		            {
+		                _methodDefinitionTable.TryGetMethodReferenceId(methodReference.Resolve(), out referenceId);
 		            }
 
                     _writer.WriteUInt16(referenceId);
@@ -215,19 +252,6 @@ namespace MFMetaDataProcessor {
 			}
 
 			return instruction.Offset;
-		}
-
-		private UInt32 GetUserStringIndex (
-            String @string)
-		{
-		    if (@string == null)
-		    {
-                return 0;
-		    }
-
-            // TODO: implement this using TinyStringTalbe
-			// return metadata.user_string_heap.GetStringIndex (@string);
-		    return 0;
 		}
 
 		private static Int32 GetVariableIndex (

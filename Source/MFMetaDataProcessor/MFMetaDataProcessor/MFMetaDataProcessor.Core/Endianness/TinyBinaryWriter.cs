@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace MFMetaDataProcessor
@@ -15,6 +16,33 @@ namespace MFMetaDataProcessor
         private sealed class BigEndianBinaryWriter : TinyBinaryWriter
         {
             /// <summary>
+            /// Emulates C++ union using explicit fields layout (with same zero offset)
+            /// </summary>
+            [StructLayout(LayoutKind.Explicit)]
+            private struct BytesMappingHelper
+            {
+                [FieldOffset(0)]
+                public UInt16 uint16Value;
+
+                [FieldOffset(0)]
+                public UInt32 uint32Value;
+
+                [FieldOffset(0)]
+                public UInt64 uint64Value;
+
+                [FieldOffset(0)]
+                public Single singleValue;
+
+                [FieldOffset(0)]
+                public Double doubleValue;
+
+                [FieldOffset(0)]
+                public unsafe fixed Byte bytes[8];
+            }
+
+            private BytesMappingHelper _helper;
+
+            /// <summary>
             /// Creates new instance of <see cref="TinyBinaryWriter.BigEndianBinaryWriter"/> object.
             /// </summary>
             /// <param name="baseWriter">Base binary writer for operating on stream.</param>
@@ -25,19 +53,74 @@ namespace MFMetaDataProcessor
             }
 
             /// <inheritdoc/>
-            public override void WriteUInt16(UInt16 value)
+            public override unsafe void WriteUInt16(UInt16 value)
             {
-                _baseWriter.Write((Byte)(value >> 8));
-                _baseWriter.Write((Byte)(value & 0xFF));
+                _helper.uint16Value = value;
+                fixed (Byte* pBytes = _helper.bytes)
+                {
+                    _baseWriter.Write(pBytes[1]);
+                    _baseWriter.Write(pBytes[0]);
+                }
             }
 
             /// <inheritdoc/>
-            public override void WriteUInt32(UInt32 value)
+            public override unsafe void WriteUInt32(UInt32 value)
             {
-                _baseWriter.Write((Byte)(value >> 24));
-                _baseWriter.Write((Byte)((value >> 16) & 0xFF));
-                _baseWriter.Write((Byte)((value >> 8) & 0xFF));
-                _baseWriter.Write((Byte)(value & 0xFF));
+                _helper.uint32Value = value;
+                fixed (Byte* pBytes = _helper.bytes)
+                {
+                    _baseWriter.Write(pBytes[3]);
+                    _baseWriter.Write(pBytes[2]);
+                    _baseWriter.Write(pBytes[1]);
+                    _baseWriter.Write(pBytes[0]);
+                }
+            }
+
+            /// <inheritdoc/>
+            public override unsafe void WriteUInt64(UInt64 value)
+            {
+                _helper.uint64Value = value;
+                fixed (Byte* pBytes = _helper.bytes)
+                {
+                    _baseWriter.Write(pBytes[7]);
+                    _baseWriter.Write(pBytes[6]);
+                    _baseWriter.Write(pBytes[5]);
+                    _baseWriter.Write(pBytes[4]);
+                    _baseWriter.Write(pBytes[3]);
+                    _baseWriter.Write(pBytes[2]);
+                    _baseWriter.Write(pBytes[1]);
+                    _baseWriter.Write(pBytes[0]);
+                }
+            }
+
+            /// <inheritdoc/>
+            public override unsafe void WriteSingle(Single value)
+            {
+                _helper.singleValue = value;
+                fixed (Byte* pBytes = _helper.bytes)
+                {
+                    _baseWriter.Write(pBytes[3]);
+                    _baseWriter.Write(pBytes[2]);
+                    _baseWriter.Write(pBytes[1]);
+                    _baseWriter.Write(pBytes[0]);
+                }
+            }
+
+            /// <inheritdoc/>
+            public override unsafe void WriteDouble(Double value)
+            {
+                _helper.doubleValue = value;
+                fixed (Byte* pBytes = _helper.bytes)
+                {
+                    _baseWriter.Write(pBytes[7]);
+                    _baseWriter.Write(pBytes[6]);
+                    _baseWriter.Write(pBytes[5]);
+                    _baseWriter.Write(pBytes[4]);
+                    _baseWriter.Write(pBytes[3]);
+                    _baseWriter.Write(pBytes[2]);
+                    _baseWriter.Write(pBytes[1]);
+                    _baseWriter.Write(pBytes[0]);
+                }
             }
 
             /// <inheritdoc/>
@@ -71,6 +154,24 @@ namespace MFMetaDataProcessor
 
             /// <inheritdoc/>
             public override void WriteUInt32(UInt32 value)
+            {
+                _baseWriter.Write(value);
+            }
+
+            /// <inheritdoc/>
+            public override void WriteUInt64(UInt64 value)
+            {
+                _baseWriter.Write(value);
+            }
+
+            /// <inheritdoc/>
+            public override void WriteSingle(Single value)
+            {
+                _baseWriter.Write(value);
+            }
+
+            /// <inheritdoc/>
+            public override void WriteDouble(Double value)
             {
                 _baseWriter.Write(value);
             }
@@ -192,6 +293,11 @@ namespace MFMetaDataProcessor
             WriteUInt32((UInt32)value);
         }
 
+        public void WriteInt64(Int64 value)
+        {
+            WriteUInt64((UInt64)value);
+        }
+
         /// <summary>
         /// Write single unsigned word into underying stream.
         /// </summary>
@@ -203,6 +309,24 @@ namespace MFMetaDataProcessor
         /// </summary>
         /// <param name="value">Unsigned double word value for writing.</param>
         public abstract void WriteUInt32(UInt32 value);
+
+        /// <summary>
+        /// Write single signed quad word into underying stream.
+        /// </summary>
+        /// <param name="value">Unsigned quad word value for writing.</param>
+        public abstract void WriteUInt64(UInt64 value);
+
+        /// <summary>
+        /// Write single floating point value (4 bytes) into underying stream.
+        /// </summary>
+        /// <param name="value">Floating point value for writing.</param>
+        public abstract void WriteSingle(Single value);
+
+        /// <summary>
+        /// Write single floating point value (8 bytes) into underying stream.
+        /// </summary>
+        /// <param name="value">Floating point value for writing.</param>
+        public abstract void WriteDouble(Double value);
 
         /// <summary>
         /// Creates new instance of <see cref="TinyBinaryWriter"/> object with same endiannes

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Mono.Cecil;
@@ -23,9 +24,16 @@ namespace MFMetaDataProcessor
         private readonly TinyBinaryWriter _writer;
 
         /// <summary>
+        /// String literals table (used for obtaining string literal ID).
+        /// </summary>
+        private readonly TinyStringTable _stringTable;
+
+        /// <summary>
         /// Methods references table (used for obtaining method reference id).
         /// </summary>
         private readonly TinyMemberReferenceTable _methodReferenceTable;
+
+        private readonly TinyMethodDefinitionTable _methodDefinitionTable;
 
         /// <summary>
         /// Maps method bodies (in form of byte array) to method identifiers.
@@ -49,15 +57,34 @@ namespace MFMetaDataProcessor
         /// </summary>
         /// <param name="nativeMethodsCrc">Helper class for native methods CRC.</param>
         /// <param name="writer">Binary writer for writing byte code in correct endianess.</param>
+        /// <param name="stringTable">String references table (for obtaining string ID).</param>
         /// <param name="methodReferenceTable">External methods references table.</param>
+        /// <param name="signaturesTable">Methods and fields signatures table.</param>
+        /// <param name="methodsDefinitions">Methods defintions list in Mono.Cecil format.</param>
         public TinyByteCodeTable(
             NativeMethodsCrc nativeMethodsCrc,
             TinyBinaryWriter writer,
-            TinyMemberReferenceTable methodReferenceTable)
+            TinyStringTable stringTable,
+            TinyMemberReferenceTable methodReferenceTable,
+            TinySignaturesTable signaturesTable,
+            IEnumerable<MethodDefinition> methodsDefinitions)
         {
             _nativeMethodsCrc = nativeMethodsCrc;
             _writer = writer;
+            _stringTable = stringTable;
             _methodReferenceTable = methodReferenceTable;
+
+            _methodDefinitionTable = new TinyMethodDefinitionTable(
+                methodsDefinitions, stringTable, this, signaturesTable);;
+        }
+
+        /// <summary>
+        /// Gets instance of <see cref="TinyMethodDefinitionTable"/> object.
+        /// </summary>
+        public TinyMethodDefinitionTable MethodDefinitionTable
+        {
+            [DebuggerStepThrough]
+            get { return _methodDefinitionTable; }
         }
 
         /// <summary>
@@ -114,7 +141,7 @@ namespace MFMetaDataProcessor
             {
                 var writer = new  CodeWriter(
                     method, _writer.GetMemoryBasedClone(stream),
-                    _methodReferenceTable);
+                    _stringTable, _methodReferenceTable, MethodDefinitionTable);
                 writer.WriteMethodBody();
                 return stream.ToArray();
             }
