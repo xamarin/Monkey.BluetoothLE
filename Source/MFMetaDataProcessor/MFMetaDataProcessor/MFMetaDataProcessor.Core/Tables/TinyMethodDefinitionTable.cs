@@ -9,8 +9,27 @@ namespace MFMetaDataProcessor
     /// this collected list into target assembly in .NET Micro Framework format.
     /// </summary>
     public sealed class TinyMethodDefinitionTable :
-        TinySimpleListTableBase<MethodDefinition>
+        TinyReferenceTableBase<MethodDefinition>
     {
+        /// <summary>
+        /// Helper class for comparing two instances of <see cref="MethodDefinition"/> objects
+        /// using <see cref="MethodDefinition.FullName"/> property as unique key for comparison.
+        /// </summary>
+        private sealed class MethodDefinitionComparer : IEqualityComparer<MethodDefinition>
+        {
+            /// <inheritdoc/>
+            public Boolean Equals(MethodDefinition lhs, MethodDefinition rhs)
+            {
+                return String.Equals(lhs.FullName, rhs.FullName, StringComparison.Ordinal);
+            }
+
+            /// <inheritdoc/>
+            public Int32 GetHashCode(MethodDefinition that)
+            {
+                return that.FullName.GetHashCode();
+            }
+        }
+
         /// <summary>
         /// Byte code table for obtaining byte code identifiers and RVAs.
         /// </summary>
@@ -33,10 +52,23 @@ namespace MFMetaDataProcessor
             TinyStringTable stringTable,
             TinyByteCodeTable byteCodeTable,
             TinySignaturesTable signatures)
-            :base(items, stringTable)
+            :base(items, new MethodDefinitionComparer(), stringTable)
         {
             _byteCodeTable = byteCodeTable;
             _signatures = signatures;
+        }
+
+        /// <summary>
+        /// Gets method reference identifier (if method is defined inside target assembly).
+        /// </summary>
+        /// <param name="methodDefinition">Method definition in Mono.Cecil format.</param>
+        /// <param name="referenceId">Method definition reference identifier for filling.</param>
+        /// <returns>Returns <c>true</c> if item found, overwise returns <c>false</c>.</returns>
+        public Boolean TryGetMethodReferenceId(
+            MethodDefinition methodDefinition,
+            out UInt16 referenceId)
+        {
+            return TryGetIdByValue(methodDefinition, out referenceId);
         }
 
         /// <inheritdoc/>
@@ -59,8 +91,9 @@ namespace MFMetaDataProcessor
             writer.WriteByte((Byte)item.Body.Variables.Count);
             writer.WriteByte(CodeWriter.CalculateStackSize(item.Body));
 
-            writer.WriteUInt16(0xFFFF); // locals
-            writer.WriteUInt16(_signatures.GetOrCreateSignatureId(item));
+            var methodSignature = _signatures.GetOrCreateSignatureId(item);
+            writer.WriteUInt16(_signatures.GetOrCreateSignatureId(item.Body.Variables));
+            writer.WriteUInt16(methodSignature);
         }
 
         private UInt32 GetFlags(

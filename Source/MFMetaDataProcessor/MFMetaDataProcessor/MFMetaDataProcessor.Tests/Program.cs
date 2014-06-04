@@ -10,7 +10,8 @@ namespace MFMetaDataProcessor.Tests
         {
             TestSingleAssembly("NetduinoOne");
             TestSingleAssembly("NetduinoTwo");
-        }
+            TestSingleAssembly("NetduinoGo");
+         }
 
         private static void TestSingleAssembly(String name)
         {

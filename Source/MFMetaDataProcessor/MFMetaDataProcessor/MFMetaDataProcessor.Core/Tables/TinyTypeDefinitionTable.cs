@@ -114,6 +114,12 @@ namespace MFMetaDataProcessor
             Collection<MethodDefinition> methods,
             TinyBinaryWriter writer)
         {
+            // We should populate methods names in string table before writing method bodies
+            foreach (var method in methods)
+            {
+                GetOrCreateStringId(method.Name);
+            }
+
             UInt16 firstMethodId = 0;
             var virtualMethodsNumber = 0;
             foreach (var method in methods.Where(item => item.IsVirtual))

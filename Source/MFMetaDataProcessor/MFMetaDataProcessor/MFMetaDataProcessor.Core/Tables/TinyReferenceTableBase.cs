@@ -61,7 +61,18 @@ namespace MFMetaDataProcessor
             TinyBinaryWriter writer,
             String value)
         {
-            writer.WriteUInt16(_stringTable.GetOrCreateStringId(value));
+            writer.WriteUInt16(GetOrCreateStringId(value));
+        }
+
+        /// <summary>
+        /// Gets existing or creates new string reference ID for provided string value.
+        /// </summary>
+        /// <param name="value">String value for lookup in string literals table.</param>
+        /// <returns>String reference ID which can be used for filling metadata and byte code.</returns>
+        protected UInt16 GetOrCreateStringId(
+            String value)
+        {
+            return _stringTable.GetOrCreateStringId(value);
         }
 
         /// <summary>

@@ -56,7 +56,7 @@ namespace MFMetaDataProcessor
                 var tableBegin = (binaryWriter.BaseStream.Position + 3) & 0xFFFFFFFC;
                 table.Write(binaryWriter);
 
-                var padding = (binaryWriter.BaseStream.Position - tableBegin) & 0x3;
+                var padding = (4 - ((binaryWriter.BaseStream.Position - tableBegin) % 4)) % 4;
                 binaryWriter.WriteBytes(new Byte[padding]);
 
                 header.UpdateTableOffset(binaryWriter, tableBegin, padding);
@@ -108,9 +108,13 @@ namespace MFMetaDataProcessor
 
             yield return methodReferenceTable;
 
-            var byteCodeTable = new TinyByteCodeTable(nativeMethodsCrc, writer, methodReferenceTable);
+            var byteCodeTable = new TinyByteCodeTable(
+                nativeMethodsCrc, writer, stringTable,
+                methodReferenceTable, signaturesTable,
+                types.SelectMany(item => item.Methods.OrderBy(method => method.Name)));
 
-            yield return new TinyTypeDefinitionTable(types, stringTable, byteCodeTable, typeRef);
+            yield return new TinyTypeDefinitionTable(
+                types, stringTable, byteCodeTable, typeRef);
 
             yield return new TinyFieldDefinitionTable(
                 // TODO: sort fields according FieldDef logic ?
@@ -118,12 +122,7 @@ namespace MFMetaDataProcessor
                 stringTable,
                 signaturesTable);
 
-            yield return new TinyMethodDefinitionTable(
-                // TODO: sort methods according FieldDef logic ?
-                types.SelectMany(item => item.Methods.OrderBy(method => method.Name)),
-                stringTable,
-                byteCodeTable,
-                signaturesTable);
+            yield return byteCodeTable.MethodDefinitionTable;
 
             yield return TinyEmptyTable.Instance; // Attributes
             yield return TinyEmptyTable.Instance; // TypeSpec
