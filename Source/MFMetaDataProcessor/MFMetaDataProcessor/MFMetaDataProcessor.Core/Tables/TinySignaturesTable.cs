@@ -33,6 +33,30 @@ namespace MFMetaDataProcessor
             }
         }
 
+        private static readonly IDictionary<String, TinyDataType> _primitiveTypes =
+            new Dictionary<String, TinyDataType>(StringComparer.Ordinal);
+
+        static TinySignaturesTable()
+        {
+            _primitiveTypes.Add(typeof(void).FullName, TinyDataType.DATATYPE_VOID);
+
+            _primitiveTypes.Add(typeof(SByte).FullName, TinyDataType.DATATYPE_I1);
+            _primitiveTypes.Add(typeof(Int16).FullName, TinyDataType.DATATYPE_I2);
+            _primitiveTypes.Add(typeof(Int32).FullName, TinyDataType.DATATYPE_I4);
+            _primitiveTypes.Add(typeof(Int64).FullName, TinyDataType.DATATYPE_I8);
+
+            _primitiveTypes.Add(typeof(Byte).FullName, TinyDataType.DATATYPE_U1);
+            _primitiveTypes.Add(typeof(UInt16).FullName, TinyDataType.DATATYPE_U2);
+            _primitiveTypes.Add(typeof(UInt32).FullName, TinyDataType.DATATYPE_U4);
+            _primitiveTypes.Add(typeof(UInt64).FullName, TinyDataType.DATATYPE_U8);
+
+            _primitiveTypes.Add(typeof(Single).FullName, TinyDataType.DATATYPE_R4);
+            _primitiveTypes.Add(typeof(Double).FullName, TinyDataType.DATATYPE_R8);
+
+            _primitiveTypes.Add(typeof(String).FullName, TinyDataType.DATATYPE_STRING);
+            _primitiveTypes.Add(typeof(Boolean).FullName, TinyDataType.DATATYPE_BOOLEAN);
+        }
+
         /// <summary>
         /// Stores list of unique signatures and corresspoinding identifiers.
         /// </summary>
@@ -43,6 +67,14 @@ namespace MFMetaDataProcessor
         /// Last available signature id (offset in resulting table).
         /// </summary>
         private UInt16 _lastAvailableId;
+
+        private TinyTypeDefinitionTable _typeDefinitionTable;
+
+        internal void SetTypeDefinitionTable(
+            TinyTypeDefinitionTable typeDefinitionTable)
+        {
+            _typeDefinitionTable = typeDefinitionTable;
+        }
 
         /// <summary>
         /// Gets existing or creates new singature identifier for method definition.
@@ -61,7 +93,7 @@ namespace MFMetaDataProcessor
         public UInt16 GetOrCreateSignatureId(
             FieldDefinition fieldDefinition)
         {
-            return 0xFFFF; // TODO: implement logic here
+            return GetOrCreateSignatureId(GetSignature(fieldDefinition.FieldType));
         }
 
         /// <summary>
@@ -95,6 +127,47 @@ namespace MFMetaDataProcessor
             return GetOrCreateSignatureId(GetSignature(variables));
         }
 
+        public void WriteDataType(
+            TypeReference typeDefinition,
+            TinyBinaryWriter writer,
+            Boolean alsoWriteSubType = false)
+        {
+            TinyDataType dataType;
+            if (_primitiveTypes.TryGetValue(typeDefinition.FullName, out dataType))
+            {
+                writer.WriteByte((Byte)dataType);
+                return;
+            }
+
+            if (typeDefinition.MetadataType == MetadataType.Class)
+            {
+                writer.WriteByte((Byte)TinyDataType.DATATYPE_CLASS);
+                if (alsoWriteSubType)
+                {
+                    // TODO: process type reference and type specs here too
+                    UInt16 referenceId;
+                    if (_typeDefinitionTable.TryGetTypeReferenceId(
+                        typeDefinition.Resolve(), out referenceId))
+                    {
+                        writer.WriteMetadataToken((UInt32)referenceId << 2);
+                    }
+                }
+                return;
+            }
+
+            if (typeDefinition.IsArray)
+            {
+                writer.WriteByte((Byte)TinyDataType.DATATYPE_SZARRAY);
+
+                var array = (ArrayType)typeDefinition;
+                WriteDataType(array.ElementType, writer, alsoWriteSubType);
+                return;
+            }
+
+            // TODO: implement full checking
+            writer.WriteByte(0x00);
+        }
+            
         /// <inheritdoc/>
         public void Write(
             TinyBinaryWriter writer)
@@ -113,14 +186,15 @@ namespace MFMetaDataProcessor
             using (var buffer = new MemoryStream())
             using (var writer = new BinaryWriter(buffer)) // Only Write(Byte) will be used
             {
-                writer.Write((Byte)(methodDefinition.Name == ".ctor" ? 0x20 : 0x00)); // TODO: remove this workaround
+                var binaryWriter = TinyBinaryWriter.CreateBigEndianBinaryWriter(writer);
+                writer.Write((Byte)(methodDefinition.HasThis ? 0x20 : 0x00)); // TODO: Extract method
 
                 writer.Write((Byte)(methodDefinition.Parameters.Count));
 
-                WriteTypeInfo(methodDefinition.ReturnType, writer);
+                WriteTypeInfo(methodDefinition.ReturnType, binaryWriter);
                 foreach (var parameter in methodDefinition.Parameters)
                 {
-                    WriteTypeInfo(parameter.ParameterType, writer);
+                    WriteTypeInfo(parameter.ParameterType, binaryWriter);
                 }
 
                 return buffer.ToArray();
@@ -133,10 +207,26 @@ namespace MFMetaDataProcessor
             using (var buffer = new MemoryStream())
             using (var writer = new BinaryWriter(buffer)) // Only Write(Byte) will be used
             {
+                var binaryWriter = TinyBinaryWriter.CreateBigEndianBinaryWriter(writer);
                 foreach (var variable in variables)
                 {
-                    WriteTypeInfo(variable.VariableType, writer);
+                    WriteTypeInfo(variable.VariableType, binaryWriter);
                 }
+
+                return buffer.ToArray();
+            }
+        }
+
+        private Byte[] GetSignature(
+            TypeReference typeReference)
+        {
+            using (var buffer = new MemoryStream())
+            using (var writer = new BinaryWriter(buffer)) // Only Write(Byte) will be used
+            {
+                var binaryWriter = TinyBinaryWriter.CreateBigEndianBinaryWriter(writer);
+                
+                writer.Write((Byte)0x06); // Field signature prefix
+                WriteTypeInfo(typeReference, binaryWriter);
 
                 return buffer.ToArray();
             }
@@ -151,6 +241,16 @@ namespace MFMetaDataProcessor
                 return id;
             }
 
+            // TODO: add caching for overlapped signatures and make this algorithm more effective
+            var fullSignatures = GetFullSignaturesArray();
+            for (var i = 0; i < fullSignatures.Length - signature.Length; ++i)
+            {
+                if (signature.SequenceEqual(fullSignatures.Skip(i).Take(signature.Length)))
+                {
+                    return (UInt16)i;
+                }
+            }
+
             id = _lastAvailableId;
             _idsBySignatures.Add(signature, id);
             _lastAvailableId += (UInt16)signature.Length;
@@ -160,16 +260,28 @@ namespace MFMetaDataProcessor
 
         private void WriteTypeInfo(
             TypeReference typeReference,
-            BinaryWriter writer)
+            TinyBinaryWriter writer)
         {
             if (typeReference.IsOptionalModifier)
             {
-                writer.Write(0); // OpTypeModifier ???
+                writer.WriteByte(0); // OpTypeModifier ???
             }
 
-            writer.Write(TinyDataTypeConvertor.GetDataType(typeReference.Resolve()));
+            WriteDataType(typeReference, writer, true);
+        }
 
-            // TODO: write sub-types for some elements
+        private Byte[] GetFullSignaturesArray()
+        {
+            return _idsBySignatures
+                .OrderBy(item => item.Value)
+                .Select(item => item.Key)
+                .Aggregate(new List<Byte>(),
+                    (current, item) =>
+                    {
+                        current.AddRange(item);
+                        return current;
+                    })
+                .ToArray();
         }
     }
 }

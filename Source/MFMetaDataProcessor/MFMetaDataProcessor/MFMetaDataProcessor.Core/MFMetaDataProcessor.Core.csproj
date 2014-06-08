@@ -39,7 +39,6 @@
     <Compile Include="Endianness\TinyBinaryWriter.cs" />
     <Compile Include="Mono.Cecil\CodeWriter.cs" />
     <Compile Include="Tables\TinyReferenceTableBase.cs" />
-    <Compile Include="Tables\TinySimpleListTableBase.cs" />
     <Compile Include="Utility\Crc32.cs" />
     <Compile Include="ITinyTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -48,7 +47,6 @@
     <Compile Include="Tables\TinyAssemblyReferenceTable.cs" />
     <Compile Include="Utility\NativeMethodsCrc.cs" />
     <Compile Include="Utility\TinyDataType.cs" />
-    <Compile Include="Utility\TinyDataTypeConvertor.cs" />
     <Compile Include="Tables\TinyEmptyTable.cs" />
     <Compile Include="Tables\TinyFieldDefinitionTable.cs" />
     <Compile Include="Tables\TinyMemberReferenceTable.cs" />

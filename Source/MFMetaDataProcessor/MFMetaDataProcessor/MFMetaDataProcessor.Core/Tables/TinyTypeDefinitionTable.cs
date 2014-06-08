@@ -43,6 +43,16 @@ namespace MFMetaDataProcessor
         private readonly TinyTypeReferenceTable _typeReferences;
 
         /// <summary>
+        /// Signatures table (for obtaining signature ID).
+        /// </summary>
+        private readonly TinySignaturesTable _signaturesTable;
+
+        /// <summary>
+        /// Fields definitions table (for field definition ID).
+        /// </summary>
+        private readonly TinyFieldDefinitionTable _fieldsTable;
+
+        /// <summary>
         /// Creates new instance of <see cref="TinyTypeDefinitionTable"/> object.
         /// </summary>
         /// <param name="items">List of types definitins in Mono.Cecil format.</param>
@@ -51,15 +61,24 @@ namespace MFMetaDataProcessor
         /// <param name="typeReferences">
         /// External type references table (for obtaining type reference ID).
         /// </param>
+        /// <param name="signaturesTable">Signatures table (for obtaining signature ID).</param>
+        /// <param name="fieldsTable">Fields definitions table (for field definition ID).</param>
         public TinyTypeDefinitionTable(
             IEnumerable<TypeDefinition> items,
             TinyStringTable stringTable,
             TinyByteCodeTable byteCodeTable,
-            TinyTypeReferenceTable typeReferences)
+            TinyTypeReferenceTable typeReferences,
+            TinySignaturesTable signaturesTable,
+            TinyFieldDefinitionTable fieldsTable)
             : base(items, new TypeDefinitionEqualityComparer(), stringTable)
         {
             _byteCodeTable = byteCodeTable;
             _typeReferences = typeReferences;
+            _signaturesTable = signaturesTable;
+            _fieldsTable = fieldsTable;
+
+            _signaturesTable.SetTypeDefinitionTable(this);
+            _byteCodeTable.SetTypeDefinitionTable(this);
         }
 
         /// <summary>
@@ -95,19 +114,62 @@ namespace MFMetaDataProcessor
             writer.WriteUInt16(GetTypeReferenceOrDefinitionId(item.BaseType));
             writer.WriteUInt16(GetTypeReferenceOrDefinitionId(item.DeclaringType));
 
-            writer.WriteUInt16(0xFFFF); // TODO: write signature here
+            if (item.HasInterfaces)
+            {
+                writer.WriteUInt16(0x0009); // TODO: write real signature here
+            }
+            else
+            {
+                writer.WriteUInt16(0xFFFF);
+            }
+
+            foreach (var field in item.Fields)
+            {
+                _signaturesTable.GetOrCreateSignatureId(field);
+            }
 
             WriteMethodBodies(item.Methods, writer);
 
-            writer.WriteByte(TinyDataTypeConvertor.GetDataType(item));
+            _signaturesTable.WriteDataType(item, writer);
 
-            writer.WriteUInt16(0); // first instance field in fields table
-            writer.WriteUInt16(0); // first static field in fields table
-
-            writer.WriteByte((Byte)item.Fields.Count(field => field.IsStatic));
-            writer.WriteByte((Byte)item.Fields.Count(field => !field.IsStatic));
+            WriteClassFields(item.Fields, writer);
 
             writer.WriteUInt16(GetFlags(item)); // flags
+        }
+
+        private void WriteClassFields(
+            Collection<FieldDefinition> fields,
+            TinyBinaryWriter writer)
+        {
+            UInt16 firstInstanceFieldId = 0xFFFF;
+            var instanceFieldsNumber = 0;
+            foreach (var field in fields.Where(item => !item.IsStatic))
+            {
+                UInt16 fieldReferenceId;
+                _fieldsTable.TryGetFieldReferenceId(field, out fieldReferenceId);
+                firstInstanceFieldId = Math.Min(firstInstanceFieldId, fieldReferenceId);
+
+                _signaturesTable.GetOrCreateSignatureId(field);
+                ++instanceFieldsNumber;
+            }
+
+            UInt16 firstStaticFieldId = 0xFFFF;
+            var staticFieldsNumber = 0;
+            foreach (var field in fields.Where(item => item.IsStatic))
+            {
+                UInt16 fieldReferenceId;
+                _fieldsTable.TryGetFieldReferenceId(field, out fieldReferenceId);
+                firstStaticFieldId = Math.Min(firstStaticFieldId, fieldReferenceId);
+
+                _signaturesTable.GetOrCreateSignatureId(field);
+                ++staticFieldsNumber;
+            }
+
+            writer.WriteUInt16(instanceFieldsNumber == 0 ? (UInt16)0x0000 : firstInstanceFieldId);
+            writer.WriteUInt16(staticFieldsNumber == 0 ? (UInt16)0x0000 : firstInstanceFieldId);
+
+            writer.WriteByte((Byte) staticFieldsNumber);
+            writer.WriteByte((Byte) instanceFieldsNumber);
         }
 
         private void WriteMethodBodies(
@@ -120,11 +182,12 @@ namespace MFMetaDataProcessor
                 GetOrCreateStringId(method.Name);
             }
 
-            UInt16 firstMethodId = 0;
+            UInt16 firstMethodId = 0xFFFF;
             var virtualMethodsNumber = 0;
             foreach (var method in methods.Where(item => item.IsVirtual))
             {
                 firstMethodId = Math.Min(firstMethodId, _byteCodeTable.GetMethodId(method));
+                CreateMethodSignatures(method);
                 ++virtualMethodsNumber;
             }
 
@@ -132,6 +195,7 @@ namespace MFMetaDataProcessor
             foreach (var method in methods.Where(item => !(item.IsVirtual || item.IsStatic)))
             {
                 firstMethodId = Math.Min(firstMethodId, _byteCodeTable.GetMethodId(method));
+                CreateMethodSignatures(method);
                 ++instanceMethodsNumber;
             }
 
@@ -139,7 +203,13 @@ namespace MFMetaDataProcessor
             foreach (var method in methods.Where(item => item.IsStatic))
             {
                 firstMethodId = Math.Min(firstMethodId, _byteCodeTable.GetMethodId(method));
+                CreateMethodSignatures(method);
                 ++staticMethodsNumber;
+            }
+
+            if (virtualMethodsNumber + instanceMethodsNumber + staticMethodsNumber == 0)
+            {
+                firstMethodId = 0x0000;
             }
 
             writer.WriteUInt16(firstMethodId);
@@ -147,6 +217,16 @@ namespace MFMetaDataProcessor
             writer.WriteByte((Byte)virtualMethodsNumber);
             writer.WriteByte((Byte)instanceMethodsNumber);
             writer.WriteByte((Byte)staticMethodsNumber);
+        }
+
+        private void CreateMethodSignatures(
+            MethodDefinition method)
+        {
+            _signaturesTable.GetOrCreateSignatureId(method);
+            if (method.HasBody)
+            {
+                _signaturesTable.GetOrCreateSignatureId(method.Body.Variables);
+            }
         }
 
         private UInt16 GetTypeReferenceOrDefinitionId(

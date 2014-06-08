@@ -80,47 +80,51 @@ namespace MFMetaDataProcessor
                 .Where(item => !IsAttribute(item) )
                 .ToList();
 
-            var typeRef = new TinyTypeReferenceTable(typeReferences, assemblyRef, stringTable);
+            var typeReferenceTable = new TinyTypeReferenceTable(
+                typeReferences, assemblyRef, stringTable);
 
             var memberReferences = mainModule.GetMemberReferences()
                 .Where(item => !item.DeclaringType.Name.EndsWith("Attribute")) // TODO: remove this workaround!!!
                 .ToList();
 
             var types = mainModule.GetTypes()
-                .Where(item => item.BaseType != null) // TODO: remove this workaround!!!
+                .Where(item => item.FullName != "<Module>") // TODO: How to do it correctly ???
                 .ToList();
 
             yield return assemblyRef;
 
-            yield return typeRef;
+            yield return typeReferenceTable;
 
             yield return new TinyMemberReferenceTable(
                 memberReferences.OfType<FieldReference>(),
                 stringTable,
                 signaturesTable,
-                typeRef);
+                typeReferenceTable);
 
             var methodReferenceTable = new TinyMemberReferenceTable(
                 memberReferences.OfType<MethodReference>(),
                 stringTable,
                 signaturesTable,
-                typeRef);
+                typeReferenceTable);
 
             yield return methodReferenceTable;
 
             var byteCodeTable = new TinyByteCodeTable(
                 nativeMethodsCrc, writer, stringTable,
                 methodReferenceTable, signaturesTable,
-                types.SelectMany(item => item.Methods.OrderBy(method => method.Name)));
+                typeReferenceTable,
+                types.SelectMany(item => GetOrderedMethods(item.Methods)));
 
-            yield return new TinyTypeDefinitionTable(
-                types, stringTable, byteCodeTable, typeRef);
-
-            yield return new TinyFieldDefinitionTable(
-                // TODO: sort fields according FieldDef logic ?
-                types.SelectMany(item => item.Fields.OrderBy(field => field.Name)),
+            var fieldsTable = new TinyFieldDefinitionTable(
+                types.SelectMany(item => GetOrderedFields(item.Fields)),
                 stringTable,
                 signaturesTable);
+
+            yield return new TinyTypeDefinitionTable(
+                types, stringTable, byteCodeTable, typeReferenceTable, signaturesTable,
+                fieldsTable);
+
+            yield return fieldsTable;
 
             yield return byteCodeTable.MethodDefinitionTable;
 
@@ -145,6 +149,43 @@ namespace MFMetaDataProcessor
             return _assemblyAttributes.Contains(typeReference.FullName) || 
                 (typeReference.DeclaringType != null &&
                     _assemblyAttributes.Contains(typeReference.DeclaringType.FullName));
+        }
+
+        private IEnumerable<MethodDefinition> GetOrderedMethods(
+            IEnumerable<MethodDefinition> methods)
+        {
+            var ordered = methods.OrderBy(item => item.FullName).ToList();
+
+            foreach (var method in ordered.Where(item => item.IsVirtual))
+            {
+                yield return method;
+            }
+
+            foreach (var method in ordered.Where(item => !(item.IsVirtual || item.IsStatic)))
+            {
+                yield return method;
+            }
+
+            foreach (var method in ordered.Where(item => item.IsStatic))
+            {
+                yield return method;
+            }
+        }
+
+        private IEnumerable<FieldDefinition> GetOrderedFields(
+            IEnumerable<FieldDefinition> fields)
+        {
+            var ordered = fields.OrderBy(item => item.FullName).ToList();
+
+            foreach (var method in ordered.Where(item => !item.IsStatic))
+            {
+                yield return method;
+            }
+
+            foreach (var method in ordered.Where(item => item.IsStatic))
+            {
+                yield return method;
+            }
         }
     }
 }
