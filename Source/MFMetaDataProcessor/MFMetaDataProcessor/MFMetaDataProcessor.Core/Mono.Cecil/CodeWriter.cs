@@ -38,6 +38,16 @@ namespace MFMetaDataProcessor {
         private readonly TinyMethodDefinitionTable _methodDefinitionTable;
 
         /// <summary>
+        /// Type references table (used for obtaining type reference ID).
+        /// </summary>
+        private readonly TinyTypeReferenceTable _typeReferenceTable;
+
+        /// <summary>
+        /// Type definitions table (used for obtaining type definition ID).
+        /// </summary>
+        private readonly TinyTypeDefinitionTable _typeDefinitionTable;
+
+        /// <summary>
         /// Creates new instance of <see cref="Mono.Cecil.Cil.CodeWriter"/> object.
         /// </summary>
         /// <param name="method">Original method body in Mono.Cecil format.</param>
@@ -45,17 +55,23 @@ namespace MFMetaDataProcessor {
         /// <param name="stringTable">String references table (for obtaining string ID).</param>
         /// <param name="methodReferenceTable">External methods references table.</param>
         /// <param name="methodDefinitionTable">Internal methods definition table.</param>
+        /// <param name="typeReferenceTable">External types references table.</param>
+        /// <param name="typeDefinitionTable">Internal types definitions table.</param>
         public CodeWriter(
 	        MethodDefinition method,
             TinyBinaryWriter writer,
             TinyStringTable stringTable,
             TinyMemberReferenceTable methodReferenceTable,
-            TinyMethodDefinitionTable methodDefinitionTable)
+            TinyMethodDefinitionTable methodDefinitionTable,
+            TinyTypeReferenceTable typeReferenceTable,
+            TinyTypeDefinitionTable typeDefinitionTable)
 	    {
 	        _writer = writer;
             _stringTable = stringTable;
             _methodReferenceTable = methodReferenceTable;
             _methodDefinitionTable = methodDefinitionTable;
+            _typeReferenceTable = typeReferenceTable;
+            _typeDefinitionTable = typeDefinitionTable;
             _body = method.Body;
         }
 
@@ -64,11 +80,15 @@ namespace MFMetaDataProcessor {
         /// </summary>
         public void WriteMethodBody()
         {
+            CorrectInstructionsOffsets();
+
             foreach (var instruction in _body.Instructions)
             {
                 WriteOpCode(instruction.OpCode);
                 WriteOperand(instruction);
             }
+
+            WriteExceptionsTable();
         }
 
         /// <summary>
@@ -79,44 +99,142 @@ namespace MFMetaDataProcessor {
 	    public static Byte CalculateStackSize(
 	        MethodBody methodBody)
 	    {
+            if (methodBody == null)
+            {
+                return 0;
+            }
+
             var size = 0;
             var maxSize = 0;
 	        foreach (var instruction in methodBody.Instructions)
 	        {
-                // TODO: add stack reset condition here
-
-	            var diff = 0;
-	            switch (instruction.OpCode.StackBehaviourPush)
+	            switch (instruction.OpCode.Code)
 	            {
-	                case StackBehaviour.Push1:
-                    case StackBehaviour.Pushi:
-                    case StackBehaviour.Pushi8:
-                    case StackBehaviour.Pushr4:
-                    case StackBehaviour.Pushr8:
-                    case StackBehaviour.Pushref:
-	                    diff += 1;
+                    case Code.Throw:
+                    case Code.Endfinally:
+                    case Code.Endfilter:
+                    case Code.Leave_S:
+                    case Code.Leave:
+                        size = 0;
+                        continue;
+                    case Code.Call:
+	                    var method = (MethodReference) instruction.Operand;
+	                    if (method.HasThis)
+	                    {
+	                        --size;
+	                    }
+	                    size -= method.Parameters.Count;
+                        // TODO: place return value into stack
                         break;
 	            }
 
-                switch (instruction.OpCode.StackBehaviourPop)
-                {
-                    case StackBehaviour.Pop1:
-                    case StackBehaviour.Popi:
-                    case StackBehaviour.Popi_pop1:
-                    case StackBehaviour.Popi_popi8:
-                    case StackBehaviour.Popi_popr4:
-                    case StackBehaviour.Popi_popr8:
-                    case StackBehaviour.Popref:
-                        diff -= 1;
-                        break;
-                }
+	            size = CorrectStackDepthByPushes(instruction, size);
+                size = CorrectStackDepthByPops(instruction, size);
 
-	            size += diff;
 	            maxSize = Math.Max(maxSize, size);
 	        }
 
 	        return (Byte)maxSize;
 	    }
+
+        private static Int32 CorrectStackDepthByPushes(
+            Instruction instruction,
+            Int32 size)
+        {
+            switch (instruction.OpCode.StackBehaviourPush)
+            {
+                case StackBehaviour.Push1:
+                case StackBehaviour.Pushi:
+                case StackBehaviour.Pushi8:
+                case StackBehaviour.Pushr4:
+                case StackBehaviour.Pushr8:
+                case StackBehaviour.Pushref:
+                    ++size;
+                    break;
+                case StackBehaviour.Push1_push1:
+                    size += 2;
+                    break;
+            }
+            return size;
+        }
+
+        private static Int32 CorrectStackDepthByPops(
+            Instruction instruction,
+            Int32 size)
+        {
+            switch (instruction.OpCode.StackBehaviourPop)
+            {
+                case StackBehaviour.Pop1:
+                case StackBehaviour.Popi:
+                case StackBehaviour.Popref:
+                    --size;
+                    break;
+                case StackBehaviour.Pop1_pop1:
+                case StackBehaviour.Popi_pop1:
+                case StackBehaviour.Popi_popi8:
+                case StackBehaviour.Popi_popr4:
+                case StackBehaviour.Popi_popr8:
+                case StackBehaviour.Popref_pop1:
+                case StackBehaviour.Popref_popi:
+                    size -= 2;
+                    break;
+                case StackBehaviour.Popref_popi_popi:
+                case StackBehaviour.Popref_popi_popi8:
+                case StackBehaviour.Popref_popi_popr4:
+                case StackBehaviour.Popref_popi_popr8:
+                case StackBehaviour.Popref_popi_popref:
+                    size -= 3;
+                    break;
+            }
+            return size;
+        }
+
+        private void CorrectInstructionsOffsets()
+        {
+            var offset = 0;
+            foreach (var instruction in _body.Instructions)
+            {
+                instruction.Offset += offset;
+
+                // TODO: 
+                switch (instruction.OpCode.OperandType)
+                {
+                    case OperandType.InlineString:
+                    case OperandType.InlineMethod:
+                    case OperandType.InlineField:
+                    case OperandType.InlineType:
+                    case OperandType.InlineTok:
+                        // In full .NET these instructions followed by double word operand
+                        // but in .NET Micro Framework these instruction's operand are word
+                        offset -= 2;
+                        break;
+                }
+            }
+        }
+
+        private void WriteExceptionsTable()
+        {
+            if (!_body.HasExceptionHandlers)
+            {
+                return;
+            }
+
+            foreach (var handler in _body.ExceptionHandlers)
+            {
+                _writer.WriteUInt16((UInt16)handler.HandlerType); // TODO: write conversion code !!!
+                _writer.WriteUInt16(
+                    handler.HandlerType == ExceptionHandlerType.Filter
+                        ? (UInt16)handler.FilterStart.Offset
+                        : GetTypeReferenceId(handler.CatchType));
+
+                _writer.WriteUInt16((UInt16)handler.TryStart.Offset);
+                _writer.WriteUInt16((UInt16)handler.TryEnd.Offset);
+                _writer.WriteUInt16((UInt16)handler.HandlerStart.Offset);
+                _writer.WriteUInt16((UInt16)handler.HandlerEnd.Offset);
+            }
+
+            _writer.WriteByte((Byte)_body.ExceptionHandlers.Count);
+        }
 
 	    private void WriteOpCode (
             OpCode opcode)
@@ -129,7 +247,7 @@ namespace MFMetaDataProcessor {
             {
                 _writer.WriteByte(opcode.Op1);
                 _writer.WriteByte(opcode.Op2);
-			}
+            }
 		}
 
 		private void WriteOperand (
@@ -165,7 +283,8 @@ namespace MFMetaDataProcessor {
 		        case OperandType.ShortInlineBrTarget:
 		        {
 		            var target = (Instruction) operand;
-		            _writer.WriteSByte((sbyte) (GetTargetOffset(target) - (instruction.Offset + opcode.Size + 1)));
+		            _writer.WriteSByte((SByte)
+                        (GetTargetOffset(target) - (instruction.Offset + opcode.Size + 1)));
 		            break;
 		        }
 		        case OperandType.InlineBrTarget:
@@ -217,41 +336,61 @@ namespace MFMetaDataProcessor {
                     _writer.WriteUInt16(stringReferenceId);
 		            break;
                 case OperandType.InlineMethod:
-                    // TODO: implement it correctly!!!
 		            var methodReference = (MethodReference) operand;
-		            UInt16 referenceId;
-		            if (_methodReferenceTable.TryGetMethodReferenceId(methodReference, out referenceId))
-		            {
-		                referenceId |= 0x8000; // External method reference
-		            }
-		            else
-		            {
-		                _methodDefinitionTable.TryGetMethodReferenceId(methodReference.Resolve(), out referenceId);
-		            }
-
-                    _writer.WriteUInt16(referenceId);
+		            var referenceId = GetMethodReferenceId(methodReference);
+		            _writer.WriteUInt16(referenceId);
                     break;
                 case OperandType.InlineType:
 		        case OperandType.InlineField:
 		        case OperandType.InlineTok:
-		            //TODO: implement this properly
-		            WriteMetadataToken (((IMetadataTokenProvider) operand).MetadataToken);
+		            //TODO: implement this properly (different for each case)
+		            _writer.WriteUInt16(0x0000);
 		            break;
 		        default:
 		            throw new ArgumentException();
 		    }
 		}
 
-		private Int32 GetTargetOffset (
+        private UInt16 GetMethodReferenceId(
+            MethodReference methodReference)
+        {
+            UInt16 referenceId;
+            if (_methodReferenceTable.TryGetMethodReferenceId(methodReference, out referenceId))
+            {
+                referenceId |= 0x8000; // External method reference
+            }
+            else
+            {
+                _methodDefinitionTable.TryGetMethodReferenceId(methodReference.Resolve(), out referenceId);
+            }
+            return referenceId;
+        }
+
+        private UInt16 GetTypeReferenceId(
+            TypeReference typeReference)
+        {
+            UInt16 referenceId;
+            if (_typeReferenceTable.TryGetTypeReferenceId(typeReference, out referenceId))
+            {
+                referenceId |= 0x8000; // External type reference
+            }
+            else
+            {
+                _typeDefinitionTable.TryGetTypeReferenceId(typeReference.Resolve(), out referenceId);
+            }
+            return referenceId;
+        }
+
+        private Int32 GetTargetOffset (
             Instruction instruction)
 		{
 			if (instruction == null)
             {
-				var last = _body.Instructions [_body.Instructions.Count - 1];
+				var last = _body.Instructions[_body.Instructions.Count - 1];
 				return last.Offset + last.GetSize ();
 			}
 
-			return instruction.Offset;
+            return instruction.Offset;
 		}
 
 		private static Int32 GetVariableIndex (
@@ -271,12 +410,6 @@ namespace MFMetaDataProcessor {
 			}
 
 			return parameter.Index;
-		}
-
-		private void WriteMetadataToken (
-            MetadataToken token)
-		{
-            _writer.WriteUInt32(token.ToUInt32());
 		}
     }
 }

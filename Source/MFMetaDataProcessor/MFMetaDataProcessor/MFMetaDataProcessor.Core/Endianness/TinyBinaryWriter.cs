@@ -293,9 +293,37 @@ namespace MFMetaDataProcessor
             WriteUInt32((UInt32)value);
         }
 
+        /// <summary>
+        /// Write single signed quad word into underying stream.
+        /// </summary>
+        /// <param name="value">Signed quad word value for writing.</param>
         public void WriteInt64(Int64 value)
         {
             WriteUInt64((UInt64)value);
+        }
+
+        /// <summary>
+        /// Write metadata token in packed format (variable length).
+        /// </summary>
+        /// <param name="value">Metadata tocken in .NET Mico Framework format.</param>
+        public void WriteMetadataToken(UInt32 value)
+        {
+            if (value <= 0x7F)
+            {
+                WriteByte((Byte) value);
+            }
+            else if (value <= 0x3FFF)
+            {
+                WriteByte((Byte)(value >> 8 | 0x80));
+                WriteByte((Byte)value);
+            }
+            else
+            {
+                WriteByte((Byte)(value >> 24 | 0xC0));
+                WriteByte((Byte)(value >> 16));
+                WriteByte((Byte)(value >> 8));
+                WriteByte((Byte)value);
+            }
         }
 
         /// <summary>

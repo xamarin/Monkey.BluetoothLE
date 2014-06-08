@@ -86,21 +86,23 @@ namespace MFMetaDataProcessor
             {
                 ++parametersCount; // add implicit 'this' pointer into non-static methods
             }
-            writer.WriteByte(TinyDataTypeConvertor.GetDataType(item.ReturnType.Resolve()));
+
+            _signatures.WriteDataType(item.ReturnType, writer);
+
             writer.WriteByte(parametersCount);
-            writer.WriteByte((Byte)item.Body.Variables.Count);
+            writer.WriteByte((Byte)(item.HasBody ? item.Body.Variables.Count : 0));
             writer.WriteByte(CodeWriter.CalculateStackSize(item.Body));
 
             var methodSignature = _signatures.GetOrCreateSignatureId(item);
-            writer.WriteUInt16(_signatures.GetOrCreateSignatureId(item.Body.Variables));
+            writer.WriteUInt16(item.HasBody ?
+                _signatures.GetOrCreateSignatureId(item.Body.Variables) :
+                (item.IsAbstract ? (UInt16)0x0000 : (UInt16)0xFFFF));
             writer.WriteUInt16(methodSignature);
         }
 
         private UInt32 GetFlags(
             MethodDefinition method)
         {
-            const UInt32 MD_Scope_Mask = 0x00000007;
-            const UInt32 MD_Scope_PrivateScope = 0x00000000; // Member not referenceable.
             const UInt32 MD_Scope_Private = 0x00000001; // Accessible only by the parent type.
             const UInt32 MD_Scope_FamANDAssem = 0x00000002; // Accessible by sub-types only in this Assembly.
             const UInt32 MD_Scope_Assem = 0x00000003; // Accessibly by anyone in the Assembly.
@@ -113,7 +115,6 @@ namespace MFMetaDataProcessor
             const UInt32 MD_Virtual = 0x00000040; // Method virtual.
             const UInt32 MD_HideBySig = 0x00000080; // Method hides by name+sig, else just by name.
 
-            const UInt32 MD_VtableLayoutMask = 0x00000100;
             const UInt32 MD_ReuseSlot = 0x00000000; // The default.
             const UInt32 MD_NewSlot = 0x00000100; // Method always gets a new slot in the vtable.
             const UInt32 MD_Abstract = 0x00000200; // Method does not provide an implementation.
@@ -219,6 +220,11 @@ namespace MFMetaDataProcessor
             if (method == method.Module.EntryPoint)
             {
                 flag |= MD_EntryPoint;
+            }
+
+            if (method.HasBody && method.Body.HasExceptionHandlers)
+            {
+                flag |= MD_HasExceptionHandlers;
             }
 
             return flag;

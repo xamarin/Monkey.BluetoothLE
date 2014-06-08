@@ -33,7 +33,20 @@ namespace MFMetaDataProcessor
         /// </summary>
         private readonly TinyMemberReferenceTable _methodReferenceTable;
 
+        /// <summary>
+        /// Methods definitions table (used for obtaining method definition id).
+        /// </summary>
         private readonly TinyMethodDefinitionTable _methodDefinitionTable;
+
+        /// <summary>
+        /// Typess references table (used for obtaining type reference id).
+        /// </summary>
+        private readonly TinyTypeReferenceTable _typeReferenceTable;
+
+        /// <summary>
+        /// Typess definitions table (used for obtaining type definition id).
+        /// </summary>
+        private TinyTypeDefinitionTable _typeDefinitionTable;
 
         /// <summary>
         /// Maps method bodies (in form of byte array) to method identifiers.
@@ -48,9 +61,9 @@ namespace MFMetaDataProcessor
             new Dictionary<String, UInt16>(StringComparer.Ordinal);
 
         /// <summary>
-        /// Last available method identifier.
+        /// Last available method RVA.
         /// </summary>
-        private UInt16 _lastAvailableId;
+        private UInt16 _lastAvailableRva;
 
         /// <summary>
         /// Creates new instance of <see cref="TinyByteCodeTable"/> object.
@@ -60,6 +73,8 @@ namespace MFMetaDataProcessor
         /// <param name="stringTable">String references table (for obtaining string ID).</param>
         /// <param name="methodReferenceTable">External methods references table.</param>
         /// <param name="signaturesTable">Methods and fields signatures table.</param>
+        /// <param name="typeReferenceTable"></param>
+        /// <param name="typeDefinitionTable"></param>
         /// <param name="methodsDefinitions">Methods defintions list in Mono.Cecil format.</param>
         public TinyByteCodeTable(
             NativeMethodsCrc nativeMethodsCrc,
@@ -67,15 +82,17 @@ namespace MFMetaDataProcessor
             TinyStringTable stringTable,
             TinyMemberReferenceTable methodReferenceTable,
             TinySignaturesTable signaturesTable,
+            TinyTypeReferenceTable typeReferenceTable,
             IEnumerable<MethodDefinition> methodsDefinitions)
         {
             _nativeMethodsCrc = nativeMethodsCrc;
             _writer = writer;
             _stringTable = stringTable;
             _methodReferenceTable = methodReferenceTable;
+            _typeReferenceTable = typeReferenceTable;
 
             _methodDefinitionTable = new TinyMethodDefinitionTable(
-                methodsDefinitions, stringTable, this, signaturesTable);;
+                methodsDefinitions, stringTable, this, signaturesTable);
         }
 
         /// <summary>
@@ -97,15 +114,16 @@ namespace MFMetaDataProcessor
         public UInt16 GetMethodId(
             MethodDefinition method)
         {
-            var id = _lastAvailableId;
+            var rva = method.HasBody ? _lastAvailableRva : (UInt16)0xFFFF;
+            var id = (UInt16)_idsByMethods.Count;
 
             _nativeMethodsCrc.UpdateCrc(method);
             var byteCode = CreateByteCode(method);
 
             _idsByMethods.Add(byteCode, id);
-            _rvasByMethodNames.Add(method.FullName, id);
+            _lastAvailableRva += (UInt16)byteCode.Length;
 
-            _lastAvailableId += (UInt16)byteCode.Length;
+            _rvasByMethodNames.Add(method.FullName, rva);
             return id;
         }
 
@@ -119,7 +137,8 @@ namespace MFMetaDataProcessor
         public UInt16 GetMethodRva(
             MethodReference method)
         {
-            return _rvasByMethodNames[method.FullName];
+            UInt16 rva;
+            return (_rvasByMethodNames.TryGetValue(method.FullName, out rva) ? rva : (UInt16)0xFFFF);
         }
 
         /// <inheritdoc/>
@@ -134,14 +153,30 @@ namespace MFMetaDataProcessor
             }
         }
 
+        /// <summary>
+        /// Helper method for injecting dependency. We unable to do it via constructor.
+        /// </summary>
+        /// <param name="typeDefinitionTable">Type definitions table.</param>
+        internal void SetTypeDefinitionTable(
+            TinyTypeDefinitionTable typeDefinitionTable)
+        {
+            _typeDefinitionTable = typeDefinitionTable;
+        }
+
         private Byte[] CreateByteCode(
             MethodDefinition method)
         {
+            if (!method.HasBody)
+            {
+                return new Byte[0];
+            }
+
             using(var stream = new MemoryStream())
             {
                 var writer = new  CodeWriter(
                     method, _writer.GetMemoryBasedClone(stream),
-                    _stringTable, _methodReferenceTable, MethodDefinitionTable);
+                    _stringTable, _methodReferenceTable, _methodDefinitionTable,
+                    _typeReferenceTable, _typeDefinitionTable);
                 writer.WriteMethodBody();
                 return stream.ToArray();
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Mono.Cecil;
 
 namespace MFMetaDataProcessor.Tests
@@ -8,33 +9,73 @@ namespace MFMetaDataProcessor.Tests
     {
         static void Main()
         {
-            TestSingleAssembly("NetduinoOne");
-            TestSingleAssembly("NetduinoTwo");
-            TestSingleAssembly("NetduinoGo");
-         }
+            var result = Directory.GetDirectories(@"Data")
+                .Select(Path.GetFileName)
+                .Aggregate(true,
+                    (current, directory) => current & TestSingleAssembly(directory));
 
-        private static void TestSingleAssembly(String name)
+            if (!result)
+            {
+                Console.ReadLine();
+            }
+        }
+
+        private static Boolean TestSingleAssembly(
+            String name)
         {
+            return
+                TestSingleAssembly(name, "le", TinyBinaryWriter.CreateLittleEndianBinaryWriter) &
+                TestSingleAssembly(name, "be", TinyBinaryWriter.CreateBigEndianBinaryWriter);
+        }
+
+
+        private static Boolean TestSingleAssembly(
+            String name, String endianness,
+            Func<BinaryWriter, TinyBinaryWriter> getBinaryWriter)
+    {
             var assemblyDefinition = AssemblyDefinition.ReadAssembly(
-                String.Format(@"Data\{0}\{0}.exe", name));
+                String.Format(@"Data\{0}\{0}.exe", Path.GetFileName(name)));
 
-            using (var stream = File.Open(
-                String.Format(@"Data\{0}\le\{0}.pex", name),
-                FileMode.Create, FileAccess.ReadWrite))
+            var fileName = ProcessSingleFile(name, endianness,
+                assemblyDefinition, getBinaryWriter);
+
+            return CompareFiles(fileName);
+        }
+
+        private static String ProcessSingleFile(
+            String name, String subDirectoryName,
+            AssemblyDefinition assemblyDefinition,
+            Func<BinaryWriter, TinyBinaryWriter> getBinaryWriter)
+        {
+            var fileName = String.Format(@"Data\{0}\{1}\{0}.pex", name, subDirectoryName);
+
+            using (var stream = File.Open(fileName, FileMode.Create, FileAccess.ReadWrite))
             using (var writer = new BinaryWriter(stream))
             {
-                var leBuilder = new TinyAssemblyBuilder(assemblyDefinition);
-                leBuilder.Write(TinyBinaryWriter.CreateLittleEndianBinaryWriter(writer));
+                new TinyAssemblyBuilder(assemblyDefinition)
+                    .Write(getBinaryWriter(writer));
             }
 
-            using (var stream = File.Open(
-                String.Format(@"Data\{0}\be\{0}.pex", name),
-                FileMode.Create, FileAccess.ReadWrite))
-            using (var writer = new BinaryWriter(stream))
+            return fileName;
+        }
+
+        private static Boolean CompareFiles(
+            String name)
+        {
+            var expetedFileName = Path.ChangeExtension(name, ".pe");
+
+            var expectedBytes = File.ReadAllBytes(expetedFileName);
+            var realBytes = File.ReadAllBytes(name);
+
+            var result = (expectedBytes.Length == realBytes.Length &&
+                expectedBytes.SequenceEqual(realBytes));
+
+            if (!result)
             {
-                var leBuilder = new TinyAssemblyBuilder(assemblyDefinition);
-                leBuilder.Write(TinyBinaryWriter.CreateBigEndianBinaryWriter(writer));
+                Console.WriteLine(name);
             }
+
+            return result;
         }
     }
 }
