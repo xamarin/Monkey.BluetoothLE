@@ -36,6 +36,11 @@ namespace MFMetaDataProcessor
         private readonly TinySignaturesTable _signatures;
 
         /// <summary>
+        /// Maximal returned field reference id - used for emulating old MetadataProcessor behavior.
+        /// </summary>
+        private Int32 _maxReferenceId;
+
+        /// <summary>
         /// Creates new instance of <see cref="TinyFieldDefinitionTable"/> object.
         /// </summary>
         /// <param name="items">List of field definitions in Mono.Cecil format.</param>
@@ -49,6 +54,11 @@ namespace MFMetaDataProcessor
         {
             _signatures = signatures;
         }
+
+        /// <summary>
+        /// Gets maximal returned field reference id - used for emulating old MetadataProcessor behavior.
+        /// </summary>
+        public UInt16 MaxFieldId { get { return (UInt16)_maxReferenceId; } }
 
         /// <inheritdoc/>
         protected override void WriteSingleItem(
@@ -73,7 +83,9 @@ namespace MFMetaDataProcessor
             FieldDefinition field,
             out UInt16 referenceId)
         {
-            return TryGetIdByValue(field, out referenceId);
+            var found = TryGetIdByValue(field, out referenceId);
+            _maxReferenceId = Math.Max(_maxReferenceId, (referenceId == 0 ? 0x01 : referenceId + 1));
+            return found;
         }
 
         private UInt16 GetFlags(

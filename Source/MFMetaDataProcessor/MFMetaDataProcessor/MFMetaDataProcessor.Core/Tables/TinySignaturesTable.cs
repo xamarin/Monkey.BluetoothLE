@@ -55,6 +55,10 @@ namespace MFMetaDataProcessor
 
             _primitiveTypes.Add(typeof(String).FullName, TinyDataType.DATATYPE_STRING);
             _primitiveTypes.Add(typeof(Boolean).FullName, TinyDataType.DATATYPE_BOOLEAN);
+
+            _primitiveTypes.Add(typeof(DateTime).FullName, TinyDataType.DATATYPE_DATETIME);
+            _primitiveTypes.Add(typeof(TimeSpan).FullName, TinyDataType.DATATYPE_TIMESPAN);
+            _primitiveTypes.Add(typeof(Object).FullName, TinyDataType.DATATYPE_OBJECT);
         }
 
         /// <summary>
@@ -68,7 +72,15 @@ namespace MFMetaDataProcessor
         /// </summary>
         private UInt16 _lastAvailableId;
 
+        /// <summary>
+        /// Types definitions table (used for correct type code writing).
+        /// </summary>
         private TinyTypeDefinitionTable _typeDefinitionTable;
+
+        /// <summary>
+        /// Types references table (used for correct type code writing).
+        /// </summary>
+        private TinyTypeReferenceTable _typeReferenceTable;
 
         internal void SetTypeDefinitionTable(
             TinyTypeDefinitionTable typeDefinitionTable)
@@ -144,13 +156,28 @@ namespace MFMetaDataProcessor
                 writer.WriteByte((Byte)TinyDataType.DATATYPE_CLASS);
                 if (alsoWriteSubType)
                 {
-                    // TODO: process type reference and type specs here too
-                    UInt16 referenceId;
-                    if (_typeDefinitionTable.TryGetTypeReferenceId(
-                        typeDefinition.Resolve(), out referenceId))
+                    WriteSubTypeInfo(typeDefinition, writer);
+                }
+                return;
+            }
+
+            if (typeDefinition.MetadataType == MetadataType.ValueType)
+            {
+                var resolvedType = typeDefinition.Resolve();
+                if (resolvedType.IsEnum && !alsoWriteSubType)
+                {
+                    var baseTypeValue = resolvedType.Fields.FirstOrDefault(item => item.IsSpecialName);
+                    if (baseTypeValue != null)
                     {
-                        writer.WriteMetadataToken((UInt32)referenceId << 2);
+                        WriteTypeInfo(baseTypeValue.FieldType, writer);
+                        return;
                     }
+                }
+
+                writer.WriteByte((Byte)TinyDataType.DATATYPE_VALUETYPE);
+                if (alsoWriteSubType)
+                {
+                    WriteSubTypeInfo(typeDefinition, writer);
                 }
                 return;
             }
@@ -159,15 +186,18 @@ namespace MFMetaDataProcessor
             {
                 writer.WriteByte((Byte)TinyDataType.DATATYPE_SZARRAY);
 
-                var array = (ArrayType)typeDefinition;
-                WriteDataType(array.ElementType, writer, alsoWriteSubType);
+                if (alsoWriteSubType)
+                {
+                    var array = (ArrayType)typeDefinition;
+                    WriteDataType(array.ElementType, writer, alsoWriteSubType);
+                }
                 return;
             }
 
             // TODO: implement full checking
             writer.WriteByte(0x00);
         }
-            
+
         /// <inheritdoc/>
         public void Write(
             TinyBinaryWriter writer)
@@ -282,6 +312,27 @@ namespace MFMetaDataProcessor
                         return current;
                     })
                 .ToArray();
+        }
+
+        public void SetTypeReferenceTable(
+            TinyTypeReferenceTable typeReferenceTable)
+        {
+            _typeReferenceTable = typeReferenceTable;
+        }
+
+        private void WriteSubTypeInfo(TypeReference typeDefinition, TinyBinaryWriter writer)
+        {
+            // TODO: process type reference and type specs here too
+            UInt16 referenceId;
+            if (_typeReferenceTable.TryGetTypeReferenceId(typeDefinition, out referenceId))
+            {
+                writer.WriteMetadataToken(((UInt32)referenceId << 2) | 0x01); // TODO: mark as external
+            }
+            else if (_typeDefinitionTable.TryGetTypeReferenceId(
+                typeDefinition.Resolve(), out referenceId))
+            {
+                writer.WriteMetadataToken((UInt32)referenceId << 2);
+            }
         }
     }
 }

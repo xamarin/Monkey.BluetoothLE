@@ -34,11 +34,16 @@
       <HintPath>..\packages\Mono.Cecil.0.9.5.0\lib\net40\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Endianness\TinyBinaryWriter.cs" />
     <Compile Include="Mono.Cecil\CodeWriter.cs" />
     <Compile Include="Tables\TinyReferenceTableBase.cs" />
+    <Compile Include="Tables\TinyResourceDataTable.cs" />
+    <Compile Include="Tables\TinyResourceFileTable.cs" />
+    <Compile Include="Tables\TinyResourcesTable.cs" />
+    <Compile Include="Tables\TinyTypeSpecificationsTable.cs" />
     <Compile Include="Utility\Crc32.cs" />
     <Compile Include="ITinyTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

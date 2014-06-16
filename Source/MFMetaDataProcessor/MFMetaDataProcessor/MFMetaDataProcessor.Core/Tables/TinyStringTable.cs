@@ -65,5 +65,18 @@ namespace MFMetaDataProcessor
                 writer.WriteString(item);
             }
         }
+
+        /// <summary>
+        /// Adds all string constants from <paramref name="fakeStringTable"/> table into this one.
+        /// </summary>
+        /// <param name="fakeStringTable">Additional string table for merging with this one.</param>
+        internal void MergeValues(
+            TinyStringTable fakeStringTable)
+        {
+            foreach (var item in fakeStringTable._idsByStrings.Keys)
+            {
+                GetOrCreateStringId(item);
+            }
+        }
     }
 }
