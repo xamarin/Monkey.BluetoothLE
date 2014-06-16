@@ -123,7 +123,8 @@ namespace MFMetaDataProcessor
                 writer.WriteUInt16(0xFFFF);
             }
 
-            foreach (var field in item.Fields)
+            var fieldsList = item.Fields.Where(field => !field.HasConstant).ToList();
+            foreach (var field in fieldsList)
             {
                 _signaturesTable.GetOrCreateSignatureId(field);
             }
@@ -132,30 +133,18 @@ namespace MFMetaDataProcessor
 
             _signaturesTable.WriteDataType(item, writer);
 
-            WriteClassFields(item.Fields, writer);
+            WriteClassFields(fieldsList, writer);
 
             writer.WriteUInt16(GetFlags(item)); // flags
         }
 
         private void WriteClassFields(
-            Collection<FieldDefinition> fields,
+            IList<FieldDefinition> fieldsList,
             TinyBinaryWriter writer)
         {
-            UInt16 firstInstanceFieldId = 0xFFFF;
-            var instanceFieldsNumber = 0;
-            foreach (var field in fields.Where(item => !item.IsStatic))
-            {
-                UInt16 fieldReferenceId;
-                _fieldsTable.TryGetFieldReferenceId(field, out fieldReferenceId);
-                firstInstanceFieldId = Math.Min(firstInstanceFieldId, fieldReferenceId);
-
-                _signaturesTable.GetOrCreateSignatureId(field);
-                ++instanceFieldsNumber;
-            }
-
-            UInt16 firstStaticFieldId = 0xFFFF;
+            var firstStaticFieldId = _fieldsTable.MaxFieldId;
             var staticFieldsNumber = 0;
-            foreach (var field in fields.Where(item => item.IsStatic))
+            foreach (var field in fieldsList.Where(item => item.IsStatic))
             {
                 UInt16 fieldReferenceId;
                 _fieldsTable.TryGetFieldReferenceId(field, out fieldReferenceId);
@@ -165,8 +154,20 @@ namespace MFMetaDataProcessor
                 ++staticFieldsNumber;
             }
 
-            writer.WriteUInt16(instanceFieldsNumber == 0 ? (UInt16)0x0000 : firstInstanceFieldId);
-            writer.WriteUInt16(staticFieldsNumber == 0 ? (UInt16)0x0000 : firstInstanceFieldId);
+            var firstInstanseFieldId = _fieldsTable.MaxFieldId;
+            var instanceFieldsNumber = 0;
+            foreach (var field in fieldsList.Where(item => !item.IsStatic))
+            {
+                UInt16 fieldReferenceId;
+                _fieldsTable.TryGetFieldReferenceId(field, out fieldReferenceId);
+                firstInstanseFieldId = Math.Min(firstInstanseFieldId, fieldReferenceId);
+
+                _signaturesTable.GetOrCreateSignatureId(field);
+                ++instanceFieldsNumber;
+            }
+
+            writer.WriteUInt16(firstStaticFieldId);
+            writer.WriteUInt16(firstInstanseFieldId);
 
             writer.WriteByte((Byte) staticFieldsNumber);
             writer.WriteByte((Byte) instanceFieldsNumber);
@@ -209,7 +210,7 @@ namespace MFMetaDataProcessor
 
             if (virtualMethodsNumber + instanceMethodsNumber + staticMethodsNumber == 0)
             {
-                firstMethodId = 0x0000;
+                firstMethodId = _byteCodeTable.NextMethodId;
             }
 
             writer.WriteUInt16(firstMethodId);
@@ -313,17 +314,17 @@ namespace MFMetaDataProcessor
                 flags |= TD_Serializable;
             }
 
-            if (definition.IsValueType)
+            if (definition.IsEnum)
+            {
+                flags |= TD_Semantics_Enum;
+            }
+            else if (definition.IsValueType)
             {
                 flags |= TD_Semantics_ValueType;
             }
             else if (definition.IsInterface)
             {
                 flags |= TD_Semantics_Interface;
-            }
-            else if (definition.IsEnum)
-            {
-                flags |= TD_Semantics_Enum;
             }
 
             if (definition.IsAbstract)

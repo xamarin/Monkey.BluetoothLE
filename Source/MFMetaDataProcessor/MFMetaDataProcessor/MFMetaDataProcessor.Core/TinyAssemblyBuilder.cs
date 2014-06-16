@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms.VisualStyles;
 using Mono.Cecil;
 
 namespace MFMetaDataProcessor
@@ -82,14 +83,14 @@ namespace MFMetaDataProcessor
 
             var typeReferenceTable = new TinyTypeReferenceTable(
                 typeReferences, assemblyRef, stringTable);
+            signaturesTable.SetTypeReferenceTable(typeReferenceTable);
 
             var memberReferences = mainModule.GetMemberReferences()
                 .Where(item => !item.DeclaringType.Name.EndsWith("Attribute")) // TODO: remove this workaround!!!
                 .ToList();
 
-            var types = mainModule.GetTypes()
-                .Where(item => item.FullName != "<Module>") // TODO: How to do it correctly ???
-                .ToList();
+            var types = SortTypesAccordingUsages(
+                mainModule.GetTypes().Where(item => item.FullName != "<Module>")); // TODO: How to do it correctly ???
 
             yield return assemblyRef;
 
@@ -116,7 +117,8 @@ namespace MFMetaDataProcessor
                 types.SelectMany(item => GetOrderedMethods(item.Methods)));
 
             var fieldsTable = new TinyFieldDefinitionTable(
-                types.SelectMany(item => GetOrderedFields(item.Fields)),
+                types.SelectMany(item => GetOrderedFields(item.Fields))
+                    .Where(field => !field.HasConstant), // TODO: how do it right?
                 stringTable,
                 signaturesTable);
 
@@ -129,24 +131,65 @@ namespace MFMetaDataProcessor
             yield return byteCodeTable.MethodDefinitionTable;
 
             yield return TinyEmptyTable.Instance; // Attributes
-            yield return TinyEmptyTable.Instance; // TypeSpec
 
-            yield return TinyEmptyTable.Instance; // Resources
-            yield return TinyEmptyTable.Instance; // ResourcesData
+            yield return types.Any(item => item.IsEnum) // TODO: is it correct???
+                ? new TinyTypeSpecificationsTable() :
+                TinyEmptyTable.Instance;
+
+            var resourceFileTable = new TinyResourceFileTable(stringTable);
+            var resourceDataTable = new TinyResourceDataTable();
+            yield return new TinyResourcesTable(mainModule.Resources,
+                resourceFileTable, resourceDataTable);
+
+            yield return resourceDataTable;
+
+            byteCodeTable.UpdateStringTable();
 
             yield return stringTable;
             yield return signaturesTable;
 
             yield return byteCodeTable;
-            yield return TinyEmptyTable.Instance; // ResourceFiles
+            yield return resourceFileTable;
 
             yield return TinyEmptyTable.Instance;
+        }
+
+        private List<TypeDefinition> SortTypesAccordingUsages(
+            IEnumerable<TypeDefinition> types)
+        {
+            return SortTypesAccordingUsagesImpl(types.OrderBy(item => item.Name)).Distinct().ToList();
+        }
+
+        private IEnumerable<TypeDefinition> SortTypesAccordingUsagesImpl(
+            IEnumerable<TypeDefinition> types)
+        {
+            foreach (var type in types)
+            {
+                if (type.DeclaringType != null)
+                {
+                    foreach (var declaredIn in SortTypesAccordingUsagesImpl(
+                        Enumerable.Repeat(type.DeclaringType, 1)))
+                    {
+                        yield return declaredIn;
+                    }
+                }
+
+                foreach (var implement in SortTypesAccordingUsagesImpl(
+                    type.Interfaces.Select(itf => itf.Resolve())))
+                {
+                    yield return implement;
+                }
+
+                yield return type;
+            }
         }
 
         private Boolean IsAttribute(
             MemberReference typeReference)
         {
-            return _assemblyAttributes.Contains(typeReference.FullName) || 
+            return 
+                typeReference.FullName.EndsWith("Attribute") ||
+                _assemblyAttributes.Contains(typeReference.FullName) || 
                 (typeReference.DeclaringType != null &&
                     _assemblyAttributes.Contains(typeReference.DeclaringType.FullName));
         }
@@ -154,7 +197,8 @@ namespace MFMetaDataProcessor
         private IEnumerable<MethodDefinition> GetOrderedMethods(
             IEnumerable<MethodDefinition> methods)
         {
-            var ordered = methods.OrderBy(item => item.FullName).ToList();
+            var ordered = methods
+                .ToList();
 
             foreach (var method in ordered.Where(item => item.IsVirtual))
             {
@@ -175,7 +219,8 @@ namespace MFMetaDataProcessor
         private IEnumerable<FieldDefinition> GetOrderedFields(
             IEnumerable<FieldDefinition> fields)
         {
-            var ordered = fields.OrderBy(item => item.FullName).ToList();
+            var ordered = fields
+                .ToList();
 
             foreach (var method in ordered.Where(item => !item.IsStatic))
             {

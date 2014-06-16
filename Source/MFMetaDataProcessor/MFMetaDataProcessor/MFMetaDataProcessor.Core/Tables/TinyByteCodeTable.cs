@@ -51,14 +51,18 @@ namespace MFMetaDataProcessor
         /// <summary>
         /// Maps method bodies (in form of byte array) to method identifiers.
         /// </summary>
-        private readonly IDictionary<Byte[], UInt16> _idsByMethods =
-            new Dictionary<Byte[], UInt16>();
+        private readonly IList<MethodDefinition> _methods = new List<MethodDefinition>();
 
         /// <summary>
         /// Maps method full names to method RVAs (offsets in resutling table).
         /// </summary>
         private readonly IDictionary<String, UInt16> _rvasByMethodNames =
             new Dictionary<String, UInt16>(StringComparer.Ordinal);
+
+        /// <summary>
+        /// Temprorary string table for code generators used duing initial load.
+        /// </summary>
+        private readonly TinyStringTable _fakeStringTable = new TinyStringTable();
 
         /// <summary>
         /// Last available method RVA.
@@ -105,6 +109,11 @@ namespace MFMetaDataProcessor
         }
 
         /// <summary>
+        /// Next method identifier. Used for reproducing strange original MetadataProcessor behavior.
+        /// </summary>
+        public UInt16 NextMethodId { get { return (UInt16)_methods.Count; } }
+
+        /// <summary>
         /// Returns method reference ID (index in methods definitions table) for passed method definition.
         /// </summary>
         /// <param name="method">Method definition in Mono.Cecil format.</param>
@@ -115,12 +124,12 @@ namespace MFMetaDataProcessor
             MethodDefinition method)
         {
             var rva = method.HasBody ? _lastAvailableRva : (UInt16)0xFFFF;
-            var id = (UInt16)_idsByMethods.Count;
+            var id = (UInt16)_methods.Count;
 
             _nativeMethodsCrc.UpdateCrc(method);
-            var byteCode = CreateByteCode(method);
+            var byteCode = CreateByteCode(method, _fakeStringTable, true);
 
-            _idsByMethods.Add(byteCode, id);
+            _methods.Add(method);
             _lastAvailableRva += (UInt16)byteCode.Length;
 
             _rvasByMethodNames.Add(method.FullName, rva);
@@ -145,12 +154,18 @@ namespace MFMetaDataProcessor
         public void Write(
             TinyBinaryWriter writer)
         {
-            foreach (var method in _idsByMethods
-                .OrderBy(item => item.Value)
-                .Select(item => item.Key))
+            foreach (var method in _methods)
             {
-                writer.WriteBytes(method);
+                writer.WriteBytes(CreateByteCode(method, _stringTable, false));
             }
+        }
+
+        /// <summary>
+        /// Updates main string table with strings stored in temp string table before code generation.
+        /// </summary>
+        internal void UpdateStringTable()
+        {
+            _stringTable.MergeValues(_fakeStringTable);
         }
 
         /// <summary>
@@ -164,7 +179,9 @@ namespace MFMetaDataProcessor
         }
 
         private Byte[] CreateByteCode(
-            MethodDefinition method)
+            MethodDefinition method,
+            TinyStringTable stringTable,
+            Boolean fixOperationsOffsets)
         {
             if (!method.HasBody)
             {
@@ -175,8 +192,9 @@ namespace MFMetaDataProcessor
             {
                 var writer = new  CodeWriter(
                     method, _writer.GetMemoryBasedClone(stream),
-                    _stringTable, _methodReferenceTable, _methodDefinitionTable,
-                    _typeReferenceTable, _typeDefinitionTable);
+                    stringTable, _methodReferenceTable, _methodDefinitionTable,
+                    _typeReferenceTable, _typeDefinitionTable,
+                    fixOperationsOffsets);
                 writer.WriteMethodBody();
                 return stream.ToArray();
             }

@@ -1,4 +1,5 @@
 using System;
+using System.CodeDom;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -48,6 +49,11 @@ namespace MFMetaDataProcessor {
         private readonly TinyTypeDefinitionTable _typeDefinitionTable;
 
         /// <summary>
+        /// If this flas is set to <c>true</c> we should fix offsets in instuctions.
+        /// </summary>
+        private readonly Boolean _fixOperationsOffsets;
+
+        /// <summary>
         /// Creates new instance of <see cref="Mono.Cecil.Cil.CodeWriter"/> object.
         /// </summary>
         /// <param name="method">Original method body in Mono.Cecil format.</param>
@@ -57,6 +63,9 @@ namespace MFMetaDataProcessor {
         /// <param name="methodDefinitionTable">Internal methods definition table.</param>
         /// <param name="typeReferenceTable">External types references table.</param>
         /// <param name="typeDefinitionTable">Internal types definitions table.</param>
+        /// <param name="fixOperationsOffsets">
+        /// If this flas is set to <c>true</c> we should fix offsets in instuctions.
+        /// </param>
         public CodeWriter(
 	        MethodDefinition method,
             TinyBinaryWriter writer,
@@ -64,7 +73,8 @@ namespace MFMetaDataProcessor {
             TinyMemberReferenceTable methodReferenceTable,
             TinyMethodDefinitionTable methodDefinitionTable,
             TinyTypeReferenceTable typeReferenceTable,
-            TinyTypeDefinitionTable typeDefinitionTable)
+            TinyTypeDefinitionTable typeDefinitionTable,
+            Boolean fixOperationsOffsets)
 	    {
 	        _writer = writer;
             _stringTable = stringTable;
@@ -72,6 +82,7 @@ namespace MFMetaDataProcessor {
             _methodDefinitionTable = methodDefinitionTable;
             _typeReferenceTable = typeReferenceTable;
             _typeDefinitionTable = typeDefinitionTable;
+            _fixOperationsOffsets = fixOperationsOffsets;
             _body = method.Body;
         }
 
@@ -80,7 +91,10 @@ namespace MFMetaDataProcessor {
         /// </summary>
         public void WriteMethodBody()
         {
-            CorrectInstructionsOffsets();
+            if (_fixOperationsOffsets)
+            {
+                CorrectInstructionsOffsets();
+            }
 
             foreach (var instruction in _body.Instructions)
             {
@@ -117,14 +131,29 @@ namespace MFMetaDataProcessor {
                     case Code.Leave:
                         size = 0;
                         continue;
-                    case Code.Call:
-	                    var method = (MethodReference) instruction.Operand;
-	                    if (method.HasThis)
+                    case Code.Callvirt:
 	                    {
-	                        --size;
-	                    }
-	                    size -= method.Parameters.Count;
-                        // TODO: place return value into stack
+                            var method = (MethodReference)instruction.Operand;
+                            if (method.HasThis)
+                            {
+                                --size;
+                            }
+                            size -= method.Parameters.Count;
+                        }
+                        break;
+                    case Code.Call:
+	                    {
+                            var method = (MethodReference)instruction.Operand;
+                            if (method.HasThis)
+                            {
+                                --size;
+                            }
+                            size -= method.Parameters.Count;
+                            if (method.ReturnType.FullName != "System.Void")
+                            {
+                                ++size;
+                            }
+                        }
                         break;
 	            }
 
@@ -203,7 +232,6 @@ namespace MFMetaDataProcessor {
                     case OperandType.InlineMethod:
                     case OperandType.InlineField:
                     case OperandType.InlineType:
-                    case OperandType.InlineTok:
                         // In full .NET these instructions followed by double word operand
                         // but in .NET Micro Framework these instruction's operand are word
                         offset -= 2;
@@ -225,7 +253,7 @@ namespace MFMetaDataProcessor {
                 _writer.WriteUInt16(
                     handler.HandlerType == ExceptionHandlerType.Filter
                         ? (UInt16)handler.FilterStart.Offset
-                        : GetTypeReferenceId(handler.CatchType));
+                        : GetTypeReferenceId(handler.CatchType, 0x8000));
 
                 _writer.WriteUInt16((UInt16)handler.TryStart.Offset);
                 _writer.WriteUInt16((UInt16)handler.TryEnd.Offset);
@@ -336,20 +364,29 @@ namespace MFMetaDataProcessor {
                     _writer.WriteUInt16(stringReferenceId);
 		            break;
                 case OperandType.InlineMethod:
-		            var methodReference = (MethodReference) operand;
-		            var referenceId = GetMethodReferenceId(methodReference);
-		            _writer.WriteUInt16(referenceId);
+                    _writer.WriteUInt16(GetMethodReferenceId((MethodReference)operand));
                     break;
                 case OperandType.InlineType:
+                    _writer.WriteUInt16(GetTypeReferenceId((TypeReference)operand));
+                    break;
 		        case OperandType.InlineField:
-		        case OperandType.InlineTok:
-		            //TODO: implement this properly (different for each case)
-		            _writer.WriteUInt16(0x0000);
-		            break;
-		        default:
+                    _writer.WriteUInt16(GetFieldReferenceId((FieldReference)operand));
+                    break;
+                case OperandType.InlineTok:
+                    //TODO: implement this properly (different for each case)
+                    _writer.WriteUInt32(0x04000000);
+                    break;
+                default:
 		            throw new ArgumentException();
 		    }
 		}
+
+        private UInt16 GetFieldReferenceId(
+            FieldReference fieldReference)
+        {
+            // TODO: implement it properly after refactoring
+            return 0x0000;
+        }
 
         private UInt16 GetMethodReferenceId(
             MethodReference methodReference)
@@ -367,16 +404,21 @@ namespace MFMetaDataProcessor {
         }
 
         private UInt16 GetTypeReferenceId(
-            TypeReference typeReference)
+            TypeReference typeReference,
+            UInt16 typeReferenceMask = 0x4000)
         {
             UInt16 referenceId;
             if (_typeReferenceTable.TryGetTypeReferenceId(typeReference, out referenceId))
             {
-                referenceId |= 0x8000; // External type reference
+                referenceId |= typeReferenceMask; // External type reference
             }
             else
             {
-                _typeDefinitionTable.TryGetTypeReferenceId(typeReference.Resolve(), out referenceId);
+                if (!_typeDefinitionTable.TryGetTypeReferenceId(typeReference.Resolve(), out referenceId))
+                {
+                    return 0x8000;
+                }
+
             }
             return referenceId;
         }
