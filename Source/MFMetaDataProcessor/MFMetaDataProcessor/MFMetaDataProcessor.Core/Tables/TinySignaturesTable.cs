@@ -139,6 +139,27 @@ namespace MFMetaDataProcessor
             return GetOrCreateSignatureId(GetSignature(variables));
         }
 
+        /// <summary>
+        /// Gets existing or creates new singature identifier for list of class interfaces.
+        /// </summary>
+        /// <param name="interfaces">List of interfaes information in Mono.Cecil format.</param>
+        public ushort GetOrCreateSignatureId(
+            Collection<TypeReference> interfaces)
+        {
+            if (interfaces == null || interfaces.Count == 0)
+            {
+                return 0xFFFF; // No implemented interfaces
+            }
+
+            return GetOrCreateSignatureId(GetSignature(interfaces));
+        }
+
+        /// <summary>
+        /// Writes data tzpe signature into ouput stream.
+        /// </summary>
+        /// <param name="typeDefinition">Tzpe reference or definition in Mono.Cecil format.</param>
+        /// <param name="writer">Target binary writer for writing signature information.</param>
+        /// <param name="alsoWriteSubType">If set to <c>true</c> also sub-type will be written.</param>
         public void WriteDataType(
             TypeReference typeDefinition,
             TinyBinaryWriter writer,
@@ -189,7 +210,7 @@ namespace MFMetaDataProcessor
                 if (alsoWriteSubType)
                 {
                     var array = (ArrayType)typeDefinition;
-                    WriteDataType(array.ElementType, writer, alsoWriteSubType);
+                    WriteDataType(array.ElementType, writer, true);
                 }
                 return;
             }
@@ -241,6 +262,24 @@ namespace MFMetaDataProcessor
                 foreach (var variable in variables)
                 {
                     WriteTypeInfo(variable.VariableType, binaryWriter);
+                }
+
+                return buffer.ToArray();
+            }
+        }
+
+        private Byte[] GetSignature(
+            Collection<TypeReference> interfaces)
+        {
+            using (var buffer = new MemoryStream())
+            using (var writer = new BinaryWriter(buffer)) // Only Write(Byte) will be used
+            {
+                var binaryWriter = TinyBinaryWriter.CreateBigEndianBinaryWriter(writer);
+                
+                binaryWriter.WriteByte((Byte)interfaces.Count);
+                foreach (var item in interfaces)
+                {
+                    WriteSubTypeInfo(item, binaryWriter);
                 }
 
                 return buffer.ToArray();
@@ -322,11 +361,11 @@ namespace MFMetaDataProcessor
 
         private void WriteSubTypeInfo(TypeReference typeDefinition, TinyBinaryWriter writer)
         {
-            // TODO: process type reference and type specs here too
+            // TODO: process type specs here too
             UInt16 referenceId;
             if (_typeReferenceTable.TryGetTypeReferenceId(typeDefinition, out referenceId))
             {
-                writer.WriteMetadataToken(((UInt32)referenceId << 2) | 0x01); // TODO: mark as external
+                writer.WriteMetadataToken(((UInt32)referenceId << 2) | 0x01);
             }
             else if (_typeDefinitionTable.TryGetTypeReferenceId(
                 typeDefinition.Resolve(), out referenceId))

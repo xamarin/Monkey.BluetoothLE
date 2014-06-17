@@ -114,14 +114,7 @@ namespace MFMetaDataProcessor
             writer.WriteUInt16(GetTypeReferenceOrDefinitionId(item.BaseType));
             writer.WriteUInt16(GetTypeReferenceOrDefinitionId(item.DeclaringType));
 
-            if (item.HasInterfaces)
-            {
-                writer.WriteUInt16(0x0009); // TODO: write real signature here
-            }
-            else
-            {
-                writer.WriteUInt16(0xFFFF);
-            }
+            writer.WriteUInt16(_signaturesTable.GetOrCreateSignatureId(item.Interfaces));
 
             var fieldsList = item.Fields.Where(field => !field.HasConstant).ToList();
             foreach (var field in fieldsList)
