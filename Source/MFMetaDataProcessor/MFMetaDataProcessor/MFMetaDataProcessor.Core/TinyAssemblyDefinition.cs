@@ -65,7 +65,6 @@ namespace MFMetaDataProcessor
             // TODO: add another flags (patch and reboot)
             writer.WriteUInt32(writer.IsBigEndian ? FLAGS_BIG_ENDIAN : FLAGS_LITTLE_ENDIAN);
 
-            // TODO: calculate this field (at least for Big Endian)
             writer.WriteUInt32(0); // Native methods checksum
             writer.WriteUInt32(0xFFFFFFFF); // Native methods offset
 

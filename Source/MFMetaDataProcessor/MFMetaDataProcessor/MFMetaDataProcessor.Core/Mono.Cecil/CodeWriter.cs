@@ -225,7 +225,6 @@ namespace MFMetaDataProcessor {
             {
                 instruction.Offset += offset;
 
-                // TODO: 
                 switch (instruction.OpCode.OperandType)
                 {
                     case OperandType.InlineString:

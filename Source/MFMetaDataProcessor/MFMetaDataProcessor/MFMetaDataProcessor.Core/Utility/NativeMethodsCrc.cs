@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using Mono.Cecil;
 
@@ -12,6 +13,8 @@ namespace MFMetaDataProcessor
     /// </summary>
     public sealed class NativeMethodsCrc
     {
+        private readonly HashSet<String> _generatedNames = new HashSet<String>(StringComparer.Ordinal);
+
         private readonly Byte[] _null = Encoding.ASCII.GetBytes("NULL");
 
         private readonly Byte[] _name;
@@ -55,8 +58,17 @@ namespace MFMetaDataProcessor
             var name = String.Concat(method.Name, (method.IsStatic ? "___STATIC__" : "___"),
                 String.Join("__", GetAllParameters(method)));
 
-            // TODO: add number suffix for non-unique method names
-            return name.Replace(".", String.Empty);
+            var originalName = name.Replace(".", String.Empty);
+
+            var index = 1;
+            name = originalName;
+            while (_generatedNames.Add(name))
+            {
+                name = String.Concat(originalName, index.ToString(CultureInfo.InvariantCulture));
+                ++index;
+            }
+
+            return name;
         }
 
         private IEnumerable<String> GetAllParameters(
