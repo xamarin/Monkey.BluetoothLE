@@ -95,7 +95,7 @@ namespace MFMetaDataProcessor
         public UInt16 GetOrCreateSignatureId(
             MethodDefinition methodDefinition)
         {
-            return GetOrCreateSignatureId(GetSignature(methodDefinition));
+            return GetOrCreateSignatureIdImpl(GetSignature(methodDefinition));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace MFMetaDataProcessor
         public UInt16 GetOrCreateSignatureId(
             FieldDefinition fieldDefinition)
         {
-            return GetOrCreateSignatureId(GetSignature(fieldDefinition.FieldType));
+            return GetOrCreateSignatureIdImpl(GetSignature(fieldDefinition.FieldType));
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace MFMetaDataProcessor
                 return 0x0000; // TODO: implement logic here
             }
 
-            return GetOrCreateSignatureId(GetSignature(methodReference));
+            return GetOrCreateSignatureIdImpl(GetSignature(methodReference));
         }
 
         /// <summary>
@@ -136,14 +136,14 @@ namespace MFMetaDataProcessor
                 return 0xFFFF; // No local variables
             }
 
-            return GetOrCreateSignatureId(GetSignature(variables));
+            return GetOrCreateSignatureIdImpl(GetSignature(variables));
         }
 
         /// <summary>
         /// Gets existing or creates new singature identifier for list of class interfaces.
         /// </summary>
         /// <param name="interfaces">List of interfaes information in Mono.Cecil format.</param>
-        public ushort GetOrCreateSignatureId(
+        public UInt16 GetOrCreateSignatureId(
             Collection<TypeReference> interfaces)
         {
             if (interfaces == null || interfaces.Count == 0)
@@ -151,7 +151,22 @@ namespace MFMetaDataProcessor
                 return 0xFFFF; // No implemented interfaces
             }
 
-            return GetOrCreateSignatureId(GetSignature(interfaces));
+            return GetOrCreateSignatureIdImpl(GetSignature(interfaces));
+        }
+
+        /// <summary>
+        /// Gets existing or creates new field default value (just writes value as is with size).
+        /// </summary>
+        /// <param name="defaultValue">Default field value in binary format.</param>
+        public UInt16 GetOrCreateSignatureId(
+            Byte[] defaultValue)
+        {
+            if (defaultValue == null || defaultValue.Length == 0)
+            {
+                return 0xFFFF; // No default value
+            }
+
+            return GetOrCreateSignatureIdImpl(GetSignature(defaultValue));
         }
 
         /// <summary>
@@ -301,7 +316,20 @@ namespace MFMetaDataProcessor
             }
         }
 
-        private UInt16 GetOrCreateSignatureId(
+        private Byte[] GetSignature(
+            Byte[] defaultValue)
+        {
+            using (var buffer = new MemoryStream())
+            using (var writer = new BinaryWriter(buffer))
+            {
+                writer.Write((Byte)defaultValue.Length);
+                writer.Write(defaultValue);
+
+                return buffer.ToArray();
+            }
+        }
+
+        private UInt16 GetOrCreateSignatureIdImpl(
             Byte[] signature)
         {
             UInt16 id;

@@ -68,8 +68,7 @@ namespace MFMetaDataProcessor
             WriteStringReference(writer, item.Name);
             writer.WriteUInt16(_signatures.GetOrCreateSignatureId(item));
 
-            // TODO: find out how to provide correct value here
-            writer.WriteUInt16(0xFFFF); // default value
+            writer.WriteUInt16(_signatures.GetOrCreateSignatureId(item.InitialValue));
             writer.WriteUInt16(GetFlags(item));
         }
 
