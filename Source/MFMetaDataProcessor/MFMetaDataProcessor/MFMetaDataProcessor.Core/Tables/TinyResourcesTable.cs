@@ -85,7 +85,7 @@ namespace MFMetaDataProcessor
                 switch (kind)
                 {
                     case ResourceKind.String:
-                        skip = 1; // TODO: Is it correct or we should calculate number of bytes?
+                        skip = 1;
                         padding = (4 - (bytes.Length % 4)) % 4 + 1;
                         break;
                     case ResourceKind.Binary:
