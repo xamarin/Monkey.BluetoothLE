@@ -26,29 +26,23 @@ namespace MFMetaDataProcessor
         private readonly IEnumerable<Resource> _resources;
 
         /// <summary>
-        /// Resource files table (used for registering files with resources).
+        /// Assembly tables context - contains all tables used for building target assembly.
         /// </summary>
-        private readonly TinyResourceFileTable _resourceFileTable;
-
-        /// <summary>
-        /// Resource data table (used for storing actual resources binary data).
-        /// </summary>
-        private readonly TinyResourceDataTable _resourceDataTable;
+        private readonly TinyTablesContext _context;
 
         /// <summary>
         /// Creates new instance of <see cref="TinyResourcesTable"/> object.
         /// </summary>
         /// <param name="resources">Original list of resouces in Mono.Cecil format.</param>
-        /// <param name="resourceFileTable">Resource files table.</param>
-        /// <param name="resourceDataTable">Resource data table.</param>
+        /// <param name="context">
+        /// Assembly tables context - contains all tables used for building target assembly.
+        /// </param>
         public TinyResourcesTable(
             IEnumerable<Resource> resources,
-            TinyResourceFileTable resourceFileTable,
-            TinyResourceDataTable resourceDataTable)
+            TinyTablesContext context)
         {
-            _resourceFileTable = resourceFileTable;
-            _resourceDataTable = resourceDataTable;
             _resources = resources.ToList();
+            _context = context;
         }
 
         /// <inheritdoc/>
@@ -78,7 +72,7 @@ namespace MFMetaDataProcessor
                     }
                 }
 
-                _resourceFileTable.AddResourceFile(item, count);
+                _context.ResourceFileTable.AddResourceFile(item, count);
             }
 
             foreach (var item in orderedResources)
@@ -103,7 +97,7 @@ namespace MFMetaDataProcessor
                     bytes = bytes.Skip(skip).Concat(Enumerable.Repeat((Byte)0, padding)).ToArray();
                 }
 
-                _resourceDataTable.AddResourceData(bytes);
+                _context.ResourceDataTable.AddResourceData(bytes);
 
                 writer.WriteInt16(item.Key);
                 writer.WriteByte((Byte)kind);

@@ -31,31 +31,17 @@ namespace MFMetaDataProcessor
         }
 
         /// <summary>
-        /// Signatures table (for obtaining method of field signature ID value).
-        /// </summary>
-        private readonly TinySignaturesTable _signatures;
-
-        /// <summary>
-        /// Type references table (for obtaining type reference ID value).
-        /// </summary>
-        private readonly TinyTypeReferenceTable _typeReferences;
-
-        /// <summary>
         /// Creates new instance of <see cref="TinyMemberReferenceTable"/> object.
         /// </summary>
         /// <param name="items">List of member references in Mono.Cecil format.</param>
-        /// <param name="stringTable">String references table (for obtaining string ID).</param>
-        /// <param name="signatures">Signatures table (for obtaining signature ID).</param>
-        /// <param name="typeReferences">Type references table (for obtaining type reference ID).</param>
+        /// <param name="context">
+        /// Assembly tables context - contains all tables used for building target assembly.
+        /// </param>
         public TinyMemberReferenceTable(
             IEnumerable<MemberReference> items,
-            TinyStringTable stringTable,
-            TinySignaturesTable signatures,
-            TinyTypeReferenceTable typeReferences)
-            : base(items, new MemberReferenceComparer(), stringTable)
+            TinyTablesContext context)
+            : base(items, new MemberReferenceComparer(), context)
         {
-            _signatures = signatures;
-            _typeReferences = typeReferences;
         }
 
         /// <summary>
@@ -77,12 +63,12 @@ namespace MFMetaDataProcessor
             MemberReference item)
         {
             UInt16 referenceId;
-            _typeReferences.TryGetTypeReferenceId(item.DeclaringType, out referenceId);
+            _context.TypeReferencesTable.TryGetTypeReferenceId(item.DeclaringType, out referenceId);
 
             WriteStringReference(writer, item.Name);
             writer.WriteUInt16(referenceId);
 
-            writer.WriteUInt16(_signatures.GetOrCreateSignatureId(item));
+            writer.WriteUInt16(_context.SignaturesTable.GetOrCreateSignatureId(item));
             writer.WriteUInt16(0); // padding
         }
     }

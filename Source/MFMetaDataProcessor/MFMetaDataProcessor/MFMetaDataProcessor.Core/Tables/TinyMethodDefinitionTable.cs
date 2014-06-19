@@ -31,31 +31,17 @@ namespace MFMetaDataProcessor
         }
 
         /// <summary>
-        /// Byte code table for obtaining byte code identifiers and RVAs.
-        /// </summary>
-        private readonly TinyByteCodeTable _byteCodeTable;
-
-        /// <summary>
-        /// Signatures table (for obtaining signature ID).
-        /// </summary>
-        private readonly TinySignaturesTable _signatures;
-
-        /// <summary>
         /// Creates new instance of <see cref="TinyMethodDefinitionTable"/> object.
         /// </summary>
         /// <param name="items">List of methods definitions in Mono.Cecil format.</param>
-        /// <param name="stringTable">String references table (for obtaining string ID).</param>
-        /// <param name="byteCodeTable">Byte code table (for obtaining method RVA).</param>
-        /// <param name="signatures">Signatures table (for obtaining signature ID).</param>
+        /// <param name="context">
+        /// Assembly tables context - contains all tables used for building target assembly.
+        /// </param>
         public TinyMethodDefinitionTable(
             IEnumerable<MethodDefinition> items,
-            TinyStringTable stringTable,
-            TinyByteCodeTable byteCodeTable,
-            TinySignaturesTable signatures)
-            :base(items, new MethodDefinitionComparer(), stringTable)
+            TinyTablesContext context)
+            :base(items, new MethodDefinitionComparer(), context)
         {
-            _byteCodeTable = byteCodeTable;
-            _signatures = signatures;
         }
 
         /// <summary>
@@ -77,7 +63,7 @@ namespace MFMetaDataProcessor
             MethodDefinition item)
         {
             WriteStringReference(writer, item.Name);
-            writer.WriteUInt16(_byteCodeTable.GetMethodRva(item));
+            writer.WriteUInt16(_context.ByteCodeTable.GetMethodRva(item));
 
             writer.WriteUInt32(GetFlags(item));
 
@@ -87,15 +73,15 @@ namespace MFMetaDataProcessor
                 ++parametersCount; // add implicit 'this' pointer into non-static methods
             }
 
-            _signatures.WriteDataType(item.ReturnType, writer);
+            _context.SignaturesTable.WriteDataType(item.ReturnType, writer);
 
             writer.WriteByte(parametersCount);
             writer.WriteByte((Byte)(item.HasBody ? item.Body.Variables.Count : 0));
             writer.WriteByte(CodeWriter.CalculateStackSize(item.Body));
 
-            var methodSignature = _signatures.GetOrCreateSignatureId(item);
+            var methodSignature = _context.SignaturesTable.GetOrCreateSignatureId(item);
             writer.WriteUInt16(item.HasBody ?
-                _signatures.GetOrCreateSignatureId(item.Body.Variables) :
+                _context.SignaturesTable.GetOrCreateSignatureId(item.Body.Variables) :
                 (item.IsAbstract ? (UInt16)0x0000 : (UInt16)0xFFFF));
             writer.WriteUInt16(methodSignature);
         }

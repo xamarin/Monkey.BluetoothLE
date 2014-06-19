@@ -17,27 +17,29 @@ namespace MFMetaDataProcessor
         private readonly Dictionary<T, UInt16> _idsByItemsDictionary;
 
         /// <summary>
-        /// String table - allows mapping string value to sting identifier in table.
+        /// Assembly tables context - contains all tables used for building target assembly.
         /// </summary>
-        private readonly TinyStringTable _stringTable;
+        protected readonly TinyTablesContext _context;
 
         /// <summary>
         /// Creates new instance of <see cref="TinyReferenceTableBase{T}"/> object.
         /// </summary>
         /// <param name="tinyTableItems">List of items for initial loading.</param>
         /// <param name="comparer">Custom comparer for items (type-specific).</param>
-        /// <param name="stringTable">String references table (for obtaining string ID).</param>
+        /// <param name="context">
+        /// Assembly tables context - contains all tables used for building target assembly.
+        /// </param>
         protected TinyReferenceTableBase(
             IEnumerable<T> tinyTableItems,
             IEqualityComparer<T> comparer,
-            TinyStringTable stringTable)
+            TinyTablesContext context)
         {
             _idsByItemsDictionary = tinyTableItems
                 .Select((reference, index) => new { reference, index })
                 .ToDictionary(item => item.reference, item => (UInt16)item.index,
                     comparer);
 
-            _stringTable = stringTable;
+            _context = context;
         }
 
         /// <inheritdoc/>
@@ -72,7 +74,7 @@ namespace MFMetaDataProcessor
         protected UInt16 GetOrCreateStringId(
             String value)
         {
-            return _stringTable.GetOrCreateStringId(value);
+            return _context.StringTable.GetOrCreateStringId(value);
         }
 
         /// <summary>

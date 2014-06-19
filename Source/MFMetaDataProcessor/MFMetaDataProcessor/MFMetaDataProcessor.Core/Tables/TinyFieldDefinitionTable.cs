@@ -31,11 +31,6 @@ namespace MFMetaDataProcessor
         }
 
         /// <summary>
-        /// Signatures table (used for obtaining field signature ID).
-        /// </summary>
-        private readonly TinySignaturesTable _signatures;
-
-        /// <summary>
         /// Maximal returned field reference id - used for emulating old MetadataProcessor behavior.
         /// </summary>
         private Int32 _maxReferenceId;
@@ -44,15 +39,14 @@ namespace MFMetaDataProcessor
         /// Creates new instance of <see cref="TinyFieldDefinitionTable"/> object.
         /// </summary>
         /// <param name="items">List of field definitions in Mono.Cecil format.</param>
-        /// <param name="stringTable">String references table (for obtaining string ID).</param>
-        /// <param name="signatures">Signatures refrences table (for obtaining signature ID).</param>
+        /// <param name="context">
+        /// Assembly tables context - contains all tables used for building target assembly.
+        /// </param>
         public TinyFieldDefinitionTable(
             IEnumerable<FieldDefinition> items,
-            TinyStringTable stringTable,
-            TinySignaturesTable signatures)
-            : base(items, new FieldDefinitionComparer(), stringTable)
+            TinyTablesContext context)
+            : base(items, new FieldDefinitionComparer(), context)
         {
-            _signatures = signatures;
         }
 
         /// <summary>
@@ -66,9 +60,9 @@ namespace MFMetaDataProcessor
             FieldDefinition item)
         {
             WriteStringReference(writer, item.Name);
-            writer.WriteUInt16(_signatures.GetOrCreateSignatureId(item));
+            writer.WriteUInt16(_context.SignaturesTable.GetOrCreateSignatureId(item));
 
-            writer.WriteUInt16(_signatures.GetOrCreateSignatureId(item.InitialValue));
+            writer.WriteUInt16(_context.SignaturesTable.GetOrCreateSignatureId(item.InitialValue));
             writer.WriteUInt16(GetFlags(item));
         }
 

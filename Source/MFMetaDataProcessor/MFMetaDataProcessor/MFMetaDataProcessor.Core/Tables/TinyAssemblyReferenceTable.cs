@@ -34,11 +34,13 @@ namespace MFMetaDataProcessor
         /// Creates new instance of <see cref="TinyAssemblyReferenceTable"/> object.
         /// </summary>
         /// <param name="items">List of assembly references in Mono.Cecil format.</param>
-        /// <param name="stringTable">String references table (for obtaining string ID).</param>
+        /// <param name="context">
+        /// Assembly tables context - contains all tables used for building target assembly.
+        /// </param>
         public TinyAssemblyReferenceTable(
             IEnumerable<AssemblyNameReference> items,
-            TinyStringTable stringTable)
-            : base(items, new AssemblyNameReferenceComparer(), stringTable)
+            TinyTablesContext context)
+            : base(items, new AssemblyNameReferenceComparer(), context)
         {
         }
 

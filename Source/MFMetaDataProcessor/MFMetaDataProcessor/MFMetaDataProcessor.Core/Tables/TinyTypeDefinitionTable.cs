@@ -33,52 +33,17 @@ namespace MFMetaDataProcessor
         }
 
         /// <summary>
-        /// Byte code table (for obtaining method IDs).
-        /// </summary>
-        private readonly TinyByteCodeTable _byteCodeTable;
-
-        /// <summary>
-        /// External type references table (for obtaining type reference ID).
-        /// </summary>
-        private readonly TinyTypeReferenceTable _typeReferences;
-
-        /// <summary>
-        /// Signatures table (for obtaining signature ID).
-        /// </summary>
-        private readonly TinySignaturesTable _signaturesTable;
-
-        /// <summary>
-        /// Fields definitions table (for field definition ID).
-        /// </summary>
-        private readonly TinyFieldDefinitionTable _fieldsTable;
-
-        /// <summary>
         /// Creates new instance of <see cref="TinyTypeDefinitionTable"/> object.
         /// </summary>
         /// <param name="items">List of types definitins in Mono.Cecil format.</param>
-        /// <param name="stringTable">String references table (for obtaining string ID).</param>
-        /// <param name="byteCodeTable">Byte code table (for obtaining method IDs).</param>
-        /// <param name="typeReferences">
-        /// External type references table (for obtaining type reference ID).
+        /// <param name="context">
+        /// Assembly tables context - contains all tables used for building target assembly.
         /// </param>
-        /// <param name="signaturesTable">Signatures table (for obtaining signature ID).</param>
-        /// <param name="fieldsTable">Fields definitions table (for field definition ID).</param>
         public TinyTypeDefinitionTable(
             IEnumerable<TypeDefinition> items,
-            TinyStringTable stringTable,
-            TinyByteCodeTable byteCodeTable,
-            TinyTypeReferenceTable typeReferences,
-            TinySignaturesTable signaturesTable,
-            TinyFieldDefinitionTable fieldsTable)
-            : base(items, new TypeDefinitionEqualityComparer(), stringTable)
+            TinyTablesContext context)
+            : base(items, new TypeDefinitionEqualityComparer(), context)
         {
-            _byteCodeTable = byteCodeTable;
-            _typeReferences = typeReferences;
-            _signaturesTable = signaturesTable;
-            _fieldsTable = fieldsTable;
-
-            _signaturesTable.SetTypeDefinitionTable(this);
-            _byteCodeTable.SetTypeDefinitionTable(this);
         }
 
         /// <summary>
@@ -114,17 +79,17 @@ namespace MFMetaDataProcessor
             writer.WriteUInt16(GetTypeReferenceOrDefinitionId(item.BaseType));
             writer.WriteUInt16(GetTypeReferenceOrDefinitionId(item.DeclaringType));
 
-            writer.WriteUInt16(_signaturesTable.GetOrCreateSignatureId(item.Interfaces));
+            writer.WriteUInt16(_context.SignaturesTable.GetOrCreateSignatureId(item.Interfaces));
 
             var fieldsList = item.Fields.Where(field => !field.HasConstant).ToList();
             foreach (var field in fieldsList)
             {
-                _signaturesTable.GetOrCreateSignatureId(field);
+                _context.SignaturesTable.GetOrCreateSignatureId(field);
             }
 
             WriteMethodBodies(item.Methods, writer);
 
-            _signaturesTable.WriteDataType(item, writer);
+            _context.SignaturesTable.WriteDataType(item, writer);
 
             WriteClassFields(fieldsList, writer);
 
@@ -135,27 +100,27 @@ namespace MFMetaDataProcessor
             IList<FieldDefinition> fieldsList,
             TinyBinaryWriter writer)
         {
-            var firstStaticFieldId = _fieldsTable.MaxFieldId;
+            var firstStaticFieldId = _context.FieldsTable.MaxFieldId;
             var staticFieldsNumber = 0;
             foreach (var field in fieldsList.Where(item => item.IsStatic))
             {
                 UInt16 fieldReferenceId;
-                _fieldsTable.TryGetFieldReferenceId(field, out fieldReferenceId);
+                _context.FieldsTable.TryGetFieldReferenceId(field, out fieldReferenceId);
                 firstStaticFieldId = Math.Min(firstStaticFieldId, fieldReferenceId);
 
-                _signaturesTable.GetOrCreateSignatureId(field);
+                _context.SignaturesTable.GetOrCreateSignatureId(field);
                 ++staticFieldsNumber;
             }
 
-            var firstInstanseFieldId = _fieldsTable.MaxFieldId;
+            var firstInstanseFieldId = _context.FieldsTable.MaxFieldId;
             var instanceFieldsNumber = 0;
             foreach (var field in fieldsList.Where(item => !item.IsStatic))
             {
                 UInt16 fieldReferenceId;
-                _fieldsTable.TryGetFieldReferenceId(field, out fieldReferenceId);
+                _context.FieldsTable.TryGetFieldReferenceId(field, out fieldReferenceId);
                 firstInstanseFieldId = Math.Min(firstInstanseFieldId, fieldReferenceId);
 
-                _signaturesTable.GetOrCreateSignatureId(field);
+                _context.SignaturesTable.GetOrCreateSignatureId(field);
                 ++instanceFieldsNumber;
             }
 
@@ -180,7 +145,7 @@ namespace MFMetaDataProcessor
             var virtualMethodsNumber = 0;
             foreach (var method in methods.Where(item => item.IsVirtual))
             {
-                firstMethodId = Math.Min(firstMethodId, _byteCodeTable.GetMethodId(method));
+                firstMethodId = Math.Min(firstMethodId, _context.ByteCodeTable.GetMethodId(method));
                 CreateMethodSignatures(method);
                 ++virtualMethodsNumber;
             }
@@ -188,7 +153,7 @@ namespace MFMetaDataProcessor
             var instanceMethodsNumber = 0;
             foreach (var method in methods.Where(item => !(item.IsVirtual || item.IsStatic)))
             {
-                firstMethodId = Math.Min(firstMethodId, _byteCodeTable.GetMethodId(method));
+                firstMethodId = Math.Min(firstMethodId, _context.ByteCodeTable.GetMethodId(method));
                 CreateMethodSignatures(method);
                 ++instanceMethodsNumber;
             }
@@ -196,14 +161,14 @@ namespace MFMetaDataProcessor
             var staticMethodsNumber = 0;
             foreach (var method in methods.Where(item => item.IsStatic))
             {
-                firstMethodId = Math.Min(firstMethodId, _byteCodeTable.GetMethodId(method));
+                firstMethodId = Math.Min(firstMethodId, _context.ByteCodeTable.GetMethodId(method));
                 CreateMethodSignatures(method);
                 ++staticMethodsNumber;
             }
 
             if (virtualMethodsNumber + instanceMethodsNumber + staticMethodsNumber == 0)
             {
-                firstMethodId = _byteCodeTable.NextMethodId;
+                firstMethodId = _context.ByteCodeTable.NextMethodId;
             }
 
             writer.WriteUInt16(firstMethodId);
@@ -216,10 +181,10 @@ namespace MFMetaDataProcessor
         private void CreateMethodSignatures(
             MethodDefinition method)
         {
-            _signaturesTable.GetOrCreateSignatureId(method);
+            _context.SignaturesTable.GetOrCreateSignatureId(method);
             if (method.HasBody)
             {
-                _signaturesTable.GetOrCreateSignatureId(method.Body.Variables);
+                _context.SignaturesTable.GetOrCreateSignatureId(method.Body.Variables);
             }
         }
 
@@ -227,7 +192,7 @@ namespace MFMetaDataProcessor
             TypeReference typeReference)
         {
             UInt16 referenceId;
-            if (_typeReferences.TryGetTypeReferenceId(typeReference, out referenceId))
+            if (_context.TypeReferencesTable.TryGetTypeReferenceId(typeReference, out referenceId))
             {
                 return (UInt16)(0x8000 | referenceId);
             }

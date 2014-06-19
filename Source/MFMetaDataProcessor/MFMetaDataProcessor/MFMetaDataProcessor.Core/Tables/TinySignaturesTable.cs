@@ -29,7 +29,7 @@ namespace MFMetaDataProcessor
             /// <inheritdoc/>
             public Int32 GetHashCode(Byte[] that)
             {
-                return that.Aggregate(37, (hash, item) => item ^ hash); // TODO: profile
+                return that.Aggregate(37, (hash, item) => item ^ hash);
             }
         }
 
@@ -68,24 +68,25 @@ namespace MFMetaDataProcessor
             new Dictionary<Byte[], UInt16>(new ByteArrayComparer());
 
         /// <summary>
+        /// Assembly tables context - contains all tables used for building target assembly.
+        /// </summary>
+        private readonly TinyTablesContext _context;
+
+        /// <summary>
         /// Last available signature id (offset in resulting table).
         /// </summary>
         private UInt16 _lastAvailableId;
 
         /// <summary>
-        /// Types definitions table (used for correct type code writing).
+        /// Creates new instance of <see cref="TinySignaturesTable"/> object.
         /// </summary>
-        private TinyTypeDefinitionTable _typeDefinitionTable;
-
-        /// <summary>
-        /// Types references table (used for correct type code writing).
-        /// </summary>
-        private TinyTypeReferenceTable _typeReferenceTable;
-
-        internal void SetTypeDefinitionTable(
-            TinyTypeDefinitionTable typeDefinitionTable)
+        /// <param name="context">
+        /// Assembly tables context - contains all tables used for building target assembly.
+        /// </param>
+        public TinySignaturesTable(
+            TinyTablesContext context)
         {
-            _typeDefinitionTable = typeDefinitionTable;
+            _context = context;
         }
 
         /// <summary>
@@ -253,7 +254,7 @@ namespace MFMetaDataProcessor
             using (var writer = new BinaryWriter(buffer)) // Only Write(Byte) will be used
             {
                 var binaryWriter = TinyBinaryWriter.CreateBigEndianBinaryWriter(writer);
-                writer.Write((Byte)(methodDefinition.HasThis ? 0x20 : 0x00)); // TODO: Extract method
+                writer.Write((Byte)(methodDefinition.HasThis ? 0x20 : 0x00));
 
                 writer.Write((Byte)(methodDefinition.Parameters.Count));
 
@@ -381,21 +382,15 @@ namespace MFMetaDataProcessor
                 .ToArray();
         }
 
-        public void SetTypeReferenceTable(
-            TinyTypeReferenceTable typeReferenceTable)
-        {
-            _typeReferenceTable = typeReferenceTable;
-        }
-
         private void WriteSubTypeInfo(TypeReference typeDefinition, TinyBinaryWriter writer)
         {
             // TODO: process type specs here too
             UInt16 referenceId;
-            if (_typeReferenceTable.TryGetTypeReferenceId(typeDefinition, out referenceId))
+            if (_context.TypeReferencesTable.TryGetTypeReferenceId(typeDefinition, out referenceId))
             {
                 writer.WriteMetadataToken(((UInt32)referenceId << 2) | 0x01);
             }
-            else if (_typeDefinitionTable.TryGetTypeReferenceId(
+            else if (_context.TypeDefinitionTable.TryGetTypeReferenceId(
                 typeDefinition.Resolve(), out referenceId))
             {
                 writer.WriteMetadataToken((UInt32)referenceId << 2);

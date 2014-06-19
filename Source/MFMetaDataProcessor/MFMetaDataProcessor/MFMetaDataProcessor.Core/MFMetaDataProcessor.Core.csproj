@@ -43,6 +43,7 @@
     <Compile Include="Tables\TinyResourceDataTable.cs" />
     <Compile Include="Tables\TinyResourceFileTable.cs" />
     <Compile Include="Tables\TinyResourcesTable.cs" />
+    <Compile Include="Tables\TinyTablesContext.cs" />
     <Compile Include="Tables\TinyTypeSpecificationsTable.cs" />
     <Compile Include="Utility\Crc32.cs" />
     <Compile Include="ITinyTable.cs" />
