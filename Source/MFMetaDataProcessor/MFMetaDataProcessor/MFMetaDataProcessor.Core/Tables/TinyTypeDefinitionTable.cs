@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Collections.Generic;
@@ -87,11 +88,16 @@ namespace MFMetaDataProcessor
                 _context.SignaturesTable.GetOrCreateSignatureId(field);
             }
 
-            WriteMethodBodies(item.Methods, writer);
+            using (var stream = new MemoryStream(6))
+            {
+                WriteClassFields(fieldsList, writer.GetMemoryBasedClone(stream));
 
-            _context.SignaturesTable.WriteDataType(item, writer);
+                WriteMethodBodies(item.Methods, writer);
 
-            WriteClassFields(fieldsList, writer);
+                _context.SignaturesTable.WriteDataType(item, writer);
+
+                writer.WriteBytes(stream.ToArray());
+            }
 
             writer.WriteUInt16(GetFlags(item)); // flags
         }
