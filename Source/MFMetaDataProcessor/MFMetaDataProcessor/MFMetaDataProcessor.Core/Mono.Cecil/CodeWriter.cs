@@ -226,7 +226,7 @@ namespace MFMetaDataProcessor {
 
             foreach (var handler in _body.ExceptionHandlers)
             {
-                _writer.WriteUInt16((UInt16)handler.HandlerType); // TODO: write conversion code !!!
+                _writer.WriteUInt16(ConvertExceptionHandlerType(handler.HandlerType));
                 _writer.WriteUInt16(
                     handler.HandlerType == ExceptionHandlerType.Filter
                         ? (UInt16)handler.FilterStart.Offset
@@ -311,7 +311,7 @@ namespace MFMetaDataProcessor {
                     _writer.WriteInt16((short)GetParameterIndex((ParameterDefinition)operand));
 		            break;
 		        case OperandType.InlineSig:
-		            // TODO: implement this property
+		            // TODO: implement this properly after finding when such code is generated
 		            //WriteMetadataToken (GetStandAloneSignature ((CallSite) operand));
 		            break;
 		        case OperandType.ShortInlineI:
@@ -361,8 +361,16 @@ namespace MFMetaDataProcessor {
         private UInt16 GetFieldReferenceId(
             FieldReference fieldReference)
         {
-            // TODO: implement it properly after refactoring
-            return 0x0000;
+            UInt16 referenceId;
+            if (_context.FieldReferencesTable.TryGetFieldReferenceId(fieldReference, out referenceId))
+            {
+                referenceId |= 0x8000; // External field reference
+            }
+            else
+            {
+                _context.FieldsTable.TryGetFieldReferenceId(fieldReference.Resolve(), out referenceId);
+            }
+            return referenceId;
         }
 
         private UInt16 GetMethodReferenceId(
@@ -430,5 +438,23 @@ namespace MFMetaDataProcessor {
 
 			return parameter.Index;
 		}
+
+        private static UInt16 ConvertExceptionHandlerType(
+            ExceptionHandlerType handlerType)
+        {
+            switch (handlerType)
+            {
+                case ExceptionHandlerType.Catch:
+                    return 0x0000;
+                case ExceptionHandlerType.Fault:
+                    return 0x0001;
+                case ExceptionHandlerType.Finally:
+                    return 0x0002;
+                case ExceptionHandlerType.Filter:
+                    return 0x0003;
+                default:
+                    return 0xFFFF;
+            }
+        }
     }
 }
