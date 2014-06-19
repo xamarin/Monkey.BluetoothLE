@@ -12,9 +12,9 @@ namespace MFMetaDataProcessor
     public sealed class TinyResourceFileTable : ITinyTable
     {
         /// <summary>
-        /// String table - allows mapping string value to sting identifier in table.
+        /// Assembly tables context - contains all tables used for building target assembly.
         /// </summary>
-        private readonly TinyStringTable _stringTable;
+        private readonly TinyTablesContext _context;
 
         /// <summary>
         /// List of resource fiels data for producing correct output records.
@@ -24,11 +24,13 @@ namespace MFMetaDataProcessor
         /// <summary>
         /// Creates new instance of <see cref="TinyResourceFileTable"/> object.
         /// </summary>
-        /// <param name="stringTable">String references table (for obtaining string ID).</param>
+        /// <param name="context">
+        /// Assembly tables context - contains all tables used for building target assembly.
+        /// </param>
         public TinyResourceFileTable(
-            TinyStringTable stringTable)
+            TinyTablesContext context)
         {
-            _stringTable = stringTable;
+            _context = context;
         }
 
         /// <summary>
@@ -41,7 +43,7 @@ namespace MFMetaDataProcessor
             UInt32 count)
         {
             var correctFileName = Path.ChangeExtension(item.Name, ".tinyresources");
-            var nameStringId = _stringTable.GetOrCreateStringId(correctFileName);
+            var nameStringId = _context.StringTable.GetOrCreateStringId(correctFileName);
 
             _resouces.Add(new Tuple<UInt16, UInt32>(nameStringId, count));
         }

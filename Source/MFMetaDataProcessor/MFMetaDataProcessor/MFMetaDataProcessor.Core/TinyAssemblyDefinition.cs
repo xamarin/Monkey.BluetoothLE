@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Mono.Cecil;
 
 namespace MFMetaDataProcessor
 {
@@ -20,14 +19,9 @@ namespace MFMetaDataProcessor
         private const UInt32 FLAGS_LITTLE_ENDIAN = 0x00000000;
 
         /// <summary>
-        /// Original assembly definition in Mono.Cecil format.
+        /// Assembly tables context - contains all tables used for building target assembly.
         /// </summary>
-        private readonly AssemblyDefinition _assemblyDefinition;
-
-        /// <summary>
-        /// String refernces table (for writing assembly name).
-        /// </summary>
-        private readonly TinyStringTable _stringTable;
+        private readonly TinyTablesContext _context;
 
         /// <summary>
         /// Offset for current table address writing.
@@ -42,14 +36,13 @@ namespace MFMetaDataProcessor
         /// <summary>
         /// Creates new instance of <see cref="TinyAssemblyDefinition"/> object.
         /// </summary>
-        /// <param name="assemblyDefinition">Original assembly definition in Mono.Cecil format.</param>
-        /// <param name="stringTable">String refernces table (for writing assembly name).</param>
+        /// <param name="context">
+        /// Assembly tables context - contains all tables used for building target assembly.
+        /// </param>
         public TinyAssemblyDefinition(
-            AssemblyDefinition assemblyDefinition,
-            TinyStringTable stringTable)
+            TinyTablesContext context)
         {
-            _assemblyDefinition = assemblyDefinition;
-            _stringTable = stringTable;
+            _context = context;
         }
 
         /// <summary>
@@ -62,16 +55,16 @@ namespace MFMetaDataProcessor
             writer.WriteString("MSSpot1");
             writer.WriteUInt32(0); // header CRC
             writer.WriteUInt32(0); // assembly CRC
-            // TODO: add another flags (patch and reboot)
+
             writer.WriteUInt32(writer.IsBigEndian ? FLAGS_BIG_ENDIAN : FLAGS_LITTLE_ENDIAN);
 
             writer.WriteUInt32(0); // Native methods checksum
             writer.WriteUInt32(0xFFFFFFFF); // Native methods offset
 
-            writer.WriteVersion(_assemblyDefinition.Name.Version);
+            writer.WriteVersion(_context.AssemblyDefinition.Name.Version);
 
             writer.WriteUInt16(
-                _stringTable.GetOrCreateStringId(_assemblyDefinition.Name.Name));
+                _context.StringTable.GetOrCreateStringId(_context.AssemblyDefinition.Name.Name));
             writer.WriteUInt16(1); // String table version
 
             _tablesOffset = writer.BaseStream.Position;

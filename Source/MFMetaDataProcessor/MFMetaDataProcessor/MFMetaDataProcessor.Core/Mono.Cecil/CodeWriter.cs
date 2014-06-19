@@ -1,5 +1,4 @@
 using System;
-using System.CodeDom;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -29,29 +28,14 @@ namespace MFMetaDataProcessor {
         private readonly TinyStringTable _stringTable;
 
         /// <summary>
-        /// Methods references table (used for obtaining method reference ID).
-        /// </summary>
-        private readonly TinyMemberReferenceTable _methodReferenceTable;
-
-        /// <summary>
-        /// Methods definitions table (used for obtaining method reference ID).
-        /// </summary>
-        private readonly TinyMethodDefinitionTable _methodDefinitionTable;
-
-        /// <summary>
-        /// Type references table (used for obtaining type reference ID).
-        /// </summary>
-        private readonly TinyTypeReferenceTable _typeReferenceTable;
-
-        /// <summary>
-        /// Type definitions table (used for obtaining type definition ID).
-        /// </summary>
-        private readonly TinyTypeDefinitionTable _typeDefinitionTable;
-
-        /// <summary>
         /// If this flas is set to <c>true</c> we should fix offsets in instuctions.
         /// </summary>
         private readonly Boolean _fixOperationsOffsets;
+
+        /// <summary>
+        /// Assembly tables context - contains all tables used for building target assembly.
+        /// </summary>
+        private readonly TinyTablesContext _context;
 
         /// <summary>
         /// Creates new instance of <see cref="Mono.Cecil.Cil.CodeWriter"/> object.
@@ -59,10 +43,9 @@ namespace MFMetaDataProcessor {
         /// <param name="method">Original method body in Mono.Cecil format.</param>
         /// <param name="writer">Binary writer for writing byte code in correct endianess.</param>
         /// <param name="stringTable">String references table (for obtaining string ID).</param>
-        /// <param name="methodReferenceTable">External methods references table.</param>
-        /// <param name="methodDefinitionTable">Internal methods definition table.</param>
-        /// <param name="typeReferenceTable">External types references table.</param>
-        /// <param name="typeDefinitionTable">Internal types definitions table.</param>
+        /// <param name="context">
+        /// Assembly tables context - contains all tables used for building target assembly.
+        /// </param>
         /// <param name="fixOperationsOffsets">
         /// If this flas is set to <c>true</c> we should fix offsets in instuctions.
         /// </param>
@@ -70,20 +53,15 @@ namespace MFMetaDataProcessor {
 	        MethodDefinition method,
             TinyBinaryWriter writer,
             TinyStringTable stringTable,
-            TinyMemberReferenceTable methodReferenceTable,
-            TinyMethodDefinitionTable methodDefinitionTable,
-            TinyTypeReferenceTable typeReferenceTable,
-            TinyTypeDefinitionTable typeDefinitionTable,
+            TinyTablesContext context,
             Boolean fixOperationsOffsets)
 	    {
-	        _writer = writer;
-            _stringTable = stringTable;
-            _methodReferenceTable = methodReferenceTable;
-            _methodDefinitionTable = methodDefinitionTable;
-            _typeReferenceTable = typeReferenceTable;
-            _typeDefinitionTable = typeDefinitionTable;
             _fixOperationsOffsets = fixOperationsOffsets;
+            _stringTable = stringTable;
+
             _body = method.Body;
+            _context = context;
+            _writer = writer;
         }
 
         /// <summary>
@@ -391,13 +369,13 @@ namespace MFMetaDataProcessor {
             MethodReference methodReference)
         {
             UInt16 referenceId;
-            if (_methodReferenceTable.TryGetMethodReferenceId(methodReference, out referenceId))
+            if (_context.MethodReferencesTable.TryGetMethodReferenceId(methodReference, out referenceId))
             {
                 referenceId |= 0x8000; // External method reference
             }
             else
             {
-                _methodDefinitionTable.TryGetMethodReferenceId(methodReference.Resolve(), out referenceId);
+                _context.MethodDefinitionTable.TryGetMethodReferenceId(methodReference.Resolve(), out referenceId);
             }
             return referenceId;
         }
@@ -407,13 +385,13 @@ namespace MFMetaDataProcessor {
             UInt16 typeReferenceMask = 0x4000)
         {
             UInt16 referenceId;
-            if (_typeReferenceTable.TryGetTypeReferenceId(typeReference, out referenceId))
+            if (_context.TypeReferencesTable.TryGetTypeReferenceId(typeReference, out referenceId))
             {
                 referenceId |= typeReferenceMask; // External type reference
             }
             else
             {
-                if (!_typeDefinitionTable.TryGetTypeReferenceId(typeReference.Resolve(), out referenceId))
+                if (!_context.TypeDefinitionTable.TryGetTypeReferenceId(typeReference.Resolve(), out referenceId))
                 {
                     return 0x8000;
                 }

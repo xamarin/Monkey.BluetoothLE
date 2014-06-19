@@ -31,23 +31,17 @@ namespace MFMetaDataProcessor
         }
 
         /// <summary>
-        /// Assembly references table (for obtaining assembly ID).
-        /// </summary>
-        private readonly TinyAssemblyReferenceTable _assemblyReferences;
-
-        /// <summary>
         /// Creates new instance of <see cref="TinyTypeReferenceTable"/> object.
         /// </summary>
         /// <param name="items">Type references list in Mono.Cecil format.</param>
-        /// <param name="assemblyReferences">Assembly references table (for obtaining assembly ID).</param>
-        /// <param name="stringTable">String references table (for obtaining string ID).</param>
+        /// <param name="context">
+        /// Assembly tables context - contains all tables used for building target assembly.
+        /// </param>
         public TinyTypeReferenceTable(
             IEnumerable<TypeReference> items,
-            TinyAssemblyReferenceTable assemblyReferences,
-            TinyStringTable stringTable)
-            : base(items, new TypeReferenceEqualityComparer(), stringTable)
+            TinyTablesContext context)
+            : base(items, new TypeReferenceEqualityComparer(), context)
         {
-            _assemblyReferences = assemblyReferences;
         }
 
         /// <summary>
@@ -90,7 +84,7 @@ namespace MFMetaDataProcessor
             switch (scope.MetadataScopeType)
             {
                 case MetadataScopeType.AssemblyNameReference:
-                    return _assemblyReferences.GetReferenceId(scope as AssemblyNameReference);
+                    return _context.AssemblyReferenceTable.GetReferenceId(scope as AssemblyNameReference);
                 case MetadataScopeType.ModuleDefinition:
                 case MetadataScopeType.ModuleReference:
                     return 0;
