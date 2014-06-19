@@ -110,18 +110,22 @@ namespace MFMetaDataProcessor
         }
 
         /// <summary>
+        /// Gets existing or creates new singature identifier for field reference.
+        /// </summary>
+        /// <param name="fieldReference">Field reference in Mono.Cecil format.</param>
+        public UInt16 GetOrCreateSignatureId(
+            FieldReference fieldReference)
+        {
+            return GetOrCreateSignatureIdImpl(GetSignature(fieldReference));
+        }
+
+        /// <summary>
         /// Gets existing or creates new singature identifier for member reference.
         /// </summary>
-        /// <param name="memberReference">Member reference in Mono.Cecil format.</param>
+        /// <param name="methodReference">Method reference in Mono.Cecil format.</param>
         public UInt16 GetOrCreateSignatureId(
-            MemberReference memberReference)
+            MethodReference methodReference)
         {
-            var methodReference = memberReference as MethodReference;
-            if (methodReference == null)
-            {
-                return 0x0000; // TODO: implement logic here
-            }
-
             return GetOrCreateSignatureIdImpl(GetSignature(methodReference));
         }
 
@@ -248,18 +252,33 @@ namespace MFMetaDataProcessor
         }
 
         private Byte[] GetSignature(
-            MethodReference methodDefinition)
+            FieldReference fieldReference)
         {
             using (var buffer = new MemoryStream())
             using (var writer = new BinaryWriter(buffer)) // Only Write(Byte) will be used
             {
                 var binaryWriter = TinyBinaryWriter.CreateBigEndianBinaryWriter(writer);
-                writer.Write((Byte)(methodDefinition.HasThis ? 0x20 : 0x00));
 
-                writer.Write((Byte)(methodDefinition.Parameters.Count));
+                binaryWriter.WriteByte(0x06); // Field reference calling convention
+                WriteTypeInfo(fieldReference.FieldType, binaryWriter);
 
-                WriteTypeInfo(methodDefinition.ReturnType, binaryWriter);
-                foreach (var parameter in methodDefinition.Parameters)
+                return buffer.ToArray();
+            }
+        }
+
+        private Byte[] GetSignature(
+            IMethodSignature methodReference)
+        {
+            using (var buffer = new MemoryStream())
+            using (var writer = new BinaryWriter(buffer)) // Only Write(Byte) will be used
+            {
+                var binaryWriter = TinyBinaryWriter.CreateBigEndianBinaryWriter(writer);
+                writer.Write((Byte)(methodReference.HasThis ? 0x20 : 0x00));
+
+                writer.Write((Byte)(methodReference.Parameters.Count));
+
+                WriteTypeInfo(methodReference.ReturnType, binaryWriter);
+                foreach (var parameter in methodReference.Parameters)
                 {
                     WriteTypeInfo(parameter.ParameterType, binaryWriter);
                 }
