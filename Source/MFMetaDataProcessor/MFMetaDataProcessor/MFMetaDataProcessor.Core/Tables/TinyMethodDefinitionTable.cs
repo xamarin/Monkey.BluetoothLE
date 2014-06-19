@@ -74,6 +74,11 @@ namespace MFMetaDataProcessor
             }
 
             _context.SignaturesTable.WriteDataType(item.ReturnType, writer);
+            if (item.ReturnType is TypeSpecification)
+            {
+                _context.TypeSpecificationsTable
+                    .GetOrCreateTypeSpecificationId(item.ReturnType);
+            }
 
             writer.WriteByte(parametersCount);
             writer.WriteByte((Byte)(item.HasBody ? item.Body.Variables.Count : 0));

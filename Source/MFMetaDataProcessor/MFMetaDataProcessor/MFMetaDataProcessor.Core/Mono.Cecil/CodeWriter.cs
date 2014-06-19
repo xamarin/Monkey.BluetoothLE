@@ -350,13 +350,31 @@ namespace MFMetaDataProcessor {
                     _writer.WriteUInt16(GetFieldReferenceId((FieldReference)operand));
                     break;
                 case OperandType.InlineTok:
-                    //TODO: implement this properly (different for each case)
-                    _writer.WriteUInt32(0x04000000);
+                    _writer.WriteUInt32(GetMetadataToken((IMetadataTokenProvider)operand));
                     break;
                 default:
 		            throw new ArgumentException();
 		    }
 		}
+
+        private UInt32 GetMetadataToken(
+            IMetadataTokenProvider token)
+        {
+            UInt16 referenceId = 0;
+            switch (token.MetadataToken.TokenType)
+            {
+                case TokenType.TypeRef:
+                    _context.TypeReferencesTable.TryGetTypeReferenceId((TypeReference)token, out referenceId);
+                    return (UInt32)0x01000000 | referenceId;
+                case TokenType.TypeDef:
+                    _context.TypeDefinitionTable.TryGetTypeReferenceId((TypeDefinition)token, out referenceId);
+                    return (UInt32)0x04000000 | referenceId;
+                case TokenType.TypeSpec:
+                    _context.TypeSpecificationsTable.TryGetTypeReferenceId((TypeReference) token, out referenceId);
+                    return (UInt32)0x08000000 | referenceId;
+            }
+            return 0U;
+        }
 
         private UInt16 GetFieldReferenceId(
             FieldReference fieldReference)
