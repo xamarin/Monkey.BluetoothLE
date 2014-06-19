@@ -52,18 +52,20 @@ namespace MFMetaDataProcessor
         public void Write(
             TinyBinaryWriter writer)
         {
+            var offset = 0U;
             foreach (var item in _resouces)
             {
                 writer.WriteUInt32(0x02); // Version
-                writer.WriteUInt32(0x04); // TODO: Size of header
-                writer.WriteUInt32(0x08); // TODO: Size of resouce header
+                writer.WriteUInt32(0x04); // Size of header
+                writer.WriteUInt32(0x08); // Size of resouce header
 
                 writer.WriteUInt32(item.Item2);
                 
                 writer.WriteUInt16(item.Item1);
                 writer.WriteUInt16(0x0); // paddding
 
-                writer.WriteUInt32(0x00); // TODO: which offset should be used?
+                writer.WriteUInt32(offset);
+                offset += 8; // Size of resource table record
             }
 
         }
