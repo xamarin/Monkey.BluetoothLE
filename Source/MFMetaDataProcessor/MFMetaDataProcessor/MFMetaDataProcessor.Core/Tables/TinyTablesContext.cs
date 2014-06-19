@@ -36,9 +36,9 @@ namespace MFMetaDataProcessor
             var memberReferences = mainModule.GetMemberReferences()
                 .Where(item => !item.DeclaringType.Name.EndsWith("Attribute"))
                 .ToList();
-            FieldReferencesTable = new TinyMemberReferenceTable(
+            FieldReferencesTable = new TinyFieldReferenceTable(
                 memberReferences.OfType<FieldReference>(), this);
-            MethodReferencesTable = new TinyMemberReferenceTable(
+            MethodReferencesTable = new TinyMethodReferenceTable(
                 memberReferences.OfType<MethodReference>(), this);
 
             // Internal types definitions
@@ -83,9 +83,9 @@ namespace MFMetaDataProcessor
 
         public TinyTypeReferenceTable TypeReferencesTable { get; private set; }
 
-        public TinyMemberReferenceTable FieldReferencesTable { get; private set; }
+        public TinyFieldReferenceTable FieldReferencesTable { get; private set; }
 
-        public TinyMemberReferenceTable MethodReferencesTable { get; private set; }
+        public TinyMethodReferenceTable MethodReferencesTable { get; private set; }
 
         public TinyFieldDefinitionTable FieldsTable { get; private set; }
 
