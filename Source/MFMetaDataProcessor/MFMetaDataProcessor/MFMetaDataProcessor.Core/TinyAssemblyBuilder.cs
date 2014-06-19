@@ -71,7 +71,7 @@ namespace MFMetaDataProcessor
 
             yield return TinyEmptyTable.Instance; // Attributes
 
-            yield return context.TypeSpecs;
+            yield return context.TypeSpecificationsTable;
 
             yield return context.ResourcesTable;
 

@@ -52,9 +52,7 @@ namespace MFMetaDataProcessor
                     .Where(field => !field.HasConstant), this);
             MethodDefinitionTable = new TinyMethodDefinitionTable(
                 types.SelectMany(item => GetOrderedMethods(item.Methods)), this);
-            TypeSpecs = types.Any(item => item.IsEnum) // TODO: Implement it correctly
-                ? new TinyTypeSpecificationsTable() :
-                TinyEmptyTable.Instance;
+            TypeSpecificationsTable = new TinyTypeSpecificationsTable(this);
 
             // Resources information
 
@@ -93,7 +91,7 @@ namespace MFMetaDataProcessor
 
         public TinyTypeDefinitionTable TypeDefinitionTable { get; private set; }
 
-        public ITinyTable TypeSpecs { get; private set; }
+        public TinyTypeSpecificationsTable TypeSpecificationsTable { get; private set; }
 
         public TinyResourcesTable ResourcesTable { get; private set; }
 

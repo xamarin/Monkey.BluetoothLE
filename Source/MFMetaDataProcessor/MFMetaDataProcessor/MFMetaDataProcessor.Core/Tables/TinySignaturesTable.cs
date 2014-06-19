@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Mono.Cecil;
@@ -106,7 +107,7 @@ namespace MFMetaDataProcessor
         public UInt16 GetOrCreateSignatureId(
             FieldDefinition fieldDefinition)
         {
-            return GetOrCreateSignatureIdImpl(GetSignature(fieldDefinition.FieldType));
+            return GetOrCreateSignatureIdImpl(GetSignature(fieldDefinition.FieldType, true));
         }
 
         /// <summary>
@@ -174,6 +175,12 @@ namespace MFMetaDataProcessor
             return GetOrCreateSignatureIdImpl(GetSignature(defaultValue));
         }
 
+        public ushort GetOrCreateSignatureId(
+            TypeReference typeReference)
+        {
+            return GetOrCreateSignatureIdImpl(GetSignature(typeReference, false));
+        }
+
         /// <summary>
         /// Writes data tzpe signature into ouput stream.
         /// </summary>
@@ -190,6 +197,11 @@ namespace MFMetaDataProcessor
             {
                 writer.WriteByte((Byte)dataType);
                 return;
+            }
+
+            if (typeDefinition is TypeSpecification)
+            {
+               //Debug.Fail("Gotcha!");
             }
 
             if (typeDefinition.MetadataType == MetadataType.Class)
@@ -235,7 +247,6 @@ namespace MFMetaDataProcessor
                 return;
             }
 
-            // TODO: implement full checking
             writer.WriteByte(0x00);
         }
 
@@ -322,14 +333,18 @@ namespace MFMetaDataProcessor
         }
 
         private Byte[] GetSignature(
-            TypeReference typeReference)
+            TypeReference typeReference,
+            Boolean isFieldSignature)
         {
             using (var buffer = new MemoryStream())
             using (var writer = new BinaryWriter(buffer)) // Only Write(Byte) will be used
             {
                 var binaryWriter = TinyBinaryWriter.CreateBigEndianBinaryWriter(writer);
-                
-                writer.Write((Byte)0x06); // Field signature prefix
+
+                if (isFieldSignature)
+                {
+                    writer.Write((Byte)0x06); // Field signature prefix
+                }
                 WriteTypeInfo(typeReference, binaryWriter);
 
                 return buffer.ToArray();
@@ -358,7 +373,6 @@ namespace MFMetaDataProcessor
                 return id;
             }
 
-            // TODO: add caching for overlapped signatures and make this algorithm more effective
             var fullSignatures = GetFullSignaturesArray();
             for (var i = 0; i < fullSignatures.Length - signature.Length; ++i)
             {
@@ -403,9 +417,13 @@ namespace MFMetaDataProcessor
 
         private void WriteSubTypeInfo(TypeReference typeDefinition, TinyBinaryWriter writer)
         {
-            // TODO: process type specs here too
             UInt16 referenceId;
-            if (_context.TypeReferencesTable.TryGetTypeReferenceId(typeDefinition, out referenceId))
+            if (typeDefinition is TypeSpecification &&
+                _context.TypeSpecificationsTable.TryGetTypeReferenceId(typeDefinition, out referenceId))
+            {
+                    writer.WriteMetadataToken(((UInt32)referenceId << 2) | 0x04);
+            }
+            else if (_context.TypeReferencesTable.TryGetTypeReferenceId(typeDefinition, out referenceId))
             {
                 writer.WriteMetadataToken(((UInt32)referenceId << 2) | 0x01);
             }
