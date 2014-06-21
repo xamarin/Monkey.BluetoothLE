@@ -2,47 +2,37 @@
 using System.IO;
 using System.Linq;
 using Mono.Cecil;
+using NUnit.Framework;
 
 namespace MFMetaDataProcessor.Tests
 {
-    class Program
+    [TestFixture]
+    public sealed class TestPreprocessedFiles
     {
-        static void Main()
+        [Test]
+        public void CompareProcessingResultsTest()
         {
-            var result = Directory.GetDirectories(@"Data")
-                .Select(Path.GetFileName)
-                .Aggregate(true,
-                    (current, directory) => current & TestSingleAssembly(directory));
-
-            if (!result)
+            foreach (var name in Directory.GetDirectories(@"Data").Select(Path.GetFileName))
             {
-                Console.ReadLine();
+                TestSingleAssembly(name, "le", TinyBinaryWriter.CreateLittleEndianBinaryWriter);
+                TestSingleAssembly(name, "be", TinyBinaryWriter.CreateBigEndianBinaryWriter);
             }
         }
 
-        private static Boolean TestSingleAssembly(
-            String name)
-        {
-            return
-                TestSingleAssembly(name, "le", TinyBinaryWriter.CreateLittleEndianBinaryWriter) &
-                TestSingleAssembly(name, "be", TinyBinaryWriter.CreateBigEndianBinaryWriter);
-        }
-
-
-        private static Boolean TestSingleAssembly(
+        private static void TestSingleAssembly (
             String name, String endianness,
             Func<BinaryWriter, TinyBinaryWriter> getBinaryWriter)
-    {
+        {
             var assemblyDefinition = AssemblyDefinition.ReadAssembly(
                 String.Format(@"Data\{0}\{0}.exe", Path.GetFileName(name)));
 
             var fileName = ProcessSingleFile(name, endianness,
                 assemblyDefinition, getBinaryWriter);
 
-            return CompareFiles(fileName);
+            CompareFiles(fileName);
         }
 
-        private static String ProcessSingleFile(
+        private static String ProcessSingleFile (
             String name, String subDirectoryName,
             AssemblyDefinition assemblyDefinition,
             Func<BinaryWriter, TinyBinaryWriter> getBinaryWriter)
@@ -59,23 +49,17 @@ namespace MFMetaDataProcessor.Tests
             return fileName;
         }
 
-        private static Boolean CompareFiles(
-            String name)
+        private static void CompareFiles (String name)
         {
             var expetedFileName = Path.ChangeExtension(name, ".pe");
 
             var expectedBytes = File.ReadAllBytes(expetedFileName);
             var realBytes = File.ReadAllBytes(name);
 
-            var result = (expectedBytes.Length == realBytes.Length &&
-                expectedBytes.SequenceEqual(realBytes));
-
-            if (!result)
-            {
-                Console.WriteLine(name);
-            }
-
-            return result;
+            Assert.AreEqual(expectedBytes.Length, realBytes.Length,
+                "Size is not equal for file " + name);
+            Assert.AreEqual(expectedBytes, realBytes,
+                "Data is not equal for file " + name);
         }
     }
 }
