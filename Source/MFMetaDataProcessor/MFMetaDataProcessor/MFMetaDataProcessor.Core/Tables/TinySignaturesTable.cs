@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Mono.Cecil;
@@ -57,9 +56,9 @@ namespace MFMetaDataProcessor
             _primitiveTypes.Add(typeof(String).FullName, TinyDataType.DATATYPE_STRING);
             _primitiveTypes.Add(typeof(Boolean).FullName, TinyDataType.DATATYPE_BOOLEAN);
 
-            _primitiveTypes.Add(typeof(DateTime).FullName, TinyDataType.DATATYPE_DATETIME);
-            _primitiveTypes.Add(typeof(TimeSpan).FullName, TinyDataType.DATATYPE_TIMESPAN);
             _primitiveTypes.Add(typeof(Object).FullName, TinyDataType.DATATYPE_OBJECT);
+            _primitiveTypes.Add(typeof(IntPtr).FullName, TinyDataType.DATATYPE_I4);
+            _primitiveTypes.Add(typeof(UIntPtr).FullName, TinyDataType.DATATYPE_U4);
         }
 
         /// <summary>
