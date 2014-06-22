@@ -44,7 +44,7 @@ namespace MFMetaDataProcessor
             // Internal types definitions
 
             var types = SortTypesAccordingUsages(
-                mainModule.GetTypes().Where(item => item.FullName != "<Module>"));
+                mainModule.GetTypes().Where(item => item.FullName != "<Module>"), mainModule);
 
             TypeDefinitionTable = new TinyTypeDefinitionTable(types, this);
             FieldsTable = new TinyFieldDefinitionTable(
@@ -118,29 +118,30 @@ namespace MFMetaDataProcessor
 
 
         private static List<TypeDefinition> SortTypesAccordingUsages(
-            IEnumerable<TypeDefinition> types)
+            IEnumerable<TypeDefinition> types, ModuleDefinition mainModule)
         {
-            return SortTypesAccordingUsagesImpl(types.OrderBy(item => item.Name))
+            return SortTypesAccordingUsagesImpl(types.OrderBy(item => item.Name), mainModule)
                 .Distinct()
                 .ToList();
         }
 
         private static IEnumerable<TypeDefinition> SortTypesAccordingUsagesImpl(
-            IEnumerable<TypeDefinition> types)
+            IEnumerable<TypeDefinition> types, ModuleDefinition mainModule)
         {
             foreach (var type in types)
             {
                 if (type.DeclaringType != null)
                 {
                     foreach (var declaredIn in SortTypesAccordingUsagesImpl(
-                        Enumerable.Repeat(type.DeclaringType, 1)))
+                        Enumerable.Repeat(type.DeclaringType, 1), mainModule))
                     {
                         yield return declaredIn;
                     }
                 }
 
                 foreach (var implement in SortTypesAccordingUsagesImpl(
-                    type.Interfaces.Select(itf => itf.Resolve())))
+                    type.Interfaces.Select(itf => itf.Resolve())
+                        .Where(itf => itf.Module.FullyQualifiedName == mainModule.FullyQualifiedName), mainModule))
                 {
                     yield return implement;
                 }
