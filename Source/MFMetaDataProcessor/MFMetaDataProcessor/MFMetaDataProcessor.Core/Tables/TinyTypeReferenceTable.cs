@@ -74,22 +74,22 @@ namespace MFMetaDataProcessor
             WriteStringReference(writer, item.Name);
             WriteStringReference(writer, item.Namespace);
 
-            writer.WriteUInt16(GetScope(item.Scope)); // scope - TBL_AssemblyRef | TBL_TypeRef // 0x8000
+            writer.WriteUInt16(GetScope(item)); // scope - TBL_AssemblyRef | TBL_TypeRef // 0x8000
             writer.WriteUInt16(0); // padding
         }
 
         private UInt16 GetScope(
-            IMetadataScope scope)
+            TypeReference typeReference)
         {
-            switch (scope.MetadataScopeType)
+            if (typeReference.DeclaringType == null)
             {
-                case MetadataScopeType.AssemblyNameReference:
-                    return _context.AssemblyReferenceTable.GetReferenceId(scope as AssemblyNameReference);
-                case MetadataScopeType.ModuleDefinition:
-                case MetadataScopeType.ModuleReference:
-                    return 0;
-                default:
-                    return 0;
+                return _context.AssemblyReferenceTable.GetReferenceId(typeReference.Scope as AssemblyNameReference);
+            }
+            else
+            {
+                UInt16 referenceId;
+                _context.TypeReferencesTable.TryGetTypeReferenceId(typeReference.DeclaringType, out referenceId);
+                return (UInt16)(0x8000 | referenceId);
             }
         }
     }
