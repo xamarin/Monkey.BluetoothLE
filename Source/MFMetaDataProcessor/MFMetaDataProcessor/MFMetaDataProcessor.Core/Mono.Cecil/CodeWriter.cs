@@ -209,6 +209,7 @@ namespace MFMetaDataProcessor {
                     case OperandType.InlineMethod:
                     case OperandType.InlineField:
                     case OperandType.InlineType:
+                    case OperandType.InlineBrTarget:
                         // In full .NET these instructions followed by double word operand
                         // but in .NET Micro Framework these instruction's operand are word
                         offset -= 2;
@@ -295,7 +296,8 @@ namespace MFMetaDataProcessor {
 		        case OperandType.InlineBrTarget:
 		        {
 		            var target = (Instruction) operand;
-                    _writer.WriteInt32(GetTargetOffset(target) - (instruction.Offset + opcode.Size + 4));
+                    _writer.WriteInt16((Int16)
+                        (GetTargetOffset(target) - (instruction.Offset + opcode.Size + 2)));
 		            break;
 		        }
 		        case OperandType.ShortInlineVar:
