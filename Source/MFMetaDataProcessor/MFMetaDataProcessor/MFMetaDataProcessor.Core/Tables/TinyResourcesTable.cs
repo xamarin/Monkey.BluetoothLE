@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Resources;
 using Mono.Cecil;
@@ -16,9 +17,12 @@ namespace MFMetaDataProcessor
         private enum ResourceKind : byte
         {
             None = 0x00,
+            Font = 0x02,
             String = 0x03,
             Binary = 0x04
         }
+
+        private const UInt32 FONT_HEADER_MAGIC = 0xf995b0a8;
 
         /// <summary>
         /// Original list of resouces in Mono.Cecil format.
@@ -66,7 +70,7 @@ namespace MFMetaDataProcessor
 
                         orderedResources.Add(GenerateIdFromResourceName(resourceName),
                             new Tuple<ResourceKind, Byte[]>(
-                                (resourceType.EndsWith(".String") ? ResourceKind.String : ResourceKind.Binary),
+                                GetResourceKind(resourceType, resourceData),
                                 resourceData));
                         ++count;
                     }
@@ -91,6 +95,9 @@ namespace MFMetaDataProcessor
                     case ResourceKind.Binary:
                         skip = 4;
                         break;
+                    case ResourceKind.Font:
+                        skip = 32; // File size + resource header size
+                        break;
                 }
                 if (padding != 0 || skip != 0)
                 {
@@ -113,6 +120,25 @@ namespace MFMetaDataProcessor
                 writer.WriteByte((Byte)ResourceKind.None);
                 writer.WriteByte(0x00);
                 writer.WriteInt32(offset);
+            }
+        }
+
+        private static ResourceKind GetResourceKind(
+            String resourceType,
+            Byte[] resourceData)
+        {
+            if (resourceType.EndsWith(".String"))
+            {
+                return ResourceKind.String;
+            }
+
+            using(var stream = new MemoryStream(resourceData))
+            using (var reader = new BinaryReader(stream))
+            {
+                var size = reader.ReadUInt32();
+                return (size > 4 && reader.ReadUInt32() == FONT_HEADER_MAGIC
+                    ? ResourceKind.Font
+                    : ResourceKind.Binary);
             }
         }
 
