@@ -167,6 +167,11 @@ namespace MFMetaDataProcessor
                 flag |= FD_HasAttributes;
             }
 
+            if (field.RVA != 0)
+            {
+                flag |= FD_HasFieldRVA;
+            }
+
             return flag;
         }
     }
