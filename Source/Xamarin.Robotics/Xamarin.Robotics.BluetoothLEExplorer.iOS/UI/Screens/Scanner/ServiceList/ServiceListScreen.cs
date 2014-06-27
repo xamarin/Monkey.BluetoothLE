@@ -69,7 +69,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.DeviceDeta
 			//			> value
 			//			> descriptor[s]
 
-			this.Title = this._connectedDevice.Name;
+			this.Title = this._connectedDevice.Name==null?"<null device name>":this._connectedDevice.Name;
 
 			// when a device disconnects, show an alert and unload this screen
 			Adapter.Current.DeviceDisconnected += (object sender, DeviceConnectionEventArgs e) => {

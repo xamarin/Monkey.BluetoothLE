@@ -227,7 +227,7 @@ Global
 		{C5E6963D-D0BA-4FD7-A102-902FFB44D6CD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Xamarin.Robotics.BluetoothLEExplorer.Droid\Xamarin.Robotics.BluetoothLEExplorer.Droid.csproj
+		StartupItem = Xamarin.Robotics.BluetoothLEExplorer.iOS\Xamarin.Robotics.BluetoothLEExplorer.iOS.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

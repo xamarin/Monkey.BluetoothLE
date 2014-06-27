@@ -72,8 +72,11 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 			bool successful = false;
 			if((this.Properties & CharacteristicPropertyType.Read) != 0) {
 				Console.WriteLine ("Characteristic.RequestValue, PropertyType = Read, requesting updates");
+
 				successful = true;
 			
+
+
 				this.ValueUpdated (this, new CharacteristicReadEventArgs () { });
 			}
 			if ((this.Properties & CharacteristicPropertyType.Notify) != 0) {

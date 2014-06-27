@@ -32,9 +32,17 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.ServiceDet
 			this._tableSource = new CharacteristicTableSource ();
 
 //			// when the characteristic is selected in the table, make a request to disover the descriptors for it.
-//			this._tableSource.CharacteristicSelected += (object sender, CharacteristicTableSource.CharacteristicSelectedEventArgs e) => {
+			this._tableSource.CharacteristicSelected += (object sender, CharacteristicTableSource.CharacteristicSelectedEventArgs e) => {
+
+				Console.WriteLine("Characteristic: " + e.Characteristic.Name);
+
+
+				var _characteristicDetailScreen = new CharacteristicDetailScreen();
+				_characteristicDetailScreen.SetDeviceServiceAndCharacteristic ( this._connectedDevice, this._currentService, e.Characteristic );
+				this.NavigationController.PushViewController(_characteristicDetailScreen, true);
+
 //				this._connectedDevice.DiscoverDescriptors(e.Characteristic);
-//			};
+			};
 		}
 
 		public override void ViewDidLoad ()

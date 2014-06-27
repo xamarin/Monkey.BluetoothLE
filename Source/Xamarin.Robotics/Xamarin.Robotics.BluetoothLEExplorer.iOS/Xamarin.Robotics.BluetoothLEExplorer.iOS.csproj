@@ -90,12 +90,13 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="MBProgressHUD">
-      <HintPath>..\Components\mbprogresshud-0.5.2\lib\ios\MBProgressHUD.dll</HintPath>
+      <HintPath>..\Components\mbprogresshud-0.8\lib\ios\MBProgressHUD.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="UI\" />
+    <Folder Include="UI\Screens\Scanner\CharacteristicDetail\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -118,6 +119,7 @@
     <Compile Include="UI\Screens\Scanner\CharacteristicList\CharacteristicListScreen.designer.cs">
       <DependentUpon>CharacteristicListScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Screens\Scanner\CharacteristicDetail\CharacteristicDetailScreen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
@@ -163,14 +165,14 @@
       <Project>{453394D3-F7E4-49E4-8FAE-36F1D988AE15}</Project>
       <Name>Xamarin.Robotics.Core.iOS</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Xamarin.Robotics.Core.Contracts\Xamarin.Robotics.Core.csproj">
+    <ProjectReference Include="..\Xamarin.Robotics.Core\Xamarin.Robotics.Core.csproj">
       <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
       <Name>Xamarin.Robotics.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="mbprogresshud">
-      <Version>0.5.2</Version>
+      <Version>0.8</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>
