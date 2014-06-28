@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using Mono.Cecil;
 using NUnit.Framework;
 
@@ -10,13 +9,10 @@ namespace MFMetaDataProcessor.Tests
     public sealed class TestPreprocessedFiles
     {
         [Test]
-        public void CompareProcessingResultsTest()
+        public void ClockSampleTest()
         {
-            foreach (var name in Directory.GetDirectories(@"Data").Select(Path.GetFileName))
-            {
-                TestSingleAssembly(name, "le", TinyBinaryWriter.CreateLittleEndianBinaryWriter);
-                TestSingleAssembly(name, "be", TinyBinaryWriter.CreateBigEndianBinaryWriter);
-            }
+            TestSingleAssembly("Clock", "le", TinyBinaryWriter.CreateLittleEndianBinaryWriter);
+            TestSingleAssembly("Clock", "be", TinyBinaryWriter.CreateBigEndianBinaryWriter);
         }
 
         private static void TestSingleAssembly (
@@ -32,7 +28,7 @@ namespace MFMetaDataProcessor.Tests
             CompareFiles(fileName);
         }
 
-        private static String ProcessSingleFile (
+         private static String ProcessSingleFile (
             String name, String subDirectoryName,
             AssemblyDefinition assemblyDefinition,
             Func<BinaryWriter, TinyBinaryWriter> getBinaryWriter)
