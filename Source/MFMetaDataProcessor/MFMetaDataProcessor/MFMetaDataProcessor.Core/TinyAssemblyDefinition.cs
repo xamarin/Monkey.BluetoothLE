@@ -49,36 +49,56 @@ namespace MFMetaDataProcessor
         /// Writes header information into output stream (w/o CRC and table offsets/paddings).
         /// </summary>
         /// <param name="writer">Binary writer with correct endianness.</param>
+        /// <param name="isPreAllocationCall">If true no assembly name will be written.</param>
         public void Write(
-            TinyBinaryWriter writer)
+            TinyBinaryWriter writer,
+            Boolean isPreAllocationCall)
         {
             writer.WriteString("MSSpot1");
-            writer.WriteUInt32(0); // header CRC
-            writer.WriteUInt32(0); // assembly CRC
+
+            if (isPreAllocationCall)
+            {
+                writer.WriteUInt32(0); // header CRC
+                writer.WriteUInt32(0); // assembly CRC
+            }
+            else
+            {
+                var headerCrc32 = ComputeCrc32(writer.BaseStream, 0, _paddingsOffset);
+                writer.WriteUInt32(headerCrc32);
+
+                var assemblyCrc32 = ComputeCrc32(writer.BaseStream,
+                    _paddingsOffset, writer.BaseStream.Length - _paddingsOffset);
+                writer.WriteUInt32(assemblyCrc32);
+            }
 
             writer.WriteUInt32(writer.IsBigEndian ? FLAGS_BIG_ENDIAN : FLAGS_LITTLE_ENDIAN);
 
-            writer.WriteUInt32(0); // Native methods checksum
+            // This CRC calculated only for BE assemblies!!!
+            writer.WriteUInt32(writer.IsBigEndian ? _context.NativeMethodsCrc.Current : 0x00);
             writer.WriteUInt32(0xFFFFFFFF); // Native methods offset
 
             writer.WriteVersion(_context.AssemblyDefinition.Name.Version);
 
-            writer.WriteUInt16(
-                _context.StringTable.GetOrCreateStringId(_context.AssemblyDefinition.Name.Name));
+            writer.WriteUInt16(isPreAllocationCall
+                ? (UInt16) 0x0000
+                : _context.StringTable.GetOrCreateStringId(_context.AssemblyDefinition.Name.Name));
             writer.WriteUInt16(1); // String table version
 
-            _tablesOffset = writer.BaseStream.Position;
-            for (var i = 0; i < 16; ++i)
+            if (isPreAllocationCall)
             {
-                writer.WriteUInt32(0);
-            }
+                _tablesOffset = writer.BaseStream.Position;
+                for (var i = 0; i < 16; ++i)
+                {
+                    writer.WriteUInt32(0);
+                }
 
-            writer.WriteUInt32(0); // Number of patched methods
+                writer.WriteUInt32(0); // Number of patched methods
 
-            _paddingsOffset = writer.BaseStream.Position;
-            for (var i = 0; i < 16; ++i)
-            {
-                writer.WriteByte(0);
+                _paddingsOffset = writer.BaseStream.Position;
+                for (var i = 0; i < 16; ++i)
+                {
+                    writer.WriteByte(0);
+                }
             }
         }
 
@@ -105,40 +125,18 @@ namespace MFMetaDataProcessor
             writer.BaseStream.Seek(0, SeekOrigin.End);
         }
 
-        /// <summary>
-        /// Updates CRC values inside header (called after writing all tables data).
-        /// </summary>
-        /// <param name="binaryWriter">Binary writer with correct endianness.</param>
-        /// <param name="nativeMethodsCrc">Helper class with stored native methods CRC.</param>
-        public void UpdateCrc(
-            TinyBinaryWriter binaryWriter,
-            UInt32 nativeMethodsCrc)
-        {
-            var assemblyCrc32 = ComputeCrc32(binaryWriter.BaseStream,
-                _paddingsOffset, binaryWriter.BaseStream.Length - _paddingsOffset);
-            binaryWriter.BaseStream.Seek(12, SeekOrigin.Begin); // assembly CRC offset
-            binaryWriter.WriteUInt32(assemblyCrc32);
-
-            if (binaryWriter.IsBigEndian) // This CRC calculated only for BE assemblies!!!
-            {
-                binaryWriter.BaseStream.Seek(20, SeekOrigin.Begin); // native methods CRC offset
-                binaryWriter.WriteUInt32(nativeMethodsCrc);
-            }
-
-            var headerCrc32 = ComputeCrc32(binaryWriter.BaseStream, 0, _paddingsOffset);
-            binaryWriter.BaseStream.Seek(8, SeekOrigin.Begin); // header CRC offset
-            binaryWriter.WriteUInt32(headerCrc32);
-        }
-
         private static UInt32 ComputeCrc32(
             Stream outputStream,
             Int64 startOffset,
             Int64 size)
         {
+            var currentPosition = outputStream.Position;
             outputStream.Seek(startOffset, SeekOrigin.Begin);
 
             var buffer = new byte[size];
             outputStream.Read(buffer, 0, buffer.Length);
+
+            outputStream.Seek(currentPosition, SeekOrigin.Begin);
 
             return Crc32.Compute(buffer);
         }

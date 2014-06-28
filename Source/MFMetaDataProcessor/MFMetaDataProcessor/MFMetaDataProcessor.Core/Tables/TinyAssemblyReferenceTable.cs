@@ -55,6 +55,13 @@ namespace MFMetaDataProcessor
             writer.WriteVersion(item.Version);
         }
 
+        /// <inheritdoc/>
+        protected override void AllocateSingleItemStrings(
+            AssemblyNameReference item)
+        {
+            GetOrCreateStringId(item.Name);
+        }
+
         /// <summary>
         /// Gets assembly reference ID by assembly name reference in Mono.Cecil format.
         /// </summary>

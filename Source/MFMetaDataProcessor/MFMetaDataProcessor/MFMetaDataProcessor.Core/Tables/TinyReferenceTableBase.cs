@@ -55,6 +55,19 @@ namespace MFMetaDataProcessor
         }
 
         /// <summary>
+        /// Helper method for allocating strings from table before table will be written.
+        /// </summary>
+        public void AllocateStrings()
+        {
+            foreach (var item in _idsByItemsDictionary
+                .OrderBy(item => item.Value)
+                .Select(item => item.Key))
+            {
+                AllocateSingleItemStrings(item);
+            }
+        }
+
+        /// <summary>
         /// Writes string reference ID related to passed string value into output stream.
         /// </summary>
         /// <param name="writer">Target binary writer for writing reference ID.</param>
@@ -89,6 +102,14 @@ namespace MFMetaDataProcessor
             out UInt16 id)
         {
             return _idsByItemsDictionary.TryGetValue(key, out id);
+        }
+
+        /// <summary>
+        /// Provides concrete implementation for string allocation method in this table.
+        /// </summary>
+        /// <param name="item">Table item for allocating strings.</param>
+        protected virtual void AllocateSingleItemStrings(T item)
+        {
         }
 
         /// <summary>

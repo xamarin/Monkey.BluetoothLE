@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Mono.Cecil;
 
 namespace MFMetaDataProcessor
@@ -35,9 +36,9 @@ namespace MFMetaDataProcessor
             var tablesContext = new TinyTablesContext(_assemblyDefinition);
 
             var header = new TinyAssemblyDefinition(tablesContext);
-            header.Write(binaryWriter);
+            header.Write(binaryWriter, true);
 
-            foreach (var table in GetTables(tablesContext, binaryWriter))
+            foreach (var table in GetTables(tablesContext))
             {
                 var tableBegin = (binaryWriter.BaseStream.Position + 3) & 0xFFFFFFFC;
                 table.Write(binaryWriter);
@@ -48,12 +49,12 @@ namespace MFMetaDataProcessor
                 header.UpdateTableOffset(binaryWriter, tableBegin, padding);
             }
 
-            header.UpdateCrc(binaryWriter, tablesContext.NativeMethodsCrc.Current);
+            binaryWriter.BaseStream.Seek(0, SeekOrigin.Begin);
+            header.Write(binaryWriter, false);
         }
 
-        private IEnumerable<ITinyTable> GetTables(
-            TinyTablesContext context,
-            TinyBinaryWriter writer)
+        private static IEnumerable<ITinyTable> GetTables(
+            TinyTablesContext context)
         {
             yield return context.AssemblyReferenceTable;
 
@@ -78,6 +79,8 @@ namespace MFMetaDataProcessor
             yield return context.ResourceDataTable;
 
             context.ByteCodeTable.UpdateStringTable();
+            context.StringTable.GetOrCreateStringId(
+                context.AssemblyDefinition.Name.Name);
 
             yield return context.StringTable;
             

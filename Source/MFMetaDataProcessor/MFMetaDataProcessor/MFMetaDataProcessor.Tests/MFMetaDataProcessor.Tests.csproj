@@ -55,56 +55,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\NetduinoGo\be\NetduinoGo.pe">
+    <None Include="Data\Clock\be\Clock.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\NetduinoGo\le\NetduinoGo.pe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\NetduinoMini\be\NetduinoMini.pe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\NetduinoMini\le\NetduinoMini.pe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\NetduinoOne\be\NetduinoOne.pe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\NetduinoOne\le\NetduinoOne.pe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\NetduinoPlus\be\NetduinoPlus.pe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\NetduinoPlus\le\NetduinoPlus.pe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\NetduinoTwo\be\NetduinoTwo.pe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\NetduinoTwo\le\NetduinoTwo.pe">
+    <None Include="Data\Clock\le\Clock.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\NetduinoOne\NetduinoOne.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Data\NetduinoGo\NetduinoGo.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\NetduinoMini\NetduinoMini.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\NetduinoTwo\NetduinoTwo.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Data\NetduinoPlus\NetduinoPlus.exe">
+    <None Include="Data\Clock\Clock.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
