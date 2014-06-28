@@ -131,16 +131,21 @@ namespace MFMetaDataProcessor {
                     case Code.Leave:
                         size = 0;
                         continue;
-                    case Code.Callvirt:
+                    case Code.Br:
+                    case Code.Br_S:
+                    case Code.Brtrue:
+                    case Code.Brtrue_S:
+                    case Code.Brfalse:
+                    case Code.Brfalse_S:
+                    case Code.Break:
+                        break;
+                    case Code.Newobj:
 	                    {
                             var method = (MethodReference)instruction.Operand;
-                            if (method.HasThis)
-                            {
-                                --size;
-                            }
                             size -= method.Parameters.Count;
                         }
                         break;
+                    case Code.Callvirt:
                     case Code.Call:
 	                    {
                             var method = (MethodReference)instruction.Operand;
