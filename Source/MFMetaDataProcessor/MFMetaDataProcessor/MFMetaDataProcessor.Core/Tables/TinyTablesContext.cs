@@ -79,6 +79,18 @@ namespace MFMetaDataProcessor
             foreach (var item in memberReferences)
             {
                 StringTable.GetOrCreateStringId(item.Name);
+                
+                var fieldReference = item as FieldReference;
+                if (fieldReference != null)
+                {
+                    SignaturesTable.GetOrCreateSignatureId(fieldReference);
+                }
+
+                var methodReference = item as MethodReference;
+                if (methodReference != null)
+                {
+                    SignaturesTable.GetOrCreateSignatureId(methodReference);
+                }
             }
         }
 
