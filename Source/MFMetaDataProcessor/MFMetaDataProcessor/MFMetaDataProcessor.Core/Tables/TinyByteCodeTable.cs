@@ -55,6 +55,11 @@ namespace MFMetaDataProcessor
         public UInt16 NextMethodId { get { return (UInt16)_methods.Count; } }
 
         /// <summary>
+        /// Temprorary string table for code generators used duing initial load.
+        /// </summary>
+        public TinyStringTable FakeStringTable { get { return _fakeStringTable; } }
+
+        /// <summary>
         /// Returns method reference ID (index in methods definitions table) for passed method definition.
         /// </summary>
         /// <param name="method">Method definition in Mono.Cecil format.</param>
@@ -122,7 +127,7 @@ namespace MFMetaDataProcessor
             {
                 var codeWriter = new CodeWriter(
                     method, TinyBinaryWriter.CreateBigEndianBinaryWriter(writer),
-                    _fakeStringTable, _context, true);
+                    _fakeStringTable, _context);
                 codeWriter.WriteMethodBody();
                 return stream.ToArray();
             }
@@ -141,7 +146,7 @@ namespace MFMetaDataProcessor
             {
                 var codeWriter = new  CodeWriter(
                     method, writer.GetMemoryBasedClone(stream),
-                    _context.StringTable, _context, false);
+                    _context.StringTable, _context);
                 codeWriter.WriteMethodBody();
                 return stream.ToArray();
             }

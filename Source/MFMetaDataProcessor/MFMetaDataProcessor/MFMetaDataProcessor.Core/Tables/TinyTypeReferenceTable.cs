@@ -78,6 +78,14 @@ namespace MFMetaDataProcessor
             writer.WriteUInt16(0); // padding
         }
 
+        /// <inheritdoc/>
+        protected override void AllocateSingleItemStrings(
+            TypeReference item)
+        {
+            GetOrCreateStringId(item.Namespace);
+            GetOrCreateStringId(item.Name);
+        }
+
         private UInt16 GetScope(
             TypeReference typeReference)
         {

@@ -74,6 +74,8 @@ namespace MFMetaDataProcessor
             TinyBinaryWriter writer,
             TypeDefinition item)
         {
+            _context.StringTable.GetOrCreateStringId(item.Namespace);
+
             WriteStringReference(writer, item.Name);
             WriteStringReference(writer, item.Namespace);
 
@@ -91,6 +93,21 @@ namespace MFMetaDataProcessor
             using (var stream = new MemoryStream(6))
             {
                 WriteClassFields(fieldsList, writer.GetMemoryBasedClone(stream));
+
+                if (item.DeclaringType == null)
+                {
+                    foreach (var method in item.Methods)
+                    {
+                        CodeWriter.PreProcessMethod(method, _context.ByteCodeTable.FakeStringTable);
+                    }
+                }
+                foreach (var nestedType in item.NestedTypes)
+                {
+                    foreach (var method in nestedType.Methods)
+                    {
+                        CodeWriter.PreProcessMethod(method, _context.ByteCodeTable.FakeStringTable);
+                    }
+                }
 
                 WriteMethodBodies(item.Methods, writer);
 
@@ -115,6 +132,8 @@ namespace MFMetaDataProcessor
                 firstStaticFieldId = Math.Min(firstStaticFieldId, fieldReferenceId);
 
                 _context.SignaturesTable.GetOrCreateSignatureId(field);
+                _context.StringTable.GetOrCreateStringId(field.Name);
+
                 ++staticFieldsNumber;
             }
 
@@ -127,6 +146,8 @@ namespace MFMetaDataProcessor
                 firstInstanseFieldId = Math.Min(firstInstanseFieldId, fieldReferenceId);
 
                 _context.SignaturesTable.GetOrCreateSignatureId(field);
+                _context.StringTable.GetOrCreateStringId(field.Name);
+
                 ++instanceFieldsNumber;
             }
 
@@ -141,12 +162,6 @@ namespace MFMetaDataProcessor
             Collection<MethodDefinition> methods,
             TinyBinaryWriter writer)
         {
-            // We should populate methods names in string table before writing method bodies
-            foreach (var method in methods)
-            {
-                GetOrCreateStringId(method.Name);
-            }
-
             UInt16 firstMethodId = 0xFFFF;
             var virtualMethodsNumber = 0;
             foreach (var method in methods.Where(item => item.IsVirtual))
@@ -192,6 +207,7 @@ namespace MFMetaDataProcessor
             {
                 _context.SignaturesTable.GetOrCreateSignatureId(method.Body.Variables);
             }
+            _context.StringTable.GetOrCreateStringId(method.Name);
         }
 
         private UInt16 GetTypeReferenceOrDefinitionId(

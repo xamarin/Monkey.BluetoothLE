@@ -28,11 +28,6 @@ namespace MFMetaDataProcessor {
         private readonly TinyStringTable _stringTable;
 
         /// <summary>
-        /// If this flas is set to <c>true</c> we should fix offsets in instuctions.
-        /// </summary>
-        private readonly Boolean _fixOperationsOffsets;
-
-        /// <summary>
         /// Assembly tables context - contains all tables used for building target assembly.
         /// </summary>
         private readonly TinyTablesContext _context;
@@ -46,17 +41,12 @@ namespace MFMetaDataProcessor {
         /// <param name="context">
         /// Assembly tables context - contains all tables used for building target assembly.
         /// </param>
-        /// <param name="fixOperationsOffsets">
-        /// If this flas is set to <c>true</c> we should fix offsets in instuctions.
-        /// </param>
         public CodeWriter(
 	        MethodDefinition method,
             TinyBinaryWriter writer,
             TinyStringTable stringTable,
-            TinyTablesContext context,
-            Boolean fixOperationsOffsets)
+            TinyTablesContext context)
 	    {
-            _fixOperationsOffsets = fixOperationsOffsets;
             _stringTable = stringTable;
 
             _body = method.Body;
@@ -69,11 +59,6 @@ namespace MFMetaDataProcessor {
         /// </summary>
         public void WriteMethodBody()
         {
-            if (_fixOperationsOffsets)
-            {
-                CorrectInstructionsOffsets();
-            }
-
             foreach (var instruction in _body.Instructions)
             {
                 WriteOpCode(instruction.OpCode);
@@ -81,6 +66,43 @@ namespace MFMetaDataProcessor {
             }
 
             WriteExceptionsTable();
+        }
+
+        /// <summary>
+        /// Fixes instructions offsets according .NET Micro Framework operands sizes.
+        /// </summary>
+        /// <param name="methodDefinition">Target method for fixing offsets</param>
+        /// <param name="stringTable">String table for populating strings from method.</param>
+        public static void PreProcessMethod(
+            MethodDefinition methodDefinition,
+            TinyStringTable stringTable)
+        {
+            if (!methodDefinition.HasBody)
+            {
+                return;
+            }
+
+            var offset = 0;
+            foreach (var instruction in methodDefinition.Body.Instructions)
+            {
+                instruction.Offset += offset;
+
+                switch (instruction.OpCode.OperandType)
+                {
+                    case OperandType.InlineString:
+                        stringTable.GetOrCreateStringId((String) instruction.Operand);
+                        offset -= 2;
+                        break;
+                    case OperandType.InlineMethod:
+                    case OperandType.InlineField:
+                    case OperandType.InlineType:
+                    case OperandType.InlineBrTarget:
+                        // In full .NET these instructions followed by double word operand
+                        // but in .NET Micro Framework these instruction's operand are word
+                        offset -= 2;
+                        break;
+                }
+            }
         }
 
         /// <summary>
@@ -194,28 +216,6 @@ namespace MFMetaDataProcessor {
                     break;
             }
             return size;
-        }
-
-        private void CorrectInstructionsOffsets()
-        {
-            var offset = 0;
-            foreach (var instruction in _body.Instructions)
-            {
-                instruction.Offset += offset;
-
-                switch (instruction.OpCode.OperandType)
-                {
-                    case OperandType.InlineString:
-                    case OperandType.InlineMethod:
-                    case OperandType.InlineField:
-                    case OperandType.InlineType:
-                    case OperandType.InlineBrTarget:
-                        // In full .NET these instructions followed by double word operand
-                        // but in .NET Micro Framework these instruction's operand are word
-                        offset -= 2;
-                        break;
-                }
-            }
         }
 
         private void WriteExceptionsTable()
@@ -362,7 +362,7 @@ namespace MFMetaDataProcessor {
         private UInt32 GetMetadataToken(
             IMetadataTokenProvider token)
         {
-            UInt16 referenceId = 0;
+            UInt16 referenceId;
             switch (token.MetadataToken.TokenType)
             {
                 case TokenType.TypeRef:
