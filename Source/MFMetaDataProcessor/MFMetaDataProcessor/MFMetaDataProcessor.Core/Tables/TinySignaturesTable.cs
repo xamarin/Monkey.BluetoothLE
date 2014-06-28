@@ -357,6 +357,7 @@ namespace MFMetaDataProcessor
             using (var writer = new BinaryWriter(buffer))
             {
                 writer.Write((Byte)defaultValue.Length);
+                writer.Write((Byte)0x00); // TODO: investigate this temporary fix
                 writer.Write(defaultValue);
 
                 return buffer.ToArray();

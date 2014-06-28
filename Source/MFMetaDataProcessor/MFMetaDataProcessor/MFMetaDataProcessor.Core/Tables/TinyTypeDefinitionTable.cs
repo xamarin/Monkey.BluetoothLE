@@ -82,12 +82,11 @@ namespace MFMetaDataProcessor
             writer.WriteUInt16(GetTypeReferenceOrDefinitionId(item.BaseType));
             writer.WriteUInt16(GetTypeReferenceOrDefinitionId(item.DeclaringType));
 
-            writer.WriteUInt16(_context.SignaturesTable.GetOrCreateSignatureId(item.Interfaces));
-
             var fieldsList = item.Fields.Where(field => !field.HasConstant).ToList();
             foreach (var field in fieldsList)
             {
                 _context.SignaturesTable.GetOrCreateSignatureId(field);
+                _context.SignaturesTable.GetOrCreateSignatureId(field.InitialValue);
             }
 
             using (var stream = new MemoryStream(6))
@@ -109,7 +108,7 @@ namespace MFMetaDataProcessor
                     }
                 }
 
-                WriteMethodBodies(item.Methods, writer);
+                WriteMethodBodies(item.Methods, item.Interfaces, writer);
 
                 _context.SignaturesTable.WriteDataType(item, writer);
 
@@ -160,6 +159,7 @@ namespace MFMetaDataProcessor
 
         private void WriteMethodBodies(
             Collection<MethodDefinition> methods,
+            Collection<TypeReference> iInterfaces,
             TinyBinaryWriter writer)
         {
             UInt16 firstMethodId = 0xFFFF;
@@ -191,6 +191,8 @@ namespace MFMetaDataProcessor
             {
                 firstMethodId = _context.ByteCodeTable.NextMethodId;
             }
+
+            writer.WriteUInt16(_context.SignaturesTable.GetOrCreateSignatureId(iInterfaces));
 
             writer.WriteUInt16(firstMethodId);
 
