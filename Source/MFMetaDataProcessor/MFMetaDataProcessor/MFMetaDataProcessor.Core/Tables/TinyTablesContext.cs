@@ -44,12 +44,13 @@ namespace MFMetaDataProcessor
             // Internal types definitions
 
             var types = SortTypesAccordingUsages(
-                mainModule.GetTypes().Where(item => item.FullName != "<Module>"), mainModule);
+                mainModule.GetTypes().Where(item => item.FullName != "<Module>"),
+                mainModule.FullyQualifiedName);
 
             TypeDefinitionTable = new TinyTypeDefinitionTable(types, this);
             FieldsTable = new TinyFieldDefinitionTable(
-                types.SelectMany(item => GetOrderedFields(item.Fields))
-                    .Where(field => !field.HasConstant), this);
+                types.SelectMany(item => GetOrderedFields(
+                    item.Fields.Where(field => !field.HasConstant))), this);
             MethodDefinitionTable = new TinyMethodDefinitionTable(
                 types.SelectMany(item => GetOrderedMethods(item.Methods)), this);
             TypeSpecificationsTable = new TinyTypeSpecificationsTable(this);
@@ -71,6 +72,14 @@ namespace MFMetaDataProcessor
             // Additional information
 
             ResourceFileTable = new TinyResourceFileTable(this);
+
+            // Pre-allocate strings from some tables
+            AssemblyReferenceTable.AllocateStrings();
+            TypeReferencesTable.AllocateStrings();
+            foreach (var item in memberReferences)
+            {
+                StringTable.GetOrCreateStringId(item.Name);
+            }
         }
 
         public AssemblyDefinition AssemblyDefinition { get; private set; }
@@ -118,22 +127,32 @@ namespace MFMetaDataProcessor
 
 
         private static List<TypeDefinition> SortTypesAccordingUsages(
-            IEnumerable<TypeDefinition> types, ModuleDefinition mainModule)
+            IEnumerable<TypeDefinition> types,
+            String mainModuleName)
         {
-            return SortTypesAccordingUsagesImpl(types.OrderBy(item => item.Name), mainModule)
-                .Distinct()
+            var processedTypes = new HashSet<String>(StringComparer.Ordinal);
+            return SortTypesAccordingUsagesImpl(
+                types.OrderBy(item => item.FullName), // Not work with ArduionPlus sample
+                mainModuleName, processedTypes)
                 .ToList();
         }
 
         private static IEnumerable<TypeDefinition> SortTypesAccordingUsagesImpl(
-            IEnumerable<TypeDefinition> types, ModuleDefinition mainModule)
+            IEnumerable<TypeDefinition> types,
+            String mainModuleName,
+            ISet<String> processedTypes)
         {
             foreach (var type in types)
             {
+                if (processedTypes.Contains(type.FullName))
+                {
+                    continue;
+                }
+
                 if (type.DeclaringType != null)
                 {
                     foreach (var declaredIn in SortTypesAccordingUsagesImpl(
-                        Enumerable.Repeat(type.DeclaringType, 1), mainModule))
+                        Enumerable.Repeat(type.DeclaringType, 1), mainModuleName, processedTypes))
                     {
                         yield return declaredIn;
                     }
@@ -141,12 +160,40 @@ namespace MFMetaDataProcessor
 
                 foreach (var implement in SortTypesAccordingUsagesImpl(
                     type.Interfaces.Select(itf => itf.Resolve())
-                        .Where(itf => itf.Module.FullyQualifiedName == mainModule.FullyQualifiedName), mainModule))
+                        .Where(item => item.Module.FullyQualifiedName == mainModuleName),
+                    mainModuleName, processedTypes))
                 {
                     yield return implement;
                 }
 
-                yield return type;
+                if (processedTypes.Add(type.FullName))
+                {
+                    var operands = type.Methods
+                        .Where(item => item.HasBody)
+                        .SelectMany(item => item.Body.Instructions)
+                        .Select(item => item.Operand)
+                        .ToList();
+
+                    foreach (var fieldType in SortTypesAccordingUsagesImpl(
+                        operands.OfType<MethodReference>().SelectMany(GetTypesList)
+                            .Where(item => item.Module.FullyQualifiedName == mainModuleName),
+                        mainModuleName, processedTypes))
+                    {
+                        yield return fieldType;
+                    }
+
+                    yield return type;
+                }
+            }
+        }
+
+        private static IEnumerable<TypeDefinition> GetTypesList(
+            MethodReference methodReference)
+        {
+            yield return methodReference.ReturnType.Resolve();
+            foreach (var parameter in methodReference.Parameters)
+            {
+                yield return parameter.ParameterType.Resolve();
             }
         }
 
@@ -178,12 +225,12 @@ namespace MFMetaDataProcessor
             var ordered = fields
                 .ToList();
 
-            foreach (var method in ordered.Where(item => !item.IsStatic))
+            foreach (var method in ordered.Where(item => item.IsStatic))
             {
                 yield return method;
             }
 
-            foreach (var method in ordered.Where(item => item.IsStatic))
+            foreach (var method in ordered.Where(item => !item.IsStatic))
             {
                 yield return method;
             }
