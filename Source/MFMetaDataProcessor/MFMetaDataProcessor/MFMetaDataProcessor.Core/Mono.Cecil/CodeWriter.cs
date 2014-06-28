@@ -379,6 +379,9 @@ namespace MFMetaDataProcessor {
                 case TokenType.TypeSpec:
                     _context.TypeSpecificationsTable.TryGetTypeReferenceId((TypeReference) token, out referenceId);
                     return (UInt32)0x08000000 | referenceId;
+                case TokenType.Field:
+                    _context.FieldsTable.TryGetFieldReferenceId((FieldDefinition) token, out referenceId);
+                    return (UInt32)0x05000000 | referenceId;
             }
             return 0U;
         }
