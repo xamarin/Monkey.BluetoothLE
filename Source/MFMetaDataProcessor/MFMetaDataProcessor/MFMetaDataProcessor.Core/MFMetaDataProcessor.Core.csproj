@@ -59,6 +59,7 @@
     <Compile Include="Tables\TinyMethodReferenceTable.cs" />
     <Compile Include="Tables\TinyMethodDefinitionTable.cs" />
     <Compile Include="Tables\TinySignaturesTable.cs" />
+    <Compile Include="Utility\TinyFontProcessor.cs" />
     <Compile Include="Utility\TinyStringsConstants.cs" />
     <Compile Include="Tables\TinyStringTable.cs" />
     <Compile Include="Tables\TinyTypeDefinitionTable.cs" />
