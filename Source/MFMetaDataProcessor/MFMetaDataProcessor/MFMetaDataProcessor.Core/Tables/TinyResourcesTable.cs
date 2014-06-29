@@ -53,7 +53,6 @@ namespace MFMetaDataProcessor
         public void Write(
             TinyBinaryWriter writer)
         {
-            Int32 offset = 0;
             var orderedResources = new SortedDictionary<Int16, Tuple<ResourceKind, Byte[]>>();
             foreach (var item in _resources.OfType<EmbeddedResource>())
             {
@@ -68,10 +67,10 @@ namespace MFMetaDataProcessor
 
                         reader.GetResourceData(resourceName, out resourceType, out resourceData);
 
+                        var kind = GetResourceKind(resourceType, resourceData);
                         orderedResources.Add(GenerateIdFromResourceName(resourceName),
-                            new Tuple<ResourceKind, Byte[]>(
-                                GetResourceKind(resourceType, resourceData),
-                                resourceData));
+                            new Tuple<ResourceKind, Byte[]>(kind, resourceData));
+
                         ++count;
                     }
                 }
@@ -84,34 +83,47 @@ namespace MFMetaDataProcessor
                 var kind = item.Value.Item1;
                 var bytes = item.Value.Item2;
 
-                var skip = 0;
                 var padding = 0;
                 switch (kind)
                 {
                     case ResourceKind.String:
-                        skip = 1;
-                        padding = (4 - (bytes.Length % 4)) % 4 + 1;
+                        var stringLength = (Int32)bytes[0];
+                        if (stringLength < 0x7F)
+                        {
+                            bytes = bytes.Skip(1).Concat(Enumerable.Repeat((Byte)0, 1)).ToArray();
+                        }
+                        else
+                        {
+                            bytes = bytes.Skip(2).Concat(Enumerable.Repeat((Byte)0, 1)).ToArray();
+                        }
                         break;
                     case ResourceKind.Binary:
-                        skip = 4;
+                        padding = _context.ResourceDataTable.AlignToWord();
+                        bytes = bytes.Skip(4).ToArray();
                         break;
                     case ResourceKind.Font:
-                        skip = 32; // File size + resource header size
+                        padding = _context.ResourceDataTable.AlignToWord();
+                        bytes = bytes.Skip(32).ToArray(); // File size + resource header size
                         break;
                 }
-                if (padding != 0 || skip != 0)
-                {
-                    bytes = bytes.Skip(skip).Concat(Enumerable.Repeat((Byte)0, padding)).ToArray();
-                }
 
-                _context.ResourceDataTable.AddResourceData(bytes);
+                // Pre-process font data (swap endiannes if needed).
+                if (kind == ResourceKind.Font)
+                {
+                    using (var stream = new MemoryStream(bytes.Length))
+                    {
+                        var fontProcessor = new TinyFontProcessor(bytes);
+                        fontProcessor.Process(writer.GetMemoryBasedClone(stream));
+                        bytes = stream.ToArray();
+                    }
+                }
 
                 writer.WriteInt16(item.Key);
                 writer.WriteByte((Byte)kind);
-                writer.WriteByte(0x00);
-                writer.WriteInt32(offset);
+                writer.WriteByte((Byte)padding);
+                writer.WriteInt32(_context.ResourceDataTable.CurrentOffset);
 
-                offset += bytes.Length;
+                _context.ResourceDataTable.AddResourceData(bytes);
             }
 
             if (orderedResources.Count != 0)
@@ -119,7 +131,7 @@ namespace MFMetaDataProcessor
                 writer.WriteInt16(0x7FFF);
                 writer.WriteByte((Byte)ResourceKind.None);
                 writer.WriteByte(0x00);
-                writer.WriteInt32(offset);
+                writer.WriteInt32(_context.ResourceDataTable.CurrentOffset);
             }
         }
 
