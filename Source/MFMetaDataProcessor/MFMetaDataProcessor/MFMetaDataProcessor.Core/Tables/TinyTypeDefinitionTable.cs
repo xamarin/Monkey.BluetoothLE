@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Mono.Cecil;
@@ -148,6 +149,11 @@ namespace MFMetaDataProcessor
                 _context.StringTable.GetOrCreateStringId(field.Name);
 
                 ++instanceFieldsNumber;
+            }
+
+            if (firstStaticFieldId > firstInstanseFieldId)
+            {
+                firstStaticFieldId = firstInstanseFieldId;
             }
 
             writer.WriteUInt16(firstStaticFieldId);
