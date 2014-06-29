@@ -77,7 +77,10 @@ namespace MFMetaDataProcessor
             out UInt16 referenceId)
         {
             var found = TryGetIdByValue(field, out referenceId);
-            _maxReferenceId = Math.Max(_maxReferenceId, (referenceId == 0 ? 0x01 : referenceId + 1));
+            if (found)
+            {
+                _maxReferenceId = Math.Max(_maxReferenceId, referenceId + 1);
+            }
             return found;
         }
 

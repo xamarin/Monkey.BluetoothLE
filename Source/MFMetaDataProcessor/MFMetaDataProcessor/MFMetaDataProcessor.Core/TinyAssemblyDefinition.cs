@@ -56,20 +56,8 @@ namespace MFMetaDataProcessor
         {
             writer.WriteString("MSSpot1");
 
-            if (isPreAllocationCall)
-            {
-                writer.WriteUInt32(0); // header CRC
-                writer.WriteUInt32(0); // assembly CRC
-            }
-            else
-            {
-                var headerCrc32 = ComputeCrc32(writer.BaseStream, 0, _paddingsOffset);
-                writer.WriteUInt32(headerCrc32);
-
-                var assemblyCrc32 = ComputeCrc32(writer.BaseStream,
-                    _paddingsOffset, writer.BaseStream.Length - _paddingsOffset);
-                writer.WriteUInt32(assemblyCrc32);
-            }
+            writer.WriteUInt32(0); // header CRC
+            writer.WriteUInt32(0); // assembly CRC
 
             writer.WriteUInt32(writer.IsBigEndian ? FLAGS_BIG_ENDIAN : FLAGS_LITTLE_ENDIAN);
 
@@ -99,6 +87,19 @@ namespace MFMetaDataProcessor
                 {
                     writer.WriteByte(0);
                 }
+            }
+            else
+            {
+                writer.BaseStream.Seek(12, SeekOrigin.Begin);
+
+                var assemblyCrc32 = ComputeCrc32(writer.BaseStream,
+                    _paddingsOffset, writer.BaseStream.Length - _paddingsOffset);
+                writer.WriteUInt32(assemblyCrc32);
+
+                writer.BaseStream.Seek(8, SeekOrigin.Begin);
+
+                var headerCrc32 = ComputeCrc32(writer.BaseStream, 0, _paddingsOffset);
+                writer.WriteUInt32(headerCrc32);
             }
         }
 

@@ -15,6 +15,13 @@ namespace MFMetaDataProcessor.Tests
             TestSingleAssembly("Clock", "be", TinyBinaryWriter.CreateBigEndianBinaryWriter);
         }
 
+        [Test]
+        public void ExtendedWeakReferencesTest()
+        {
+            TestSingleAssembly("ExtendedWeakReferences", "le", TinyBinaryWriter.CreateLittleEndianBinaryWriter);
+            TestSingleAssembly("ExtendedWeakReferences", "be", TinyBinaryWriter.CreateBigEndianBinaryWriter);
+        }
+
         private static void TestSingleAssembly (
             String name, String endianness,
             Func<BinaryWriter, TinyBinaryWriter> getBinaryWriter)
