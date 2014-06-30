@@ -58,10 +58,39 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS
 					{
 						// position
 						var position = dataBytes[0];
+						var locationString = "-";
 						Console.WriteLine("----------------------position:" + position);
+						// https://developer.apple.com/library/mac/samplecode/HeartRateMonitor/Listings/HeartRateMonitor_HeartRateMonitorAppDelegate_m.html
+						switch (position) {
+						case 0:
+							locationString = @"Other";
+							break;
+						case 1:
+							locationString = @"Chest";
+							break;
+						case 2:
+							locationString = @"Wrist";
+							break;
+						case 3:
+							locationString = @"Finger";
+							break;
+						case 4:
+							locationString = @"Hand";
+							break;
+						case 5:
+							locationString = @"Ear Lobe";
+							break;
+						case 6: 
+							locationString = @"Foot";
+							break;
+						default:
+							locationString = @"Reserved";
+							break;
+						}
+						labelHR.Text = "on " + locationString;
 					} else {
 						// heartrate
-						int bpm = 0;
+	 					int bpm = 0;
 						//http://www.raywenderlich.com/52080/introduction-core-bluetooth-building-heart-rate-monitor
 						//https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
 						if ( (dataBytes[0] & 0x01) == 0) {
