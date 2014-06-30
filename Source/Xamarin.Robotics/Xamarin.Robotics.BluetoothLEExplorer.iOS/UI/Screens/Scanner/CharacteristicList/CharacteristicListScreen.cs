@@ -9,7 +9,7 @@ using System.Text;
 namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.ServiceDetails
 {
 	[Register("CharacteristicListScreen")]
-	public partial class CharacteristicListScreen : UITableViewController
+	public class CharacteristicListScreen : UITableViewController
 	{
 		CharacteristicTableSource _tableSource;
 		//protected List<ICharacteristic> _characteristics = new List<ICharacteristic>();

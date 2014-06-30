@@ -8,7 +8,7 @@ using Xamarin.Robotics.Core.Bluetooth.LE;
 namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.DeviceDetails
 {
 	[Register("ServiceListScreen")]
-	public partial class ServiceListScreen : UITableViewController
+	public class ServiceListScreen : UITableViewController
 	{
 		//protected List<IService> _services = new List<IService>();
 		protected Dictionary<IService, ICharacteristic> _serviceCharacteristics = new Dictionary<IService, ICharacteristic>();

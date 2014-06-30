@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="TODO.MD" />
-    <None Include="..\Xamarin.Robotics.Core.Contracts\BLE API Notes.md">
+    <None Include="..\Xamarin.Robotics.Core\BLE API Notes.md">
       <Link>BLE API Notes.md</Link>
     </None>
     <None Include="BluetoothLE\Readme.md" />

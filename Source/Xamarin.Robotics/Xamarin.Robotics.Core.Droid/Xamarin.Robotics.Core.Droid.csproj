@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
-    <None Include="..\Xamarin.Robotics.Core.Contracts\BLE API Notes.md">
+    <None Include="..\Xamarin.Robotics.Core\BLE API Notes.md">
       <Link>BLE API Notes.md</Link>
     </None>
   </ItemGroup>

@@ -108,27 +108,14 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="UI\Controls\ScanButton.cs" />
     <Compile Include="UI\Screens\Scanner\Home\ScannerHome.cs" />
-    <Compile Include="UI\Screens\Scanner\Home\ScannerHome.designer.cs">
-      <DependentUpon>..\..\..\..\Screens\Scanner\Home\ScannerHome.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\Screens\Scanner\ServiceList\ServiceListScreen.cs" />
-    <Compile Include="UI\Screens\Scanner\ServiceList\ServiceListScreen.designer.cs">
-      <DependentUpon>ServiceListScreen.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\Screens\Scanner\CharacteristicList\CharacteristicListScreen.cs" />
-    <Compile Include="UI\Screens\Scanner\CharacteristicList\CharacteristicListScreen.designer.cs">
-      <DependentUpon>CharacteristicListScreen.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\Screens\Scanner\CharacteristicDetail\CharacteristicDetailScreen.cs" />
     <Compile Include="UI\Screens\Scanner\CharacteristicDetail\CharacteristicDetailScreen_Hrm.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
     <BundleResource Include="Default-568h%402x.png" />
-    <BundleResource Include="Default-Landscape%402x~ipad.png" />
-    <BundleResource Include="Default-Landscape~ipad.png" />
-    <BundleResource Include="Default-Portrait%402x~ipad.png" />
-    <BundleResource Include="Default-Portrait~ipad.png" />
     <BundleResource Include="Default.png" />
     <BundleResource Include="Default%402x.png" />
     <BundleResource Include="Resources\icon-29.png" />
@@ -157,9 +144,6 @@
   <ItemGroup>
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork%402x" />
-  </ItemGroup>
-  <ItemGroup>
-    <InterfaceDefinition Include="UI\Screens\Main.storyboard" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Robotics.Core.iOS\Xamarin.Robotics.Core.iOS.csproj">

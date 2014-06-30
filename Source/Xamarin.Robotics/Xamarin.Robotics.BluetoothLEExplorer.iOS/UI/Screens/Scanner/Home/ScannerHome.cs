@@ -11,7 +11,7 @@ using Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Controls;
 namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.Home
 {
 	[Register("ScannerHome")]
-	public partial class ScannerHome : UITableViewController
+	public class ScannerHome : UITableViewController
 	{
 		ScanButton _scanButton;
 		BleDeviceTableSource _tableSource;
