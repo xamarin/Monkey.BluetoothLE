@@ -11,7 +11,7 @@ using Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Controls;
 namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.Home
 {
 	[Register("ScannerHome")]
-	public partial class ScannerHome : UIViewController
+	public partial class ScannerHome : UITableViewController
 	{
 		ScanButton _scanButton;
 		BleDeviceTableSource _tableSource;
@@ -64,7 +64,9 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.Home
 				Adapter.Current.DeviceConnected += (object s, DeviceConnectionEventArgs connectArgs) => {
 					this._connectingDialog.Hide(false);
 
-					this._ServiceListScreen = this.Storyboard.InstantiateViewController("ServiceListScreen") as DeviceDetails.ServiceListScreen;
+					//HACK: this._ServiceListScreen = this.Storyboard.InstantiateViewController("ServiceListScreen") as DeviceDetails.ServiceListScreen;
+					this._ServiceListScreen = new DeviceDetails.ServiceListScreen();
+
 					this._ServiceListScreen.ConnectedDevice = connectArgs.Device;
 					this.NavigationController.PushViewController ( this._ServiceListScreen, true);
 
@@ -88,14 +90,14 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.Home
 			base.ViewDidLoad ();
 
 			// iOS7 idiocy
-			this.BleDevicesTable.ContentInset = new UIEdgeInsets (this.TopLayoutGuide.Length, 0, 0, 0);
+			this.TableView.ContentInset = new UIEdgeInsets (this.TopLayoutGuide.Length, 0, 0, 0);
 
-			BleDevicesTable.Source = this._tableSource;
+			TableView.Source = this._tableSource;
 
 			// wire up the DiscoveredPeripheral event to update the table
 			Adapter.Current.DeviceDiscovered += (object sender, DeviceDiscoveredEventArgs e) => {
 				this._tableSource.Peripherals = Adapter.Current.DiscoveredDevices;
-				this.BleDevicesTable.ReloadData();
+				this.TableView.ReloadData();
 			};
 
 			Adapter.Current.ScanTimeoutElapsed += (sender, e) => {

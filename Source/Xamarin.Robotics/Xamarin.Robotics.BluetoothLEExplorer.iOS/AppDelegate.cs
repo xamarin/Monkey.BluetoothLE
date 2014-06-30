@@ -16,7 +16,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS
 		// class-level declarations
 		UIWindow window;
 		UINavigationController _nav;
-		UIStoryboard _storyboard;
+		//HACK: UIStoryboard _storyboard;
 
 
 		//
@@ -31,8 +31,10 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS
 			// create a new window instance based on the screen size
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
-			_storyboard = UIStoryboard.FromName ("Main", null);
-			this._nav = new UINavigationController( (ScannerHome)_storyboard.InstantiateInitialViewController () );
+			//HACK: _storyboard = UIStoryboard.FromName ("Main", null);
+
+			//HACK: this._nav = new UINavigationController( (ScannerHome)_storyboard.InstantiateInitialViewController () );
+			this._nav = new UINavigationController (new ScannerHome ());
 
 			this.window.RootViewController = _nav;
 

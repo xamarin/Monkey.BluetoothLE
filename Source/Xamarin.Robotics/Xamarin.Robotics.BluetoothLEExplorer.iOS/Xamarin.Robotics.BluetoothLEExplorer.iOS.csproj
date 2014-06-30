@@ -120,6 +120,7 @@
       <DependentUpon>CharacteristicListScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Screens\Scanner\CharacteristicDetail\CharacteristicDetailScreen.cs" />
+    <Compile Include="UI\Screens\Scanner\CharacteristicDetail\CharacteristicDetailScreen_Hrm.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>

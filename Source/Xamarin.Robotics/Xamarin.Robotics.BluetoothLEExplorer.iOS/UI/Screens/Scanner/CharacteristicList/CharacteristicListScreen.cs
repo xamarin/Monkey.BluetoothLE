@@ -9,7 +9,7 @@ using System.Text;
 namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.ServiceDetails
 {
 	[Register("CharacteristicListScreen")]
-	public partial class CharacteristicListScreen : UIViewController
+	public partial class CharacteristicListScreen : UITableViewController
 	{
 		CharacteristicTableSource _tableSource;
 		//protected List<ICharacteristic> _characteristics = new List<ICharacteristic>();
@@ -49,7 +49,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.ServiceDet
 		{
 			base.ViewDidLoad ();
 
-			this.CharacteristicsTable.Source = this._tableSource;
+			TableView.Source = this._tableSource;
 
 		}
 
@@ -64,7 +64,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.ServiceDet
 
 			// wire up our handler for when characteristics are discovered
 			(this._currentService as Service).CharacteristicsDiscovered += (object sender, EventArgs e) => {
-				this.CharacteristicsTable.ReloadData();
+				TableView.ReloadData();
 			};
 
 			// discover the charactersistics

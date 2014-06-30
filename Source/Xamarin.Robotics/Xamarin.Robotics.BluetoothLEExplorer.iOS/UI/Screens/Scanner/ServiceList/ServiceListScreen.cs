@@ -8,7 +8,7 @@ using Xamarin.Robotics.Core.Bluetooth.LE;
 namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.DeviceDetails
 {
 	[Register("ServiceListScreen")]
-	public partial class ServiceListScreen : UIViewController
+	public partial class ServiceListScreen : UITableViewController
 	{
 		//protected List<IService> _services = new List<IService>();
 		protected Dictionary<IService, ICharacteristic> _serviceCharacteristics = new Dictionary<IService, ICharacteristic>();
@@ -41,7 +41,9 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.DeviceDeta
 			this._tableSource = new ServiceTableSource ();
 
 			this._tableSource.ServiceSelected += (object sender, ServiceTableSource.ServiceSelectedEventArgs e) => {
-				this._characteristicListScreen = this.Storyboard.InstantiateViewController("CharacteristicListScreen") as ServiceDetails.CharacteristicListScreen;
+				//HACK: this._characteristicListScreen = this.Storyboard.InstantiateViewController("CharacteristicListScreen") as ServiceDetails.CharacteristicListScreen;
+				this._characteristicListScreen = new ServiceDetails.CharacteristicListScreen();
+
 				this._characteristicListScreen.SetDeviceAndService ( this._connectedDevice, e.Service );
 				this.NavigationController.PushViewController(this._characteristicListScreen, true);
 			};
@@ -52,7 +54,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.DeviceDeta
 			base.ViewDidLoad ();
 
 			this._tableSource.Services = this._connectedDevice.Services;
-			this.ServicesTableView.Source = this._tableSource;
+			TableView.Source = this._tableSource;
 
 			this.NavigationItem.SetLeftBarButtonItem( new UIBarButtonItem ("Disconnect", UIBarButtonItemStyle.Plain, (s,e) => {
 				Adapter.Current.DisconnectDevice (this._connectedDevice);
@@ -77,7 +79,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.DeviceDeta
 					null, "ok", null);
 				alert.Clicked += (object s, UIButtonEventArgs e2) => {
 					Console.WriteLine ("Alert.Clicked");
-					this.NavigationController.PopToRootViewController(true);//.PopViewControllerAnimated(true);
+					this.NavigationController.PopToRootViewController(true); //.PopViewControllerAnimated(true);
 				};
 				alert.Show();
 			};
@@ -86,7 +88,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.DeviceDeta
 			this._connectedDevice.DiscoverServices ();
 			this._connectedDevice.ServicesDiscovered += (object sender, EventArgs e) => {
 				Console.WriteLine("ServiceListScreen.ServicesDiscovered");
-				this.ServicesTableView.ReloadData();
+				TableView.ReloadData();
 			};
 		}
 
@@ -102,10 +104,10 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.DeviceDeta
 			}
 			protected IList<IService> _services = new List<IService>();
 
-			public override int NumberOfSections (UITableView tableView)
-			{
-				return 1;
-			}
+//			public override int NumberOfSections (UITableView tableView)
+//			{
+//				return 1;
+//			}
 
 			public override int RowsInSection (UITableView tableview, int section)
 			{
