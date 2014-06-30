@@ -53,6 +53,7 @@ namespace MFMetaDataProcessor
             _primitiveTypes.Add(typeof(Single).FullName, TinyDataType.DATATYPE_R4);
             _primitiveTypes.Add(typeof(Double).FullName, TinyDataType.DATATYPE_R8);
 
+            _primitiveTypes.Add(typeof(Char).FullName, TinyDataType.DATATYPE_CHAR);
             _primitiveTypes.Add(typeof(String).FullName, TinyDataType.DATATYPE_STRING);
             _primitiveTypes.Add(typeof(Boolean).FullName, TinyDataType.DATATYPE_BOOLEAN);
 
@@ -216,7 +217,7 @@ namespace MFMetaDataProcessor
             if (typeDefinition.MetadataType == MetadataType.ValueType)
             {
                 var resolvedType = typeDefinition.Resolve();
-                if (resolvedType.IsEnum && !alsoWriteSubType)
+                if (resolvedType != null && resolvedType.IsEnum && !alsoWriteSubType)
                 {
                     var baseTypeValue = resolvedType.Fields.FirstOrDefault(item => item.IsSpecialName);
                     if (baseTypeValue != null)
@@ -398,7 +399,16 @@ namespace MFMetaDataProcessor
                 writer.WriteByte(0); // OpTypeModifier ???
             }
 
-            WriteDataType(typeReference, writer, true);
+            var byReference = typeReference as ByReferenceType;
+            if (byReference != null)
+            {
+                writer.WriteByte((Byte)TinyDataType.DATATYPE_BYREF);
+                WriteDataType(byReference.ElementType, writer, true);
+            }
+            else
+            {
+                WriteDataType(typeReference, writer, true);
+            }
         }
 
         private Byte[] GetFullSignaturesArray()

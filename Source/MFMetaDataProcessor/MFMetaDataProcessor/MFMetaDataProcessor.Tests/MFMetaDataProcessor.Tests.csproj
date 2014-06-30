@@ -67,6 +67,12 @@
     <None Include="Data\ExtendedWeakReferences\le\ExtendedWeakReferences.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\FileSystemSample\be\FileSystemSample.pe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\FileSystemSample\le\FileSystemSample.pe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +82,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\ExtendedWeakReferences\ExtendedWeakReferences.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\FileSystemSample\FileSystemSample.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

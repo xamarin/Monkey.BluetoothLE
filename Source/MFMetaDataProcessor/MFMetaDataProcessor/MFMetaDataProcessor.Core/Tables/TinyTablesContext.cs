@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Mono.Cecil;
 
@@ -184,6 +185,7 @@ namespace MFMetaDataProcessor
                         .Where(item => item.HasBody)
                         .SelectMany(item => item.Body.Instructions)
                         .Select(item => item.Operand)
+                        .OfType<MethodReference>()
                         .ToList();
 
                     foreach (var fieldType in SortTypesAccordingUsagesImpl(
@@ -202,10 +204,18 @@ namespace MFMetaDataProcessor
         private static IEnumerable<TypeDefinition> GetTypesList(
             MethodReference methodReference)
         {
-            yield return methodReference.ReturnType.Resolve();
+            var returnType = methodReference.ReturnType.Resolve();
+            if (returnType != null && returnType.FullName != "System.Void")
+            {
+                yield return returnType;
+            }
             foreach (var parameter in methodReference.Parameters)
             {
-                yield return parameter.ParameterType.Resolve();
+                var parameterType = parameter.ParameterType.Resolve();
+                if (parameterType != null)
+                {
+                    yield return parameterType;
+                }
             }
         }
 
