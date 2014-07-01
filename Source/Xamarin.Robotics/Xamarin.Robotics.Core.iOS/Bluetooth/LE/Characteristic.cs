@@ -10,10 +10,12 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 		public event EventHandler<CharacteristicReadEventArgs> ValueUpdated = delegate {};
 
 		protected CBCharacteristic _nativeCharacteristic;
+		CBPeripheral _parentDevice;
 
-		public Characteristic (CBCharacteristic nativeCharacteristic)
+		public Characteristic (CBCharacteristic nativeCharacteristic, CBPeripheral parentDevice)
 		{
 			this._nativeCharacteristic = nativeCharacteristic;
+			this._parentDevice = parentDevice;
 		}
 		public string Uuid {
 			get { return this._nativeCharacteristic.UUID.ToString (); }
@@ -24,7 +26,9 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 		}
 
 		public byte[] Value {
-			get { return this._nativeCharacteristic.Value.ToArray(); }
+			get { 
+				return this._nativeCharacteristic.Value.ToArray(); 
+			}
 		}
 
 		public string StringValue {
@@ -71,22 +75,34 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 			// TODO: should be bool RequestValue? compare iOS API for commonality
 			bool successful = false;
 			if((this.Properties & CharacteristicPropertyType.Read) != 0) {
-				Console.WriteLine ("Characteristic.RequestValue, PropertyType = Read, requesting updates");
+				Console.WriteLine ("** Characteristic.RequestValue, PropertyType = Read, requesting read");
+				_parentDevice.ReadValue (_nativeCharacteristic);
+
+				_parentDevice.UpdatedCharacterteristicValue += UpdatedRead;
 
 				successful = true;
-			
-
-
-				this.ValueUpdated (this, new CharacteristicReadEventArgs () { });
 			}
 			if ((this.Properties & CharacteristicPropertyType.Notify) != 0) {
-				Console.WriteLine ("Characteristic.RequestValue, PropertyType = Notify, requesting updates");
+				Console.WriteLine ("** Characteristic.RequestValue, PropertyType = Notify, requesting updates");
+				_parentDevice.SetNotifyValue (true, _nativeCharacteristic);
 
-				//TODO: need to call SetNotifyValue() on the CBPeripheral
-				//successful = 
+				_parentDevice.UpdatedCharacterteristicValue += UpdatedNotify;
+				successful = true;
 			}
 
-			Console.WriteLine ("RequestValue, Succesful: " + successful.ToString());
+			Console.WriteLine ("** RequestValue, Succesful: " + successful.ToString());
+		}
+
+		void UpdatedRead (object sender, CBCharacteristicEventArgs e) {
+			this.ValueUpdated (this, new CharacteristicReadEventArgs () {
+				Characteristic = new Characteristic(e.Characteristic, _parentDevice)
+			});
+			//_parentDevice.UpdatedCharacterteristicValue -= UpdatedRead;
+		}
+		void UpdatedNotify(object sender, CBCharacteristicEventArgs e) {
+			this.ValueUpdated (this, new CharacteristicReadEventArgs () {
+				Characteristic = new Characteristic(e.Characteristic, _parentDevice)
+			});
 		}
 
 		//TODO: this is the exact same as ServiceUuid i think

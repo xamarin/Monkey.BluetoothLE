@@ -23,7 +23,9 @@
 		<string>Icon-Small@2x</string>
 		<string>Icon-Small-40@2x</string>
 	</array>
+	<key>CFBundleShortVersionString</key>
+	<string>1</string>
 	<key>CFBundleDisplayName</key>
-	<string>BLE Explr.</string>
+	<string>BluetoothLE</string>
 </dict>
 </plist>

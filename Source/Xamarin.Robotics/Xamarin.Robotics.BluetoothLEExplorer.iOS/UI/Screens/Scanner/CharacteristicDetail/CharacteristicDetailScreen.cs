@@ -8,9 +8,17 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS
 {
 	public class CharacteristicDetailScreen : UIViewController
 	{
-		protected IDevice _connectedDevice;
-		protected IService _currentService;
-		protected ICharacteristic _characteristic;
+		IDevice _connectedDevice;
+		IService _currentService;
+		ICharacteristic _characteristic;
+
+		UILabel _characteristicNameText;
+		UILabel _characteristicIDText;
+		UILabel _rawValueText;
+		UILabel _stringValueText;
+		UILabel _valueUdpatedDateTime;
+
+		EventHandler<CharacteristicReadEventArgs> _valueUpdatedHandler;
 
 		public CharacteristicDetailScreen ()
 		{
@@ -29,91 +37,67 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS
 			Title = "CharacteristicDetail";
 			View.BackgroundColor = UIColor.White;
 
-			var label = new UILabel (new RectangleF (10, 100, 300, 60));
-			label.Text = "Characteristic: " + _connectedDevice.Name + "\n" + _currentService.Name + "\n" + _characteristic.Name;
-			label.Lines = 3;
-			Add (label);
+
+			_characteristicNameText = new UILabel (new RectangleF (10, 70, 300, 60));
+			_characteristicIDText = new UILabel (new RectangleF (10, 100, 300, 60));
+			_rawValueText = new UILabel (new RectangleF (10, 130, 300, 60));
+			_stringValueText = new UILabel (new RectangleF (10, 160, 300, 60));
+			_valueUdpatedDateTime = new UILabel (new RectangleF (10, 190, 300, 60));
 
 
-			var labelHR = new UILabel (new RectangleF (50, 200, 300, 100));
-			labelHR.Font = UIFont.BoldSystemFontOfSize (48);
-			labelHR.TextColor = UIColor.Red;
-			labelHR.Text = "- bpm";
-			labelHR.Lines = 3;
-			Add (labelHR);
+			_rawValueText.Text = "raw";
+			_stringValueText.Text = "string";
+			_valueUdpatedDateTime.Text = "-";
 
+			// populate our page
+			this._characteristicNameText.Text = _characteristic.Name;
+			this._characteristicIDText.Text = _characteristic.ID.ToString ();
+
+
+
+			Add (_characteristicNameText);
+			Add (_characteristicIDText);
+			Add (_rawValueText);
+			Add (_stringValueText);
+			Add (_valueUdpatedDateTime);
+
+			this._valueUpdatedHandler = (s, e) => {
+				Console.WriteLine("-- _valueUpdatedHandler: " +  e.Characteristic.Value);
+				this.InvokeOnMainThread( () => {
+					this.PopulateValueInfo();
+				});
+			};
 
 			// request the value to be read
 			_characteristic.RequestValue();
-
-			((CBPeripheral)_connectedDevice.NativeDevice).UpdatedCharacterteristicValue += (object sender, CBCharacteristicEventArgs e) => {
-				Console.WriteLine("UpdatedCharacterteristicValue:" + e.Characteristic.Description + " " + e.Characteristic.Value);
-
-				if (e.Characteristic.Value != null) {
-					var data = e.Characteristic.Value;
-					byte[] dataBytes = new byte[data.Length];
-					System.Runtime.InteropServices.Marshal.Copy(data.Bytes, dataBytes, 0, Convert.ToInt32(data.Length));
-
-					if (dataBytes.Length == 1)
-					{
-						// position
-						var position = dataBytes[0];
-						var locationString = "-";
-						Console.WriteLine("----------------------position:" + position);
-						// https://developer.apple.com/library/mac/samplecode/HeartRateMonitor/Listings/HeartRateMonitor_HeartRateMonitorAppDelegate_m.html
-						switch (position) {
-						case 0:
-							locationString = @"Other";
-							break;
-						case 1:
-							locationString = @"Chest";
-							break;
-						case 2:
-							locationString = @"Wrist";
-							break;
-						case 3:
-							locationString = @"Finger";
-							break;
-						case 4:
-							locationString = @"Hand";
-							break;
-						case 5:
-							locationString = @"Ear Lobe";
-							break;
-						case 6: 
-							locationString = @"Foot";
-							break;
-						default:
-							locationString = @"Reserved";
-							break;
-						}
-						labelHR.Text = "on " + locationString;
-					} else {
-						// heartrate
-	 					int bpm = 0;
-						//http://www.raywenderlich.com/52080/introduction-core-bluetooth-building-heart-rate-monitor
-						//https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
-						if ( (dataBytes[0] & 0x01) == 0) {
-							bpm = (int)dataBytes[1];
-						} else {
-							bpm = (int)dataBytes[1]; //HACK: wrong
-						}
-						Console.WriteLine("--------------------------hr:" + bpm);
-
-						InvokeOnMainThread(() =>{
-							labelHR.Text = bpm + " bpm";
-						});
-					}
-				}
-			};
-
-
-			Console.WriteLine("ReadValue");
-			((CBPeripheral)_connectedDevice.NativeDevice).ReadValue ((CBCharacteristic)_characteristic.NativeCharacteristic);
-
-			Console.WriteLine("SetNotifyValue");
-			((CBPeripheral)_connectedDevice.NativeDevice).SetNotifyValue(true, ((CBCharacteristic)_characteristic.NativeCharacteristic));
 		}
+
+
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
+			_characteristic.ValueUpdated += _valueUpdatedHandler;
+		}
+
+		public override void ViewWillDisappear (bool animated)
+		{
+			base.ViewWillDisappear (animated);
+			_characteristic.ValueUpdated -= _valueUpdatedHandler;
+		}
+
+		//TODO: check if i should be passing in the value from _valueUpdatedHandler, sometimes nulls get thru this null check!?
+		protected void PopulateValueInfo()
+		{
+			if (_characteristic.Value == null) {
+				this._rawValueText.Text = this._stringValueText.Text = "Waiting for update...";
+
+			} else {
+				this._rawValueText.Text = string.Join (",", _characteristic.Value);
+				this._stringValueText.Text = _characteristic.StringValue;
+			}
+			//TODO: this._valueUpdatedDateTime
+		}
+
 	}
 }
 

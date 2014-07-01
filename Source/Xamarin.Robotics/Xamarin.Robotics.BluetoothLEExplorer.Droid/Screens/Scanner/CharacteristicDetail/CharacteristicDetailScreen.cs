@@ -58,7 +58,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.Droid.Screens.Scanner.Characteris
 				this._rawValueText.Text = string.Join (",", App.Current.State.SelectedCharacteristic.Value);
 				this._stringValueText.Text = App.Current.State.SelectedCharacteristic.StringValue;
 			}
-			//this._valueUdpatedDateTime
+			//TODO: this._valueUpdatedDateTime
 		}
 
 		protected override void OnResume ()

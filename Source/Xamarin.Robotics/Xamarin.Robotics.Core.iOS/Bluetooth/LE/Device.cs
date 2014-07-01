@@ -45,7 +45,7 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 								// add the discovered characteristics to the particular service
 								foreach (var characteristic in srv.Characteristics) {
 									Console.WriteLine("Characteristic: " + characteristic.Description);
-									Characteristic newChar = new Characteristic(characteristic);
+									Characteristic newChar = new Characteristic(characteristic, _nativeDevice);
 									item.Characteristics.Add(newChar);
 								}
 								// inform the service that the characteristics have been discovered

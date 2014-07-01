@@ -38,10 +38,11 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.ServiceDet
 
 
 				var _characteristicDetailScreen = new CharacteristicDetailScreen();
-				_characteristicDetailScreen.SetDeviceServiceAndCharacteristic ( this._connectedDevice, this._currentService, e.Characteristic );
-				this.NavigationController.PushViewController(_characteristicDetailScreen, true);
+				//HACK: var _characteristicDetailScreen = new CharacteristicDetailScreen_Hrm();
 
-//				this._connectedDevice.DiscoverDescriptors(e.Characteristic);
+				_characteristicDetailScreen.SetDeviceServiceAndCharacteristic ( this._connectedDevice, this._currentService, e.Characteristic );
+
+				this.NavigationController.PushViewController(_characteristicDetailScreen, true);
 			};
 		}
 
@@ -64,6 +65,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.ServiceDet
 
 			// wire up our handler for when characteristics are discovered
 			(this._currentService as Service).CharacteristicsDiscovered += (object sender, EventArgs e) => {
+				Console.WriteLine("CharacteristicsDiscovered");
 				TableView.ReloadData();
 			};
 
@@ -116,10 +118,10 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.ServiceDet
 			}
 			protected IList<ICharacteristic> _characteristics = new List<ICharacteristic>();
 
-			public override int NumberOfSections (UITableView tableView)
-			{
-				return 1;
-			}
+//			public override int NumberOfSections (UITableView tableView)
+//			{
+//				return 1;
+//			}
 
 			public override int RowsInSection (UITableView tableview, int section)
 			{

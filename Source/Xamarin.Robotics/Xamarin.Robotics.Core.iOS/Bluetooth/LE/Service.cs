@@ -53,7 +53,7 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 					this._characteristics = new List<ICharacteristic> ();
 					if (this._nativeService.Characteristics != null) {
 						foreach (var item in this._nativeService.Characteristics) {
-							this._characteristics.Add (new Characteristic (item));
+							this._characteristics.Add (new Characteristic (item, _parentDevice));
 						}
 					}
 				}
@@ -71,7 +71,7 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 			//TODO: why don't we look in the internal list _chacateristics?
 			foreach (var item in this._nativeService.Characteristics) {
 				if ( string.Equals(item.UUID.ToString(), characteristic.ID.ToString()) ) {
-					return new Characteristic(item);
+					return new Characteristic(item, _parentDevice);
 				}
 			}
 			return null;
