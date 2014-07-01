@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Xamarin.Robotics.Core.Bluetooth.LE
 {
@@ -20,6 +21,9 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 		// methods
 //		void EnumerateDescriptors ();
 		void RequestValue();
+
+
+		Task<ICharacteristic> ReadAsync ();
 
 	}
 }

@@ -68,8 +68,24 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS
 				});
 			};
 
+
 			// request the value to be read
 			_characteristic.RequestValue();
+
+
+			var @type = new UILabel (new RectangleF (150, 250, 300, 60));
+
+
+			var read = UIButton.FromType (UIButtonType.System);
+			read.Frame = new RectangleF (10, 250, 50, 30);
+			read.SetTitle ("Read", UIControlState.Normal);
+			read.TouchUpInside += async (sender, e) => {
+				@type.Text = "before";
+				var c = await _characteristic.ReadAsync();
+				@type.Text = "value:" + c.StringValue;
+			};
+			Add (@type);
+			Add (read);
 		}
 
 

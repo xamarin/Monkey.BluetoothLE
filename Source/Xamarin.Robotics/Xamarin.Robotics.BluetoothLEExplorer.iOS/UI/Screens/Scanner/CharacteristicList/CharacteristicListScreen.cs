@@ -38,7 +38,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.ServiceDet
 
 
 				var _characteristicDetailScreen = new CharacteristicDetailScreen();
-				//HACK: var _characteristicDetailScreen = new CharacteristicDetailScreen_Hrm();
+//				var _characteristicDetailScreen = new CharacteristicDetailScreen_Hrm();
 
 				_characteristicDetailScreen.SetDeviceServiceAndCharacteristic ( this._connectedDevice, this._currentService, e.Characteristic );
 

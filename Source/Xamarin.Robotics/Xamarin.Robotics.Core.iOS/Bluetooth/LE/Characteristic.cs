@@ -2,6 +2,7 @@
 using System.Linq;
 using MonoTouch.CoreBluetooth;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Xamarin.Robotics.Core.Bluetooth.LE
 {
@@ -70,23 +71,49 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 			}
 		}
 
+		public bool CanRead {get{return (this.Properties & CharacteristicPropertyType.Read) != 0; }}
+		public bool CanNotify {get{return (this.Properties & CharacteristicPropertyType.Notify) != 0; }}
+
+		public Task<ICharacteristic> ReadAsync() 
+		{
+			var tcs = new TaskCompletionSource<ICharacteristic>();
+
+			if (!CanRead) {
+				throw new InvalidOperationException ("Characteristic does not support READ");
+			}
+			EventHandler<CBCharacteristicEventArgs> updated = null;
+			updated = (object sender, CBCharacteristicEventArgs e) => {
+				Console.WriteLine(".....UpdatedCharacterteristicValue");
+				var c = new Characteristic(e.Characteristic, _parentDevice);
+				tcs.SetResult(c);
+				_parentDevice.UpdatedCharacterteristicValue -= updated;
+			};
+
+			_parentDevice.UpdatedCharacterteristicValue += updated;
+			Console.WriteLine(".....ReadValue");
+			_parentDevice.ReadValue (_nativeCharacteristic);
+
+			return tcs.Task;
+		}
+
 		public void RequestValue ()
 		{
 			// TODO: should be bool RequestValue? compare iOS API for commonality
 			bool successful = false;
-			if((this.Properties & CharacteristicPropertyType.Read) != 0) {
+			if(CanRead) {
 				Console.WriteLine ("** Characteristic.RequestValue, PropertyType = Read, requesting read");
-				_parentDevice.ReadValue (_nativeCharacteristic);
-
 				_parentDevice.UpdatedCharacterteristicValue += UpdatedRead;
+
+				_parentDevice.ReadValue (_nativeCharacteristic);
 
 				successful = true;
 			}
-			if ((this.Properties & CharacteristicPropertyType.Notify) != 0) {
+			if (CanNotify) {
 				Console.WriteLine ("** Characteristic.RequestValue, PropertyType = Notify, requesting updates");
+				_parentDevice.UpdatedCharacterteristicValue += UpdatedNotify;
+
 				_parentDevice.SetNotifyValue (true, _nativeCharacteristic);
 
-				_parentDevice.UpdatedCharacterteristicValue += UpdatedNotify;
 				successful = true;
 			}
 

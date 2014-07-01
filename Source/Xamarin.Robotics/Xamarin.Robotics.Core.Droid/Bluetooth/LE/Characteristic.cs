@@ -5,6 +5,7 @@ using Android.Bluetooth;
 using System.Linq;
 using Java.Util;
 using Android.Media;
+using System.Threading.Tasks;
 
 namespace Xamarin.Robotics.Core.Bluetooth.LE
 {
@@ -96,6 +97,12 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 			get {
 				return this._nativeCharacteristic;
 			}
+		}
+
+		public Task<ICharacteristic> ReadAsync()
+		{
+			//TODO: implement async read for Android
+			throw new NotImplementedException ("TODO");
 		}
 
 		public void RequestValue ()
