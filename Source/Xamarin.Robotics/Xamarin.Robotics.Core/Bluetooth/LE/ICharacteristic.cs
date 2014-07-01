@@ -18,10 +18,14 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 		object NativeCharacteristic { get; }
 		string Name { get; }
 		CharacteristicPropertyType Properties { get; }
+
+		bool CanRead { get; }
+		bool CanUpdate { get; }
 		// methods
 //		void EnumerateDescriptors ();
-		void RequestValue();
 
+		void StartUpdates();
+		void StopUpdates();
 
 		Task<ICharacteristic> ReadAsync ();
 

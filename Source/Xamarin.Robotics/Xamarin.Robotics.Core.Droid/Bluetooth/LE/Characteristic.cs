@@ -99,21 +99,25 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 			}
 		}
 
+		public bool CanRead {get{return (this.Properties & CharacteristicPropertyType.Read) != 0; }}
+		public bool CanUpdate {get{return (this.Properties & CharacteristicPropertyType.Notify) != 0; }}
+
+
 		public Task<ICharacteristic> ReadAsync()
 		{
 			//TODO: implement async read for Android
 			throw new NotImplementedException ("TODO");
 		}
 
-		public void RequestValue ()
+		public void StartUpdates ()
 		{
 			// TODO: should be bool RequestValue? compare iOS API for commonality
 			bool successful = false;
-			if((this.Properties & CharacteristicPropertyType.Read) != 0) {
+			if (CanRead) {
 				Console.WriteLine ("Characteristic.RequestValue, PropertyType = Read, requesting updates");
 				successful = this._gatt.ReadCharacteristic (this._nativeCharacteristic);
 			}
-			if ((this.Properties & CharacteristicPropertyType.Notify) != 0) {
+			if (CanUpdate) {
 				Console.WriteLine ("Characteristic.RequestValue, PropertyType = Notify, requesting updates");
 				
 				successful = this._gatt.SetCharacteristicNotification (this._nativeCharacteristic, true);
@@ -130,6 +134,15 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 			}
 
 			Console.WriteLine ("RequestValue, Succesful: " + successful.ToString());
+		}
+
+		public void StopUpdates ()
+		{
+			bool successful = false;
+			if (CanUpdate) {
+				successful = this._gatt.SetCharacteristicNotification (this._nativeCharacteristic, false);
+				Console.WriteLine ("Characteristic.RequestValue, PropertyType = Notify, STOP updates");
+			}
 		}
 	}
 }

@@ -72,7 +72,7 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 		}
 
 		public bool CanRead {get{return (this.Properties & CharacteristicPropertyType.Read) != 0; }}
-		public bool CanNotify {get{return (this.Properties & CharacteristicPropertyType.Notify) != 0; }}
+		public bool CanUpdate {get{return (this.Properties & CharacteristicPropertyType.Notify) != 0; }}
 
 		public Task<ICharacteristic> ReadAsync() 
 		{
@@ -96,7 +96,7 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 			return tcs.Task;
 		}
 
-		public void RequestValue ()
+		public void StartUpdates ()
 		{
 			// TODO: should be bool RequestValue? compare iOS API for commonality
 			bool successful = false;
@@ -108,7 +108,7 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 
 				successful = true;
 			}
-			if (CanNotify) {
+			if (CanUpdate) {
 				Console.WriteLine ("** Characteristic.RequestValue, PropertyType = Notify, requesting updates");
 				_parentDevice.UpdatedCharacterteristicValue += UpdatedNotify;
 
@@ -120,12 +120,22 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 			Console.WriteLine ("** RequestValue, Succesful: " + successful.ToString());
 		}
 
+		public void StopUpdates () {
+			bool successful = false;
+			if (CanUpdate) {
+				_parentDevice.SetNotifyValue (false, _nativeCharacteristic);
+				Console.WriteLine ("** Characteristic.RequestValue, PropertyType = Notify, STOP updates");
+			}
+		}
+		// removes listener after first response received
 		void UpdatedRead (object sender, CBCharacteristicEventArgs e) {
 			this.ValueUpdated (this, new CharacteristicReadEventArgs () {
 				Characteristic = new Characteristic(e.Characteristic, _parentDevice)
 			});
-			//_parentDevice.UpdatedCharacterteristicValue -= UpdatedRead;
+			_parentDevice.UpdatedCharacterteristicValue -= UpdatedRead;
 		}
+
+		// continues to listen indefinitely
 		void UpdatedNotify(object sender, CBCharacteristicEventArgs e) {
 			this.ValueUpdated (this, new CharacteristicReadEventArgs () {
 				Characteristic = new Characteristic(e.Characteristic, _parentDevice)
