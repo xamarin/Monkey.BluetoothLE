@@ -98,3 +98,21 @@ CBService
 	Methods
 }
 
+WINPHONE8.1 (draft - not sure these are all correct)
+===========
+https://dev.windowsphone.com/en-US/OEM/docs/Driver_Components/Bluetooth
+http://www.apeoholic.se/post/2014/05/04/Windows-phone-81-and-Bluetooth-LE-Getting-started
+https://github.com/danardelean/BLEExplorer.WP
+
+BluetoothLEDevice
+	.Name
+	.GattServices
+	.GetDeviceSelector()
+	.GetGattService()
+	.FromIdAsync()
+DeviceInformation
+	.FindAllAsync
+GattService?
+	.GetCharacteristics()
+Characteristic
+	.WriteValueAsync()

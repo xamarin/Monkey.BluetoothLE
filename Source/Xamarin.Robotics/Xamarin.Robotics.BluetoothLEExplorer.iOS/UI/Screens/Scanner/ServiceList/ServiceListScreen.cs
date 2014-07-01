@@ -41,7 +41,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.DeviceDeta
 			this._tableSource = new ServiceTableSource ();
 
 			this._tableSource.ServiceSelected += (object sender, ServiceTableSource.ServiceSelectedEventArgs e) => {
-				//HACK: this._characteristicListScreen = this.Storyboard.InstantiateViewController("CharacteristicListScreen") as ServiceDetails.CharacteristicListScreen;
+
 				this._characteristicListScreen = new ServiceDetails.CharacteristicListScreen();
 
 				this._characteristicListScreen.SetDeviceAndService ( this._connectedDevice, e.Service );

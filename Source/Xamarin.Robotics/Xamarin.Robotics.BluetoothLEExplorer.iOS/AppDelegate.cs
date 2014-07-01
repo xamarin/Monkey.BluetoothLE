@@ -16,24 +16,12 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS
 		// class-level declarations
 		UIWindow window;
 		UINavigationController _nav;
-		//HACK: UIStoryboard _storyboard;
 
-
-		//
-		// This method is invoked when the application has loaded and is ready to run. In this
-		// method you should instantiate the window, load the UI into it and then make the window
-		// visible.
-		//
-		// You have 17 seconds to return from this method, or iOS will terminate your application.
-		//
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
 			// create a new window instance based on the screen size
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
-			//HACK: _storyboard = UIStoryboard.FromName ("Main", null);
-
-			//HACK: this._nav = new UINavigationController( (ScannerHome)_storyboard.InstantiateInitialViewController () );
 			this._nav = new UINavigationController (new ScannerHome ());
 
 			this.window.RootViewController = _nav;

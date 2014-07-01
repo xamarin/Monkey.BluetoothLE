@@ -64,7 +64,6 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.Home
 				Adapter.Current.DeviceConnected += (object s, DeviceConnectionEventArgs connectArgs) => {
 					this._connectingDialog.Hide(false);
 
-					//HACK: this._ServiceListScreen = this.Storyboard.InstantiateViewController("ServiceListScreen") as DeviceDetails.ServiceListScreen;
 					this._ServiceListScreen = new DeviceDetails.ServiceListScreen();
 
 					this._ServiceListScreen.ConnectedDevice = connectArgs.Device;
@@ -132,10 +131,10 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.Home
 				_devices = devices;
 			}
 
-			public override int NumberOfSections (UITableView tableView)
-			{
-				return 1;
-			}
+//			public override int NumberOfSections (UITableView tableView)
+//			{
+//				return 1;
+//			}
 
 			public override int RowsInSection (UITableView tableview, int section)
 			{
