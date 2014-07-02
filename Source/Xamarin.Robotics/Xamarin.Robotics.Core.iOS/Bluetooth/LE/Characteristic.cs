@@ -90,7 +90,7 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 			};
 
 			_parentDevice.UpdatedCharacterteristicValue += updated;
-			Console.WriteLine(".....ReadValue");
+			Console.WriteLine(".....ReadAsync");
 			_parentDevice.ReadValue (_nativeCharacteristic);
 
 			return tcs.Task;

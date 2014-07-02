@@ -46,7 +46,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.Droid.Screens.Scanner.Characteris
 			this.PopulateValueInfo ();
 
 			// request the value to be read
-			App.Current.State.SelectedCharacteristic.RequestValue ();
+			App.Current.State.SelectedCharacteristic.StartUpdates ();
 		}
 
 		protected void PopulateValueInfo()

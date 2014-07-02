@@ -70,7 +70,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS
 
 
 			// request the value to be read
-			_characteristic.RequestValue();
+			_characteristic.StartUpdates();
 
 
 			var @type = new UILabel (new RectangleF (150, 250, 300, 60));

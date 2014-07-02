@@ -44,7 +44,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS
 
 
 			// request the value to be read
-			_characteristic.RequestValue();
+			_characteristic.StartUpdates();
 
 			((CBPeripheral)_connectedDevice.NativeDevice).UpdatedCharacterteristicValue += (object sender, CBCharacteristicEventArgs e) => {
 				Console.WriteLine("UpdatedCharacterteristicValue:" + e.Characteristic.Description + " " + e.Characteristic.Value);
