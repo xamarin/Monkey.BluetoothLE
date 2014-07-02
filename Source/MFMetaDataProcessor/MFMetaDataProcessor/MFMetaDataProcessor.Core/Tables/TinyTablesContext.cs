@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Mono.Cecil;
 
@@ -20,6 +19,12 @@ namespace MFMetaDataProcessor
             assemblyAttributes.Add("System.Reflection.AssemblyCultureAttribute");
             assemblyAttributes.Add("System.Reflection.AssemblyVersionAttribute");
 
+            assemblyAttributes.Add("System.Runtime.InteropServices.StructLayoutAttribute");
+            assemblyAttributes.Add("System.Runtime.InteropServices.OutAttribute");
+            assemblyAttributes.Add("System.Runtime.InteropServices.LayoutKind");
+
+            assemblyAttributes.Add("System.SerializableAttribute");
+
             NativeMethodsCrc = new NativeMethodsCrc(assemblyDefinition);
 
             var mainModule = AssemblyDefinition.MainModule;
@@ -30,12 +35,16 @@ namespace MFMetaDataProcessor
                 mainModule.AssemblyReferences, this);
 
             var typeReferences = mainModule.GetTypeReferences()
-                .Where(item => !IsAttribute(item, assemblyAttributes));
+                .Where(item => !IsAttribute(item, assemblyAttributes))
+                .ToList();
             TypeReferencesTable = new TinyTypeReferenceTable(
                 typeReferences, this);
 
+            var typeReferencesNames = new HashSet<String>(
+                typeReferences.Select(item => item.FullName),
+                StringComparer.Ordinal);
             var memberReferences = mainModule.GetMemberReferences()
-                .Where(item => !item.DeclaringType.Name.EndsWith("Attribute"))
+                .Where(item => typeReferencesNames.Contains(item.DeclaringType.FullName))
                 .ToList();
             FieldReferencesTable = new TinyFieldReferenceTable(
                 memberReferences.OfType<FieldReference>(), this);
@@ -132,7 +141,7 @@ namespace MFMetaDataProcessor
             ICollection<String> attributesNames)
         {
             return
-                typeReference.FullName.EndsWith("Attribute") ||
+//                typeReference.FullName.EndsWith("Attribute") ||
                 attributesNames.Contains(typeReference.FullName) ||
                 (typeReference.DeclaringType != null &&
                     attributesNames.Contains(typeReference.DeclaringType.FullName));
