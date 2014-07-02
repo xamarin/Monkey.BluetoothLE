@@ -102,11 +102,35 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 		public bool CanRead {get{return (this.Properties & CharacteristicPropertyType.Read) != 0; }}
 		public bool CanUpdate {get{return (this.Properties & CharacteristicPropertyType.Notify) != 0; }}
 
-
+		// HACK: UNTESTED
 		public Task<ICharacteristic> ReadAsync()
 		{
-			//TODO: implement async read for Android
-			throw new NotImplementedException ("TODO");
+			var tcs = new TaskCompletionSource<ICharacteristic>();
+
+			if (!CanRead) {
+				throw new InvalidOperationException ("Characteristic does not support READ");
+			}
+			EventHandler<CharacteristicReadEventArgs> updated = null;
+			updated = (object sender, CharacteristicReadEventArgs e) => {
+				// it may be other characteristics, so we need to test
+				var c = e.Characteristic;
+				tcs.SetResult(c);
+				if (this._gattCallback != null) {
+					// wire up the characteristic value updating on the gattcallback
+					this._gattCallback.CharacteristicValueUpdated -= updated;
+				}
+			};
+
+
+			if (this._gattCallback != null) {
+				// wire up the characteristic value updating on the gattcallback
+				this._gattCallback.CharacteristicValueUpdated += updated;
+			}
+
+			Console.WriteLine(".....ReadAsync");
+			this._gatt.ReadCharacteristic (this._nativeCharacteristic);
+
+			return tcs.Task;
 		}
 
 		public void StartUpdates ()
@@ -141,6 +165,7 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 			bool successful = false;
 			if (CanUpdate) {
 				successful = this._gatt.SetCharacteristicNotification (this._nativeCharacteristic, false);
+				//TODO: determine whether 
 				Console.WriteLine ("Characteristic.RequestValue, PropertyType = Notify, STOP updates");
 			}
 		}
