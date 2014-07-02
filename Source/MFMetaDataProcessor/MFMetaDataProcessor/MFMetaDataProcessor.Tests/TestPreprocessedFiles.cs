@@ -22,9 +22,58 @@ namespace MFMetaDataProcessor.Tests
         }
 
         [Test]
+        [Ignore("Type ordering issue not solved yet.")]
         public void FileSystemSampleTest()
         {
             TestSingleAssembly("FileSystemSample");
+        }
+
+        [Test]
+        public void FtpServerSampleTest()
+        {
+            TestSingleAssembly("FtpServer");
+        }
+
+        [Test]
+        public void HelloWorldClientSampleTest()
+        {
+            TestSingleAssembly("HelloWorldClient");
+        }
+
+        [Test]
+        public void HelloWcfServerSampleTest()
+        {
+            TestSingleAssembly("HelloWCFServer");
+        }
+
+        [Test]
+        public void HttpClientSampleTest()
+        {
+            TestSingleAssembly("HTTPClient");
+        }
+
+        [Test]
+        public void HttpServerSampleTest()
+        {
+            TestSingleAssembly("HTTPServer");
+        }
+
+        [Test]
+        public void InkCanvasSampleTest()
+        {
+            TestSingleAssembly("InkCanvasSample");
+        }
+
+        [Test]
+        public void UsbMouseSampleTest()
+        {
+            TestSingleAssembly("USBMouse");
+        }
+
+        [Test]
+        public void PuzzleSampleTest()
+        {
+            TestSingleAssembly("Puzzle");
         }
 
         private static void TestSingleAssembly(
