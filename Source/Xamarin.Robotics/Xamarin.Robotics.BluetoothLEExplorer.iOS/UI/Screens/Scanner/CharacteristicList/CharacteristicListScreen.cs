@@ -36,12 +36,14 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.ServiceDet
 
 				Console.WriteLine("Characteristic: " + e.Characteristic.Name);
 
-
-				var _characteristicDetailScreen = new CharacteristicDetailScreen();
-//				var _characteristicDetailScreen = new CharacteristicDetailScreen_Hrm();
-
-				_characteristicDetailScreen.SetDeviceServiceAndCharacteristic ( this._connectedDevice, this._currentService, e.Characteristic );
-
+				UIViewController _characteristicDetailScreen = null;
+				if (e.Characteristic.Uuid == CBUUID.FromPartial (0x2A37).ToString()) { // heart rate characteristic
+					_characteristicDetailScreen = new CharacteristicDetailScreen_Hrm();
+					((CharacteristicDetailScreen_Hrm)_characteristicDetailScreen).SetDeviceServiceAndCharacteristic ( this._connectedDevice, this._currentService, e.Characteristic );
+				} else {
+					_characteristicDetailScreen = new CharacteristicDetailScreen();
+					((CharacteristicDetailScreen)_characteristicDetailScreen).SetDeviceServiceAndCharacteristic ( this._connectedDevice, this._currentService, e.Characteristic );
+				}
 				this.NavigationController.PushViewController(_characteristicDetailScreen, true);
 			};
 		}
