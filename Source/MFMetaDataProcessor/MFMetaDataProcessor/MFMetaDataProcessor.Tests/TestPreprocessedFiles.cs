@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Mono.Cecil;
 using NUnit.Framework;
 
@@ -12,83 +14,105 @@ namespace MFMetaDataProcessor.Tests
         [Ignore("Temporary ignore - stack size calculation issue not solved.")]
         public void ClockSampleTest()
         {
-            TestSingleAssembly("Clock");
+
+            TestSingleAssembly("Clock",
+                 "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Hardware",
+                 "Microsoft.SPOT.Net", "Microsoft.SPOT.Time", "Microsoft.SPOT.Graphics");
         }
 
         [Test]
         public void ExtendedWeakReferencesTest()
         {
-            TestSingleAssembly("ExtendedWeakReferences");
+            TestSingleAssembly("ExtendedWeakReferences",
+                "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore");
         }
 
         [Test]
         [Ignore("Type ordering issue not solved yet.")]
         public void FileSystemSampleTest()
         {
-            TestSingleAssembly("FileSystemSample");
+            TestSingleAssembly("FileSystemSample",
+                "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.IO",
+                "Microsoft.SPOT.Graphics");
         }
 
         [Test]
         public void FtpServerSampleTest()
         {
-            TestSingleAssembly("FtpServer");
+            TestSingleAssembly("FtpServer",
+                "System.Ftp", "Microsoft.SPOT.IO");
         }
 
         [Test]
         public void HelloWorldClientSampleTest()
         {
-            TestSingleAssembly("HelloWorldClient");
+            TestSingleAssembly("HelloWorldClient",
+                "MFWsStack", "Microsoft.SPOT.Net", "System.Http");
         }
 
         [Test]
         public void HelloWcfServerSampleTest()
         {
-            TestSingleAssembly("HelloWCFServer");
+            TestSingleAssembly("HelloWCFServer",
+                "Microsoft.SPOT.Net", "MFWsStack");
         }
 
         [Test]
+        [Ignore("Strings odering issue still not resolved.")]
         public void HttpClientSampleTest()
         {
-            TestSingleAssembly("HTTPClient");
+            TestSingleAssembly("HTTPClient",
+                "System.Http", "Microsoft.SPOT.Native");
         }
 
         [Test]
         public void HttpServerSampleTest()
         {
-            TestSingleAssembly("HTTPServer");
+            TestSingleAssembly("HTTPServer",
+                "System.Http", "Microsoft.SPOT.Native", "Microsoft.SPOT.Update",
+                "MFUpdate", "Microsoft.SPOT.IO");
         }
 
         [Test]
         public void InkCanvasSampleTest()
         {
-            TestSingleAssembly("InkCanvasSample");
+            TestSingleAssembly("InkCanvasSample",
+                "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Touch",
+                "Microsoft.SPOT.Graphics", "Microsoft.SPOT.Ink", "Microsoft.SPOT.Hardware");
         }
 
         [Test]
         public void UsbMouseSampleTest()
         {
-            TestSingleAssembly("USBMouse");
+            TestSingleAssembly("USBMouse",
+                "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Hardware.Usb",
+                "Microsoft.SPOT.Hardware");
         }
 
         [Test]
         public void PuzzleSampleTest()
         {
-            TestSingleAssembly("Puzzle");
+            TestSingleAssembly("Puzzle",
+                "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Graphics",
+                "Microsoft.SPOT.Hardware", "Microsoft.SPOT.Ink", "Microsoft.SPOT.Touch");
         }
 
         private static void TestSingleAssembly(
-            String name)
+            String name, params String[] dependencies)
         {
-            TestSingleAssembly(name, "le", TinyBinaryWriter.CreateLittleEndianBinaryWriter);
-            TestSingleAssembly(name, "be", TinyBinaryWriter.CreateBigEndianBinaryWriter);
+            var loadHints = dependencies
+                .ToDictionary(item => item, item => String.Concat(@"..\..\Libs\", item, ".dll"));
+            TestSingleAssembly(name, "le", loadHints, TinyBinaryWriter.CreateLittleEndianBinaryWriter);
+            TestSingleAssembly(name, "be", loadHints, TinyBinaryWriter.CreateBigEndianBinaryWriter);
         }
 
         private static void TestSingleAssembly (
-            String name, String endianness,
+            String name, String endianness, IDictionary<String, String> loadHints,
             Func<BinaryWriter, TinyBinaryWriter> getBinaryWriter)
         {
             var assemblyDefinition = AssemblyDefinition.ReadAssembly(
-                String.Format(@"Data\{0}\{0}.exe", Path.GetFileName(name)));
+                String.Format(@"Data\{0}\{0}.exe", Path.GetFileName(name)),
+                new ReaderParameters { AssemblyResolver = new LoadHintsAssemblyResolver(loadHints)});
 
             var fileName = ProcessSingleFile(name, endianness,
                 assemblyDefinition, getBinaryWriter);

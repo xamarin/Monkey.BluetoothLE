@@ -52,6 +52,7 @@
     <Compile Include="TinyAssemblyBuilder.cs" />
     <Compile Include="TinyAssemblyDefinition.cs" />
     <Compile Include="Tables\TinyAssemblyReferenceTable.cs" />
+    <Compile Include="Utility\LoadHintsAssemblyResolver.cs" />
     <Compile Include="Utility\NativeMethodsCrc.cs" />
     <Compile Include="Utility\TinyDataType.cs" />
     <Compile Include="Tables\TinyEmptyTable.cs" />
