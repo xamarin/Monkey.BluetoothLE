@@ -17,6 +17,7 @@ namespace MFMetaDataProcessor
         private enum ResourceKind : byte
         {
             None = 0x00,
+            Bitmap = 0x01,
             Font = 0x02,
             String = 0x03,
             Binary = 0x04
@@ -97,8 +98,11 @@ namespace MFMetaDataProcessor
                             bytes = bytes.Skip(2).Concat(Enumerable.Repeat((Byte)0, 1)).ToArray();
                         }
                         break;
-                    case ResourceKind.Binary:
+                    case ResourceKind.Bitmap:
                         padding = _context.ResourceDataTable.AlignToWord();
+                        bytes = bytes.Skip(0x96).ToArray();
+                        break;
+                    case ResourceKind.Binary:
                         bytes = bytes.Skip(4).ToArray();
                         break;
                     case ResourceKind.Font:
@@ -142,6 +146,11 @@ namespace MFMetaDataProcessor
             if (resourceType.EndsWith(".String"))
             {
                 return ResourceKind.String;
+            }
+
+            if (resourceType.StartsWith("System.Drawing.Bitmap"))
+            {
+                return ResourceKind.Bitmap;
             }
 
             using(var stream = new MemoryStream(resourceData))
