@@ -5,6 +5,9 @@
 			 Title="Characteristic">
 
 	<StackLayout>
-		<Label Text="" />
+		<Label x:Name="Name" Text="-" />
+		<Label x:Name="ID" Text="-" />
+		<Label x:Name="RawValue" Text="-" />
+		<Label x:Name="StringValue" Text="-" />
 	</StackLayout>
 </ContentPage>
