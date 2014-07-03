@@ -46,6 +46,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorerForms
 
 			DisconnectButton.Activated += (sender, e) => {
 				adapter.DisconnectDevice (device);
+				Navigation.PopToRootAsync(); // disconnect means start over
 			};
 		}
 
