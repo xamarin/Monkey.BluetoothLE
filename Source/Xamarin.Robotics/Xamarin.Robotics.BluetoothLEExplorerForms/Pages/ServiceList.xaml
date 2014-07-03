@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+		     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		     x:Class="Xamarin.Robotics.BluetoothLEExplorerForms.ServiceList"
+		     Title="Service List">
+
+	<ContentPage.ToolbarItems>
+    	<ToolbarItem x:Name="DisconnectButton" Name="Disconnect" Icon="31-circle-x.png"/>    
+	</ContentPage.ToolbarItems>
+
+	<ListView x:Name="listView">
+	  <ListView.ItemTemplate>
+	    <DataTemplate>
+	      <ViewCell>
+	      	<StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">	
+		     	<StackLayout Padding="5,0,0,0" VerticalOptions="StartAndExpand" Orientation="Vertical">
+		        	<Label Text="A" YAlign="Center" Font="Medium" />
+		        	<Label Text="B" YAlign="Center" Font="Micro" />
+		        </StackLayout>
+	         </StackLayout>
+	      </ViewCell>
+	    </DataTemplate>
+	  </ListView.ItemTemplate>
+	</ListView>
+</ContentPage>
