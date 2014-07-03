@@ -21,16 +21,26 @@ namespace Xamarin.Robotics.BluetoothLEExplorerForms
 			this.device = device;
 			this.services = new List<IService> ();
 
-			adapter.DeviceConnected += (sender, e) => {
-				//device = e.Device; // do we need to overwrite this?
-				services = (List<IService>)device.Services;
-				Device.BeginInvokeOnMainThread(() => {
-					if (services.Count == 0) {
-						DisplayAlert ("No Services Found", "No services are available for " + e.Device.Name, "OK", null);
-					} else {
-						listView.ItemsSource = services;
-					}
-				});
+			// when device is connected
+			adapter.DeviceConnected += (s, e) => {
+				device = e.Device; // do we need to overwrite this?
+
+				// when services are discovered
+				device.ServicesDiscovered += (object se, EventArgs ea) => {
+					Debug.WriteLine("device.ServicesDiscovered");
+					services = (List<IService>)device.Services;
+					Device.BeginInvokeOnMainThread(() => {
+						if (services.Count == 0) {
+							DisplayAlert ("No Services Found", "No services are available for " + e.Device.Name, "OK", null);
+						} else {
+							listView.ItemsSource = services;
+						}
+					});
+				};
+				// start looking for services
+				device.DiscoverServices ();
+
+
 			};
 			// TODO: add to IAdapter first
 			//adapter.DeviceFailedToConnect += (sender, else) => {};
@@ -46,6 +56,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorerForms
 			base.OnAppearing ();
 			if (services.Count == 0) {
 				Debug.WriteLine ("No services, attempting to connect to device");
+				// start looking for the device
 				adapter.ConnectToDevice (device); 
 			}
 		}

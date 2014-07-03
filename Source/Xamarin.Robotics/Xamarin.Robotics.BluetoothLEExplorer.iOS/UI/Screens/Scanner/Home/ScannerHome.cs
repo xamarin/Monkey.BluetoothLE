@@ -62,11 +62,13 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.Home
 
 				// when the peripheral connects, load our details screen
 				Adapter.Current.DeviceConnected += (object s, DeviceConnectionEventArgs connectArgs) => {
+
 					this._connectingDialog.Hide(false);
 
 					this._ServiceListScreen = new DeviceDetails.ServiceListScreen();
 
 					this._ServiceListScreen.ConnectedDevice = connectArgs.Device;
+
 					this.NavigationController.PushViewController ( this._ServiceListScreen, true);
 
 				};

@@ -27,16 +27,17 @@ namespace Xamarin.Robotics.BluetoothLEExplorerForms
 			};
 
 			adapter.ScanTimeoutElapsed += (sender, e) => {
-
 				DisplayAlert("Timeout", "Bluetooth scan timeout elapsed", "OK", null);
 			};
 
 			ScanButton.Activated += (sender, e) => {
 				if (adapter.IsScanning) {
 					adapter.StopScanningForDevices();
+					Debug.WriteLine ("adapter.StopScanningForDevices()");
 				} else {
 					devices.Clear();
 					adapter.StartScanningForDevices();
+					Debug.WriteLine ("adapter.StartScanningForDevices()");
 				}
 			};
 		}
@@ -48,7 +49,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorerForms
 			StopScanning ();
 
 			var device = e.SelectedItem as IDevice;
-			var servicePage = new ServiceList(adapter,device);
+			var servicePage = new ServiceList(adapter, device);
 			// load services on the next page
 			Navigation.PushAsync(servicePage);
 
