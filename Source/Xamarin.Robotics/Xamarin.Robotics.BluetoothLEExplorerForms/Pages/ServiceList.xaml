@@ -14,7 +14,7 @@
     	<ToolbarItem x:Name="DisconnectButton" Name="Disconnect" Icon="31-circle-x.png"/>    
 	</ContentPage.ToolbarItems>
 
-	<ListView x:Name="listView">
+	<ListView x:Name="listView" ItemSelected="OnItemSelected">
 	  <ListView.ItemTemplate>
 	    <DataTemplate>
 	      <ViewCell>

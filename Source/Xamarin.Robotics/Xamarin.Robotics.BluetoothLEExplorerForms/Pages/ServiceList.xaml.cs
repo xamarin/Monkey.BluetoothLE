@@ -12,14 +12,15 @@ namespace Xamarin.Robotics.BluetoothLEExplorerForms
 		IAdapter adapter;
 		IDevice device;
 
-		List<IService> services;
+		ObservableCollection<IService> services;
 
 		public ServiceList (IAdapter adapter, IDevice device)
 		{
 			InitializeComponent ();
 			this.adapter = adapter;
 			this.device = device;
-			this.services = new List<IService> ();
+			this.services = new ObservableCollection<IService> ();
+			listView.ItemsSource = services;
 
 			// when device is connected
 			adapter.DeviceConnected += (s, e) => {
@@ -28,18 +29,16 @@ namespace Xamarin.Robotics.BluetoothLEExplorerForms
 				// when services are discovered
 				device.ServicesDiscovered += (object se, EventArgs ea) => {
 					Debug.WriteLine("device.ServicesDiscovered");
-					services = (List<IService>)device.Services;
-					Device.BeginInvokeOnMainThread(() => {
-						if (services.Count == 0) {
-							DisplayAlert ("No Services Found", "No services are available for " + e.Device.Name, "OK", null);
-						} else {
-							listView.ItemsSource = services;
-						}
-					});
+					//services = (List<IService>)device.Services;
+					if (services.Count == 0)
+						Device.BeginInvokeOnMainThread(() => {
+							foreach (var service in device.Services) {
+								services.Add(service);
+							}
+						});
 				};
 				// start looking for services
 				device.DiscoverServices ();
-
 
 			};
 			// TODO: add to IAdapter first
@@ -61,11 +60,15 @@ namespace Xamarin.Robotics.BluetoothLEExplorerForms
 			}
 		}
 		public void OnItemSelected (object sender, SelectedItemChangedEventArgs e) {
-			((ListView)sender).SelectedItem = null; // clear selection
+			if (((ListView)sender).SelectedItem == null) {
+				return;
+			}
 
 			var service = e.SelectedItem as IService;
 			var characteristicsPage = new CharacteristicList(adapter, device, service);
 			Navigation.PushAsync(characteristicsPage);
+
+			((ListView)sender).SelectedItem = null; // clear selection
 		}
 	}
 }

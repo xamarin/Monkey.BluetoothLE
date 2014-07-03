@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 			 xmlns:local="clr-namespace:Xamarin.Robotics.BluetoothLEExplorerForms;assembly=Xamarin.Robotics.BluetoothLEExplorerForms"
-			 x:Class="Xamarin.Robotics.BluetoothLEExplorerForms.CharacteristicList">
+			 x:Class="Xamarin.Robotics.BluetoothLEExplorerForms.CharacteristicList"
+			 Title="Characteristic List">
 	<ContentPage.Resources>
 	    <ResourceDictionary>
 	        <local:GuidConverter x:Key="guidConverter"/>
@@ -13,14 +14,14 @@
     	<ToolbarItem x:Name="DisconnectButton" Name="Disconnect" Icon="31-circle-x.png"/>    
 	</ContentPage.ToolbarItems>
 
-	<ListView x:Name="listView">
+	<ListView x:Name="listView" ItemSelected="OnItemSelected">
 	  <ListView.ItemTemplate>
 	    <DataTemplate>
 	      <ViewCell>
 	      	<StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">	
 		     	<StackLayout Padding="5,0,0,0" VerticalOptions="StartAndExpand" Orientation="Vertical">
 		        	<Label Text="{Binding Name, Converter={StaticResource strConverter}}" YAlign="Center" Font="Medium" />
-		        	<Label Text="{Binding Path=ID, Converter={StaticResource guidConverter}}" YAlign="Center" Font="Micro" />
+		        	<Label Text="(descriptors: todo)" YAlign="Center" Font="Micro" />
 		        </StackLayout>
 	         </StackLayout>
 	      </ViewCell>
