@@ -36,12 +36,17 @@ namespace MFMetaDataProcessor
         /// Identifier is offset in strings table or just number from table of pre-defined constants.
         /// </remarks>
         /// <param name="value">String value for obtaining identifier.</param>
+        /// <param name="useConstantsTable">
+        /// If <c>true</c> hard-coded string constants table will be used (should be <c>false</c>
+        /// for byte code writer because onlyloader use this pre-defined string table optimization).
+        /// </param>
         /// <returns>Existing identifier if string already in table or new one.</returns>
         public UInt16 GetOrCreateStringId(
-            String value)
+            String value,
+            Boolean useConstantsTable = true)
         {
             UInt16 id;
-            if (TinyStringsConstants.TryGetStringIndex(value, out id))
+            if (useConstantsTable && TinyStringsConstants.TryGetStringIndex(value, out id))
             {
                 return id;
             }
@@ -73,9 +78,13 @@ namespace MFMetaDataProcessor
         internal void MergeValues(
             TinyStringTable fakeStringTable)
         {
-            foreach (var item in fakeStringTable._idsByStrings.Keys)
+            foreach (var item in fakeStringTable._idsByStrings.Keys.Where(item => !item.EndsWith("Resource1")))
             {
-                GetOrCreateStringId(item);
+                GetOrCreateStringId(item, false);
+            }
+            foreach (var item in fakeStringTable._idsByStrings.Keys.Where(item => item.EndsWith("Resource1")))
+            {
+                GetOrCreateStringId(item, false);
             }
         }
     }

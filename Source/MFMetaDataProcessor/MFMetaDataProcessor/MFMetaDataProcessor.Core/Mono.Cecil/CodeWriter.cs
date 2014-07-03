@@ -90,7 +90,7 @@ namespace MFMetaDataProcessor {
                 switch (instruction.OpCode.OperandType)
                 {
                     case OperandType.InlineString:
-                        stringTable.GetOrCreateStringId((String) instruction.Operand);
+                        stringTable.GetOrCreateStringId((String) instruction.Operand, false);
                         offset -= 2;
                         break;
                     case OperandType.InlineMethod:
@@ -344,7 +344,7 @@ namespace MFMetaDataProcessor {
                     _writer.WriteDouble((Double)operand);
 		            break;
 		        case OperandType.InlineString:
-		            var stringReferenceId = _stringTable.GetOrCreateStringId((String) operand);
+		            var stringReferenceId = _stringTable.GetOrCreateStringId((String) operand, false);
                     _writer.WriteUInt16(stringReferenceId);
 		            break;
                 case OperandType.InlineMethod:
