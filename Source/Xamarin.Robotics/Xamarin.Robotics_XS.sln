@@ -1,11 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.BluetoothLEExplorer.iOS", "Xamarin.Robotics.BluetoothLEExplorer.iOS\Xamarin.Robotics.BluetoothLEExplorer.iOS.csproj", "{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.Core.iOS", "Xamarin.Robotics.Core.iOS\Xamarin.Robotics.Core.iOS.csproj", "{453394D3-F7E4-49E4-8FAE-36F1D988AE15}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.BluetoothLEExplorer.Droid", "Xamarin.Robotics.BluetoothLEExplorer.Droid\Xamarin.Robotics.BluetoothLEExplorer.Droid.csproj", "{C5E6963D-D0BA-4FD7-A102-902FFB44D6CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.Core.Droid", "Xamarin.Robotics.Core.Droid\Xamarin.Robotics.Core.Droid.csproj", "{0040B1B9-6E22-438A-A6A7-A5A00B2B89B1}"
 EndProject
@@ -13,11 +9,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.Core", "Xa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.Mobile.AgentWatch", "Xamarin.Robotics.Mobile.AgentWatch\Xamarin.Robotics.Mobile.AgentWatch.csproj", "{8A05CBFD-705F-4AA8-88D9-4692B1102260}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xamarin.Forms", "Xamarin.Forms", "{754E730E-0CF0-49D7-B92F-C81B815B80FD}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.BluetoothLEExplorerForms", "Xamarin.Robotics.BluetoothLEExplorerForms\Xamarin.Robotics.BluetoothLEExplorerForms.csproj", "{A1E14BEA-A9D9-46C5-83AA-8891A13E4837}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.BluetoothLEExplorerForms.Droid", "Xamarin.Robotics.BluetoothLEExplorerForms.Droid\Xamarin.Robotics.BluetoothLEExplorerForms.Droid.csproj", "{99B2DFE6-0DC5-403C-9653-58F13765F0B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.BluetoothLEExplorerForms.iOS", "Xamarin.Robotics.BluetoothLEExplorerForms.iOS\Xamarin.Robotics.BluetoothLEExplorerForms.iOS.csproj", "{5A951FB6-FD2D-41E3-BE9F-45DC8C238193}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.BluetoothLEExplorerForms.Droid", "Xamarin.Robotics.BluetoothLEExplorerForms.Droid\Xamarin.Robotics.BluetoothLEExplorerForms.Droid.csproj", "{99B2DFE6-0DC5-403C-9653-58F13765F0B9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xamarin.Classic", "Xamarin.Classic", "{055A3C85-CD0F-42A8-8F2F-F7C5017D6E6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.BluetoothLEExplorer.Droid", "Xamarin.Robotics.BluetoothLEExplorer.Droid\Xamarin.Robotics.BluetoothLEExplorer.Droid.csproj", "{C5E6963D-D0BA-4FD7-A102-902FFB44D6CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.BluetoothLEExplorer.iOS", "Xamarin.Robotics.BluetoothLEExplorer.iOS\Xamarin.Robotics.BluetoothLEExplorer.iOS.csproj", "{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.BluetoothLEExplorer.iOS", "Xamarin.Robotics.BluetoothLEExplorer.iOS\Xamarin.Robotics.BluetoothLEExplorer.iOS.csproj", "{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -262,37 +268,69 @@ Global
 		{A1E14BEA-A9D9-46C5-83AA-8891A13E4837}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A1E14BEA-A9D9-46C5-83AA-8891A13E4837}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|Any CPU.ActiveCfg = Ad-Hoc|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Ad-Hoc|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|iPhoneSimulator.Build.0 = Ad-Hoc|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|Mixed Platforms.ActiveCfg = Ad-Hoc|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|Mixed Platforms.ActiveCfg = Debug|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|Mixed Platforms.Build.0 = Ad-Hoc|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|Mixed Platforms.Build.0 = Debug|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Ad-Hoc|Mixed Platforms.Deploy.0 = Ad-Hoc|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|Any CPU.ActiveCfg = AppStore|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|iPhone.Build.0 = AppStore|iPhone
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|iPhoneSimulator.ActiveCfg = AppStore|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|iPhoneSimulator.Build.0 = AppStore|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|Mixed Platforms.ActiveCfg = AppStore|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|Mixed Platforms.ActiveCfg = Debug|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|Mixed Platforms.Build.0 = AppStore|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|Mixed Platforms.Build.0 = Debug|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.AppStore|Mixed Platforms.Deploy.0 = AppStore|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|iPhone.Build.0 = Debug|iPhone
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|iPhone.Build.0 = Debug|iPhone
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|Mixed Platforms.ActiveCfg = Debug|iPhone
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|Mixed Platforms.ActiveCfg = Debug|iPhone
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|Mixed Platforms.Build.0 = Debug|iPhone
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|Mixed Platforms.Build.0 = Debug|iPhone
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Debug|Mixed Platforms.Deploy.0 = Debug|iPhone
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|Any CPU.Build.0 = Release|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|Any CPU.Build.0 = Release|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|iPhone.ActiveCfg = Release|iPhone
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|iPhone.ActiveCfg = Release|iPhone
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|iPhone.Build.0 = Release|iPhone
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|iPhone.Build.0 = Release|iPhone
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|Mixed Platforms.ActiveCfg = Release|iPhone
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|Mixed Platforms.ActiveCfg = Release|iPhone
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|Mixed Platforms.Build.0 = Release|iPhone
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|Mixed Platforms.Build.0 = Release|iPhone
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50}.Release|Mixed Platforms.Deploy.0 = Release|iPhone
 		{C5E6963D-D0BA-4FD7-A102-902FFB44D6CD}.Ad-Hoc|Any CPU.ActiveCfg = Release|Any CPU
@@ -327,6 +365,14 @@ Global
 		{C5E6963D-D0BA-4FD7-A102-902FFB44D6CD}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{C5E6963D-D0BA-4FD7-A102-902FFB44D6CD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C5E6963D-D0BA-4FD7-A102-902FFB44D6CD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A1E14BEA-A9D9-46C5-83AA-8891A13E4837} = {754E730E-0CF0-49D7-B92F-C81B815B80FD}
+		{99B2DFE6-0DC5-403C-9653-58F13765F0B9} = {754E730E-0CF0-49D7-B92F-C81B815B80FD}
+		{5A951FB6-FD2D-41E3-BE9F-45DC8C238193} = {754E730E-0CF0-49D7-B92F-C81B815B80FD}
+		{C5E6963D-D0BA-4FD7-A102-902FFB44D6CD} = {055A3C85-CD0F-42A8-8F2F-F7C5017D6E6C}
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50} = {055A3C85-CD0F-42A8-8F2F-F7C5017D6E6C}
+		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50} = {055A3C85-CD0F-42A8-8F2F-F7C5017D6E6C}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Xamarin.Robotics.BluetoothLEExplorerForms.iOS\Xamarin.Robotics.BluetoothLEExplorerForms.iOS.csproj
