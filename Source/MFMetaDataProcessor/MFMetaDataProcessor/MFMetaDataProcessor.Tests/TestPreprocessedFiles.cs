@@ -14,7 +14,6 @@ namespace MFMetaDataProcessor.Tests
         [Ignore("Temporary ignore - stack size calculation issue not solved.")]
         public void ClockSampleTest()
         {
-
             TestSingleAssembly("Clock",
                  "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Hardware",
                  "Microsoft.SPOT.Net", "Microsoft.SPOT.Time", "Microsoft.SPOT.Graphics");
