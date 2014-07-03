@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using Mono.Cecil;
 
@@ -6,8 +8,11 @@ namespace MFMetaDataProcessor.Console
 {
 	internal static class MainClass
 	{
-        internal sealed class MetaDataProcessor
+	    private sealed class MetaDataProcessor
         {
+            private readonly IDictionary<String, String> _loadHints =
+                new Dictionary<String, String>(StringComparer.Ordinal);
+
             private AssemblyDefinition _assemblyDefinition;
 
             private Boolean _isBigEndianOutput;
@@ -16,7 +21,8 @@ namespace MFMetaDataProcessor.Console
             {
                 try
                 {
-                    _assemblyDefinition = AssemblyDefinition.ReadAssembly(fileName);
+                    _assemblyDefinition = AssemblyDefinition.ReadAssembly(fileName,
+                        new ReaderParameters { AssemblyResolver = new LoadHintsAssemblyResolver(_loadHints)});
                 }
                 catch (Exception)
                 {
@@ -66,6 +72,13 @@ namespace MFMetaDataProcessor.Console
                     System.Console.Error.WriteLine("Unknown endian '{0}' specified ignored.", endian);
                 }
             }
+
+            public void AddLoadHint(
+                String assemblyName,
+                String assemblyFileName)
+            {
+                _loadHints[assemblyName] = assemblyFileName;
+            }
         }
 
         public static void Main(String[] args)
@@ -73,7 +86,8 @@ namespace MFMetaDataProcessor.Console
 		    var md = new MetaDataProcessor();
             for (var i = 0; i < args.Length; ++i)
             {
-                var arg = args[i];
+                var arg = args[i].ToLower(CultureInfo.InvariantCulture);
+
                 if (arg == "-parse" && i + 1 < args.Length)
                 {
                     md.Parse(args[++i]);
@@ -85,6 +99,11 @@ namespace MFMetaDataProcessor.Console
                 else if (arg == "-endian" && i + 1 < args.Length)
                 {
                     md.SetEndian(args[++i]);
+                }
+                else if (arg == "-loadhints" && i + 2 < args.Length)
+                {
+                    md.AddLoadHint(args[i + 1], args[i + 2]);
+                    i += 2;
                 }
                 else
                 {

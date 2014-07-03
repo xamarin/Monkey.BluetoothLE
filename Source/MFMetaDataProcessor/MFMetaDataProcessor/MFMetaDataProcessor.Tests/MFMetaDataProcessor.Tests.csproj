@@ -172,6 +172,23 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Libs\MFUpdate.dll" />
+    <None Include="Libs\MFWsStack.dll" />
+    <None Include="Libs\Microsoft.SPOT.Graphics.dll" />
+    <None Include="Libs\Microsoft.SPOT.Hardware.dll" />
+    <None Include="Libs\Microsoft.SPOT.Hardware.Usb.dll" />
+    <None Include="Libs\Microsoft.SPOT.Ink.dll" />
+    <None Include="Libs\Microsoft.SPOT.IO.dll" />
+    <None Include="Libs\Microsoft.SPOT.Native.dll" />
+    <None Include="Libs\Microsoft.SPOT.Net.dll" />
+    <None Include="Libs\Microsoft.SPOT.Time.dll" />
+    <None Include="Libs\Microsoft.SPOT.TinyCore.dll" />
+    <None Include="Libs\Microsoft.SPOT.Touch.dll" />
+    <None Include="Libs\Microsoft.SPOT.Update.dll" />
+    <None Include="Libs\System.Ftp.dll" />
+    <None Include="Libs\System.Http.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
