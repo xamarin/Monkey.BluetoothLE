@@ -90,13 +90,14 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS
 						labelHR.Text = "on " + locationString;
 					} else {
 						// heartrate
-						int bpm = 0;
+						ushort bpm = 0;
 						//http://www.raywenderlich.com/52080/introduction-core-bluetooth-building-heart-rate-monitor
 						//https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
 						if ( (dataBytes[0] & 0x01) == 0) {
-							bpm = (int)dataBytes[1];
+							bpm = (ushort)dataBytes[1];
 						} else {
-							bpm = (int)dataBytes[1]; //HACK: wrong
+							bpm = (ushort)dataBytes [1];
+							bpm = (ushort)(((bpm >> 8) & 0xFF) | ((bpm << 8) & 0xFF00));
 						}
 						Console.WriteLine("--------------------------hr:" + bpm);
 
