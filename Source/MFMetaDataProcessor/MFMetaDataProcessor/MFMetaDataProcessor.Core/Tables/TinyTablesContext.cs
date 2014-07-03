@@ -53,9 +53,14 @@ namespace MFMetaDataProcessor
 
             // Internal types definitions
 
-            var types = SortTypesAccordingUsages(
-                mainModule.GetTypes().Where(item => item.FullName != "<Module>"),
-                mainModule.FullyQualifiedName);
+            var unorderedTypes = mainModule.GetTypes()
+                .Where(item => item.FullName != "<Module>")
+                .ToList();
+
+            var orderedTypes = SortTypesAccordingUsages(
+                unorderedTypes, mainModule.FullyQualifiedName);
+
+            var types = orderedTypes;
 
             TypeDefinitionTable = new TinyTypeDefinitionTable(types, this);
             FieldsTable = new TinyFieldDefinitionTable(
@@ -141,7 +146,6 @@ namespace MFMetaDataProcessor
             ICollection<String> attributesNames)
         {
             return
-//                typeReference.FullName.EndsWith("Attribute") ||
                 attributesNames.Contains(typeReference.FullName) ||
                 (typeReference.DeclaringType != null &&
                     attributesNames.Contains(typeReference.DeclaringType.FullName));
@@ -154,7 +158,7 @@ namespace MFMetaDataProcessor
         {
             var processedTypes = new HashSet<String>(StringComparer.Ordinal);
             return SortTypesAccordingUsagesImpl(
-                types.OrderBy(item => item.FullName), // Not work with ArduionPlus sample
+                types.OrderBy(item => item.FullName),
                 mainModuleName, processedTypes)
                 .ToList();
         }
@@ -198,7 +202,7 @@ namespace MFMetaDataProcessor
                         .ToList();
 
                     foreach (var fieldType in SortTypesAccordingUsagesImpl(
-                        operands.OfType<MethodReference>().SelectMany(GetTypesList)
+                        operands.SelectMany(GetTypesList)
                             .Where(item => item.Module.FullyQualifiedName == mainModuleName),
                         mainModuleName, processedTypes))
                     {
