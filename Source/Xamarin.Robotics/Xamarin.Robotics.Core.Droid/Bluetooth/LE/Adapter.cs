@@ -60,6 +60,11 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 			};
 		}
 
+		//TODO: scan for specific service type eg. HeartRateMonitor
+		public async void StartScanningForDevices (Guid serviceUuid)
+		{
+			throw new NotImplementedException ("Not implemented on Android yet, look at _adapter.StartLeScan() overload");
+		}
 		public async void StartScanningForDevices ()
 		{
 			Console.WriteLine ("Adapter: Starting a scan for devices.");

@@ -22,6 +22,8 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 
 		// methods
 		void StartScanningForDevices ();
+		void StartScanningForDevices (Guid serviceUuid);
+
 		void StopScanningForDevices ();
 		void ConnectToDevice (IDevice device);
 		void DisconnectDevice (IDevice device);
