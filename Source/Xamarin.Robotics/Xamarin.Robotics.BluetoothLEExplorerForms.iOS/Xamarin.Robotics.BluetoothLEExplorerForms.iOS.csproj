@@ -114,6 +114,7 @@
     <BundleResource Include="Resources\bluetooth%402x.png" />
     <BundleResource Include="Resources\31-circle-x.png" />
     <BundleResource Include="Resources\31-circle-x%402x.png" />
+    <BundleResource Include="Resources\29-heart.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

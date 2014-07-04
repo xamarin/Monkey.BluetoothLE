@@ -30,7 +30,7 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 
 			//BUGBUG/TODO: this event is misnamed in our SDK
 			this._nativeDevice.DiscoverCharacteristic += (object sender, CBServiceEventArgs e) => {
-				Console.WriteLine ("Discovered Characteristics.");
+				Console.WriteLine ("Device.Discovered Characteristics.");
 				//loop through each service, and update the characteristics
 				foreach (CBService srv in ((CBPeripheral)sender).Services) {
 					// if the service has characteristics yet

@@ -104,16 +104,28 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 
 		}
 			
-		public async void StartScanningForDevices ()
+		public void StartScanningForDevices ()
+		{
+			StartScanningForDevices (serviceUuid: Guid.Empty);
+		}
+
+		public async void StartScanningForDevices (Guid serviceUuid)
 		{
 			Console.WriteLine ("Adapter: Starting a scan for devices.");
+
+			CBUUID[] serviceUuids = null; // TODO: convert to list so multiple Uuids can be detected
+			if (serviceUuid != Guid.Empty) {
+				var suuid = CBUUID.FromString (serviceUuid.ToString ());
+				serviceUuids = new CBUUID[] { suuid };
+				Console.WriteLine ("Adapter: Scanning for " + suuid);
+			}
 
 			// clear out the list
 			this._discoveredDevices = new List<IDevice> ();
 
 			// start scanning
 			this._isScanning = true;
-			this._central.ScanForPeripherals ( serviceUuids:null );
+			this._central.ScanForPeripherals ( serviceUuids );
 
 			// in 10 seconds, stop the scan
 			await Task.Delay (10000);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Robotics.Core.Bluetooth.LE;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Xamarin.Robotics.BluetoothLEExplorerForms
 {	
@@ -48,9 +49,33 @@ namespace Xamarin.Robotics.BluetoothLEExplorerForms
 		}
 		void UpdateDisplay (ICharacteristic c) {
 			Name.Text = c.Name;
-			ID.Text = c.ID.ToString();
-			RawValue.Text = string.Join (",", c.Value);
-			StringValue.Text = c.StringValue;
+			//ID.Text = c.ID.ToString();
+			ID.Text = c.ID.PartialFromUuid ();
+
+			var s = (from i in c.Value
+					select i.ToString ("X").PadRight(2, '0')).ToArray ();
+			RawValue.Text = string.Join (":", s);
+
+			if (c.ID == 0x2A37.UuidFromPartial ()) {
+				// heart rate
+				StringValue.Text = DecodeHeartRateCharacteristicValue (c.Value);
+				StringValue.TextColor = Color.Red;
+			} else {
+				StringValue.Text = c.StringValue;
+				StringValue.TextColor = Color.Default;
+			}
+
+		}
+
+		string DecodeHeartRateCharacteristicValue(byte[] data) {
+			ushort bpm = 0;
+			if ((data [0] & 0x01) == 0) {
+				bpm = data [1];
+			} else {
+				bpm = (ushort)data [1];
+				bpm = (ushort)(((bpm >> 8) & 0xFF) | ((bpm << 8) & 0xFF00));
+			}
+			return bpm.ToString () + " bpm";
 		}
 	}
 }

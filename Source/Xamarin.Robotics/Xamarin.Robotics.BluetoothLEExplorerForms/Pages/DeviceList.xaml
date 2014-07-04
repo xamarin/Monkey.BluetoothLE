@@ -11,7 +11,8 @@
 	    </ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
-    	<ToolbarItem x:Name="ScanButton" Name="Scan" Icon="bluetooth.png"/>    
+		<ToolbarItem x:Name="ScanHrmButton" Name="Scan" Icon="29-heart.png"/>    
+    	<ToolbarItem x:Name="ScanAllButton" Name="Scan" Icon="bluetooth.png"/>    
 	</ContentPage.ToolbarItems>
 
 	<ListView x:Name="listView" ItemSelected="OnItemSelected">

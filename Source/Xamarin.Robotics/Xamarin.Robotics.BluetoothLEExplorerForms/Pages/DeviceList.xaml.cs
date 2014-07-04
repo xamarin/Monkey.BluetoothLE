@@ -27,18 +27,16 @@ namespace Xamarin.Robotics.BluetoothLEExplorerForms
 			};
 
 			adapter.ScanTimeoutElapsed += (sender, e) => {
+				adapter.StopScanningForDevices(); // not sure why it doesn't stop already, if the timeout elapses... or is this a fake timeout we made?
 				DisplayAlert("Timeout", "Bluetooth scan timeout elapsed", "OK", null);
 			};
 
-			ScanButton.Activated += (sender, e) => {
-				if (adapter.IsScanning) {
-					adapter.StopScanningForDevices();
-					Debug.WriteLine ("adapter.StopScanningForDevices()");
-				} else {
-					devices.Clear();
-					adapter.StartScanningForDevices();
-					Debug.WriteLine ("adapter.StartScanningForDevices()");
-				}
+			ScanAllButton.Activated += (sender, e) => {
+				StartScanning();
+			};
+
+			ScanHrmButton.Activated += (sender, e) => {
+				StartScanning (0x180D.UuidFromPartial());
 			};
 		}
 
@@ -54,6 +52,20 @@ namespace Xamarin.Robotics.BluetoothLEExplorerForms
 			Navigation.PushAsync(servicePage);
 
 			((ListView)sender).SelectedItem = null; // clear selection
+		}
+
+		void StartScanning () {
+			StartScanning (Guid.Empty);
+		}
+		void StartScanning (Guid forService) {
+			if (adapter.IsScanning) {
+				adapter.StopScanningForDevices();
+				Debug.WriteLine ("adapter.StopScanningForDevices()");
+			} else {
+				devices.Clear();
+				adapter.StartScanningForDevices(forService);
+				Debug.WriteLine ("adapter.StartScanningForDevices("+forService+")");
+			}
 		}
 
 		void StopScanning () {
