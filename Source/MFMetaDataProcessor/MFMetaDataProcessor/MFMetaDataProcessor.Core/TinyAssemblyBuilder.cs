@@ -70,7 +70,7 @@ namespace MFMetaDataProcessor
 
             yield return context.MethodDefinitionTable;
 
-            yield return TinyEmptyTable.Instance; // Attributes
+            yield return context.AttributesTable;
 
             yield return context.TypeSpecificationsTable;
 

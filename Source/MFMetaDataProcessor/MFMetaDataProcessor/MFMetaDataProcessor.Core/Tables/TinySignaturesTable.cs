@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Mono.Cecil;
@@ -175,10 +176,23 @@ namespace MFMetaDataProcessor
             return GetOrCreateSignatureIdImpl(GetSignature(defaultValue));
         }
 
-        public ushort GetOrCreateSignatureId(
+        /// <summary>
+        /// Gets existing or creates new type referece signature (used for encoding type specification).
+        /// </summary>
+        /// <param name="typeReference">Type reference in Mono.Cecil format.</param>
+        public UInt16 GetOrCreateSignatureId(
             TypeReference typeReference)
         {
             return GetOrCreateSignatureIdImpl(GetSignature(typeReference, false));
+        }
+
+        /// <summary>
+        /// Gets existing or creates new custom attribute signature.
+        /// </summary>
+        /// <param name="customAttribute">Custom attribute in Mono.Cecil format.</param>
+        public UInt16 GetOrCreateSignatureId(CustomAttribute customAttribute)
+        {
+            return GetOrCreateSignatureIdImpl(GetSignature(customAttribute));
         }
 
         /// <summary>
@@ -362,6 +376,98 @@ namespace MFMetaDataProcessor
                 writer.Write(defaultValue);
 
                 return buffer.ToArray();
+            }
+        }
+
+        private Byte[] GetSignature(
+            CustomAttribute customAttribute)
+        {
+            using (var buffer = new MemoryStream())
+            using (var writer = new BinaryWriter(buffer))
+            {
+                foreach (var argument in customAttribute.ConstructorArguments)
+                {
+                    WriteAttributeArgumentValue(writer, argument);
+                }
+
+                // TODO: use compressed format
+                writer.Write((Byte)(customAttribute.Properties.Count + customAttribute.Fields.Count));
+
+                foreach (var namedArgument in customAttribute.Properties.Concat(customAttribute.Fields))
+                {
+                    writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_STRING);
+                    writer.Write(_context.StringTable.GetOrCreateStringId(namedArgument.Name));
+                    WriteAttributeArgumentValue(writer, namedArgument.Argument);
+                }
+                return buffer.ToArray();
+            }
+        }
+
+        private void WriteAttributeArgumentValue(
+            BinaryWriter writer,
+            CustomAttributeArgument argument)
+        {
+            TinyDataType dataType;
+            if (_primitiveTypes.TryGetValue(argument.Type.FullName, out dataType))
+            {
+                switch (dataType)
+                {
+                    case TinyDataType.DATATYPE_BOOLEAN:
+                        writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_BOOLEAN);
+                        writer.Write((Boolean)argument.Value ? 1 : 0);
+                        break;
+                    case TinyDataType.DATATYPE_I1:
+                        writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_I1);
+                        writer.Write((SByte)argument.Value);
+                        break;
+                    case TinyDataType.DATATYPE_U1:
+                        writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_U1);
+                        writer.Write((Byte)argument.Value);
+                        break;
+                    case TinyDataType.DATATYPE_I2:
+                        writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_I2);
+                        writer.Write((Int16)argument.Value);
+                        break;
+                    case TinyDataType.DATATYPE_U2:
+                        writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_U2);
+                        writer.Write((UInt16)argument.Value);
+                        break;
+                    case TinyDataType.DATATYPE_I4:
+                        writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_I4);
+                        writer.Write((Int32)argument.Value);
+                        break;
+                    case TinyDataType.DATATYPE_U4:
+                        writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_U4);
+                        writer.Write((UInt32)argument.Value);
+                        break;
+                    case TinyDataType.DATATYPE_I8:
+                        writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_I8);
+                        writer.Write((Int64)argument.Value);
+                        break;
+                    case TinyDataType.DATATYPE_U8:
+                        writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_U8);
+                        writer.Write((UInt64)argument.Value);
+                        break;
+                    case TinyDataType.DATATYPE_R4:
+                        writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_R4);
+                        writer.Write((Single)argument.Value);
+                        break;
+                    case TinyDataType.DATATYPE_R8:
+                        writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_R8);
+                        writer.Write((Double)argument.Value);
+                        break;
+                    case TinyDataType.DATATYPE_CHAR:
+                        writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_CHAR);
+                        writer.Write((Char)argument.Value);
+                        break;
+                    case TinyDataType.DATATYPE_STRING:
+                        writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_STRING);
+                        writer.Write(_context.StringTable.GetOrCreateStringId((String)argument.Value));
+                        break;
+                    default:
+                        Debug.Fail(dataType.ToString());
+                        break;
+                }
             }
         }
 

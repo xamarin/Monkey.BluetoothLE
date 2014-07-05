@@ -337,6 +337,10 @@ namespace MFMetaDataProcessor
             {
                 flags |= TD_HasSecurity;
             }
+            if (definition.HasCustomAttributes)
+            {
+                flags |= TD_HasAttributes;
+            }
 
             return (UInt16)flags;
         }

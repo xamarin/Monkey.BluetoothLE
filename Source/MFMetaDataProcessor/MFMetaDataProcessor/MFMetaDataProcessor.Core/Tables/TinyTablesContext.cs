@@ -61,13 +61,30 @@ namespace MFMetaDataProcessor
                 unorderedTypes, mainModule.FullyQualifiedName);
 
             var types = orderedTypes;
-
+    
             TypeDefinitionTable = new TinyTypeDefinitionTable(types, this);
-            FieldsTable = new TinyFieldDefinitionTable(
-                types.SelectMany(item => GetOrderedFields(
-                    item.Fields.Where(field => !field.HasConstant))), this);
-            MethodDefinitionTable = new TinyMethodDefinitionTable(
-                types.SelectMany(item => GetOrderedMethods(item.Methods)), this);
+            
+            var fields = types
+                .SelectMany(item => GetOrderedFields(item.Fields.Where(field => !field.HasConstant)))
+                .ToList();
+            FieldsTable = new TinyFieldDefinitionTable(fields, this);
+
+            var methods = types.SelectMany(item => GetOrderedMethods(item.Methods)).ToList();
+
+            MethodDefinitionTable = new TinyMethodDefinitionTable(methods, this);
+
+            AttributesTable = new TinyAttributesTable(
+                types.SelectMany(
+                    (item, index) => item.CustomAttributes.Select(
+                        attr => new Tuple<CustomAttribute, UInt16>(attr, (UInt16)index))),
+                fields.SelectMany(
+                    (item, index) => item.CustomAttributes.Select(
+                        attr => new Tuple<CustomAttribute, UInt16>(attr, (UInt16)index))),
+                methods.SelectMany(
+                    (item, index) => item.CustomAttributes.Select(
+                        attr => new Tuple<CustomAttribute, UInt16>(attr, (UInt16)index))),
+                this);
+
             TypeSpecificationsTable = new TinyTypeSpecificationsTable(this);
 
             // Resources information
@@ -109,6 +126,26 @@ namespace MFMetaDataProcessor
             }
         }
 
+        /// <summary>
+        /// Gets method reference identifier (external or internal) encoded with appropriate prefix.
+        /// </summary>
+        /// <param name="methodReference">Method reference in Mono.Cecil format.</param>
+        /// <returns>Refernce identifier for passed <paramref name="methodReference"/> value.</returns>
+        public UInt16 GetMethodReferenceId(
+            MethodReference methodReference)
+        {
+            UInt16 referenceId;
+            if (MethodReferencesTable.TryGetMethodReferenceId(methodReference, out referenceId))
+            {
+                referenceId |= 0x8000; // External method reference
+            }
+            else
+            {
+                MethodDefinitionTable.TryGetMethodReferenceId(methodReference.Resolve(), out referenceId);
+            }
+            return referenceId;
+        }
+
         public AssemblyDefinition AssemblyDefinition { get; private set; }
 
         public NativeMethodsCrc NativeMethodsCrc { get; private set; }
@@ -126,6 +163,8 @@ namespace MFMetaDataProcessor
         public TinyMethodDefinitionTable MethodDefinitionTable { get; private set; }
 
         public TinyTypeDefinitionTable TypeDefinitionTable { get; private set; }
+
+        public TinyAttributesTable AttributesTable { get; private set; }
 
         public TinyTypeSpecificationsTable TypeSpecificationsTable { get; private set; }
 
