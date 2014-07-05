@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Endianness\TinyBinaryWriter.cs" />
     <Compile Include="Mono.Cecil\CodeWriter.cs" />
+    <Compile Include="Tables\TinyAttributesTable.cs" />
     <Compile Include="Tables\TinyFieldReferenceTable.cs" />
     <Compile Include="Tables\TinyReferenceTableBase.cs" />
     <Compile Include="Tables\TinyResourceDataTable.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Tables\TinyMethodDefinitionTable.cs" />
     <Compile Include="Tables\TinySignaturesTable.cs" />
     <Compile Include="Utility\TinyFontProcessor.cs" />
+    <Compile Include="Utility\TinySerializationType.cs" />
     <Compile Include="Utility\TinyStringsConstants.cs" />
     <Compile Include="Tables\TinyStringTable.cs" />
     <Compile Include="Tables\TinyTypeDefinitionTable.cs" />

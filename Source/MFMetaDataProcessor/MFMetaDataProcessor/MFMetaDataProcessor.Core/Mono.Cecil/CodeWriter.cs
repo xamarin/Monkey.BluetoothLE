@@ -348,7 +348,7 @@ namespace MFMetaDataProcessor {
                     _writer.WriteUInt16(stringReferenceId);
 		            break;
                 case OperandType.InlineMethod:
-                    _writer.WriteUInt16(GetMethodReferenceId((MethodReference)operand));
+                    _writer.WriteUInt16(_context.GetMethodReferenceId((MethodReference)operand));
                     break;
                 case OperandType.InlineType:
                     _writer.WriteUInt16(GetTypeReferenceId((TypeReference)operand));
@@ -397,21 +397,6 @@ namespace MFMetaDataProcessor {
             else
             {
                 _context.FieldsTable.TryGetFieldReferenceId(fieldReference.Resolve(), out referenceId);
-            }
-            return referenceId;
-        }
-
-        private UInt16 GetMethodReferenceId(
-            MethodReference methodReference)
-        {
-            UInt16 referenceId;
-            if (_context.MethodReferencesTable.TryGetMethodReferenceId(methodReference, out referenceId))
-            {
-                referenceId |= 0x8000; // External method reference
-            }
-            else
-            {
-                _context.MethodDefinitionTable.TryGetMethodReferenceId(methodReference.Resolve(), out referenceId);
             }
             return referenceId;
         }
