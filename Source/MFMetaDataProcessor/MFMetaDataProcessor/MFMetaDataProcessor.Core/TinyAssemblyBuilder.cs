@@ -17,13 +17,21 @@ namespace MFMetaDataProcessor
         private readonly AssemblyDefinition _assemblyDefinition;
 
         /// <summary>
+        /// List of full type names with explicit ordering (used by UTs).
+        /// </summary>
+        private readonly List<String> _explicitTypesOrder;
+
+        /// <summary>
         /// Creates new instance of <see cref="TinyAssemblyBuilder"/> object.
         /// </summary>
         /// <param name="assemblyDefinition">Original assembly metadata in Mono.Cecil format.</param>
+        /// <param name="explicitTypesOrder">List of full type names with explicit ordering.</param>
         public TinyAssemblyBuilder(
-            AssemblyDefinition assemblyDefinition)
+            AssemblyDefinition assemblyDefinition,
+            List<String> explicitTypesOrder = null)
         {
             _assemblyDefinition = assemblyDefinition;
+            _explicitTypesOrder = explicitTypesOrder;
         }
 
         /// <summary>
@@ -33,7 +41,7 @@ namespace MFMetaDataProcessor
         public void Write(
             TinyBinaryWriter binaryWriter)
         {
-            var tablesContext = new TinyTablesContext(_assemblyDefinition);
+            var tablesContext = new TinyTablesContext(_assemblyDefinition, _explicitTypesOrder);
 
             var header = new TinyAssemblyDefinition(tablesContext);
             header.Write(binaryWriter, true);

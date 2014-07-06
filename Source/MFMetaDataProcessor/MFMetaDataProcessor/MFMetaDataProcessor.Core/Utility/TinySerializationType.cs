@@ -17,6 +17,9 @@
         ELEMENT_TYPE_U8 = 0xb,
         ELEMENT_TYPE_R4 = 0xc,
         ELEMENT_TYPE_R8 = 0xd,
-        ELEMENT_TYPE_STRING = 0xe
+        ELEMENT_TYPE_STRING = 0xe,
+
+        SERIALIZATION_TYPE_FIELD = 0x53,
+        SERIALIZATION_TYPE_PROPERTY = 0x54,
     }
 }

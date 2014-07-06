@@ -89,6 +89,11 @@ namespace MFMetaDataProcessor {
 
                 switch (instruction.OpCode.OperandType)
                 {
+                    case OperandType.InlineSwitch:
+		                var targets = (Instruction[]) instruction.Operand;
+                        offset -= 3; // One bye used instead of Int32
+		                offset -= 2 * targets.Length; // each target use Int16 instead of Int32
+                        break;
                     case OperandType.InlineString:
                         stringTable.GetOrCreateStringId((String) instruction.Operand, false);
                         offset -= 2;
@@ -232,11 +237,25 @@ namespace MFMetaDataProcessor {
 
             foreach (var handler in _body.ExceptionHandlers)
             {
-                _writer.WriteUInt16(ConvertExceptionHandlerType(handler.HandlerType));
-                _writer.WriteUInt16(
-                    handler.HandlerType == ExceptionHandlerType.Filter
-                        ? (UInt16)handler.FilterStart.Offset
-                        : GetTypeReferenceId(handler.CatchType, 0x8000));
+                switch (handler.HandlerType)
+                {
+                    case ExceptionHandlerType.Catch:
+                        _writer.WriteUInt16(0x0000);
+                        _writer.WriteUInt16(GetTypeReferenceId(handler.CatchType, 0x8000));
+                        break;
+                    case ExceptionHandlerType.Fault:
+                        _writer.WriteUInt16(0x0001);
+                        _writer.WriteUInt16(0x0000);
+                        break;
+                    case ExceptionHandlerType.Finally:
+                        _writer.WriteUInt16(0x0002);
+                        _writer.WriteUInt16(0x0000);
+                        break;
+                    case ExceptionHandlerType.Filter:
+                        _writer.WriteUInt16(0x0003);
+                        _writer.WriteUInt16((UInt16)handler.FilterStart.Offset);
+                        break;
+                }
 
                 _writer.WriteUInt16((UInt16)handler.TryStart.Offset);
                 _writer.WriteUInt16((UInt16)handler.TryEnd.Offset);
@@ -283,11 +302,11 @@ namespace MFMetaDataProcessor {
 		        case OperandType.InlineSwitch:
 		        {
 		            var targets = (Instruction[]) operand;
-                    _writer.WriteInt32(targets.Length);
-		            var diff = instruction.Offset + opcode.Size + (4*(targets.Length + 1));
+                    _writer.WriteByte((Byte)targets.Length);
+		            var diff = instruction.Offset + opcode.Size + 2 * targets.Length + 1;
 		            foreach (var item in targets)
 		            {
-		                _writer.WriteInt32(GetTargetOffset(item) - diff);
+		                _writer.WriteInt16((Int16)(GetTargetOffset(item) - diff));
 		            }
 		            break;
 		        }
@@ -451,23 +470,5 @@ namespace MFMetaDataProcessor {
 
 			return parameter.Index;
 		}
-
-        private static UInt16 ConvertExceptionHandlerType(
-            ExceptionHandlerType handlerType)
-        {
-            switch (handlerType)
-            {
-                case ExceptionHandlerType.Catch:
-                    return 0x0000;
-                case ExceptionHandlerType.Fault:
-                    return 0x0001;
-                case ExceptionHandlerType.Finally:
-                    return 0x0002;
-                case ExceptionHandlerType.Filter:
-                    return 0x0003;
-                default:
-                    return 0xFFFF;
-            }
-        }
     }
 }
