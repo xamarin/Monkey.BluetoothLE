@@ -391,14 +391,22 @@ namespace MFMetaDataProcessor
                 }
 
                 // TODO: use compressed format
-                writer.Write((Byte)(customAttribute.Properties.Count + customAttribute.Fields.Count));
+                writer.Write((UInt16)(customAttribute.Properties.Count + customAttribute.Fields.Count));
 
-                foreach (var namedArgument in customAttribute.Properties.Concat(customAttribute.Fields))
+                foreach (var namedArgument in customAttribute.Fields.OrderBy(item => item.Name))
                 {
-                    writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_STRING);
+                    writer.Write((Byte)TinySerializationType.SERIALIZATION_TYPE_PROPERTY);
                     writer.Write(_context.StringTable.GetOrCreateStringId(namedArgument.Name));
                     WriteAttributeArgumentValue(writer, namedArgument.Argument);
                 }
+
+                foreach (var namedArgument in customAttribute.Properties.OrderBy(item => item.Name))
+                {
+                    writer.Write((Byte)TinySerializationType.SERIALIZATION_TYPE_PROPERTY);
+                    writer.Write(_context.StringTable.GetOrCreateStringId(namedArgument.Name));
+                    WriteAttributeArgumentValue(writer, namedArgument.Argument);
+                }
+
                 return buffer.ToArray();
             }
         }
@@ -414,7 +422,7 @@ namespace MFMetaDataProcessor
                 {
                     case TinyDataType.DATATYPE_BOOLEAN:
                         writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_BOOLEAN);
-                        writer.Write((Boolean)argument.Value ? 1 : 0);
+                        writer.Write((Byte)((Boolean)argument.Value ? 1 : 0));
                         break;
                     case TinyDataType.DATATYPE_I1:
                         writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_I1);

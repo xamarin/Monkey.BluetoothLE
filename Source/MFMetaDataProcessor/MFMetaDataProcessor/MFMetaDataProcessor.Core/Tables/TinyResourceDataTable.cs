@@ -47,7 +47,10 @@ namespace MFMetaDataProcessor
         public Int32 AlignToWord()
         {
             var padding = (4 - (CurrentOffset % 4)) % 4;
-            AddResourceData(new Byte[padding]);
+            if (padding != 0)
+            {
+                AddResourceData(new Byte[padding]);
+            }
             return padding;
         }
     }

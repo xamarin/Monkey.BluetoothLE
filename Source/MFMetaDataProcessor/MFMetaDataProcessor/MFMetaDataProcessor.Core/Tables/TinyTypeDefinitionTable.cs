@@ -342,6 +342,12 @@ namespace MFMetaDataProcessor
                 flags |= TD_HasAttributes;
             }
 
+            var baseType = definition.BaseType;
+            if (baseType != null && baseType.FullName == "System.MulticastDelegate")
+            {
+                flags |= TD_MulticastDelegate;
+            }
+
             return (UInt16)flags;
         }
     }

@@ -87,7 +87,7 @@ namespace MFMetaDataProcessor
             var methodSignature = _context.SignaturesTable.GetOrCreateSignatureId(item);
             writer.WriteUInt16(item.HasBody ?
                 _context.SignaturesTable.GetOrCreateSignatureId(item.Body.Variables) :
-                (item.IsAbstract ? (UInt16)0x0000 : (UInt16)0xFFFF));
+                (item.IsAbstract || item.IsRuntime ? (UInt16)0x0000 : (UInt16)0xFFFF));
             writer.WriteUInt16(methodSignature);
         }
 
@@ -218,6 +218,26 @@ namespace MFMetaDataProcessor
                 flag |= MD_HasExceptionHandlers;
             }
 
+            var baseType = method.DeclaringType.BaseType;
+            if (baseType != null && baseType.FullName == "System.MulticastDelegate")
+            {
+                if (method.IsConstructor)
+                {
+                    flag |= MD_DelegateConstructor;
+                }
+                else if (method.Name == "Invoke")
+                {
+                    flag |= MD_DelegateInvoke;
+                }
+                else if (method.Name == "BeginInvoke")
+                {
+                    flag |= MD_DelegateBeginInvoke;
+                }
+                else if (method.Name == "EndInvoke")
+                {
+                    flag |= MD_DelegateEndInvoke;
+                }
+            }
             return flag;
         }
     }

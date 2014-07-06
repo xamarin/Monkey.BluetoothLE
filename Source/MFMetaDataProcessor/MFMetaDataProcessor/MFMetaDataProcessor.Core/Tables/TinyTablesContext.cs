@@ -8,7 +8,8 @@ namespace MFMetaDataProcessor
     public sealed class TinyTablesContext
     {
         public TinyTablesContext(
-            AssemblyDefinition assemblyDefinition)
+            AssemblyDefinition assemblyDefinition,
+            List<String> explicitTypesOrder)
         {
             AssemblyDefinition = assemblyDefinition;
 
@@ -53,15 +54,8 @@ namespace MFMetaDataProcessor
 
             // Internal types definitions
 
-            var unorderedTypes = mainModule.GetTypes()
-                .Where(item => item.FullName != "<Module>")
-                .ToList();
+            var types = GetOrderedTypes(mainModule, explicitTypesOrder);
 
-            var orderedTypes = SortTypesAccordingUsages(
-                unorderedTypes, mainModule.FullyQualifiedName);
-
-            var types = orderedTypes;
-    
             TypeDefinitionTable = new TinyTypeDefinitionTable(types, this);
             
             var fields = types
@@ -190,6 +184,24 @@ namespace MFMetaDataProcessor
                     attributesNames.Contains(typeReference.DeclaringType.FullName));
         }
 
+        private static List<TypeDefinition> GetOrderedTypes(
+            ModuleDefinition mainModule,
+            List<String> explicitTypesOrder)
+        {
+            var unorderedTypes = mainModule.GetTypes()
+                .Where(item => item.FullName != "<Module>")
+                .ToList();
+
+            if (explicitTypesOrder == null || explicitTypesOrder.Count == 0)
+            {
+                return SortTypesAccordingUsages(
+                    unorderedTypes, mainModule.FullyQualifiedName);
+            }
+
+            return explicitTypesOrder
+                .Join(unorderedTypes, outer => outer, inner => inner.FullName, (inner, outer) => outer)
+                .ToList();
+        }
 
         private static List<TypeDefinition> SortTypesAccordingUsages(
             IEnumerable<TypeDefinition> types,
