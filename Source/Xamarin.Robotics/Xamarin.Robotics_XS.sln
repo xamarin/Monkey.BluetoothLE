@@ -342,7 +342,7 @@ Global
 		{AE94A5D2-15A6-4BE5-9020-31FABFD4CD50} = {055A3C85-CD0F-42A8-8F2F-F7C5017D6E6C}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Xamarin.Robotics.BluetoothLEExplorer.iOS\Xamarin.Robotics.BluetoothLEExplorer.iOS.csproj
+		StartupItem = Xamarin.Robotics.BluetoothLEExplorerForms.iOS\Xamarin.Robotics.BluetoothLEExplorerForms.iOS.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

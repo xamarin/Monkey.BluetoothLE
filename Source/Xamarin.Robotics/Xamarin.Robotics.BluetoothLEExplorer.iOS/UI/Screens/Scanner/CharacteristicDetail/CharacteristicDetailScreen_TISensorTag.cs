@@ -101,7 +101,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS
 			write.TouchUpInside += (sender, e) => {
 				Console.WriteLine("turning on: " + _characteristic.ID.PartialFromUuid ());
 				if (_characteristic.ID.PartialFromUuid () == "0xaa52") // gyroscope on/off
-					_characteristic.Write(new byte[] {0x07}); // enable XYZ axes
+					_characteristic.Write(new byte[] {0x07}); // enable XYZ axes 
 				else if (_characteristic.ID.PartialFromUuid () == "0xaa23") // humidity period
 					_characteristic.Write(new byte[] {0x02}); // 
 				else
@@ -157,12 +157,12 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS
 				if (_characteristic.ID.PartialFromUuid () == "0xaa01") {
 					// Temperature sensorTMP006 - works
 					var ambientTemperature = BitConverter.ToUInt16 (sensorData, 2) / 128.0;
+					double Tdie = ambientTemperature + 273.15;
+
 
 					// http://sensortag.codeplex.com/SourceControl/latest#SensorTagLibrary/SensorTagLibrary/Source/Sensors/IRTemperatureSensor.cs
 					double Vobj2 = BitConverter.ToInt16 (sensorData, 0);
 					Vobj2 *= 0.00000015625;
-
-					double Tdie = ambientTemperature + 273.15;
 
 					double S0 = 5.593E-14;
 					double a1 = 1.75E-3;
@@ -206,7 +206,7 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS
 					double humidity = (-6f) + 125f * (a / 65535f);
 
 //					int t = BitConverter.ToInt16 (sensorData, 0);
-					var t = (sensorData[0] & 0xff) | ((sensorData[1] << 8) & 0xff00);
+					var t = (sensorData[0] & 0xff) | ((sensorData[1] << 8) & 0xff00); // iono what this sensor is returning :-(
 
 					this._stringValueText.Text = "humidity: " + Math.Round(humidity,1) + "%rH\ntemp: " + Math.Round(t / 1000.0, 1) + "C"; // HACK /1000
 
