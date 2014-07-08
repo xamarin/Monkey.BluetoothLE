@@ -29,6 +29,8 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 
 		public byte[] Value {
 			get { 
+				if (_nativeCharacteristic.Value == null)
+					return null;
 				return this._nativeCharacteristic.Value.ToArray(); 
 			}
 		}

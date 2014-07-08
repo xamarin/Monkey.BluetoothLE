@@ -40,6 +40,9 @@ namespace Xamarin.Robotics.BluetoothLEExplorer.iOS.UI.Screens.Scanner.ServiceDet
 				if (e.Characteristic.Uuid == CBUUID.FromPartial (0x2A37).ToString()) { // heart rate characteristic
 					_characteristicDetailScreen = new CharacteristicDetailScreen_Hrm();
 					((CharacteristicDetailScreen_Hrm)_characteristicDetailScreen).SetDeviceServiceAndCharacteristic ( this._connectedDevice, this._currentService, e.Characteristic );
+				} if (_connectedDevice.Name == "TI BLE Sensor Tag") { // TI SensorTag device
+					_characteristicDetailScreen = new CharacteristicDetailScreen_TISensorTag();
+					((CharacteristicDetailScreen_TISensorTag)_characteristicDetailScreen).SetDeviceServiceAndCharacteristic ( this._connectedDevice, this._currentService, e.Characteristic );
 				} else {
 					_characteristicDetailScreen = new CharacteristicDetailScreen();
 					((CharacteristicDetailScreen)_characteristicDetailScreen).SetDeviceServiceAndCharacteristic ( this._connectedDevice, this._currentService, e.Characteristic );

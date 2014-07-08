@@ -111,7 +111,7 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 			}
 
 			var c = _nativeCharacteristic;
-			c.SetValue(data)
+			c.SetValue (data);
 			this._gatt.WriteCharacteristic (c);
 			Console.WriteLine(".....Write");
 		}
