@@ -3,6 +3,7 @@ using System.Linq;
 using MonoTouch.CoreBluetooth;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MonoTouch.Foundation;
 
 namespace Xamarin.Robotics.Core.Bluetooth.LE
 {
@@ -36,8 +37,12 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 			get {
 				if (this.Value == null)
 					return String.Empty;
-				else
-					return System.Text.Encoding.UTF8.GetString (this.Value);
+				else {
+					var stringByes = this.Value;
+					var s1 = System.Text.Encoding.UTF8.GetString (stringByes);
+					//var s2 = System.Text.Encoding.ASCII.GetString (stringByes);
+					return s1;
+				}
 			}
 		}
 
@@ -73,6 +78,7 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 
 		public bool CanRead {get{return (this.Properties & CharacteristicPropertyType.Read) != 0; }}
 		public bool CanUpdate {get{return (this.Properties & CharacteristicPropertyType.Notify) != 0; }}
+		public bool CanWrite {get{return (this.Properties & CharacteristicPropertyType.WriteWithoutResponse) != 0; }}
 
 		public Task<ICharacteristic> ReadAsync() 
 		{
@@ -94,6 +100,22 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 			_parentDevice.ReadValue (_nativeCharacteristic);
 
 			return tcs.Task;
+		}
+
+		public void Write (byte[] data) 
+		{
+			if (!CanWrite) {
+				throw new InvalidOperationException ("Characteristic does not support WRITE");
+			}
+			var nsdata = NSData.FromArray (data);
+			var descriptor = (CBCharacteristic)_nativeCharacteristic;
+
+//			_parentDevice.WriteValue (nsdata, descriptor, CBCharacteristicWriteType.WithoutResponse);
+			_parentDevice.WriteValue (nsdata, descriptor, CBCharacteristicWriteType.WithResponse);
+
+			Console.WriteLine ("** Characteristic.Write, Type = WithoutResponse, Data = " + data);
+
+			return;
 		}
 
 		public void StartUpdates ()

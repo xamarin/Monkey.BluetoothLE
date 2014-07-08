@@ -101,8 +101,24 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 
 		public bool CanRead {get{return (this.Properties & CharacteristicPropertyType.Read) != 0; }}
 		public bool CanUpdate {get{return (this.Properties & CharacteristicPropertyType.Notify) != 0; }}
+		public bool CanWrite {get{return (this.Properties & CharacteristicPropertyType.WriteWithoutResponse) != 0; }}
 
-		// HACK: UNTESTED
+		// HACK: UNTESTED - this API has only been tested on iOS
+		public void Write (byte[] data)
+		{
+			if (!CanWrite) {
+				throw new InvalidOperationException ("Characteristic does not support WRITE");
+			}
+
+			var c = _nativeCharacteristic;
+			c.SetValue(data)
+			this._gatt.WriteCharacteristic (c);
+			Console.WriteLine(".....Write");
+		}
+
+
+
+		// HACK: UNTESTED - this API has only been tested on iOS
 		public Task<ICharacteristic> ReadAsync()
 		{
 			var tcs = new TaskCompletionSource<ICharacteristic>();

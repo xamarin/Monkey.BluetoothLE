@@ -157,5 +157,35 @@
 	"00002a5e-0000-1000-8000-00805f9b34fb":"Pulse Oximetry Spot-Check Measurement",
 	"00002a52-0000-1000-8000-00805f9b34fb":"Record Access Control Point (Test Version)",
 	"00002a3a-0000-1000-8000-00805f9b34fb":"Removable",
-	"00002a3b-0000-1000-8000-00805f9b34fb":"Service Required"
+	"00002a3b-0000-1000-8000-00805f9b34fb":"Service Required",
+
+
+
+	"0000ffe1-0000-1000-8000-00805f9b34fb":"TI SensorTag Keys Data",
+	"f000aa01-0451-4000-b000-000000000000":"TI SensorTag Infrared Temperature Data",
+	"f000aa02-0451-4000-b000-000000000000":"TI SensorTag Infrared Temperature On/Off",
+	"f000aa03-0451-4000-b000-000000000000":"TI SensorTag Infrared Temperature Sample Rate",
+	"f000aa11-0451-4000-b000-000000000000":"TI SensorTag Accelerometer Data",
+	"f000aa12-0451-4000-b000-000000000000":"TI SensorTag Accelerometer On/Off",
+	"f000aa13-0451-4000-b000-000000000000":"TI SensorTag Accelerometer Sample Rate",
+	"f000aa21-0451-4000-b000-000000000000":"TI SensorTag Humidity Data",
+	"f000aa22-0451-4000-b000-000000000000":"TI SensorTag Humidity On/Off",
+	"f000aa23-0451-4000-b000-000000000000":"TI SensorTag Humidity Sample Rate",
+	"f000aa31-0451-4000-b000-000000000000":"TI SensorTag Magnometer Data",
+	"f000aa32-0451-4000-b000-000000000000":"TI SensorTag Magnometer On/Off",
+	"f000aa33-0451-4000-b000-000000000000":"TI SensorTag Magnometer Sample Rate",
+	"f000aa41-0451-4000-b000-000000000000":"TI SensorTag Barometer Data",
+	"f000aa42-0451-4000-b000-000000000000":"TI SensorTag Barometer On/Off",
+	"f000aa43-0451-4000-b000-000000000000":"TI SensorTag Barometer Calibration",
+	"f000aa44-0451-4000-b000-000000000000":"TI SensorTag Barometer Sample Rate",
+	"f000aa51-0451-4000-b000-000000000000":"TI SensorTag Gyroscope Data",
+	"f000aa52-0451-4000-b000-000000000000":"TI SensorTag Gyroscope On/Off",
+	"f000aa53-0451-4000-b000-000000000000":"TI SensorTag Gyroscope Sample Rate",
+	"f000aa61-0451-4000-b000-000000000000":"TI SensorTag Test Data",
+	"f000aa62-0451-4000-b000-000000000000":"TI SensorTag Test Configuration",
+	"f000ccc1-0451-4000-b000-000000000000":"TI SensorTag Connection Parameters",
+	"f000ccc2-0451-4000-b000-000000000000":"TI SensorTag Connection Request Parameters",
+	"f000ccc3-0451-4000-b000-000000000000":"TI SensorTag Connection Request Disconnect",
+	"f000ffc1-0451-4000-b000-000000000000":"TI SensorTag OAD Image Identify",
+	"f000ffc2-0451-4000-b000-000000000000":"TI SensorTag OAD Image Block"
 }

@@ -129,8 +129,6 @@
     <BundleResource Include="Resources\icon7-40.png" />
     <BundleResource Include="Resources\icon7-60.png" />
     <BundleResource Include="Resources\icon7-76.png" />
-    <BundleResource Include="Resources\icon7-80.png" />
-    <BundleResource Include="Resources\icon7-120.png" />
     <BundleResource Include="Resources\icon7-152.png" />
     <BundleResource Include="Resources\iTunesArtwork.png" />
     <BundleResource Include="Resources\iTunesArtwork%402x.png" />

@@ -21,6 +21,8 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 
 		bool CanRead { get; }
 		bool CanUpdate { get; }
+		bool CanWrite { get; }
+
 		// methods
 //		void EnumerateDescriptors ();
 
@@ -28,6 +30,8 @@ namespace Xamarin.Robotics.Core.Bluetooth.LE
 		void StopUpdates();
 
 		Task<ICharacteristic> ReadAsync ();
+
+		void Write (byte[] data);
 
 	}
 }

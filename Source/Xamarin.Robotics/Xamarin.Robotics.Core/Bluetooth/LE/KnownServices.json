@@ -20,5 +20,17 @@
 	"00001806-0000-1000-8000-00805f9b34fb":"Reference Time Update Service",
 	"00001814-0000-1000-8000-00805f9b34fb":"Running Speed and Cadence",
 	"00001813-0000-1000-8000-00805f9b34fb":"Scan Parameters",
-	"00001804-0000-1000-8000-00805f9b34fb":"TX Power"
+	"00001804-0000-1000-8000-00805f9b34fb":"TX Power",
+
+
+	"0000ffe0-0000-1000-8000-00805f9b34fb":"TI SensorTag Smart Keys",
+	"f000aa00-0451-4000-b000-000000000000":"TI SensorTag Infrared Thermometer",
+	"f000aa10-0451-4000-b000-000000000000":"TI SensorTag Accelerometer",
+	"f000aa20-0451-4000-b000-000000000000":"TI SensorTag Humidity",
+	"f000aa30-0451-4000-b000-000000000000":"TI SensorTag Magnometer",
+	"f000aa40-0451-4000-b000-000000000000":"TI SensorTag Barometer",
+	"f000aa50-0451-4000-b000-000000000000":"TI SensorTag Gyroscope",
+	"f000aa60-0451-4000-b000-000000000000":"TI SensorTag Test",
+	"f000ccc0-0451-4000-b000-000000000000":"TI SensorTag Connection Control",
+	"f000ffc0-0451-4000-b000-000000000000":"TI SensorTag OvertheAir Download"
 }
