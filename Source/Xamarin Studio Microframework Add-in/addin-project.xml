@@ -1,0 +1,7 @@
+<AddinProject appVersion="4.2.3">
+	<Project platforms="Win32">
+		<AddinFile>MonoDevelop.MicroFramework/bin/Debug/MonoDevelop.MicroFramework.dll</AddinFile>
+		<BuildFile>MonoDevelop.MicroFramework.sln</BuildFile>
+		<BuildConfiguration>Debug</BuildConfiguration>
+	</Project>
+</AddinProject>

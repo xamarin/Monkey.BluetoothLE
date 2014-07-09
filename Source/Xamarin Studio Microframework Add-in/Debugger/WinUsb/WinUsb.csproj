@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DAEB83A4-5868-4725-A15D-85F75DB87EAC}</ProjectGuid>
+    <ComponentGuid>{aa03c31f-e697-4668-9206-3b2cc39e8a44}</ComponentGuid>
+    <DirectoryRef>ToolsDir</DirectoryRef>
+    <OutputType>Library</OutputType>
+    <AssemblyType>Library</AssemblyType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WinUsb</RootNamespace>
+    <AssemblyName>WinUsb</AssemblyName>
+    <TargetFrameworkProfile />
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Optimize>false</Optimize>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="DeviceManagement.cs" />
+    <Compile Include="DeviceManagementApi.cs" />
+    <Compile Include="WinUsbDevice.cs" />
+    <Compile Include="WinUsbDeviceApi.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="readme.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

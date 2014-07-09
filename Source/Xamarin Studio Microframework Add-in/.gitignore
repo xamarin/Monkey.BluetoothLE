@@ -1,0 +1,8 @@
+*.suo
+*.userprefs
+Debugger/WinUsb/bin/
+Debugger/WinUsb/obj/
+Debugger/bin/
+Debugger/obj/
+MonoDevelop.MicroFramework/obj/
+MonoDevelop.MicroFramework/bin/

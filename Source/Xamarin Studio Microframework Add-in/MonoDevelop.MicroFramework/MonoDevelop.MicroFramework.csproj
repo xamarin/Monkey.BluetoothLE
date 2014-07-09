@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9A860B71-DD7C-4511-B00A-34197E15A799}</ProjectGuid>
+    <ProjectTypeGuids>{7DBEB09D-BB9F-4D92-A141-A009135475EF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MonoDevelop.MicroFramework</RootNamespace>
+    <AssemblyName>MonoDevelop.MicroFramework</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\ext\Mono.Cecil.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb">
+      <HintPath>..\ext\Mono.Cecil.Pdb.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.Debugging">
+      <HintPath>..\ext\Mono.Debugging.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MonoDevelop.Core">
+      <HintPath>..\ext\MonoDevelop.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MonoDevelop.Debugger">
+      <HintPath>..\ext\MonoDevelop.Debugger.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MonoDevelop.Ide">
+      <HintPath>..\ext\MonoDevelop.Ide.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MicroFrameworkDebugger.cs" />
+    <Compile Include="MicroFrameworkDebuggerSession.cs" />
+    <Compile Include="MicroFrameworkDebuggerStartInfo.cs" />
+    <Compile Include="MicroFrameworkExecutionCommand.cs" />
+    <Compile Include="MicroFrameworkExecutionHandler.cs" />
+    <Compile Include="MicroFrameworkExecutionTarget.cs" />
+    <Compile Include="MicroFrameworkProject.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MicroFrameworkProjectBinding.cs" />
+    <Compile Include="ExecutionTargetsManager.cs" />
+    <Compile Include="Debug\DiagnosticStrings.Designer.cs" />
+    <Compile Include="Debug\CorDebugAppDomain.cs" />
+    <Compile Include="Debug\CorDebugProcess.cs" />
+    <Compile Include="Debug\CorDebugThread.cs" />
+    <Compile Include="Debug\Pdbx.cs" />
+    <Compile Include="Debug\TinyCLR_TypeSystem.cs" />
+    <Compile Include="Debug\Utility.cs" />
+    <Compile Include="Debug\CorDebugClass.cs" />
+    <Compile Include="Debug\CorDebugBreakpoint.cs" />
+    <Compile Include="Debug\CorDebugBreakpointStepper.cs" />
+    <Compile Include="Debug\CorDebugFunction.cs" />
+    <Compile Include="Debug\CorDebugCode.cs" />
+    <Compile Include="Debug\CorDebugFrame.cs" />
+    <Compile Include="Debug\CorDebugChain.cs" />
+    <Compile Include="Debug\CorDebugValue.cs" />
+    <Compile Include="Debug\CorDebugEval.cs" />
+    <Compile Include="Debug\CorDebugAssembly.cs" />
+    <Compile Include="Debug\MessageCentre.cs" />
+    <Compile Include="Debug\ManagedCallbacks.cs" />
+    <Compile Include="Debug\DebugPort.cs" />
+    <Compile Include="Debug\DebugPortSupplier.cs" />
+    <Compile Include="Debug\ConnectionPoint.cs" />
+    <Compile Include="Debug\CorDebugStepper.cs" />
+    <Compile Include="Debug\PdbxFile.cs" />
+    <Compile Include="Debug\CorDebugBacktrace.cs" />
+    <Compile Include="Debug\CorDebugType.cs" />
+    <Compile Include="Debug\CorEvaluationContext.cs" />
+    <Compile Include="Debug\MicroFrameworkObjectValueAdaptor.cs" />
+    <Compile Include="Debug\CorValRef.cs" />
+    <Compile Include="Debug\FieldValueReference.cs" />
+    <Compile Include="Debug\Adaptors.cs" />
+    <Compile Include="Debug\VariableValueReference.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MonoDevelop.MicroFramework.addin.xml" />
+    <EmbeddedResource Include="Templates\MicroFrameworkLibraryProject.xpt.xml">
+      <LogicalName>MicroFrameworkLibraryProject.xpt.xml</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\MicroFrameworkConsoleProject.xpt.xml">
+      <LogicalName>MicroFrameworkConsoleProject.xpt.xml</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Debug\DiagnosticStrings.resx">
+      <LogicalName>Microsoft.SPOT.Debugger.DiagnosticStrings.resources</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <Folder Include="Debug\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Debugger\Debugger.csproj">
+      <Project>{D9DCA6FB-680F-4355-ABEF-128DB02721E6}</Project>
+      <Name>Debugger</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

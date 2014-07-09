@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoDevelop.MicroFramework", "MonoDevelop.MicroFramework\MonoDevelop.MicroFramework.csproj", "{9A860B71-DD7C-4511-B00A-34197E15A799}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Debugger", "Debugger\Debugger.csproj", "{D9DCA6FB-680F-4355-ABEF-128DB02721E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUsb", "Debugger\WinUsb\WinUsb.csproj", "{DAEB83A4-5868-4725-A15D-85F75DB87EAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A860B71-DD7C-4511-B00A-34197E15A799}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A860B71-DD7C-4511-B00A-34197E15A799}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A860B71-DD7C-4511-B00A-34197E15A799}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A860B71-DD7C-4511-B00A-34197E15A799}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9DCA6FB-680F-4355-ABEF-128DB02721E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9DCA6FB-680F-4355-ABEF-128DB02721E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9DCA6FB-680F-4355-ABEF-128DB02721E6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9DCA6FB-680F-4355-ABEF-128DB02721E6}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{DAEB83A4-5868-4725-A15D-85F75DB87EAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAEB83A4-5868-4725-A15D-85F75DB87EAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAEB83A4-5868-4725-A15D-85F75DB87EAC}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAEB83A4-5868-4725-A15D-85F75DB87EAC}.Release|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = MonoDevelop.MicroFramework\MonoDevelop.MicroFramework.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.TabsToSpaces = False
+		$1.inheritsSet = VisualStudio
+		$1.inheritsScope = text/plain
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.IndentSwitchBody = True
+		$2.AnonymousMethodBraceStyle = NextLine
+		$2.PropertyBraceStyle = NextLine
+		$2.PropertyGetBraceStyle = NextLine
+		$2.PropertySetBraceStyle = NextLine
+		$2.EventBraceStyle = NextLine
+		$2.EventAddBraceStyle = NextLine
+		$2.EventRemoveBraceStyle = NextLine
+		$2.StatementBraceStyle = NextLine
+		$2.ElseNewLinePlacement = NewLine
+		$2.CatchNewLinePlacement = NewLine
+		$2.FinallyNewLinePlacement = NewLine
+		$2.BeforeMethodDeclarationParentheses = False
+		$2.BeforeMethodCallParentheses = False
+		$2.BeforeConstructorDeclarationParentheses = False
+		$2.BeforeIndexerDeclarationBracket = False
+		$2.BeforeDelegateDeclarationParentheses = False
+		$2.NewParentheses = False
+		$2.IfParentheses = False
+		$2.WhileParentheses = False
+		$2.ForParentheses = False
+		$2.ForeachParentheses = False
+		$2.CatchParentheses = False
+		$2.SwitchParentheses = False
+		$2.LockParentheses = False
+		$2.UsingParentheses = False
+		$2.SpacesBeforeBrackets = False
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 120
+		$3.TabsToSpaces = False
+		$3.EolMarker = Windows
+		$3.inheritsSet = VisualStudio
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+		$0.DotNetNamingPolicy = $4
+		$4.DirectoryNamespaceAssociation = None
+		$4.ResourceNamePolicy = FileFormatDefault
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

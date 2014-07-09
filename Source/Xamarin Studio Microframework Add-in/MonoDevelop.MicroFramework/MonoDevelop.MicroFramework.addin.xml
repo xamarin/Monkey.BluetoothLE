@@ -1,0 +1,40 @@
+﻿<Addin id			= "MicroFramework"
+		namespace	= "MonoDevelop"
+		name		= "MicroFramework"
+		author		= "David Karlaš"
+		copyright	= "MIT"
+		description	= "Provides support for .Net MicroFramework developing, deploying and debugging."
+		category	= "IDE extensions"
+		version		= "0.2">
+	<Dependencies>
+		<Addin id="::MonoDevelop.Core" version="5.1" />
+		<Addin id="::MonoDevelop.Ide" version="5.1" />
+		<Addin id="::MonoDevelop.Debugger" version="5.1" />
+	</Dependencies>
+	<Runtime>
+		<Import assembly="Debugger.dll" />
+		<Import assembly="WinUsb.dll" />
+	</Runtime>
+	<Extension path="/MonoDevelop/Debugging/DebuggerEngines">
+		<DebuggerEngine id="MonoDevelop.MicroFramework.Debugger" name="Debugger for .NET Micro Framework" features="Breakpoints, Pause, Stepping, DebugFile, ConditionalBreakpoints, Tracepoints, Catchpoints, Disassembly" type="MonoDevelop.MicroFramework.MicroFrameworkDebugger" />
+	</Extension>
+	<Extension path="/MonoDevelop/ProjectModel/MSBuildItemTypes">
+		<DotNetProjectSubtype id=".NETMicroFramework" useXBuild="true" guid="{b69e3092-b931-443c-abe7-7e7b65f2a37f}" type="MonoDevelop.MicroFramework.MicroFrameworkProject">
+			<AddImport language="C#" projects="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
+			<RemoveImport language="C#" projects="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+		</DotNetProjectSubtype>
+	</Extension>
+	<Extension path="/MonoDevelop/ProjectModel/ProjectBindings">
+		<ProjectBinding id="MicroFrameworkProject" class="MonoDevelop.MicroFramework.MicroFrameworkProjectBinding" />
+	</Extension>
+	<Extension path="/MonoDevelop/Ide/ProjectTemplates">
+		<ProjectTemplate id="MicroFrameworkConsoleProject" resource="MicroFrameworkConsoleProject.xpt.xml" />
+		<ProjectTemplate id="MicroFrameworkLibraryProject" resource="MicroFrameworkLibraryProject.xpt.xml" />
+	</Extension>
+	<Extension path = "/MonoDevelop/ProjectModel/SerializableClasses">
+		<DataType class = "MonoDevelop.MicroFramework.MicroFrameworkProject" />
+	</Extension>
+	<Extension path = "/MonoDevelop/Core/ExecutionHandlers">
+		<ExecutionHandler id="MicroFramework" class = "MonoDevelop.MicroFramework.MicroFrameworkExecutionHandler"/>
+	</Extension>
+</Addin>

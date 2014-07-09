@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Template originator="David Karlaš" created="12/02/2014" lastModified="12/02/2014">
+	<!-- Template Header -->
+	<TemplateConfiguration>
+		<_Name>MicroFramework Console Application</_Name>
+		<_Category>C#/MicroFramework</_Category>
+		<Icon>md-project-console|res:csharp-icon-32.png</Icon>
+		<LanguageName>C#</LanguageName>
+		<_Description>Creates an empty C# MicroFramework console application project</_Description>
+		<DefaultFilename>MFConsoleApplication</DefaultFilename>
+	</TemplateConfiguration>
+	<!-- Actions -->
+	<Actions>
+		<Open filename="Program.cs" />
+	</Actions>
+	<!-- Template Content -->
+	<Combine name="${ProjectName}" directory=".">
+		<Project name="${ProjectName}" directory="." type=".NETMicroFramework">
+			<References>
+				<Reference type="Package" refto="Microsoft.SPOT.Native" />
+			</References>
+			<Files>
+				<File name="Program.cs" BuildAction="Compile"><![CDATA[﻿using System;
+using Microsoft.SPOT;
+
+namespace ${Namespace}
+{
+	public class Program
+	{
+		public static void Main()
+		{
+			
+		}
+	}
+}]]></File>
+				<FileTemplateReference TemplateID="CSharpAssemblyInfo" name="AssemblyInfo.cs" />
+			</Files>
+		</Project>
+	</Combine>
+</Template>
