@@ -69,4 +69,4 @@ Level: **Advanced**
 An semi-advanced robot that can perform basic collision avoidance and can be optionally controlled by a mobile device.
 
 # Authors
-Bryan Costanich, Frank Krueger, Craig Dunn, David Karlas
+Bryan Costanich, Frank Krueger, Craig Dunn, David Karlas, Oleg Rakhmatulin
