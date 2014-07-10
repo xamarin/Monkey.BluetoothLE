@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml;
+using System.Xml.Xsl;
 using Mono.Cecil;
 using NUnit.Framework;
 
@@ -11,7 +13,14 @@ namespace MFMetaDataProcessor.Tests
     public sealed class TestPreprocessedFiles
     {
         private static readonly List<String> _typesOrder = new List<String>();
-        
+
+        private static readonly XslTransform _pdbxSorter = new XslTransform();
+
+        public TestPreprocessedFiles()
+        {
+            _pdbxSorter.Load("PdbxSorter.xslt");
+        }
+
         [TearDown]
         public void TestTearDown()
         {
@@ -152,6 +161,14 @@ namespace MFMetaDataProcessor.Tests
         [Test]
         public void UsbMouseSampleTest()
         {
+            _typesOrder.AddRange(new[]
+            {
+                "<PrivateImplementationDetails>{5B04E18E-C178-4A8D-9F9A-B891A012052A}",
+                "USBMouseSample.MyUSBMouse",
+                "USBMouseSample.MyUSBMouse/ButtonList",
+                "<PrivateImplementationDetails>{5B04E18E-C178-4A8D-9F9A-B891A012052A}/__StaticArrayInitTypeSize=50",
+                "<PrivateImplementationDetails>{5B04E18E-C178-4A8D-9F9A-B891A012052A}/__StaticArrayInitTypeSize=7"
+            });
             TestSingleAssembly("USBMouse",
                 "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Hardware.Usb",
                 "Microsoft.SPOT.Hardware");
@@ -187,7 +204,7 @@ namespace MFMetaDataProcessor.Tests
             TestSingleAssembly(name, "be", loadHints, TinyBinaryWriter.CreateBigEndianBinaryWriter);
         }
 
-        private static void TestSingleAssembly (
+        private static void TestSingleAssembly(
             String name, String endianness, IDictionary<String, String> loadHints,
             Func<BinaryWriter, TinyBinaryWriter> getBinaryWriter)
         {
@@ -198,27 +215,38 @@ namespace MFMetaDataProcessor.Tests
             var fileName = ProcessSingleFile(name, endianness,
                 assemblyDefinition, getBinaryWriter);
 
-            CompareFiles(fileName);
+            CompareBinaryFiles(fileName);
+            CompareXmlFiles(
+                String.Format(@"Data\{0}\{0}.pdbx", name),
+                Path.ChangeExtension(fileName, "pdbx"));
         }
 
-         private static String ProcessSingleFile (
+        private static String ProcessSingleFile(
             String name, String subDirectoryName,
             AssemblyDefinition assemblyDefinition,
             Func<BinaryWriter, TinyBinaryWriter> getBinaryWriter)
         {
-            var fileName = String.Format(@"Data\{0}\{1}\{0}.pex", name, subDirectoryName);
+            var peFileName = String.Format(@"Data\{0}\{1}\{0}.pex", name, subDirectoryName);
+            var pdbxFileName = String.Format(@"Data\{0}\{1}\{0}.pdbx", name, subDirectoryName);
 
-            using (var stream = File.Open(fileName, FileMode.Create, FileAccess.ReadWrite))
+            var builder = new TinyAssemblyBuilder(assemblyDefinition, _typesOrder);
+
+            using (var stream = File.Open(peFileName, FileMode.Create, FileAccess.ReadWrite))
             using (var writer = new BinaryWriter(stream))
             {
-                new TinyAssemblyBuilder(assemblyDefinition, _typesOrder)
-                    .Write(getBinaryWriter(writer));
+                builder.Write(getBinaryWriter(writer));
             }
 
-            return fileName;
+            using (var writer = XmlWriter.Create(pdbxFileName,
+                new XmlWriterSettings { Indent = true }))
+            {
+                builder.Write(writer);
+            }
+
+            return peFileName;
         }
 
-        private static void CompareFiles (String name)
+        private static void CompareBinaryFiles(String name)
         {
             var expetedFileName = Path.ChangeExtension(name, ".pe");
 
@@ -229,6 +257,34 @@ namespace MFMetaDataProcessor.Tests
                 "Size is not equal for file " + name);
             Assert.AreEqual(expectedBytes, realBytes,
                 "Data is not equal for file " + name);
+        }
+
+        private static void CompareXmlFiles(
+            String expected,
+            String actual)
+        {
+            var tempExpected = Path.GetTempFileName();
+            _pdbxSorter.Transform(expected, tempExpected);
+
+            var tempActual = Path.GetTempFileName();
+            _pdbxSorter.Transform(actual, tempActual);
+
+            var xmlReaderSettings = new XmlReaderSettings { IgnoreWhitespace = true };
+            using(var expectedReader = XmlReader.Create(tempExpected, xmlReaderSettings))
+            using (var actualReader = XmlReader.Create(tempActual, xmlReaderSettings))
+            {
+                while (expectedReader.Read())
+                {
+                    actualReader.Read();
+
+                    Assert.AreEqual(expectedReader.NodeType, actualReader.NodeType);
+                    Assert.AreEqual(expectedReader.Name, actualReader.Name);
+                    Assert.AreEqual(expectedReader.Value, actualReader.Value);
+                }
+            }
+
+            File.Delete(tempExpected);
+            File.Delete(tempActual);
         }
     }
 }

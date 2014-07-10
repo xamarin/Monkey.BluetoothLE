@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Xml;
 using Mono.Cecil;
 
 namespace MFMetaDataProcessor
@@ -11,15 +13,7 @@ namespace MFMetaDataProcessor
     /// </summary>
     public sealed class TinyAssemblyBuilder
     {
-        /// <summary>
-        /// Original assembly metadata in Mono.Cecil format.
-        /// </summary>
-        private readonly AssemblyDefinition _assemblyDefinition;
-
-        /// <summary>
-        /// List of full type names with explicit ordering (used by UTs).
-        /// </summary>
-        private readonly List<String> _explicitTypesOrder;
+        private TinyTablesContext _tablesContext;
 
         /// <summary>
         /// Creates new instance of <see cref="TinyAssemblyBuilder"/> object.
@@ -30,8 +24,7 @@ namespace MFMetaDataProcessor
             AssemblyDefinition assemblyDefinition,
             List<String> explicitTypesOrder = null)
         {
-            _assemblyDefinition = assemblyDefinition;
-            _explicitTypesOrder = explicitTypesOrder;
+            _tablesContext = new TinyTablesContext(assemblyDefinition, explicitTypesOrder);
         }
 
         /// <summary>
@@ -41,12 +34,10 @@ namespace MFMetaDataProcessor
         public void Write(
             TinyBinaryWriter binaryWriter)
         {
-            var tablesContext = new TinyTablesContext(_assemblyDefinition, _explicitTypesOrder);
-
-            var header = new TinyAssemblyDefinition(tablesContext);
+            var header = new TinyAssemblyDefinition(_tablesContext);
             header.Write(binaryWriter, true);
 
-            foreach (var table in GetTables(tablesContext))
+            foreach (var table in GetTables(_tablesContext))
             {
                 var tableBegin = (binaryWriter.BaseStream.Position + 3) & 0xFFFFFFFC;
                 table.Write(binaryWriter);
@@ -59,6 +50,13 @@ namespace MFMetaDataProcessor
 
             binaryWriter.BaseStream.Seek(0, SeekOrigin.Begin);
             header.Write(binaryWriter, false);
+        }
+
+        public void Write(
+            XmlWriter xmlWriter)
+        {
+            var pdbxWriter = new TinyPdbxFileWriter(_tablesContext);
+            pdbxWriter.Write(xmlWriter);
         }
 
         private static IEnumerable<ITinyTable> GetTables(

@@ -34,6 +34,9 @@ namespace MFMetaDataProcessor
             }
         }
 
+        private IDictionary<UInt32, List<Tuple<UInt32, UInt32>>> _byteCodeOffsets =
+            new Dictionary<UInt32, List<Tuple<UInt32, UInt32>>>();
+
         /// <summary>
         /// Creates new instance of <see cref="TinyTypeDefinitionTable"/> object.
         /// </summary>
@@ -70,6 +73,12 @@ namespace MFMetaDataProcessor
             return TryGetIdByValue(typeDefinition, out referenceId);
         }
 
+        public IEnumerable<Tuple<UInt32, UInt32>> GetByteCodeOffsets(
+            UInt32 clrMethodToken)
+        {
+            return _byteCodeOffsets[clrMethodToken];
+        }
+
         /// <inheritdoc/>
         protected override void WriteSingleItem(
             TinyBinaryWriter writer,
@@ -98,14 +107,20 @@ namespace MFMetaDataProcessor
                 {
                     foreach (var method in item.Methods)
                     {
-                        CodeWriter.PreProcessMethod(method, _context.ByteCodeTable.FakeStringTable);
+                        var offsets = CodeWriter
+                            .PreProcessMethod(method, _context.ByteCodeTable.FakeStringTable)
+                            .ToList();
+                        _byteCodeOffsets.Add(method.MetadataToken.ToUInt32(), offsets);
                     }
                 }
                 foreach (var nestedType in item.NestedTypes)
                 {
                     foreach (var method in nestedType.Methods)
                     {
-                        CodeWriter.PreProcessMethod(method, _context.ByteCodeTable.FakeStringTable);
+                        var offsets = CodeWriter
+                            .PreProcessMethod(method, _context.ByteCodeTable.FakeStringTable)
+                            .ToList();
+                        _byteCodeOffsets.Add(method.MetadataToken.ToUInt32(), offsets);
                     }
                 }
 

@@ -43,6 +43,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,10 +59,16 @@
     <None Include="Data\Clock\be\Clock.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Clock\Clock.pdbx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Clock\le\Clock.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\ExtendedWeakReferences\be\ExtendedWeakReferences.pe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\ExtendedWeakReferences\ExtendedWeakReferences.pdbx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\ExtendedWeakReferences\le\ExtendedWeakReferences.pe">
@@ -70,10 +77,16 @@
     <None Include="Data\FileSystemSample\be\FileSystemSample.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\FileSystemSample\FileSystemSample.pdbx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\FileSystemSample\le\FileSystemSample.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\FtpServer\be\FtpServer.pe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\FtpServer\FtpServer.pdbx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\FtpServer\le\FtpServer.pe">
@@ -82,10 +95,16 @@
     <None Include="Data\HelloWCFServer\be\HelloWCFServer.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\HelloWCFServer\HelloWCFServer.pdbx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\HelloWCFServer\le\HelloWCFServer.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\HelloWorldClient\be\HelloWorldClient.pe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\HelloWorldClient\HelloWorldClient.pdbx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\HelloWorldClient\le\HelloWorldClient.pe">
@@ -94,16 +113,25 @@
     <None Include="Data\HTTPClient\be\HTTPClient.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\HTTPClient\HTTPClient.pdbx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\HTTPClient\le\HTTPClient.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\HTTPServer\be\HTTPServer.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\HTTPServer\HTTPServer.pdbx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\HTTPServer\le\HTTPServer.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\InkCanvasSample\be\InkCanvasSample.pe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\InkCanvasSample\InkCanvasSample.pdbx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\InkCanvasSample\le\InkCanvasSample.pe">
@@ -115,10 +143,16 @@
     <None Include="Data\Puzzle\le\Puzzle.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Puzzle\Puzzle.pdbx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\USBMouse\be\USBMouse.pe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\USBMouse\le\USBMouse.pe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\USBMouse\USBMouse.pdbx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
@@ -188,6 +222,11 @@
     <None Include="Libs\Microsoft.SPOT.Update.dll" />
     <None Include="Libs\System.Ftp.dll" />
     <None Include="Libs\System.Http.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PdbxSorter.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Xml;
 using Mono.Cecil;
 
 namespace MFMetaDataProcessor.Console
@@ -36,10 +37,17 @@ namespace MFMetaDataProcessor.Console
             {
                 try
                 {
+                    var builder = new TinyAssemblyBuilder(_assemblyDefinition);
+
                     using (var stream = File.Open(fileName, FileMode.Create, FileAccess.ReadWrite))
                     using (var writer = new BinaryWriter(stream))
                     {
-                        new TinyAssemblyBuilder(_assemblyDefinition).Write(GetBinaryWriter(writer));
+                        builder.Write(GetBinaryWriter(writer));
+                    }
+
+                    using (var writer = XmlWriter.Create(Path.ChangeExtension(fileName, "pdbx")))
+                    {
+                        builder.Write(writer);
                     }
                 }
                 catch (Exception)

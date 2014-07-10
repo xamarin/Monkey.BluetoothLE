@@ -54,6 +54,15 @@ namespace MFMetaDataProcessor
             }
         }
 
+        public void ForEachItems(Action<UInt32, T> action)
+        {
+            foreach (var item in _idsByItemsDictionary
+                .OrderBy(item => item.Value))
+            {
+                action(item.Value, item.Key);
+            }
+        }
+
         /// <summary>
         /// Helper method for allocating strings from table before table will be written.
         /// </summary>

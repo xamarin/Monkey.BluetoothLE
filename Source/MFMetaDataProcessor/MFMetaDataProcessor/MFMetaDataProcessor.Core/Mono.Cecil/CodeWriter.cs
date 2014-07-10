@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -73,19 +75,29 @@ namespace MFMetaDataProcessor {
         /// </summary>
         /// <param name="methodDefinition">Target method for fixing offsets</param>
         /// <param name="stringTable">String table for populating strings from method.</param>
-        public static void PreProcessMethod(
+        public static IEnumerable<Tuple<UInt32, UInt32>> PreProcessMethod(
             MethodDefinition methodDefinition,
             TinyStringTable stringTable)
         {
             if (!methodDefinition.HasBody)
             {
-                return;
+                yield break;
             }
 
             var offset = 0;
+            var offsetChanged = true;
             foreach (var instruction in methodDefinition.Body.Instructions)
             {
-                instruction.Offset += offset;
+                if (offset != 0)
+                {
+                    if (offsetChanged)
+                    {
+                        yield return new Tuple<UInt32, UInt32>(
+                            (UInt32)instruction.Offset, (UInt32)(instruction.Offset + offset));
+                        offsetChanged = false;
+                    }
+                    instruction.Offset += offset;
+                }
 
                 switch (instruction.OpCode.OperandType)
                 {
@@ -93,10 +105,12 @@ namespace MFMetaDataProcessor {
 		                var targets = (Instruction[]) instruction.Operand;
                         offset -= 3; // One bye used instead of Int32
 		                offset -= 2 * targets.Length; // each target use Int16 instead of Int32
+                        offsetChanged = true;
                         break;
                     case OperandType.InlineString:
                         stringTable.GetOrCreateStringId((String) instruction.Operand, false);
                         offset -= 2;
+                        offsetChanged = true;
                         break;
                     case OperandType.InlineMethod:
                     case OperandType.InlineField:
@@ -105,6 +119,7 @@ namespace MFMetaDataProcessor {
                         // In full .NET these instructions followed by double word operand
                         // but in .NET Micro Framework these instruction's operand are word
                         offset -= 2;
+                        offsetChanged = true;
                         break;
                 }
             }
