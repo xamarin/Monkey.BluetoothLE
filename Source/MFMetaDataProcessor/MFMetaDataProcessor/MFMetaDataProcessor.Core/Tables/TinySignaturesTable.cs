@@ -201,10 +201,12 @@ namespace MFMetaDataProcessor
         /// <param name="typeDefinition">Tzpe reference or definition in Mono.Cecil format.</param>
         /// <param name="writer">Target binary writer for writing signature information.</param>
         /// <param name="alsoWriteSubType">If set to <c>true</c> also sub-type will be written.</param>
+        /// <param name="expandEnumType">If set to <c>true</c> expand enum with base type.</param>
         public void WriteDataType(
             TypeReference typeDefinition,
             TinyBinaryWriter writer,
-            Boolean alsoWriteSubType = false)
+            Boolean alsoWriteSubType,
+            Boolean expandEnumType)
         {
             TinyDataType dataType;
             if (_primitiveTypes.TryGetValue(typeDefinition.FullName, out dataType))
@@ -231,7 +233,7 @@ namespace MFMetaDataProcessor
             if (typeDefinition.MetadataType == MetadataType.ValueType)
             {
                 var resolvedType = typeDefinition.Resolve();
-                if (resolvedType != null && resolvedType.IsEnum && !alsoWriteSubType)
+                if (resolvedType != null && resolvedType.IsEnum && expandEnumType)
                 {
                     var baseTypeValue = resolvedType.Fields.FirstOrDefault(item => item.IsSpecialName);
                     if (baseTypeValue != null)
@@ -256,7 +258,7 @@ namespace MFMetaDataProcessor
                 if (alsoWriteSubType)
                 {
                     var array = (ArrayType)typeDefinition;
-                    WriteDataType(array.ElementType, writer, true);
+                    WriteDataType(array.ElementType, writer, true, expandEnumType);
                 }
                 return;
             }
@@ -517,11 +519,11 @@ namespace MFMetaDataProcessor
             if (byReference != null)
             {
                 writer.WriteByte((Byte)TinyDataType.DATATYPE_BYREF);
-                WriteDataType(byReference.ElementType, writer, true);
+                WriteDataType(byReference.ElementType, writer, true, false);
             }
             else
             {
-                WriteDataType(typeReference, writer, true);
+                WriteDataType(typeReference, writer, true, false);
             }
         }
 

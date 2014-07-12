@@ -126,7 +126,7 @@ namespace MFMetaDataProcessor
 
                 WriteMethodBodies(item.Methods, item.Interfaces, writer);
 
-                _context.SignaturesTable.WriteDataType(item, writer);
+                _context.SignaturesTable.WriteDataType(item, writer, false, true);
 
                 writer.WriteBytes(stream.ToArray());
             }

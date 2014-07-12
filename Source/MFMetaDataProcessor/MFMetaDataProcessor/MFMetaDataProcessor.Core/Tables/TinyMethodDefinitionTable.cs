@@ -73,7 +73,7 @@ namespace MFMetaDataProcessor
                 ++parametersCount; // add implicit 'this' pointer into non-static methods
             }
 
-            _context.SignaturesTable.WriteDataType(item.ReturnType, writer);
+            _context.SignaturesTable.WriteDataType(item.ReturnType, writer, false, false);
             if (item.ReturnType is TypeSpecification)
             {
                 _context.TypeSpecificationsTable

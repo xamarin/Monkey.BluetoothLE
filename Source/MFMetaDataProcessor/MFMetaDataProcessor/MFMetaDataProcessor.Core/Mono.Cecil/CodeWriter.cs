@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -138,10 +139,19 @@ namespace MFMetaDataProcessor {
                 return 0;
             }
 
+            Console.WriteLine("{0}", methodBody.Method.FullName);
+            IDictionary<Int32, Int32> offsets = new Dictionary<Int32, Int32>();
+
             var size = 0;
             var maxSize = 0;
 	        foreach (var instruction in methodBody.Instructions)
 	        {
+	            Int32 correctedStackSize;
+	            if (offsets.TryGetValue(instruction.Offset, out correctedStackSize))
+	            {
+	                size = correctedStackSize;
+	            }
+
 	            switch (instruction.OpCode.Code)
 	            {
                     case Code.Throw:
@@ -152,19 +162,14 @@ namespace MFMetaDataProcessor {
                     case Code.Leave:
                         size = 0;
                         continue;
-                    case Code.Br:
-                    case Code.Brtrue:
-                    case Code.Brtrue_S:
-                    case Code.Brfalse:
-                    case Code.Brfalse_S:
-                    case Code.Break:
-                        break;
+
                     case Code.Newobj:
 	                    {
                             var method = (MethodReference)instruction.Operand;
                             size -= method.Parameters.Count;
                         }
                         break;
+
                     case Code.Callvirt:
                     case Code.Call:
 	                    {
@@ -184,6 +189,15 @@ namespace MFMetaDataProcessor {
 
 	            size = CorrectStackDepthByPushes(instruction, size);
                 size = CorrectStackDepthByPops(instruction, size);
+
+                if (instruction.OpCode.OperandType == OperandType.ShortInlineBrTarget ||
+                    instruction.OpCode.OperandType == OperandType.InlineBrTarget)
+                {
+                    Int32 stackSize;
+                    var target = (Instruction)instruction.Operand;
+                    offsets.TryGetValue(target.Offset, out stackSize);
+                    offsets[target.Offset] = Math.Max(stackSize, size);
+                }
 
 	            maxSize = Math.Max(maxSize, size);
 	        }
@@ -252,7 +266,8 @@ namespace MFMetaDataProcessor {
                 return;
             }
 
-            foreach (var handler in _body.ExceptionHandlers)
+            foreach (var handler in _body.ExceptionHandlers
+                .OrderBy(item => item.TryStart.Offset))
             {
                 switch (handler.HandlerType)
                 {
