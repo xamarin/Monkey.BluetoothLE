@@ -148,11 +148,11 @@ namespace MFMetaDataProcessor {
                     case Code.Endfinally:
                     case Code.Endfilter:
                     case Code.Leave_S:
+                    case Code.Br_S:
                     case Code.Leave:
                         size = 0;
                         continue;
                     case Code.Br:
-                    case Code.Br_S:
                     case Code.Brtrue:
                     case Code.Brtrue_S:
                     case Code.Brfalse:
@@ -225,6 +225,7 @@ namespace MFMetaDataProcessor {
                     break;
                 case StackBehaviour.Pop1_pop1:
                 case StackBehaviour.Popi_pop1:
+                case StackBehaviour.Popi_popi:
                 case StackBehaviour.Popi_popi8:
                 case StackBehaviour.Popi_popr4:
                 case StackBehaviour.Popi_popr8:
@@ -232,6 +233,7 @@ namespace MFMetaDataProcessor {
                 case StackBehaviour.Popref_popi:
                     size -= 2;
                     break;
+                case StackBehaviour.Popi_popi_popi:
                 case StackBehaviour.Popref_popi_popi:
                 case StackBehaviour.Popref_popi_popi8:
                 case StackBehaviour.Popref_popi_popr4:
