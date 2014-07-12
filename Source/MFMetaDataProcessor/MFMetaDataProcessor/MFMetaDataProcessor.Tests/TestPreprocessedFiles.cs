@@ -14,7 +14,7 @@ namespace MFMetaDataProcessor.Tests
     {
         private static readonly List<String> _typesOrder = new List<String>();
 
-        private static readonly XslTransform _pdbxSorter = new XslTransform();
+        private static readonly XslCompiledTransform _pdbxSorter = new XslCompiledTransform();
 
         public TestPreprocessedFiles()
         {

@@ -34,6 +34,7 @@
       <HintPath>..\packages\Mono.Cecil.0.9.5.0\lib\net40\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -41,6 +42,7 @@
     <Compile Include="Endianness\TinyBinaryWriter.cs" />
     <Compile Include="Mono.Cecil\CodeWriter.cs" />
     <Compile Include="Tables\TinyAttributesTable.cs" />
+    <Compile Include="Utility\TinyBitmapProcessor.cs" />
     <Compile Include="Tables\TinyFieldReferenceTable.cs" />
     <Compile Include="Tables\TinyReferenceTableBase.cs" />
     <Compile Include="Tables\TinyResourceDataTable.cs" />

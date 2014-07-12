@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Resources;
@@ -69,6 +71,17 @@ namespace MFMetaDataProcessor
                         reader.GetResourceData(resourceName, out resourceType, out resourceData);
 
                         var kind = GetResourceKind(resourceType, resourceData);
+
+                        if (kind == ResourceKind.Bitmap)
+                        {
+                            using (var stream = new MemoryStream(resourceData.Length))
+                            {
+                                var bitmapProcessor = new TinyBitmapProcessor((Bitmap)resource.Value);
+                                bitmapProcessor.Process(writer.GetMemoryBasedClone(stream));
+                                resourceData = stream.ToArray();
+                            }
+                        }
+
                         orderedResources.Add(GenerateIdFromResourceName(resourceName),
                             new Tuple<ResourceKind, Byte[]>(kind, resourceData));
 
@@ -100,7 +113,6 @@ namespace MFMetaDataProcessor
                         break;
                     case ResourceKind.Bitmap:
                         padding = _context.ResourceDataTable.AlignToWord();
-                        bytes = bytes.Skip(0x96).ToArray();
                         break;
                     case ResourceKind.Binary:
                         bytes = bytes.Skip(4).ToArray();
