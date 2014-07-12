@@ -115,7 +115,7 @@ namespace MFMetaDataProcessor
             foreach (var field in fields.Where(item => !item.HasConstant))
             {
                 UInt16 fieldToken;
-                _context.FieldsTable.TryGetFieldReferenceId(field, out fieldToken);
+                _context.FieldsTable.TryGetFieldReferenceId(field, false, out fieldToken);
                 yield return new Tuple<UInt32, UInt32>(
                     field.MetadataToken.ToUInt32(), 0x05000000 | (UInt32)fieldToken);
             }

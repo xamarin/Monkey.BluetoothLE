@@ -12,9 +12,49 @@ namespace MFMetaDataProcessor.Tests
     [TestFixture]
     public sealed class TestPreprocessedFiles
     {
+        private sealed class MoveStringsBefore : ICustomStringSorter
+        {
+            private readonly String _keyword;
+
+            public MoveStringsBefore(
+                String keyword)
+            {
+                _keyword = keyword;
+            }
+
+            public IEnumerable<String> Sort(
+                ICollection<String> strings)
+            {
+                return strings
+                    .Where(item => !item.Contains(_keyword))
+                    .Concat(strings.Where(item => item.Contains(_keyword)));
+            }
+        }
+
+        private sealed class MoveStringsAfter : ICustomStringSorter
+        {
+            private readonly String _keyword;
+
+            public MoveStringsAfter(
+                String keyword)
+            {
+                _keyword = keyword;
+            }
+
+            public IEnumerable<String> Sort(
+                ICollection<String> strings)
+            {
+                return strings
+                    .Where(item => item.Contains(_keyword))
+                    .Concat(strings.Where(item => !item.Contains(_keyword)));
+            }
+        }
+
         private static readonly List<String> _typesOrder = new List<String>();
 
         private static readonly XslCompiledTransform _pdbxSorter = new XslCompiledTransform();
+
+        private static ICustomStringSorter _stringSorter;
 
         public TestPreprocessedFiles()
         {
@@ -25,10 +65,10 @@ namespace MFMetaDataProcessor.Tests
         public void TestTearDown()
         {
             _typesOrder.Clear();
+            _stringSorter = null;
         }
 
         [Test]
-        [Ignore("Stack size")]
         public void ClockSampleTest()
         {
             TestSingleAssembly("Clock",
@@ -44,7 +84,6 @@ namespace MFMetaDataProcessor.Tests
         }
 
         [Test]
-        [Ignore("Stack size")]
         public void FileSystemSampleTest()
         {
             _typesOrder.AddRange(new[]
@@ -66,15 +105,14 @@ namespace MFMetaDataProcessor.Tests
         }
 
         [Test]
-        [Ignore("Stack size and string order")]
         public void FtpServerSampleTest()
         {
+            _stringSorter = new MoveStringsAfter("anon");
             TestSingleAssembly("FtpServer",
                 "System.Ftp", "Microsoft.SPOT.IO");
         }
 
         [Test]
-        [Ignore("Unused field indexes")]
         public void HelloWorldClientSampleTest()
         {
             _typesOrder.AddRange(new[]
@@ -115,6 +153,7 @@ namespace MFMetaDataProcessor.Tests
         [Test]
         public void HttpClientSampleTest()
         {
+            _stringSorter = new MoveStringsBefore(".Resource");
             TestSingleAssembly("HTTPClient",
                 "System.Http", "Microsoft.SPOT.Native");
         }
@@ -122,6 +161,7 @@ namespace MFMetaDataProcessor.Tests
         [Test]
         public void HttpServerSampleTest()
         {
+            _stringSorter = new MoveStringsBefore(".Resource");
             _typesOrder.AddRange(new[]
             {
                 "HttpServerSample.Resource1",
@@ -136,7 +176,6 @@ namespace MFMetaDataProcessor.Tests
         }
 
         [Test]
-        [Ignore("Stack size")]
         public void InkCanvasSampleTest()
         {
             _typesOrder.AddRange(new[]
@@ -177,6 +216,7 @@ namespace MFMetaDataProcessor.Tests
         [Test]
         public void PuzzleSampleTest()
         {
+            _stringSorter = new MoveStringsBefore(".Resource");
             _typesOrder.AddRange(new[]
             {
                 "<PrivateImplementationDetails>{143ADFEE-4589-467E-B091-DE1D534B7572}",
@@ -229,7 +269,8 @@ namespace MFMetaDataProcessor.Tests
             var peFileName = String.Format(@"Data\{0}\{1}\{0}.pex", name, subDirectoryName);
             var pdbxFileName = String.Format(@"Data\{0}\{1}\{0}.pdbx", name, subDirectoryName);
 
-            var builder = new TinyAssemblyBuilder(assemblyDefinition, _typesOrder);
+            var builder = new TinyAssemblyBuilder(
+                assemblyDefinition, _typesOrder, _stringSorter);
 
             using (var stream = File.Open(peFileName, FileMode.Create, FileAccess.ReadWrite))
             using (var writer = new BinaryWriter(stream))

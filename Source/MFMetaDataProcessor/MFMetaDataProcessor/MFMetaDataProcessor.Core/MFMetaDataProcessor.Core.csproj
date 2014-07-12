@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Endianness\TinyBinaryWriter.cs" />
     <Compile Include="Mono.Cecil\CodeWriter.cs" />
+    <Compile Include="Tables\ICustomStringSorter.cs" />
     <Compile Include="Tables\TinyAttributesTable.cs" />
     <Compile Include="Utility\TinyBitmapProcessor.cs" />
     <Compile Include="Tables\TinyFieldReferenceTable.cs" />

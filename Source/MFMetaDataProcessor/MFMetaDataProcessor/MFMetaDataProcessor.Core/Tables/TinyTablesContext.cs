@@ -9,7 +9,8 @@ namespace MFMetaDataProcessor
     {
         public TinyTablesContext(
             AssemblyDefinition assemblyDefinition,
-            List<String> explicitTypesOrder)
+            List<String> explicitTypesOrder,
+            ICustomStringSorter stringSorter)
         {
             AssemblyDefinition = assemblyDefinition;
 
@@ -90,7 +91,7 @@ namespace MFMetaDataProcessor
             // Strings and signatures
 
             SignaturesTable = new TinySignaturesTable(this);
-            StringTable = new TinyStringTable();
+            StringTable = new TinyStringTable(stringSorter);
 
             // Byte code table
             ByteCodeTable = new TinyByteCodeTable(this);

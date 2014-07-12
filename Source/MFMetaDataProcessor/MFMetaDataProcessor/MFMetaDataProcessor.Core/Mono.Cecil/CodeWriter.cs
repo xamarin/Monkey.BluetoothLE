@@ -139,7 +139,6 @@ namespace MFMetaDataProcessor {
                 return 0;
             }
 
-            Console.WriteLine("{0}", methodBody.Method.FullName);
             IDictionary<Int32, Int32> offsets = new Dictionary<Int32, Int32>();
 
             var size = 0;
@@ -267,7 +266,7 @@ namespace MFMetaDataProcessor {
             }
 
             foreach (var handler in _body.ExceptionHandlers
-                .OrderBy(item => item.TryStart.Offset))
+                .OrderBy(item => item.HandlerStart.Offset))
             {
                 switch (handler.HandlerType)
                 {
@@ -431,7 +430,7 @@ namespace MFMetaDataProcessor {
                     _context.TypeSpecificationsTable.TryGetTypeReferenceId((TypeReference) token, out referenceId);
                     return (UInt32)0x08000000 | referenceId;
                 case TokenType.Field:
-                    _context.FieldsTable.TryGetFieldReferenceId((FieldDefinition) token, out referenceId);
+                    _context.FieldsTable.TryGetFieldReferenceId((FieldDefinition) token, false, out referenceId);
                     return (UInt32)0x05000000 | referenceId;
             }
             return 0U;
@@ -447,7 +446,7 @@ namespace MFMetaDataProcessor {
             }
             else
             {
-                _context.FieldsTable.TryGetFieldReferenceId(fieldReference.Resolve(), out referenceId);
+                _context.FieldsTable.TryGetFieldReferenceId(fieldReference.Resolve(), false, out referenceId);
             }
             return referenceId;
         }

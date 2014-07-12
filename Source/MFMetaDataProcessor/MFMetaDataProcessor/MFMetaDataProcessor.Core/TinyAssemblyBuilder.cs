@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Xml;
 using Mono.Cecil;
@@ -20,11 +19,14 @@ namespace MFMetaDataProcessor
         /// </summary>
         /// <param name="assemblyDefinition">Original assembly metadata in Mono.Cecil format.</param>
         /// <param name="explicitTypesOrder">List of full type names with explicit ordering.</param>
+        /// <param name="stringSorter">Custom string literals sorter for UTs using only.</param>
         public TinyAssemblyBuilder(
             AssemblyDefinition assemblyDefinition,
-            List<String> explicitTypesOrder = null)
+            List<String> explicitTypesOrder = null,
+            ICustomStringSorter stringSorter = null)
         {
-            _tablesContext = new TinyTablesContext(assemblyDefinition, explicitTypesOrder);
+            _tablesContext = new TinyTablesContext(
+                assemblyDefinition, explicitTypesOrder, stringSorter);
         }
 
         /// <summary>

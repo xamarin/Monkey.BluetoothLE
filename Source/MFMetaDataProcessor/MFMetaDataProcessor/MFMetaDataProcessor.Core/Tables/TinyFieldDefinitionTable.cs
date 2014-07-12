@@ -70,14 +70,16 @@ namespace MFMetaDataProcessor
         /// Gets field reference identifier (if field is defined inside target assembly).
         /// </summary>
         /// <param name="field">Field definition in Mono.Cecil format.</param>
+        /// <param name="trackMaxReferenceId">If set to <c>true</c> we should track max ID value.</param>
         /// <param name="referenceId">Field reference identifier for filling.</param>
         /// <returns>Returns <c>true</c> if item found, overwise returns <c>false</c>.</returns>
         public Boolean TryGetFieldReferenceId(
             FieldDefinition field,
+            Boolean trackMaxReferenceId,
             out UInt16 referenceId)
         {
             var found = TryGetIdByValue(field, out referenceId);
-            if (found)
+            if (trackMaxReferenceId && found)
             {
                 _maxReferenceId = Math.Max(_maxReferenceId, referenceId + 1);
             }

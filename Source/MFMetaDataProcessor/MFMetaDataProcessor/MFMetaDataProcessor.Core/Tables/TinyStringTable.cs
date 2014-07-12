@@ -11,10 +11,29 @@ namespace MFMetaDataProcessor
     public sealed class TinyStringTable : ITinyTable
     {
         /// <summary>
+        /// Default implementation of <see cref="ICustomStringSorter"/> interface.
+        /// Do nothing and just returns original sequence of string literals.
+        /// </summary>
+        private sealed class EmptyStringSorter : ICustomStringSorter
+        {
+            /// <inheritdoc/>
+            public IEnumerable<String> Sort(
+                ICollection<String> strings)
+            {
+                return strings;
+            }
+        }
+
+        /// <summary>
         /// Maps for each unique string and related identifier (offset in strings table).
         /// </summary>
         private readonly Dictionary<String, UInt16> _idsByStrings =
             new Dictionary<String, UInt16>(StringComparer.Ordinal);
+
+        /// <summary>
+        /// Concrete implementation of string literals sorting algorithm (used by UTs).
+        /// </summary>
+        private readonly ICustomStringSorter _stringSorter;
 
         /// <summary>
         /// Last available string identifier.
@@ -24,9 +43,11 @@ namespace MFMetaDataProcessor
         /// <summary>
         /// Creates new instance of <see cref="TinyStringTable"/> object.
         /// </summary>
-        public TinyStringTable()
+        public TinyStringTable(
+            ICustomStringSorter stringSorter = null)
         {
             GetOrCreateStringId(String.Empty); // First item in string table always empty string
+            _stringSorter = stringSorter ?? new EmptyStringSorter();
         }
 
         /// <summary>
@@ -78,11 +99,7 @@ namespace MFMetaDataProcessor
         internal void MergeValues(
             TinyStringTable fakeStringTable)
         {
-            foreach (var item in fakeStringTable._idsByStrings.Keys.Where(item => !item.EndsWith("Resource1")))
-            {
-                GetOrCreateStringId(item, false);
-            }
-            foreach (var item in fakeStringTable._idsByStrings.Keys.Where(item => item.EndsWith("Resource1")))
+            foreach (var item in _stringSorter.Sort(fakeStringTable._idsByStrings.Keys))
             {
                 GetOrCreateStringId(item, false);
             }

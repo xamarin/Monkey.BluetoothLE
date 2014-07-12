@@ -143,7 +143,7 @@ namespace MFMetaDataProcessor
             foreach (var field in fieldsList.Where(item => item.IsStatic))
             {
                 UInt16 fieldReferenceId;
-                _context.FieldsTable.TryGetFieldReferenceId(field, out fieldReferenceId);
+                _context.FieldsTable.TryGetFieldReferenceId(field, true, out fieldReferenceId);
                 firstStaticFieldId = Math.Min(firstStaticFieldId, fieldReferenceId);
 
                 _context.SignaturesTable.GetOrCreateSignatureId(field);
@@ -157,7 +157,7 @@ namespace MFMetaDataProcessor
             foreach (var field in fieldsList.Where(item => !item.IsStatic))
             {
                 UInt16 fieldReferenceId;
-                _context.FieldsTable.TryGetFieldReferenceId(field, out fieldReferenceId);
+                _context.FieldsTable.TryGetFieldReferenceId(field, true, out fieldReferenceId);
                 firstInstanseFieldId = Math.Min(firstInstanseFieldId, fieldReferenceId);
 
                 _context.SignaturesTable.GetOrCreateSignatureId(field);
