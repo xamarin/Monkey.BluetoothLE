@@ -63,6 +63,10 @@
       <HintPath>..\ext\MonoDevelop.Ide.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+      <Package>/Applications/Xamarin Studio.app/Contents/MacOS/lib/monodevelop/bin/Mono.Cecil.Mdb.dll</Package>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MicroFrameworkDebugger.cs" />

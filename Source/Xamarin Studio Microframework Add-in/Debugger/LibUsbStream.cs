@@ -42,26 +42,30 @@ namespace Microsoft.SPOT.Debugger
 
 		public static PortDefinition[] EnumeratePorts ()
 		{
-			var result = new List<PortDefinition> ();
-			foreach (UsbRegistry usbRegDevice in UsbDevice.AllDevices) {
-				if (usbRegDevice.Device.Info.Descriptor.Class.Equals (LibUsbDotNet.Descriptors.ClassCodeType.PerInterface)) {
-					if (string.IsNullOrWhiteSpace (usbRegDevice.FullName))
-						continue;
-					var fullname = usbRegDevice.FullName.ToLower ();
-					//MacBook keyboard became unresponsive after I accidentally started debugging on it...
-					//Lets try to hide most of devices
-					if (fullname.Contains ("apple") ||
-					    fullname.Contains ("key") ||
-					    fullname.Contains ("mouse") ||
-					    fullname.Contains ("touch") ||
-					    fullname.Contains ("track") ||
-					    fullname.Contains ("pad"))
-						continue;
-					result.Add (new PortDefinition_LibUsb (usbRegDevice.Name, usbRegDevice.Vid + "-" + usbRegDevice.Pid));
-					//TODO: Verify this is MicroFramework device by opening port and ask for device name...
+			var result = new List<PortDefinition>();
+			try {
+				foreach(UsbRegistry usbRegDevice in UsbDevice.AllDevices) {
+					if(usbRegDevice.Device.Info.Descriptor.Class.Equals(LibUsbDotNet.Descriptors.ClassCodeType.PerInterface)) {
+						if(string.IsNullOrWhiteSpace(usbRegDevice.FullName))
+							continue;
+						var fullname = usbRegDevice.FullName.ToLower();
+						//MacBook keyboard became unresponsive after I accidentally started debugging on it...
+						//Lets try to hide most of devices
+						if(fullname.Contains("apple") ||
+						   fullname.Contains("key") ||
+						   fullname.Contains("mouse") ||
+						   fullname.Contains("touch") ||
+						   fullname.Contains("track") ||
+						   fullname.Contains("pad"))
+							continue;
+						result.Add(new PortDefinition_LibUsb(usbRegDevice.Name, usbRegDevice.Vid + "-" + usbRegDevice.Pid));
+						//TODO: Verify this is MicroFramework device by opening port and ask for device name...
+					}
 				}
 			}
-			return result.ToArray ();
+			catch {
+			}
+			return result.ToArray();
 		}
 
 		public LibUsb_AsyncUsbStream (string port)
