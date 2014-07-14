@@ -142,4 +142,8 @@
       <Name>Debugger</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="libusb-1.0.a" />
+    <None Include="libusb-1.0.dylib" />
+  </ItemGroup>
 </Project>

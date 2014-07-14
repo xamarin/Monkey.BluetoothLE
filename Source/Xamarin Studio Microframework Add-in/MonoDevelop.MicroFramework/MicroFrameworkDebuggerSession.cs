@@ -51,6 +51,8 @@ namespace MonoDevelop.MicroFramework
 
 		public void UnregisterProcess (CorDebugProcess process)
 		{
+			if(process == null)
+				return;
 			lock(processes) {
 				if(processes.Contains(process))
 					processes.Remove(process);

@@ -14,6 +14,8 @@
 	<Runtime>
 		<Import assembly="Debugger.dll" />
 		<Import assembly="WinUsb.dll" />
+		<Import file="libusb-1.0.a" />
+		<Import file="libusb-1.0.dylib" />
 	</Runtime>
 	<Extension path="/MonoDevelop/Debugging/DebuggerEngines">
 		<DebuggerEngine id="MonoDevelop.MicroFramework.Debugger" name="Debugger for .NET Micro Framework" features="Breakpoints, Pause, Stepping, DebugFile, ConditionalBreakpoints, Tracepoints, Catchpoints, Disassembly" type="MonoDevelop.MicroFramework.MicroFrameworkDebugger" />
