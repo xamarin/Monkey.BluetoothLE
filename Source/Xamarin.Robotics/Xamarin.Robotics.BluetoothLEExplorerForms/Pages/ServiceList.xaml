@@ -11,7 +11,7 @@
 	    </ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
-    	<ToolbarItem x:Name="DisconnectButton" Name="Disconnect" Icon="31_circle_x.png"/>    
+    	<ToolbarItem x:Name="DisconnectButton" Name="Disconnect" Icon="glyphish_31_circle_x.png"/>    
 	</ContentPage.ToolbarItems>
 
 	<ListView x:Name="listView" ItemSelected="OnItemSelected">

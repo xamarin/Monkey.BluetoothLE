@@ -50,13 +50,25 @@ namespace Xamarin.Robotics.BluetoothLEExplorerForms
 				adapter.ConnectToDevice (device); 
 			}
 		}
+		/// <summary>
+		/// Display a Characteristics Page
+		/// </summary>
 		public void OnItemSelected (object sender, SelectedItemChangedEventArgs e) {
 			if (((ListView)sender).SelectedItem == null) {
 				return;
 			}
 
 			var characteristic = e.SelectedItem as ICharacteristic;
-			var characteristicsPage = new CharacteristicDetail(adapter, device, service, characteristic);
+			ContentPage characteristicsPage = null;
+
+			if (characteristic.Name.Contains ("On/Off")) {
+				characteristicsPage = new CharacteristicDetail_TISwitch (adapter, device, service, characteristic);
+			} else if (true) {
+				characteristicsPage = new CharacteristicDetail_TISensor (adapter, device, service, characteristic);
+			} else {
+				characteristicsPage = new CharacteristicDetail (adapter, device, service, characteristic);
+			}
+
 			Navigation.PushAsync(characteristicsPage);
 
 			((ListView)sender).SelectedItem = null; // clear selection
