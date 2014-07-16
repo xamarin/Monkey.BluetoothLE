@@ -176,6 +176,37 @@ namespace MFMetaDataProcessor.Tests
         }
 
         [Test]
+        [Ignore("Type def flag (serialization) and strings sorting")]
+        public void Ieee802x15x4NetworkSampleTest()
+        {
+            _typesOrder.AddRange(new[]
+            {
+                "IEEE_802_15_4_Sample.NetworkTest",
+                "IEEE_802_15_4_Sample.NetworkTest/<>c__DisplayClass4",
+                "IEEE_802_15_4_Sample.IMonitor",
+                "IEEE_802_15_4_Sample.Message",
+                "IEEE_802_15_4_Sample.MsgNeighbors",
+                "IEEE_802_15_4_Sample.MsgReport",
+                "IEEE_802_15_4_Sample.NeighborStatus",
+                "IEEE_802_15_4_Sample.NodeStatus",
+                "IEEE_802_15_4_Sample.Program",
+                "IEEE_802_15_4_Sample.TrafficStatus",
+                "IEEE_802_15_4_Sample.Program/Monitor",
+                "IEEE_802_15_4_Sample.MsgReport/Node"
+            });
+            TestSingleAssembly("IEEE_802_15_4_PHY_Sample",
+                "Microsoft.SPOT.Wireless.IEEE_802_15_4.Phy", "Microsoft.SPOT.Wireless.IEEE_802_15_4");
+        }
+
+        [Test]
+        public void Ieee802x15x4PhySampleTest()
+        {
+            TestSingleAssembly("IEEE_802_15_4_PHY_Sample",
+                "Microsoft.SPOT.Hardware", "Microsoft.SPOT.Wireless.IEEE_802_15_4.Phy",
+                "Microsoft.SPOT.Wireless.IEEE_802_15_4.Phy.CC2420");
+        }
+
+        [Test]
         public void InkCanvasSampleTest()
         {
             _typesOrder.AddRange(new[]
@@ -198,22 +229,6 @@ namespace MFMetaDataProcessor.Tests
         }
 
         [Test]
-        public void UsbMouseSampleTest()
-        {
-            _typesOrder.AddRange(new[]
-            {
-                "<PrivateImplementationDetails>{5B04E18E-C178-4A8D-9F9A-B891A012052A}",
-                "USBMouseSample.MyUSBMouse",
-                "USBMouseSample.MyUSBMouse/ButtonList",
-                "<PrivateImplementationDetails>{5B04E18E-C178-4A8D-9F9A-B891A012052A}/__StaticArrayInitTypeSize=50",
-                "<PrivateImplementationDetails>{5B04E18E-C178-4A8D-9F9A-B891A012052A}/__StaticArrayInitTypeSize=7"
-            });
-            TestSingleAssembly("USBMouse",
-                "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Hardware.Usb",
-                "Microsoft.SPOT.Hardware");
-        }
-
-        [Test]
         public void PuzzleSampleTest()
         {
             _stringSorter = new MoveStringsBefore(".Resource");
@@ -233,6 +248,237 @@ namespace MFMetaDataProcessor.Tests
             TestSingleAssembly("Puzzle",
                 "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Graphics",
                 "Microsoft.SPOT.Hardware", "Microsoft.SPOT.Ink", "Microsoft.SPOT.Touch");
+        }
+
+        [Test]
+        [Ignore("Too many attributes")]
+        public void SimpleServiceTest()
+        {
+            _typesOrder.AddRange(new[]
+            {
+                "<PrivateImplementationDetails>{3C01404A-A8E8-4D6C-94FD-61FAED567C73}",
+                "Dpws.Device.Program",
+                "Interop.SimpleService.SimpleDeviceHost",
+                "<PrivateImplementationDetails>{3C01404A-A8E8-4D6C-94FD-61FAED567C73}/__StaticArrayInitTypeSize=4846",
+                "schemas.example.org.AttachmentService.AttachmentService",
+                "schemas.example.org.AttachmentService.IAttachmentService",
+                "schemas.example.org.AttachmentService.AttachmentServiceImplementation",
+                "schemas.example.org.AttachmentService.HelpIcon",
+                "schemas.example.org.AttachmentService.OneWayAttachmentRequest",
+                "schemas.example.org.AttachmentService.OneWayAttachmentRequestDataContractSerializer",
+                "schemas.example.org.AttachmentService.TwoWayAttachmentRequest",
+                "schemas.example.org.AttachmentService.TwoWayAttachmentRequestDataContractSerializer",
+                "schemas.example.org.AttachmentService.TwoWayAttachmentResponse",
+                "schemas.example.org.AttachmentService.TwoWayAttachmentResponseDataContractSerializer",
+                "schemas.example.org.EventingService.EventSimulator",
+                "schemas.example.org.EventingService.EventingService",
+                "schemas.example.org.EventingService.IEventingService",
+                "schemas.example.org.EventingService.IEventingServiceCallback",
+                "schemas.example.org.EventingService.IntegerEventRequest",
+                "schemas.example.org.EventingService.IntegerEventRequestDataContractSerializer",
+                "schemas.example.org.EventingService.SimpleEventRequest",
+                "schemas.example.org.EventingService.SimpleEventRequestDataContractSerializer",
+                "schemas.example.org.SimpleService.AnyCheckRequest",
+                "schemas.example.org.SimpleService.AnyCheckRequestDataContractSerializer",
+                "schemas.example.org.SimpleService.AnyCheckResponse",
+                "schemas.example.org.SimpleService.AnyCheckResponseDataContractSerializer",
+                "schemas.example.org.SimpleService.ISimpleService",
+                "schemas.example.org.SimpleService.OneWayRequest",
+                "schemas.example.org.SimpleService.OneWayRequestDataContractSerializer",
+                "schemas.example.org.SimpleService.SimpleService",
+                "schemas.example.org.SimpleService.SimpleServiceImplementation",
+                "schemas.example.org.SimpleService.TwoWayRequest",
+                "schemas.example.org.SimpleService.TwoWayRequestDataContractSerializer",
+                "schemas.example.org.SimpleService.TwoWayResponse",
+                "schemas.example.org.SimpleService.TwoWayResponseDataContractSerializer",
+                "schemas.example.org.SimpleService.TypeCheckRequest",
+                "schemas.example.org.SimpleService.TypeCheckRequestDataContractSerializer",
+                "schemas.example.org.SimpleService.TypeCheckResponse",
+                "schemas.example.org.SimpleService.TypeCheckResponseDataContractSerializer"
+            });
+            TestSingleAssembly("SimpleService",
+                "MFWsStack", "MFDpwsDevice");
+        }
+
+        [Test]
+        public void SimpleTouchInputTest()
+        {
+            _stringSorter = new MoveStringsBefore(".Resource");
+            _typesOrder.AddRange(new[]
+            {
+                "SimpleTouchInputSample.Resources",
+                "SimpleTouchInputSample.Resources/FontResources",
+                "SimpleTouchInputSample.MySimpleTouchInput",
+                "SimpleTouchInputSample.MySimpleTouchInput/MyWindow",
+                "SimpleTouchInputSample.Resources/StringResources",
+                "SimpleTouchInputSample.MySimpleTouchInput/MyWindow/point",
+            });
+            TestSingleAssembly("SimpleTouchInput",
+                "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Graphics");
+        }
+
+        private sealed class CustomMoveStrings : ICustomStringSorter
+        {
+            public IEnumerable<String> Sort(
+                ICollection<String> strings)
+            {
+                return strings
+                    .Where(item => item.Contains(".Resources"))
+                    .Concat(strings.Where(item => item.Contains("Panel")))
+                    .Concat(strings.Where(item => item.Length < 4));
+            }
+        }
+
+        [Test]
+        public void SimpleWpfApplicationTest()
+        {
+            _stringSorter = new CustomMoveStrings();
+            _typesOrder.AddRange(new[]
+            {
+                "<PrivateImplementationDetails>{75DDD5B0-8879-4688-82A2-E125CB344440}",
+                "SimpleWPFApplicationSample.Resources",
+                "SimpleWPFApplicationSample.Resources/BitmapResources",
+                "SimpleWPFApplicationSample.GPIOButtonInputProvider",
+                "SimpleWPFApplicationSample.GPIOButtonInputProvider/ButtonPad",
+                "SimpleWPFApplicationSample.PresentationWindow",
+                "SimpleWPFApplicationSample.StackPanelDemo",
+                "SimpleWPFApplicationSample.StackPanelDemo/Cross",
+                "SimpleWPFApplicationSample.Resources/FontResources",
+                "SimpleWPFApplicationSample.CanvasPanelDemo",
+                "SimpleWPFApplicationSample.FreeDrawingDemo",
+                "SimpleWPFApplicationSample.MainMenuWindow",
+                "SimpleWPFApplicationSample.MenuItem",
+                "SimpleWPFApplicationSample.MenuItemPanel",
+                "SimpleWPFApplicationSample.MySimpleWPFApplication",
+                "SimpleWPFApplicationSample.ScrollPanelDemo",
+                "SimpleWPFApplicationSample.ScrollerText",
+                "SimpleWPFApplicationSample.TextScrollViewer",
+                "SimpleWPFApplicationSample.Resources/StringResources",
+                "<PrivateImplementationDetails>{75DDD5B0-8879-4688-82A2-E125CB344440}/__StaticArrayInitTypeSize=32",
+                "<PrivateImplementationDetails>{75DDD5B0-8879-4688-82A2-E125CB344440}/__StaticArrayInitTypeSize=64",
+            });
+            TestSingleAssembly("SimpleWPFApplication",
+                "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Graphics", "Microsoft.SPOT.Hardware");
+        }
+
+        [Test]
+        public void SocketClientTest()
+        {
+            TestSingleAssembly("SocketClient");
+        }
+
+        [Test]
+        public void SocketServerTest()
+        {
+            TestSingleAssembly("SocketServer");
+        }
+
+        [Test]
+        public void StylusCaptureTest()
+        {
+            _stringSorter = new MoveStringsBefore(".Resource");
+            _typesOrder.AddRange(new[]
+            {
+                "StylusCaptureSample.Resources",
+                "StylusCaptureSample.Resources/FontResources",
+                "StylusCaptureSample.MyStylusCapture",
+                "StylusCaptureSample.MyStylusCapture/MyWindow",
+                "StylusCaptureSample.Resources/StringResources",
+                "StylusCaptureSample.MyStylusCapture/MyWindow/point",
+            });
+            TestSingleAssembly("StylusCapture",
+                "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Graphics");
+        }
+
+        [Test]
+        [Ignore("Type flags and resources binary representation")]
+        public void TemperatureSampleTest()
+        {
+            _typesOrder.AddRange(new[]
+            {
+                "TemperatureSample.Resources",
+                "TemperatureSample.Resources/BitmapResources",
+                "TemperatureSample.GPIOButtonInputProvider",
+                "TemperatureSample.GPIOButtonInputProvider/ButtonPad",
+                "TemperatureSample.Resources/FontResources",
+                "TemperatureSample.StatusIndicator",
+                "TemperatureSample.StatusIndicator/StatusType",
+                "TemperatureSample.Resources/StringResources",
+                "TemperatureSample.MyTemperature",
+                "TemperatureSample.MyTemperature/TempMode",
+                "TemperatureSample.BorderPanel",
+                "TemperatureSample.SpiTemperatureSensor"
+            });
+            TestSingleAssembly("TemperatureSample",
+                "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Graphics", "Microsoft.SPOT.Hardware",
+                "Microsoft.SPOT.Native");
+        }
+
+        [Test]
+        public void ThreadingTest()
+        {
+            TestSingleAssembly("Threading");
+        }
+
+        [Test]
+        public void TouchCalibrationTest()
+        {
+            _stringSorter = new MoveStringsBefore(".Resource");
+            _typesOrder.AddRange(new[]
+            {
+                "TouchCalibrationSample.GPIOButtonInputProvider",
+                "TouchCalibrationSample.GPIOButtonInputProvider/ButtonPad",
+                "TouchCalibrationSample.Resources",
+                "TouchCalibrationSample.Resources/FontResources",
+                "TouchCalibrationSample.MyTouchCalibration",
+                "TouchCalibrationSample.MyTouchCalibration/MyWindow",
+                "TouchCalibrationSample.Resources/StringResources",
+                "TouchCalibrationSample.MyTouchCalibration/MyWindow/point"
+            });
+            TestSingleAssembly("TouchCalibration",
+                "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Hardware", "Microsoft.SPOT.Native",
+                "Microsoft.SPOT.Graphics", "Microsoft.SPOT.Touch");
+        }
+
+        [Test]
+        [Ignore("Resources data mismatch")]
+        public void TouchScreenTest()
+        {
+            _typesOrder.AddRange(new[]
+            {
+                "TouchScreenSample.Resources",
+                "TouchScreenSample.Resources/BitmapResources",
+                "TouchScreenSample.Resources/FontResources",
+                "TouchScreenSample.MyTouchScreen",
+                "TouchScreenSample.MyTouchScreen/ScreenId",
+                "TouchScreenSample.Resources/StringResources"
+            });
+            TestSingleAssembly("TouchScreen",
+                "Microsoft.SPOT.Touch", "Microsoft.SPOT.Hardware", "Microsoft.SPOT.Graphics",
+                "Microsoft.SPOT.Native");
+        }
+
+        [Test]
+        public void UsbMouseSampleTest()
+        {
+            _typesOrder.AddRange(new[]
+            {
+                "<PrivateImplementationDetails>{5B04E18E-C178-4A8D-9F9A-B891A012052A}",
+                "USBMouseSample.MyUSBMouse",
+                "USBMouseSample.MyUSBMouse/ButtonList",
+                "<PrivateImplementationDetails>{5B04E18E-C178-4A8D-9F9A-B891A012052A}/__StaticArrayInitTypeSize=50",
+                "<PrivateImplementationDetails>{5B04E18E-C178-4A8D-9F9A-B891A012052A}/__StaticArrayInitTypeSize=7"
+            });
+            TestSingleAssembly("USBMouse",
+                "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Hardware.Usb",
+                "Microsoft.SPOT.Hardware");
+        }
+        
+        [Test]
+        [Ignore("Too many attributes in output file")]
+        public void WeakDelegatesTest()
+        {
+            TestSingleAssembly("WeakDelegates");
         }
 
         private static void TestSingleAssembly(
