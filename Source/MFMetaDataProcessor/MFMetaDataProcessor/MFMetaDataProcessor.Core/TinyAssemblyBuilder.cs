@@ -20,13 +20,17 @@ namespace MFMetaDataProcessor
         /// <param name="assemblyDefinition">Original assembly metadata in Mono.Cecil format.</param>
         /// <param name="explicitTypesOrder">List of full type names with explicit ordering.</param>
         /// <param name="stringSorter">Custom string literals sorter for UTs using only.</param>
+        /// <param name="applyAttributesCompression">
+        /// If contains <c>true</c> each type/method/field should contains one attribute of each type.
+        /// </param>
         public TinyAssemblyBuilder(
             AssemblyDefinition assemblyDefinition,
             List<String> explicitTypesOrder = null,
-            ICustomStringSorter stringSorter = null)
+            ICustomStringSorter stringSorter = null,
+            Boolean applyAttributesCompression = false)
         {
             _tablesContext = new TinyTablesContext(
-                assemblyDefinition, explicitTypesOrder, stringSorter);
+                assemblyDefinition, explicitTypesOrder, stringSorter, applyAttributesCompression);
         }
 
         /// <summary>

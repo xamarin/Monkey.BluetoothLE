@@ -7,25 +7,38 @@ namespace MFMetaDataProcessor
 {
     public sealed class TinyTablesContext
     {
+        private sealed class CustomAttributeComparer : IEqualityComparer<CustomAttribute>
+        {
+            public Boolean Equals(CustomAttribute lhs, CustomAttribute rhs)
+            {
+                return String.Equals(lhs.AttributeType.FullName, rhs.AttributeType.FullName, StringComparison.Ordinal);
+            }
+
+            public Int32 GetHashCode(CustomAttribute that)
+            {
+                return that.AttributeType.FullName.GetHashCode();
+            }
+        }
+
         public TinyTablesContext(
             AssemblyDefinition assemblyDefinition,
             List<String> explicitTypesOrder,
-            ICustomStringSorter stringSorter)
+            ICustomStringSorter stringSorter,
+            Boolean applyAttributesCompression)
         {
             AssemblyDefinition = assemblyDefinition;
 
             var assemblyAttributes = new HashSet<String>(
                 assemblyDefinition.CustomAttributes.Select(item => item.AttributeType.FullName),
-                StringComparer.Ordinal);
-
-            assemblyAttributes.Add("System.Reflection.AssemblyCultureAttribute");
-            assemblyAttributes.Add("System.Reflection.AssemblyVersionAttribute");
-
-            assemblyAttributes.Add("System.Runtime.InteropServices.StructLayoutAttribute");
-            assemblyAttributes.Add("System.Runtime.InteropServices.OutAttribute");
-            assemblyAttributes.Add("System.Runtime.InteropServices.LayoutKind");
-
-            assemblyAttributes.Add("System.SerializableAttribute");
+                StringComparer.Ordinal)
+            {
+                "System.Reflection.AssemblyCultureAttribute",
+                "System.Reflection.AssemblyVersionAttribute",
+                "System.Runtime.InteropServices.StructLayoutAttribute",
+                "System.Runtime.InteropServices.OutAttribute",
+                "System.Runtime.InteropServices.LayoutKind",
+                "System.SerializableAttribute"
+            };
 
             NativeMethodsCrc = new NativeMethodsCrc(assemblyDefinition);
 
@@ -69,15 +82,9 @@ namespace MFMetaDataProcessor
             MethodDefinitionTable = new TinyMethodDefinitionTable(methods, this);
 
             AttributesTable = new TinyAttributesTable(
-                types.SelectMany(
-                    (item, index) => item.CustomAttributes.Select(
-                        attr => new Tuple<CustomAttribute, UInt16>(attr, (UInt16)index))),
-                fields.SelectMany(
-                    (item, index) => item.CustomAttributes.Select(
-                        attr => new Tuple<CustomAttribute, UInt16>(attr, (UInt16)index))),
-                methods.SelectMany(
-                    (item, index) => item.CustomAttributes.Select(
-                        attr => new Tuple<CustomAttribute, UInt16>(attr, (UInt16)index))),
+                GetAttributes(types, applyAttributesCompression),
+                GetAttributes(fields, applyAttributesCompression),
+                GetAttributes(methods, applyAttributesCompression),
                 this);
 
             TypeSpecificationsTable = new TinyTypeSpecificationsTable(this);
@@ -174,6 +181,24 @@ namespace MFMetaDataProcessor
         public TinyByteCodeTable ByteCodeTable { get; private set; }
 
         public TinyResourceFileTable ResourceFileTable { get; private set; }
+
+        private static IEnumerable<Tuple<CustomAttribute, UInt16>> GetAttributes(
+            IEnumerable<ICustomAttributeProvider> types,
+            Boolean applyAttributesCompression)
+        {
+            if (applyAttributesCompression)
+            {
+                return types.SelectMany(
+                    (item, index) => item.CustomAttributes
+                        .Distinct(new CustomAttributeComparer())
+                        .OrderByDescending(attr => attr.AttributeType.FullName)
+                        .Select(attr => new Tuple<CustomAttribute, UInt16>(attr, (UInt16)index)));
+                
+            }
+            return types.SelectMany(
+                (item, index) => item.CustomAttributes
+                    .Select( attr => new Tuple<CustomAttribute, UInt16>(attr, (UInt16)index)));
+        }
 
         private static Boolean IsAttribute(
             MemberReference typeReference,

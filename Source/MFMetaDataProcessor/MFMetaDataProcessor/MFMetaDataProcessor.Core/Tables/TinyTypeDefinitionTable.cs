@@ -92,7 +92,10 @@ namespace MFMetaDataProcessor
             writer.WriteUInt16(GetTypeReferenceOrDefinitionId(item.BaseType));
             writer.WriteUInt16(GetTypeReferenceOrDefinitionId(item.DeclaringType));
 
-            var fieldsList = item.Fields.Where(field => !field.HasConstant).ToList();
+            var fieldsList = item.Fields
+                .Where(field => !field.HasConstant)
+                .OrderByDescending(field => field.IsStatic)
+                .ToList();
             foreach (var field in fieldsList)
             {
                 _context.SignaturesTable.GetOrCreateSignatureId(field);

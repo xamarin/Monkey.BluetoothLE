@@ -250,10 +250,28 @@ namespace MFMetaDataProcessor.Tests
                 "Microsoft.SPOT.Hardware", "Microsoft.SPOT.Ink", "Microsoft.SPOT.Touch");
         }
 
+        private sealed class MoveStringsForSimpleServiceTest : ICustomStringSorter
+        {
+            public IEnumerable<String> Sort(
+                ICollection<String> strings)
+            {
+                var result = new List<String>(strings.Count);
+                result.AddRange(strings.Skip(28).Take(11));
+                result.AddRange(strings.Skip(15).Take(24));
+                result.AddRange(strings.Skip(53).Take(01));
+                result.AddRange(strings.Skip(43).Take(11));
+                result.AddRange(strings.Skip(39).Take(04));
+                result.AddRange(strings.Skip(01).Take(27));
+                result.AddRange(strings.Skip(75).Take(02));
+                result.AddRange(strings.Skip(54).Take(21));
+                return result;
+            }
+        }
+
         [Test]
-        [Ignore("Too many attributes")]
         public void SimpleServiceTest()
         {
+            _stringSorter = new MoveStringsForSimpleServiceTest();
             _typesOrder.AddRange(new[]
             {
                 "<PrivateImplementationDetails>{3C01404A-A8E8-4D6C-94FD-61FAED567C73}",
@@ -317,7 +335,7 @@ namespace MFMetaDataProcessor.Tests
                 "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Graphics");
         }
 
-        private sealed class CustomMoveStrings : ICustomStringSorter
+        private sealed class MoveStringsForSimpleWpfApplicationTest : ICustomStringSorter
         {
             public IEnumerable<String> Sort(
                 ICollection<String> strings)
@@ -332,7 +350,7 @@ namespace MFMetaDataProcessor.Tests
         [Test]
         public void SimpleWpfApplicationTest()
         {
-            _stringSorter = new CustomMoveStrings();
+            _stringSorter = new MoveStringsForSimpleWpfApplicationTest();
             _typesOrder.AddRange(new[]
             {
                 "<PrivateImplementationDetails>{75DDD5B0-8879-4688-82A2-E125CB344440}",
@@ -390,7 +408,7 @@ namespace MFMetaDataProcessor.Tests
                 "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Graphics");
         }
 
-        private sealed class MoveStringsByNumbers : ICustomStringSorter
+        private sealed class MoveStringsForTemperatureSampleTest : ICustomStringSorter
         {
             public IEnumerable<String> Sort(
                 ICollection<String> strings)
@@ -401,10 +419,11 @@ namespace MFMetaDataProcessor.Tests
                     .Concat(strings.Take(2));
             }
         }
+
         [Test]
         public void TemperatureSampleTest()
         {
-            _stringSorter = new MoveStringsByNumbers();
+            _stringSorter = new MoveStringsForTemperatureSampleTest();
             _typesOrder.AddRange(new[]
             {
                 "TemperatureSample.Resources",
@@ -527,7 +546,7 @@ namespace MFMetaDataProcessor.Tests
             var pdbxFileName = String.Format(@"Data\{0}\{1}\{0}.pdbx", name, subDirectoryName);
 
             var builder = new TinyAssemblyBuilder(
-                assemblyDefinition, _typesOrder, _stringSorter);
+                assemblyDefinition, _typesOrder, _stringSorter, true);
 
             using (var stream = File.Open(peFileName, FileMode.Create, FileAccess.ReadWrite))
             using (var writer = new BinaryWriter(stream))

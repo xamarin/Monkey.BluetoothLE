@@ -397,7 +397,7 @@ namespace MFMetaDataProcessor
 
                 foreach (var namedArgument in customAttribute.Fields.OrderBy(item => item.Name))
                 {
-                    writer.Write((Byte)TinySerializationType.SERIALIZATION_TYPE_PROPERTY);
+                    writer.Write((Byte)TinySerializationType.SERIALIZATION_TYPE_FIELD);
                     writer.Write(_context.StringTable.GetOrCreateStringId(namedArgument.Name));
                     WriteAttributeArgumentValue(writer, namedArgument.Argument);
                 }
@@ -478,6 +478,11 @@ namespace MFMetaDataProcessor
                         Debug.Fail(dataType.ToString());
                         break;
                 }
+            }
+            if (argument.Type.FullName == "System.Type")
+            {
+                writer.Write((Byte)TinySerializationType.ELEMENT_TYPE_STRING);
+                writer.Write(_context.StringTable.GetOrCreateStringId(((TypeReference)argument.Value).FullName));
             }
         }
 
