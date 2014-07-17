@@ -12,9 +12,10 @@
 	<array>
 		<string>HelveticaNeue-Light</string>
 		<string>HelveticaNeue</string>
+		<string>HelveticaNeue-UltraLight</string>
 	</array>
 	<key>length</key>
-	<integer>774669</integer>
+	<integer>781769</integer>
 	<key>version</key>
 	<integer>37</integer>
 </dict>
