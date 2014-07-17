@@ -176,7 +176,6 @@ namespace MFMetaDataProcessor.Tests
         }
 
         [Test]
-        [Ignore("Type def flag (serialization) and strings sorting")]
         public void Ieee802x15x4NetworkSampleTest()
         {
             _typesOrder.AddRange(new[]
@@ -195,7 +194,8 @@ namespace MFMetaDataProcessor.Tests
                 "IEEE_802_15_4_Sample.MsgReport/Node"
             });
             TestSingleAssembly("IEEE_802_15_4_PHY_Sample",
-                "Microsoft.SPOT.Wireless.IEEE_802_15_4.Phy", "Microsoft.SPOT.Wireless.IEEE_802_15_4");
+                "Microsoft.SPOT.Wireless.IEEE_802_15_4.Phy", "Microsoft.SPOT.Wireless.IEEE_802_15_4",
+                "Microsoft.SPOT.Hardware", "Microsoft.SPOT.Wireless.IEEE_802_15_4.Phy.CC2420");
         }
 
         [Test]
@@ -390,10 +390,22 @@ namespace MFMetaDataProcessor.Tests
                 "Microsoft.SPOT.Native", "Microsoft.SPOT.TinyCore", "Microsoft.SPOT.Graphics");
         }
 
+        private sealed class MoveStringsByNumbers : ICustomStringSorter
+        {
+            public IEnumerable<String> Sort(
+                ICollection<String> strings)
+            {
+                return strings
+                    .Skip(6)
+                    .Concat(strings.Skip(2).Take(6))
+                    .Concat(strings.Take(2));
+            }
+        }
         [Test]
         [Ignore("Type flags and resources binary representation")]
         public void TemperatureSampleTest()
         {
+            _stringSorter = new MoveStringsByNumbers();
             _typesOrder.AddRange(new[]
             {
                 "TemperatureSample.Resources",
@@ -444,6 +456,7 @@ namespace MFMetaDataProcessor.Tests
         [Ignore("Resources data mismatch")]
         public void TouchScreenTest()
         {
+            _stringSorter = new MoveStringsBefore(".Resource");
             _typesOrder.AddRange(new[]
             {
                 "TouchScreenSample.Resources",

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
 
 namespace MFMetaDataProcessor
 {
@@ -21,10 +22,52 @@ namespace MFMetaDataProcessor
             writer.WriteUInt32((UInt32)_bitmap.Height);
 
             writer.WriteUInt16(0x00);   // flags
-            writer.WriteByte(0x01);     // bpp
-            writer.WriteByte(0x02);     // format
 
-            _bitmap.Save(writer.BaseStream, ImageFormat.Jpeg);
+            var tinyImageFormat = GetTinytImageFormat(_bitmap.RawFormat);
+
+            if (tinyImageFormat != 0)
+            {
+                writer.WriteByte(0x01);     // bpp
+                writer.WriteByte(tinyImageFormat);
+                _bitmap.Save(writer.BaseStream, _bitmap.RawFormat);
+            }
+            else
+            {
+                writer.WriteByte(0x10);     // bpp
+                writer.WriteByte(tinyImageFormat);
+
+                var rect = new Rectangle(Point.Empty, _bitmap.Size);
+                using (var convertedBitmap =
+                    _bitmap.Clone(new Rectangle(Point.Empty, _bitmap.Size),
+                        PixelFormat.Format16bppRgb565))
+                {
+                    var bitmapData = convertedBitmap.LockBits(
+                        rect, ImageLockMode.ReadOnly, convertedBitmap.PixelFormat);
+
+                    var buffer = new Byte[bitmapData.Stride * convertedBitmap.Height];
+                    System.Runtime.InteropServices.Marshal.Copy(
+                        bitmapData.Scan0, buffer, 0, buffer.Length);
+
+                    convertedBitmap.UnlockBits(bitmapData);
+                    writer.WriteBytes(buffer);
+                }
+            }
+        }
+
+        private Byte GetTinytImageFormat(
+            ImageFormat rawFormat)
+        {
+            if (rawFormat.Equals(ImageFormat.Gif))
+            {
+                return 1;
+            }
+            
+            if (rawFormat.Equals(ImageFormat.Jpeg))
+            {
+                return 2;
+            }
+
+            return 0;
         }
     }
 }
