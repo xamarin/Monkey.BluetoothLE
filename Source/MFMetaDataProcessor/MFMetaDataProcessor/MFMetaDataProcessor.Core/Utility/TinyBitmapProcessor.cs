@@ -44,12 +44,15 @@ namespace MFMetaDataProcessor
                     var bitmapData = convertedBitmap.LockBits(
                         rect, ImageLockMode.ReadOnly, convertedBitmap.PixelFormat);
 
-                    var buffer = new Byte[bitmapData.Stride * convertedBitmap.Height];
+                    var buffer = new Int16[bitmapData.Stride * convertedBitmap.Height / sizeof(Int16)];
                     System.Runtime.InteropServices.Marshal.Copy(
                         bitmapData.Scan0, buffer, 0, buffer.Length);
 
                     convertedBitmap.UnlockBits(bitmapData);
-                    writer.WriteBytes(buffer);
+                    foreach (var item in buffer)
+                    {
+                        writer.WriteInt16(item);
+                    }
                 }
             }
         }
