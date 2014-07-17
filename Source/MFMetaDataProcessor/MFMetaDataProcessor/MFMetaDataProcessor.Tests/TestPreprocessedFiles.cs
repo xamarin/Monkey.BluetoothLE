@@ -402,7 +402,6 @@ namespace MFMetaDataProcessor.Tests
             }
         }
         [Test]
-        [Ignore("Type flags and resources binary representation")]
         public void TemperatureSampleTest()
         {
             _stringSorter = new MoveStringsByNumbers();
@@ -453,7 +452,6 @@ namespace MFMetaDataProcessor.Tests
         }
 
         [Test]
-        [Ignore("Resources data mismatch")]
         public void TouchScreenTest()
         {
             _stringSorter = new MoveStringsBefore(".Resource");

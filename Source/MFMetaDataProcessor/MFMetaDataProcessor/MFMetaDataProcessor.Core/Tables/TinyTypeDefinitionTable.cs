@@ -320,6 +320,7 @@ namespace MFMetaDataProcessor
             if (definition.IsEnum)
             {
                 flags |= TD_Semantics_Enum;
+                flags |= TD_Serializable;
             }
             else if (definition.IsValueType)
             {
