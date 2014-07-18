@@ -269,6 +269,7 @@ namespace MFMetaDataProcessor.Tests
         }
 
         [Test]
+        [Ignore("Signatures indexes issue")]
         public void SimpleServiceTest()
         {
             _stringSorter = new MoveStringsForSimpleServiceTest();
@@ -505,7 +506,6 @@ namespace MFMetaDataProcessor.Tests
         }
         
         [Test]
-        [Ignore("Too many attributes in output file")]
         public void WeakDelegatesTest()
         {
             TestSingleAssembly("WeakDelegates");

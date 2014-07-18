@@ -34,6 +34,8 @@ namespace MFMetaDataProcessor
             {
                 "System.Reflection.AssemblyCultureAttribute",
                 "System.Reflection.AssemblyVersionAttribute",
+                "System.Runtime.CompilerServices.MethodImplAttribute",
+                "System.Runtime.CompilerServices.MethodImplOptions",
                 "System.Runtime.InteropServices.StructLayoutAttribute",
                 "System.Runtime.InteropServices.OutAttribute",
                 "System.Runtime.InteropServices.LayoutKind",
