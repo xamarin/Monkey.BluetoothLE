@@ -43,6 +43,13 @@ namespace Xamarin.Robotics.SpecializedBlocks
             Write (new byte[] { register });
             Read (readBuffer);
         }
+        protected byte ReadByte (byte register)
+        {
+            Write (new byte[] { register });
+            var readBuffer = new byte[1];
+            Read (readBuffer);
+            return readBuffer[0];
+        }
         protected short ReadInt16 (byte register)
         {
             Write (new byte[] { register });

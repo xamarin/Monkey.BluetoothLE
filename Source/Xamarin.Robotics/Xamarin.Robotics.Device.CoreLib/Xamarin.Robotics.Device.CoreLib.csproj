@@ -37,6 +37,7 @@
     <Compile Include="Generators\Pwm.cs" />
     <Compile Include="IBlock.cs" />
     <Compile Include="InputPort.cs" />
+    <Compile Include="Motors\AdafruitMotorShield.cs" />
     <Compile Include="OutputPort.cs" />
     <Compile Include="Port.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,7 +67,5 @@
     </Reference>
     <Reference Include="Microsoft.SPOT.TinyCore" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Actuators\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
