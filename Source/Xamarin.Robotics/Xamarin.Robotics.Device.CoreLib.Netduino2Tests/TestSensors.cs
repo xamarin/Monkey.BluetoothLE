@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using Xamarin.Robotics.Sensors.Location;
 using Xamarin.Robotics.Sensors.Motion;
+using Xamarin.Robotics.Sensors.Proximity;
 using Xamarin.Robotics.Sensors.Temperature;
 using Xamarin.Robotics.SpecializedBlocks;
 
@@ -29,6 +30,10 @@ namespace Xamarin.Robotics.Device.CoreLib.Netduino2Tests
 
             var a0 = new AnalogInputPin (AnalogChannels.ANALOG_PIN_A0);
             scope.Connect (a0.Analog);
+
+            var sharp = new SharpGP2D12 ();
+            a0.Analog.ConnectTo (sharp.AnalogInput);
+            scope.Connect (sharp.DistanceOutput);
 
             var therm = new Thermistor ();
             therm.AnalogInput.ConnectTo (a0.Analog);

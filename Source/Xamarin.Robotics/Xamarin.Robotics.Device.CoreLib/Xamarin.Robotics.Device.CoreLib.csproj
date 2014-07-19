@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>Xamarin.Robotics.Device.CoreLib</AssemblyName>
     <OutputType>Library</OutputType>
-    <RootNamespace>Xamarin.Robotics.Device</RootNamespace>
+    <RootNamespace>Xamarin.Robotics</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -52,11 +52,14 @@
     <Compile Include="Sensors\Location\Grove3AxisDigitalCompass.cs" />
     <Compile Include="Sensors\Motion\IAccelerometer.cs" />
     <Compile Include="Sensors\Motion\Memsic2125.cs" />
+    <Compile Include="Sensors\Proximity\IRangeFinder.cs" />
+    <Compile Include="Sensors\Proximity\SharpGP2D12.cs" />
     <Compile Include="Sensors\Temperature\Thermistor.cs" />
     <Compile Include="SpecializedBlocks\CelsiusToFahrenheit.cs" />
     <Compile Include="SpecializedBlocks\DutyCycleMeter.cs" />
     <Compile Include="SpecializedBlocks\Generator.cs" />
     <Compile Include="SpecializedBlocks\I2CBlock.cs" />
+    <Compile Include="SpecializedBlocks\LookupTable.cs" />
     <Compile Include="SpecializedBlocks\PollingBlock.cs" />
     <Compile Include="SpecializedBlocks\PollingI2CBlock.cs" />
     <Compile Include="SpecializedBlocks\SineWaveGenerator.cs" />

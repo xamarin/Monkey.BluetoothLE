@@ -20,10 +20,18 @@ namespace Xamarin.Robotics
         Digital,
 
         /// <summary>
+        /// Measured in Meters.
+        /// </summary>
+        Distance,
+
+        /// <summary>
         /// Measured in Hertz.
         /// </summary>
         Frequency,
 
+        /// <summary>
+        /// Measured in Seconds.
+        /// </summary>
         Time,
 
         Temperature,
