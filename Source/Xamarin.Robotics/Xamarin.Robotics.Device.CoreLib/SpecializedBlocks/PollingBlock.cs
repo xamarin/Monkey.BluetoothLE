@@ -9,14 +9,16 @@ namespace Xamarin.Robotics.SpecializedBlocks
 {
     public abstract class PollingBlock : BlockBase
     {
+        public const double DefaultUpdateFrequency = 1;
+
         public Port UpdateFrequency { get; private set; }
 
         readonly Thread th;
         Timer timer;
 
-        public PollingBlock ()
+        public PollingBlock (double updateFrequency = DefaultUpdateFrequency)
         {
-            UpdateFrequency = AddPort ("UpdateFrequency", Units.Frequency, 1);
+            UpdateFrequency = AddPort ("UpdateFrequency", Units.Frequency, updateFrequency);
             UpdateFrequency.ValueChanged += UpdateFrequency_ValueChanged;
 
             th = new Thread ((ThreadStart)delegate {

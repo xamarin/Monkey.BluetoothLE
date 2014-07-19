@@ -38,6 +38,7 @@
     <Compile Include="IBlock.cs" />
     <Compile Include="InputPort.cs" />
     <Compile Include="Motors\AdafruitMotorShield.cs" />
+    <Compile Include="Motors\IDCMotor.cs" />
     <Compile Include="OutputPort.cs" />
     <Compile Include="Port.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -54,9 +55,11 @@
     <Compile Include="Sensors\Temperature\Thermistor.cs" />
     <Compile Include="SpecializedBlocks\CelsiusToFahrenheit.cs" />
     <Compile Include="SpecializedBlocks\DutyCycleMeter.cs" />
+    <Compile Include="SpecializedBlocks\Generator.cs" />
     <Compile Include="SpecializedBlocks\I2CBlock.cs" />
     <Compile Include="SpecializedBlocks\PollingBlock.cs" />
     <Compile Include="SpecializedBlocks\PollingI2CBlock.cs" />
+    <Compile Include="SpecializedBlocks\SineWaveGenerator.cs" />
     <Compile Include="SpecializedBlocks\Transform.cs" />
     <Compile Include="Units.cs" />
   </ItemGroup>

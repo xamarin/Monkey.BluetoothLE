@@ -2,7 +2,7 @@ using System;
 using Microsoft.SPOT;
 using Xamarin.Robotics.SpecializedBlocks;
 
-namespace Xamarin.Robotics.Device.Motors
+namespace Xamarin.Robotics.Motors
 {
     public class AdafruitMotorShield : I2CBlock
     {
@@ -129,7 +129,7 @@ namespace Xamarin.Robotics.Device.Motors
         }
     }
 
-    public class AdafruitDCMotor : BlockBase
+    public class AdafruitDCMotor : BlockBase, IDCMotor
     {
         readonly AdafruitMotorShield shield;
 
