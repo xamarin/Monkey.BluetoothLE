@@ -17,8 +17,8 @@ Solder a black and a red wire to the flat metal leads coming off each of the mot
 
 Screw the motor attachment block onto the motor with two of the long bolts. NOTE: the image shows the bolts backwards. While it'll work this way, it'll also put the bolt ends very close to the wheel wells when it's fully assembled, so I would reverse them as seen in the image below. Note that you'll create two of these assemblies, each mirroring each other:
 
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/02.jpg)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/02.jpg)
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/02.jpg?raw=true)
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/02.jpg?raw=true)
 
 Note that yours should have wires coming off the motor by this point.
 
