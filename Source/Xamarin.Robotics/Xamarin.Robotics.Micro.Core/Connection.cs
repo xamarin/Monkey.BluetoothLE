@@ -1,7 +1,7 @@
 using System;
 using Microsoft.SPOT;
 
-namespace Xamarin.Robotics
+namespace Xamarin.Robotics.Micro
 {
     /// <summary>
     /// This is a reference to a connection. Creation of this object does not make the connection.

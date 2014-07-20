@@ -1,7 +1,7 @@
 using System;
-using Xamarin.Robotics.SpecializedBlocks;
+using Xamarin.Robotics.Micro.SpecializedBlocks;
 
-namespace Xamarin.Robotics.Sensors.Location
+namespace Xamarin.Robotics.Micro.Sensors.Location
 {
     public class Grove3AxisDigitalCompass : PollingI2CBlock
     {

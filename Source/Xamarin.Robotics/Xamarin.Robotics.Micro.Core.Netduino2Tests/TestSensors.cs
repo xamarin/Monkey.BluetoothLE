@@ -2,13 +2,14 @@ using Microsoft.SPOT;
 using SecretLabs.NETMF.Hardware.Netduino;
 using System;
 using System.Threading;
-using Xamarin.Robotics.Sensors.Location;
-using Xamarin.Robotics.Sensors.Motion;
-using Xamarin.Robotics.Sensors.Proximity;
-using Xamarin.Robotics.Sensors.Temperature;
-using Xamarin.Robotics.SpecializedBlocks;
+using Xamarin.Robotics.Micro.Devices;
+using Xamarin.Robotics.Micro.Sensors.Location;
+using Xamarin.Robotics.Micro.Sensors.Motion;
+using Xamarin.Robotics.Micro.Sensors.Proximity;
+using Xamarin.Robotics.Micro.Sensors.Temperature;
+using Xamarin.Robotics.Micro.SpecializedBlocks;
 
-namespace Xamarin.Robotics.Device.CoreLib.Netduino2Tests
+namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
 {
     public class TestSensors
     {

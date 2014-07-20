@@ -1,7 +1,7 @@
 ﻿using System;
-using Xamarin.Robotics.SpecializedBlocks;
+using Xamarin.Robotics.Micro.SpecializedBlocks;
 
-namespace Xamarin.Robotics.Sensors.Light
+namespace Xamarin.Robotics.Micro.Sensors.Light
 {
 	/// <summary>
 	/// Assumes an analog input range of 0v -> 3.3v and 1024 steps of resolution to describe that

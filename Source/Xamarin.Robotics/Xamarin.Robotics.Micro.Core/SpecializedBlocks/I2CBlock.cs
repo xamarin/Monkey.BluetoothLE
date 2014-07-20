@@ -5,7 +5,7 @@ using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 #endif
 
-namespace Xamarin.Robotics.SpecializedBlocks
+namespace Xamarin.Robotics.Micro.SpecializedBlocks
 {
     public abstract class I2CBlock : BlockBase
     {

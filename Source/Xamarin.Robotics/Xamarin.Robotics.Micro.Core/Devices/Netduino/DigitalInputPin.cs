@@ -4,7 +4,7 @@ using Microsoft.SPOT.Hardware;
 
 using HWPort = Microsoft.SPOT.Hardware.Port;
 
-namespace Xamarin.Robotics.Device
+namespace Xamarin.Robotics.Micro.Devices
 {
     public class DigitalInputPin : BlockBase
     {

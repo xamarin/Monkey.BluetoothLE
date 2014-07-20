@@ -9,7 +9,7 @@ using PortList = System.Collections.ArrayList;
 using PortList = System.Collections.Generic.List<Xamarin.Robotics.Port>;
 #endif
 
-namespace Xamarin.Robotics
+namespace Xamarin.Robotics.Micro
 {
 	public class Port
 	{

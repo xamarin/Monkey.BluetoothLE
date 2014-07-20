@@ -1,8 +1,8 @@
 using System;
 using Microsoft.SPOT;
-using Xamarin.Robotics.SpecializedBlocks;
+using Xamarin.Robotics.Micro.SpecializedBlocks;
 
-namespace Xamarin.Robotics.Sensors.Proximity
+namespace Xamarin.Robotics.Micro.Sensors.Proximity
 {
     public class SharpGP2D12 : BlockBase, IRangeFinder
     {

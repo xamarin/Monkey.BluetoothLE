@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace Xamarin.Robotics.SpecializedBlocks
+namespace Xamarin.Robotics.Micro.SpecializedBlocks
 {
     public delegate double TransformFunction (double input);
 

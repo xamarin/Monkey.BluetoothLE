@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Threading;
 
-namespace Xamarin.Robotics.Generators
+namespace Xamarin.Robotics.Micro.Generators
 {
+    /// <summary>
+    /// Represents a PulseWidthModulation Generator
+    /// </summary>
 	public class Pwm : BlockBase
 	{
 		public OutputPort Output { get; private set; }

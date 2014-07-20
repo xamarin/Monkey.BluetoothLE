@@ -4,7 +4,7 @@ using System;
 using Microsoft.SPOT;
 #endif
 
-namespace Xamarin.Robotics.Sensors.Buttons
+namespace Xamarin.Robotics.Micro.Sensors.Buttons
 {
 	/// <summary>
 	/// A simple push button. 

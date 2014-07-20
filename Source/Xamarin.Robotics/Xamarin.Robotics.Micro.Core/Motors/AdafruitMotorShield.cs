@@ -1,8 +1,8 @@
 using System;
 using Microsoft.SPOT;
-using Xamarin.Robotics.SpecializedBlocks;
+using Xamarin.Robotics.Micro.SpecializedBlocks;
 
-namespace Xamarin.Robotics.Motors
+namespace Xamarin.Robotics.Micro.Motors
 {
     public class AdafruitMotorShield : I2CBlock
     {

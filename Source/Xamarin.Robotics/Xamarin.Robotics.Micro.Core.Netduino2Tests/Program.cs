@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Xamarin.Robotics.Device.CoreLib.Netduino2Tests
+namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
 {
 	public class Program
 	{

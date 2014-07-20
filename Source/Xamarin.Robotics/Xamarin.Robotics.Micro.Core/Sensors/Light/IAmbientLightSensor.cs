@@ -1,6 +1,6 @@
 using System;
 
-namespace Xamarin.Robotics.Sensors.Light
+namespace Xamarin.Robotics.Micro.Sensors.Light
 {
 	interface IAmbientLightSensor
 	{

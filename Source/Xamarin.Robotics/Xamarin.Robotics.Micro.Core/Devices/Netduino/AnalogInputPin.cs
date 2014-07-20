@@ -1,9 +1,9 @@
 using System;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
-using Xamarin.Robotics.SpecializedBlocks;
+using Xamarin.Robotics.Micro.SpecializedBlocks;
 
-namespace Xamarin.Robotics.Device
+namespace Xamarin.Robotics.Micro.Devices
 {
     public class AnalogInputPin : PollingBlock
     {

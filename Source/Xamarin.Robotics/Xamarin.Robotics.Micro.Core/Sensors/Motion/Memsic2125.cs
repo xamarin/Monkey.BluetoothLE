@@ -1,7 +1,7 @@
 ﻿using System;
-using Xamarin.Robotics.SpecializedBlocks;
+using Xamarin.Robotics.Micro.SpecializedBlocks;
 
-namespace Xamarin.Robotics.Sensors.Motion
+namespace Xamarin.Robotics.Micro.Sensors.Motion
 {
     public class Memsic2125 : BlockBase
     {

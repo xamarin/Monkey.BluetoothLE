@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Xamarin.Robotics.SpecializedBlocks
+namespace Xamarin.Robotics.Micro.SpecializedBlocks
 {
     public class CelsiusToFahrenheit : BlockBase
     {

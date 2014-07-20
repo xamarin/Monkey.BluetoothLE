@@ -1,7 +1,7 @@
 using System;
 using Microsoft.SPOT;
 
-namespace Xamarin.Robotics.Generators
+namespace Xamarin.Robotics.Micro.Generators
 {
     public class SineWave : Generator
     {

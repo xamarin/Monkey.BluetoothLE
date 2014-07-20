@@ -5,7 +5,7 @@ using System.Threading;
 using Microsoft.SPOT;
 #endif
 
-namespace Xamarin.Robotics.SpecializedBlocks
+namespace Xamarin.Robotics.Micro.SpecializedBlocks
 {
     public abstract class PollingBlock : BlockBase
     {

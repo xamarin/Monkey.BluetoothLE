@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Xamarin.Robotics
+namespace Xamarin.Robotics.Micro
 {
 	public abstract class BlockBase
 	{

@@ -5,9 +5,9 @@ using System.Threading;
 using Microsoft.SPOT;
 #endif
 
-using Xamarin.Robotics.SpecializedBlocks;
+using Xamarin.Robotics.Micro.SpecializedBlocks;
 
-namespace Xamarin.Robotics.Generators
+namespace Xamarin.Robotics.Micro.Generators
 {
     public abstract class Generator : PollingBlock
     {

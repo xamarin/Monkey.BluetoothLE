@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Xamarin.Robotics.Sensors.Temperature
+namespace Xamarin.Robotics.Micro.Sensors.Temperature
 {
     public class Thermistor : BlockBase
     {

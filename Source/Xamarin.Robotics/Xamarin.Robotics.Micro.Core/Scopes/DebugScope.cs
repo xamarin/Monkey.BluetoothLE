@@ -6,7 +6,7 @@ using System.Threading;
 using Microsoft.SPOT;
 #endif
 
-namespace Xamarin.Robotics
+namespace Xamarin.Robotics.Micro
 {
     public class DebugScope : BlockBase
     {

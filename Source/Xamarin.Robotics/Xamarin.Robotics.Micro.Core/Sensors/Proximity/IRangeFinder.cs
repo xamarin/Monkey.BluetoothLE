@@ -1,7 +1,7 @@
 using System;
 using Microsoft.SPOT;
 
-namespace Xamarin.Robotics.Sensors.Proximity
+namespace Xamarin.Robotics.Micro.Sensors.Proximity
 {
     public interface IRangeFinder
     {

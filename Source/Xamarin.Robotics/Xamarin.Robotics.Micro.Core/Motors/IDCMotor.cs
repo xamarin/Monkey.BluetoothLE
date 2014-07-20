@@ -1,7 +1,7 @@
 using System;
 using Microsoft.SPOT;
 
-namespace Xamarin.Robotics.Motors
+namespace Xamarin.Robotics.Micro.Motors
 {
     public interface IDCMotor
     {

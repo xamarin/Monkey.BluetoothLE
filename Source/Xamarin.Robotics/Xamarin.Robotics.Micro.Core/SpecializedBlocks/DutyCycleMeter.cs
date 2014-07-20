@@ -5,7 +5,7 @@ using Microsoft.SPOT;
 #endif
 
 
-namespace Xamarin.Robotics.SpecializedBlocks
+namespace Xamarin.Robotics.Micro.SpecializedBlocks
 {
     public class DutyCycleMeter : BlockBase
     {

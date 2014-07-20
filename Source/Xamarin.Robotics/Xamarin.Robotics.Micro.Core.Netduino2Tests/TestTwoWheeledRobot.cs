@@ -2,12 +2,13 @@ using Microsoft.SPOT;
 using SecretLabs.NETMF.Hardware.Netduino;
 using System;
 using System.Threading;
-using Xamarin.Robotics.Generators;
-using Xamarin.Robotics.Motors;
-using Xamarin.Robotics.Sensors.Proximity;
-using Xamarin.Robotics.SpecializedBlocks;
+using Xamarin.Robotics.Micro.Devices;
+using Xamarin.Robotics.Micro.Generators;
+using Xamarin.Robotics.Micro.Motors;
+using Xamarin.Robotics.Micro.Sensors.Proximity;
+using Xamarin.Robotics.Micro.SpecializedBlocks;
 
-namespace Xamarin.Robotics.Device.CoreLib.Netduino2Tests
+namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
 {
     public class TwoWheeledRobot : BlockBase
     {

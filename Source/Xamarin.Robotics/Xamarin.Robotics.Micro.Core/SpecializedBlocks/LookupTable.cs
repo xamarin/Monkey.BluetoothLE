@@ -1,7 +1,7 @@
 using System;
 using Microsoft.SPOT;
 
-namespace Xamarin.Robotics.SpecializedBlocks
+namespace Xamarin.Robotics.Micro.SpecializedBlocks
 {
     public class LookupTable : BlockBase, System.Collections.IEnumerable
     {

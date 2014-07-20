@@ -1,6 +1,6 @@
 using System;
 
-namespace Xamarin.Robotics.Sensors.Motion
+namespace Xamarin.Robotics.Micro.Sensors.Motion
 {
 	public interface IAccelerometer
 	{

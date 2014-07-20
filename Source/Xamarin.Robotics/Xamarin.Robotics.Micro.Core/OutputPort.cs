@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Xamarin.Robotics
+namespace Xamarin.Robotics.Micro
 {
 	public class OutputPort : Port
 	{
