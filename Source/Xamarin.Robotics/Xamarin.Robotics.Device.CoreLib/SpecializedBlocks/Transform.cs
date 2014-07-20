@@ -7,15 +7,17 @@ namespace Xamarin.Robotics.SpecializedBlocks
 
     public class Transform : BlockBase
     {
-        public Port Input { get; private set; }
-        public Port Output { get; private set; }
+        public InputPort Input { get; private set; }
+        public OutputPort Output { get; private set; }
 
         public TransformFunction Function { get; set; }
 
-        public Transform ()
+        public Transform (TransformFunction function = null)
         {
-            Input = AddPort ("Input", Units.Scalar);
-            Output = AddPort ("Output", Units.Scalar);
+            Function = function;
+
+            Input = AddInput ("Input", Units.Scalar);
+            Output = AddOutput ("Output", Units.Scalar);
 
             Input.ValueChanged += (s,e) => Run ();
         }

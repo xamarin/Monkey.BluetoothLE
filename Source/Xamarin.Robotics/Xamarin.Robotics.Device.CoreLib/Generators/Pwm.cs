@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Threading;
 
-namespace Xamarin.Robotics
+namespace Xamarin.Robotics.Generators
 {
 	public class Pwm : BlockBase
 	{
-		public Port Output { get; private set; }
+		public OutputPort Output { get; private set; }
 
-		public Port DutyCycleInput { get; private set; }
-		public Port FrequencyInput { get; private set; }
+		public InputPort DutyCycleInput { get; private set; }
+		public InputPort FrequencyInput { get; private set; }
 
 		Thread th;
 
 		public Pwm ()
 		{
-			Output = AddPort ("Output", Units.Digital);
-			DutyCycleInput = AddPort ("DutyCycleInput", Units.Ratio, 0.5);
-			FrequencyInput = AddPort ("FrequencyInput", Units.Frequency, 1);
+			Output = AddOutput ("Output", Units.Digital);
+			DutyCycleInput = AddInput ("DutyCycleInput", Units.Ratio, 0.5);
+            FrequencyInput = AddInput ("FrequencyInput", Units.Frequency, 1);
 
 			th = new Thread ((ThreadStart)delegate {
 

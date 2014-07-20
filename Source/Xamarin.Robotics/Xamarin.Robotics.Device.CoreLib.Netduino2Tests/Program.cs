@@ -8,7 +8,8 @@ namespace Xamarin.Robotics.Device.CoreLib.Netduino2Tests
 		public static void Main()
 		{
             // TestSensors.Run ();
-            TestTwoWheeledRobot.Run ();
+            // TestDrunkenRobot.Run ();
+            TestWallBouncingRobot.Run ();
 		}
 	}
 }

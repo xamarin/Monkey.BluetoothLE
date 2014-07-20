@@ -138,15 +138,12 @@ namespace Xamarin.Robotics.Motors
         readonly byte in2Pin;
 
         /// <summary>
-        /// Direction of the motor.
-        /// Negative values &lt; -0.5 are reverse.
-        /// Positive values &gt; 0.5 are forwards.
-        /// Others are neutral.
+        /// Remember if we're reversed to minimize state changes
         /// </summary>
-        public InputPort DirectionInput { get; private set; }
+        bool isReversed = false; 
 
         /// <summary>
-        /// The speed of the motor from 0 to 1.
+        /// The speed of the motor from -1 to 1.
         /// </summary>
         public InputPort SpeedInput { get; private set; }
 
@@ -157,43 +154,50 @@ namespace Xamarin.Robotics.Motors
             this.in1Pin = in1Pin;
             this.in2Pin = in2Pin;
 
-            DirectionInput = new InputPort (this, "DirectionInput", Units.Scalar);
-            SpeedInput = new InputPort (this, "SpeedInput", Units.Ratio);
-
+            SpeedInput = AddInput ("SpeedInput", Units.Ratio);
+            
             SetDirection ();
             SetSpeed ();
 
-            DirectionInput.ValueChanged += (s, e) => SetDirection ();
-            SpeedInput.ValueChanged += (s, e) => SetSpeed ();
+            SpeedInput.ValueChanged += (s, e) => {
+
+                var newlyReversed = SpeedInput.Value < 0;
+                if (newlyReversed != isReversed) {
+                    SetDirection ();
+                }
+
+                SetSpeed ();
+            };
         }
 
         void SetSpeed ()
         {
-            var speed = System.Math.Min (System.Math.Max (SpeedInput.Value, 0), 1);
+            var speed = System.Math.Min (System.Math.Abs (SpeedInput.Value), 1);
             shield.SetPwm (pwmPin, (ushort)(4095 * speed));
         }
 
         void SetDirection ()
         {
-            var d = DirectionInput.Value;
+            var d = SpeedInput.Value;
 
             // Note, always switch low (false) first to avoid glitches
 
-            if (d < -0.5) {
+            if (d < 0) {
                 // Reverse
                 shield.SetPin (in1Pin, false);
                 shield.SetPin (in2Pin, true);
-            }
-            else if (d <= 0.5) {
-                // Neutral
-                shield.SetPin (in1Pin, false);
-                shield.SetPin (in2Pin, false);
+                isReversed = true;
             }
             else {
                 // Forward
                 shield.SetPin (in2Pin, false);
                 shield.SetPin (in1Pin, true);
+                isReversed = false;
             }
+
+            // Neutral:
+            //shield.SetPin (in1Pin, false);
+            //shield.SetPin (in2Pin, false);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Xamarin.Robotics
 
         readonly ArrayList connectedPorts = new ArrayList ();
 
-        public void Connect (Port port)
+        public void ConnectTo (Port port)
         {
             connectedPorts.Add (port);
         }

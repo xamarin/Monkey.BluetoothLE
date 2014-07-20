@@ -14,7 +14,8 @@ namespace Xamarin.Robotics.Device
 
         AnalogInput input;
 
-        public AnalogInputPin (Cpu.AnalogChannel pin)
+        public AnalogInputPin (Cpu.AnalogChannel pin, double updateFrequency = DefaultUpdateFrequency)
+            : base (updateFrequency)
 		{
             input = new AnalogInput (pin, -1);
 

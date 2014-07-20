@@ -82,10 +82,18 @@ namespace Xamarin.Robotics
 				// Set the value of everyone we're connected to
 				// (for loop to prevent allocations)
 				//
-				for (int i = 0; i < connectedPorts.Count; i++) {
-					var port = (Port)connectedPorts [i];
-					port.Value = value;
-				}
+                var numToUpdate = connectedPorts.Count;
+                if (portsToUpdate == null || portsToUpdate.Length < numToUpdate) {
+                    portsToUpdate = new Port[numToUpdate * 2];
+                }                
+				for (int i = 0; i < numToUpdate; i++) {
+					portsToUpdate[i] = (Port)connectedPorts [i];
+                }
+
+                for (int i = 0; i < numToUpdate; i++) {
+                    // This little assignment causes this function to be recursively called
+                    portsToUpdate[i].Value = value;
+                }				
 
 				//
 				// Release recursize lock
@@ -106,6 +114,13 @@ namespace Xamarin.Robotics
 		public event EventHandler ValueChanged;
 
 		readonly PortList connectedPorts = new PortList ();
+
+        /// <summary>
+        /// This is a shadow variable of connectedPorts used to
+        /// allow value changes to affect the connectedPorts list.
+        /// It is a field instead of a local variable to keep pressure off the GC.
+        /// </summary>
+        Port[] portsToUpdate = null;
 
         readonly BlockBase block;
 
@@ -133,6 +148,21 @@ namespace Xamarin.Robotics
 			connectedPorts.Add (other);
 			other.connectedPorts.Add (this);
 		}
+
+        /// <summary>
+        /// Disconnect this port from another port.
+        /// </summary>
+        /// <param name="other"></param>
+        public void DisconnectFrom (Port other)
+        {
+            if (other == null)
+                return;
+            if (this == other)
+                return;
+            connectedPorts.Remove (other);
+            other.connectedPorts.Remove (this);
+        }
 	}
+
 }
 

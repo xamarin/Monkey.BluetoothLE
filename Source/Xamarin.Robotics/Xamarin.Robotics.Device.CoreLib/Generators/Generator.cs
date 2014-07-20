@@ -5,7 +5,9 @@ using System.Threading;
 using Microsoft.SPOT;
 #endif
 
-namespace Xamarin.Robotics.SpecializedBlocks
+using Xamarin.Robotics.SpecializedBlocks;
+
+namespace Xamarin.Robotics.Generators
 {
     public abstract class Generator : PollingBlock
     {
@@ -18,7 +20,7 @@ namespace Xamarin.Robotics.SpecializedBlocks
         {
             startTicks = DateTime.UtcNow.Ticks;
 
-            Output = new OutputPort (this, "Output", Units.Scalar, 0);
+            Output = AddOutput ("Output", Units.Scalar, 0);
         }
 
         protected abstract double Generate (double time);

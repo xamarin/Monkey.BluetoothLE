@@ -32,8 +32,10 @@
   <ItemGroup>
     <Compile Include="BlockBase.cs" />
     <Compile Include="ConfigPort.cs" />
+    <Compile Include="Connection.cs" />
     <Compile Include="Devices\Netduino\AnalogInputPin.cs" />
     <Compile Include="Devices\Netduino\DigitalInputPin.cs" />
+    <Compile Include="Generators\Constant.cs" />
     <Compile Include="Generators\Pwm.cs" />
     <Compile Include="IBlock.cs" />
     <Compile Include="InputPort.cs" />
@@ -57,12 +59,13 @@
     <Compile Include="Sensors\Temperature\Thermistor.cs" />
     <Compile Include="SpecializedBlocks\CelsiusToFahrenheit.cs" />
     <Compile Include="SpecializedBlocks\DutyCycleMeter.cs" />
-    <Compile Include="SpecializedBlocks\Generator.cs" />
+    <Compile Include="Generators\Generator.cs" />
     <Compile Include="SpecializedBlocks\I2CBlock.cs" />
     <Compile Include="SpecializedBlocks\LookupTable.cs" />
     <Compile Include="SpecializedBlocks\PollingBlock.cs" />
     <Compile Include="SpecializedBlocks\PollingI2CBlock.cs" />
-    <Compile Include="SpecializedBlocks\SineWaveGenerator.cs" />
+    <Compile Include="Generators\SineWave.cs" />
+    <Compile Include="SpecializedBlocks\Switch.cs" />
     <Compile Include="SpecializedBlocks\Transform.cs" />
     <Compile Include="Units.cs" />
   </ItemGroup>

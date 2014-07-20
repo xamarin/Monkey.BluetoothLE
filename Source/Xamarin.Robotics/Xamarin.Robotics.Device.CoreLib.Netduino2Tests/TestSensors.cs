@@ -20,36 +20,36 @@ namespace Xamarin.Robotics.Device.CoreLib.Netduino2Tests
             var accel = new Memsic2125 ();
             accel.XPwmInput.ConnectTo (new DigitalInputPin (Pins.GPIO_PIN_D6).Output);
             accel.YPwmInput.ConnectTo (new DigitalInputPin (Pins.GPIO_PIN_D7).Output);
-            scope.Connect (accel.XAccelerationOutput);
-            scope.Connect (accel.YAccelerationOutput);
+            scope.ConnectTo (accel.XAccelerationOutput);
+            scope.ConnectTo (accel.YAccelerationOutput);
 
             var compass = new Grove3AxisDigitalCompass ();
-            scope.Connect (compass.XGaussOutput);
-            scope.Connect (compass.YGaussOutput);
-            scope.Connect (compass.ZGaussOutput);
+            scope.ConnectTo (compass.XGaussOutput);
+            scope.ConnectTo (compass.YGaussOutput);
+            scope.ConnectTo (compass.ZGaussOutput);
 
             var a0 = new AnalogInputPin (AnalogChannels.ANALOG_PIN_A0);
-            scope.Connect (a0.Analog);
+            scope.ConnectTo (a0.Analog);
 
             var sharp = new SharpGP2D12 ();
             a0.Analog.ConnectTo (sharp.AnalogInput);
-            scope.Connect (sharp.DistanceOutput);
+            scope.ConnectTo (sharp.DistanceOutput);
 
             var therm = new Thermistor ();
             therm.AnalogInput.ConnectTo (a0.Analog);
-            scope.Connect (therm.Temperature);
+            scope.ConnectTo (therm.Temperature);
 
             var b = new CelsiusToFahrenheit ();
             therm.Temperature.ConnectTo (b.Celsius);
-            scope.Connect (b.Fahrenheit);
+            scope.ConnectTo (b.Fahrenheit);
 
 
             var bmp = new Bmp085 ();
-            scope.Connect (bmp.Temperature);
+            scope.ConnectTo (bmp.Temperature);
 
             var b2 = new CelsiusToFahrenheit ();
             bmp.Temperature.ConnectTo (b2.Celsius);
-            scope.Connect (b2.Fahrenheit);
+            scope.ConnectTo (b2.Fahrenheit);
 
 
             for (; ; ) {

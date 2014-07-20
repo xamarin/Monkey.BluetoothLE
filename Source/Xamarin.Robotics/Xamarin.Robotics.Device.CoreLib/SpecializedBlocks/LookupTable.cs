@@ -14,8 +14,8 @@ namespace Xamarin.Robotics.SpecializedBlocks
 
         public LookupTable ()
         {
-            Input = new InputPort (this, "Input", Units.Scalar);
-            Output = new OutputPort (this, "Output", Units.Scalar, 0);
+            Input = AddInput ("Input", Units.Scalar);
+            Output = AddOutput ("Output", Units.Scalar, 0);
 
             Input.ValueChanged += (s, e) => SetOutput ();
 
