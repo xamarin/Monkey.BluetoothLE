@@ -49,7 +49,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xamarin.Robotics.Device.CoreLib\Xamarin.Robotics.Device.CoreLib.csproj">
+    <ProjectReference Include="..\Xamarin.Robotics.Micro.Core\Xamarin.Robotics.Micro.Core.csproj">
       <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
       <Name>Xamarin.Robotics.Device.CoreLib</Name>
     </ProjectReference>
