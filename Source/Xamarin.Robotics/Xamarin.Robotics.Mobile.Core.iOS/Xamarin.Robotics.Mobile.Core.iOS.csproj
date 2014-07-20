@@ -41,6 +41,7 @@
     <Folder Include="Bluetooth\LE\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <Compile Include="BluetoothLE\BluetoothLEManager.cs" />
     <Compile Include="Bluetooth\LE\Descriptor.cs" />
