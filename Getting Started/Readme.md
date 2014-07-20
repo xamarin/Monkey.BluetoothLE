@@ -26,30 +26,30 @@ Note that yours should have wires coming off the motor by this point.
 
 Use the small bolts to attache the motors to the plate as shown:
 
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/03.jpg)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/04.jpg)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/05.jpg)
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/03.jpg?raw=true)
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/04.jpg?raw=true)
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/05.jpg?raw=true)
 
 ## Step 4: Attach the Wheels and Tires
 
 Push the tire/wheel assembly onto the motor axle (it takes a bit of pressure and finesse). Then, using 4 small bolts and nuts, attach the front wheel to the front of the plate:
 
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/06.jpg)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/07.jpg)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/08.jpg)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/09.jpg)
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/06.jpg?raw=true)
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/07.jpg?raw=true)
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/08.jpg?raw=true)
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/09.jpg?raw=true)
 
 ## Step 5: Attach the Battery Pack
 
 Using two small bolts and nuts, attach the battery pack to the back of the chassis:
 
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/10.jpg)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/11.jpg)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/12.jpg)
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/10.jpg?raw=true)
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/11.jpg?raw=true)
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/12.jpg?raw=true)
 
 ## Step 6: Run the Motor Wires through the Chassis
 
 This will get them out of the way and make it so they're long enough to reach the motor controller.
 
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/13.jpeg)
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/13.jpeg?raw=true)
 
