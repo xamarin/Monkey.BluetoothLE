@@ -6,3 +6,4 @@ Debugger/bin/
 Debugger/obj/
 MonoDevelop.MicroFramework/obj/
 MonoDevelop.MicroFramework/bin/
+!MonoDevelop.MicroFramework/Debug
