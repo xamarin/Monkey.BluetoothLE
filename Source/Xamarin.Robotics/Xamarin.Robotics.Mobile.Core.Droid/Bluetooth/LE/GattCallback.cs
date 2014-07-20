@@ -1,7 +1,7 @@
 using System;
 using Android.Bluetooth;
 
-namespace Xamarin.Robotics.Core.Bluetooth.LE
+namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 {
 	public class GattCallback : BluetoothGattCallback
 	{

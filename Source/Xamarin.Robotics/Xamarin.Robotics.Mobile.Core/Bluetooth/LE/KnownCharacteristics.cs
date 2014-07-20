@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Xamarin.Robotics.Core.Utils;
+using Xamarin.Robotics.Mobile.Core.Utils;
 using Newtonsoft.Json.Linq;
 using System.Reflection;
 
-namespace Xamarin.Robotics.Core.Bluetooth.LE
+namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 {
 	// Source: https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicsHome.aspx
 	public static class KnownCharacteristics

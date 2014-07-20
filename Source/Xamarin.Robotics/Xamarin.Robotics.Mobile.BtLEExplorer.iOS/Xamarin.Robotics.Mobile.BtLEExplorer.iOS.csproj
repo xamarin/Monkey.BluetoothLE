@@ -6,7 +6,7 @@
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{5A951FB6-FD2D-41E3-BE9F-45DC8C238193}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Xamarin.Robotics.BluetoothLEExplorerForms.iOS</RootNamespace>
+    <RootNamespace>Xamarin.Robotics.Mobile.BtLEExplorer.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>XamarinRoboticsBluetoothLEExplorerFormsiOS</AssemblyName>
   </PropertyGroup>
@@ -130,6 +130,10 @@
     <ProjectReference Include="..\Xamarin.Robotics.Mobile.Core.iOS\Xamarin.Robotics.Mobile.Core.iOS.csproj">
       <Project>{453394D3-F7E4-49E4-8FAE-36F1D988AE15}</Project>
       <Name>Xamarin.Robotics.Mobile.Core.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xamarin.Robotics.Mobile.BtLEExplorer.Core\Xamarin.Robotics.Mobile.BtLEExplorer.Core.csproj">
+      <Project>{A1E14BEA-A9D9-46C5-83AA-8891A13E4837}</Project>
+      <Name>Xamarin.Robotics.Mobile.BtLEExplorer.Core</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

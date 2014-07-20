@@ -6,9 +6,9 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 using Xamarin.Forms;
-using Xamarin.Robotics.Core.Bluetooth.LE;
+using Xamarin.Robotics.Mobile.Core.Bluetooth.LE;
 
-namespace Xamarin.Robotics.BluetoothLEExplorerForms.iOS
+namespace Xamarin.Robotics.Mobile.BtLEExplorer.iOS
 {
 	[Register ("AppDelegate")]
 	public partial class AppDelegate : UIApplicationDelegate

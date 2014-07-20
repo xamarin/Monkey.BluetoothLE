@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Xamarin.Robotics.Core.Bluetooth.LE
+namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 {
 	public interface ICharacteristic
 	{

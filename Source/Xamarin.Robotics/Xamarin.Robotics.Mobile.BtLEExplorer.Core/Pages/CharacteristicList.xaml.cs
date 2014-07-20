@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using Xamarin.Robotics.Core.Bluetooth.LE;
+using Xamarin.Robotics.Mobile.Core.Bluetooth.LE;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-namespace Xamarin.Robotics.BluetoothLEExplorerForms
+namespace Xamarin.Robotics.Mobile.BtLEExplorer
 {	
 	public partial class CharacteristicList : ContentPage
 	{	

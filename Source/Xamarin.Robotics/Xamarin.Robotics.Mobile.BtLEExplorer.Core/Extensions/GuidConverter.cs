@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using System.Globalization;
 
-namespace Xamarin.Robotics.BluetoothLEExplorerForms
+namespace Xamarin.Robotics.Mobile.BtLEExplorer
 {
 	public class GuidConverter : IValueConverter
 	{

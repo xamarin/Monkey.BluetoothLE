@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Android.Bluetooth;
 using System.Threading.Tasks;
 
-namespace Xamarin.Robotics.Core.Bluetooth.LE
+namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 {
 	/// <summary>
 	/// TODO: this really should be a singleton.

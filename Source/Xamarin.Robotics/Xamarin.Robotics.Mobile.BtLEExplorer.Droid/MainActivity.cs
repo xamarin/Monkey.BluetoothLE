@@ -11,9 +11,9 @@ using Xamarin.Forms.Platform.Android;
 using Android.Content.PM;
 
 
-namespace Xamarin.Robotics.BluetoothLEExplorerForms.Droid
+namespace Xamarin.Robotics.Mobile.BtLEExplorer.Droid
 {
-	[Activity (Label = "Xamarin.Robotics.BluetoothLEExplorerForms.Android.Android", 
+	[Activity (Label = "Xamarin.Robotics.Mobile.BtLEExplorer.Android.Android", 
 		MainLauncher = true, 
 		ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 	public class MainActivity : AndroidActivity

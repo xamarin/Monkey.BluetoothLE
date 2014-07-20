@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 
 
-namespace Xamarin.Robotics.Core.Utils
+namespace Xamarin.Robotics.Mobile.Core.Utils
 {
 	/// <summary>
 	/// Utility class that can be used to find and load embedded resources into memory.

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MonoTouch.Foundation;
 
-namespace Xamarin.Robotics.Core.Bluetooth.LE
+namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 {
 	public class Characteristic : ICharacteristic
 	{

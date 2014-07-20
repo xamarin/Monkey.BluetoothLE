@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using Xamarin.Robotics.Core.Bluetooth.LE;
+using Xamarin.Robotics.Mobile.Core.Bluetooth.LE;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
 
-namespace Xamarin.Robotics.BluetoothLEExplorerForms
+namespace Xamarin.Robotics.Mobile.BtLEExplorer
 {	
 	public partial class DeviceList : ContentPage
 	{	

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
-using Xamarin.Robotics.Core.Bluetooth.LE;
+using Xamarin.Robotics.Mobile.Core.Bluetooth.LE;
 using System.Diagnostics;
 
-namespace Xamarin.Robotics.BluetoothLEExplorerForms
+namespace Xamarin.Robotics.Mobile.BtLEExplorer
 {	
 	/* 
 	* this page is specifically for the on/off capabilities of the 

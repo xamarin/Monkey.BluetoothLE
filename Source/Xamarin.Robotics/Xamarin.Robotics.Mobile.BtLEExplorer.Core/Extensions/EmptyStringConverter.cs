@@ -2,7 +2,7 @@
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace Xamarin.Robotics.BluetoothLEExplorerForms
+namespace Xamarin.Robotics.Mobile.BtLEExplorer
 {
 	public class EmptyStringConverter : IValueConverter
 	{

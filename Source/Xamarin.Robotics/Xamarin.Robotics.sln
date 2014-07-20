@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.Mobile.BtL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.Micro.Core", "Xamarin.Robotics.Micro.Core\Xamarin.Robotics.Micro.Core.csproj", "{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.Device.CoreLib.Netduino2Tests", "Xamarin.Robotics.Micro.Core.Netduino2Tests\Xamarin.Robotics.Device.CoreLib.Netduino2Tests.csproj", "{C12A111F-28FB-45AB-8F7E-609255CD2D7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.Micro.Core.Netduino2Tests", "Xamarin.Robotics.Micro.Core.Netduino2Tests\Xamarin.Robotics.Micro.Core.Netduino2Tests.csproj", "{C12A111F-28FB-45AB-8F7E-609255CD2D7B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Robotics.Mobile.BtLEExplorer.Core", "Xamarin.Robotics.Mobile.BtLEExplorer.Core\Xamarin.Robotics.Mobile.BtLEExplorer.Core.csproj", "{A1E14BEA-A9D9-46C5-83AA-8891A13E4837}"
 EndProject

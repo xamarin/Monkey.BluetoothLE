@@ -3,7 +3,7 @@ using MonoTouch.CoreBluetooth;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Xamarin.Robotics.Core.iOS
+namespace Xamarin.Robotics.Mobile.Core.iOS
 {
 	/// <summary>
 	/// Manager class for Bluetooth Low Energy connectivity. Adds functionality to the 

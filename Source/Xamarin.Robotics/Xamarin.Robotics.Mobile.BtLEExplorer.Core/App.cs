@@ -1,8 +1,8 @@
 ﻿using System;
 using Xamarin.Forms;
-using Xamarin.Robotics.Core.Bluetooth.LE;
+using Xamarin.Robotics.Mobile.Core.Bluetooth.LE;
 
-namespace Xamarin.Robotics.BluetoothLEExplorerForms
+namespace Xamarin.Robotics.Mobile.BtLEExplorer
 {
 	public class App
 	{

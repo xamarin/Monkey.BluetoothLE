@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 using System.Diagnostics;
-using Xamarin.Robotics.Core.Bluetooth.LE;
+using Xamarin.Robotics.Mobile.Core.Bluetooth.LE;
 
-namespace Xamarin.Robotics.BluetoothLEExplorerForms
+namespace Xamarin.Robotics.Mobile.BtLEExplorer
 {	
 	public partial class CharacteristicDetail_TISensor : ContentPage
 	{	

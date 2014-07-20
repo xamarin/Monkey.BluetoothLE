@@ -4,9 +4,9 @@ using System.Text;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Xamarin.Robotics.Core.Utils;
+using Xamarin.Robotics.Mobile.Core.Utils;
 
-namespace Xamarin.Robotics.Core.Bluetooth.LE
+namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 {
 	// Source: https://developer.bluetooth.org/gatt/services/Pages/ServicesHome.aspx
 	public static class KnownServices

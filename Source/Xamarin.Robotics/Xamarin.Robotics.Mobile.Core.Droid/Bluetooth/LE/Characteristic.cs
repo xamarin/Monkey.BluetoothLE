@@ -7,7 +7,7 @@ using Java.Util;
 using Android.Media;
 using System.Threading.Tasks;
 
-namespace Xamarin.Robotics.Core.Bluetooth.LE
+namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 {
 	public class Characteristic : ICharacteristic
 	{

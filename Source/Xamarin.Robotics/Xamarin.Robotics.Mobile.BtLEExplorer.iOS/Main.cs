@@ -5,7 +5,7 @@ using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
-namespace Xamarin.Robotics.BluetoothLEExplorerForms.iOS
+namespace Xamarin.Robotics.Mobile.BtLEExplorer.iOS
 {
 	public class Application
 	{
