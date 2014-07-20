@@ -8,7 +8,7 @@
     <ProjectGuid>{009D5CF4-DF58-47F9-A00F-ABD25D8324FC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Xamarin.Robotics</RootNamespace>
-    <AssemblyName>Xamarin.Robotics.Device.CoreLib.Net45</AssemblyName>
+    <AssemblyName>Xamarin.Robotics.Micro.Core.Net45</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -6,9 +6,9 @@
     <ProjectGuid>{453394D3-F7E4-49E4-8FAE-36F1D988AE15}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Xamarin.Robotics.Core</RootNamespace>
+    <RootNamespace>Xamarin.Robotics.Mobile.Core</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>Xamarin.Robotics.Core.iOS</AssemblyName>
+    <AssemblyName>Xamarin.Robotics.Mobile.Core.iOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,15 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="TODO.MD" />
-    <None Include="..\Xamarin.Robotics.Core\BLE API Notes.md">
-      <Link>BLE API Notes.md</Link>
-    </None>
     <None Include="BluetoothLE\Readme.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xamarin.Robotics.Core\Xamarin.Robotics.Core.csproj">
+    <ProjectReference Include="..\Xamarin.Robotics.Mobile.Core\Xamarin.Robotics.Mobile.Core.csproj">
       <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
-      <Name>Xamarin.Robotics.Core</Name>
+      <Name>Xamarin.Robotics.Mobile.Core</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

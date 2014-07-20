@@ -56,20 +56,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xamarin.Robotics.BluetoothLEExplorerForms\Xamarin.Robotics.BluetoothLEExplorerForms.csproj">
-      <Project>{A1E14BEA-A9D9-46C5-83AA-8891A13E4837}</Project>
-      <Name>Xamarin.Robotics.BluetoothLEExplorerForms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Xamarin.Robotics.Core\Xamarin.Robotics.Core.csproj">
-      <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
-      <Name>Xamarin.Robotics.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Xamarin.Robotics.Core.Droid\Xamarin.Robotics.Core.Droid.csproj">
-      <Project>{0040B1B9-6E22-438A-A6A7-A5A00B2B89B1}</Project>
-      <Name>Xamarin.Robotics.Core.Droid</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,4 +76,18 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.2.1.6229\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.1.6229\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
+  <ItemGroup>
+    <ProjectReference Include="..\Xamarin.Robotics.Mobile.BtLEExplorer.Core\Xamarin.Robotics.BtLEExplorer.Core.csproj">
+      <Project>{A1E14BEA-A9D9-46C5-83AA-8891A13E4837}</Project>
+      <Name>Xamarin.Robotics.BtLEExplorer.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xamarin.Robotics.Mobile.Core\Xamarin.Robotics.Mobile.Core.csproj">
+      <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
+      <Name>Xamarin.Robotics.Mobile.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xamarin.Robotics.Mobile.Core.Droid\Xamarin.Robotics.Mobile.Core.Droid.csproj">
+      <Project>{0040B1B9-6E22-438A-A6A7-A5A00B2B89B1}</Project>
+      <Name>Xamarin.Robotics.Mobile.Core.Droid</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

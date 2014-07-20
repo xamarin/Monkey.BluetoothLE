@@ -56,12 +56,6 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.2.1.6229\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.1.6229\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <ItemGroup>
-    <ProjectReference Include="..\Xamarin.Robotics.Core\Xamarin.Robotics.Core.csproj">
-      <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
-      <Name>Xamarin.Robotics.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Pages\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
@@ -95,5 +89,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xamarin.Robotics.Mobile.Core\Xamarin.Robotics.Mobile.Core.csproj">
+      <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
+      <Name>Xamarin.Robotics.Mobile.Core</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
