@@ -53,3 +53,31 @@ This will get them out of the way and make it so they're long enough to reach th
 
 ![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/13.jpeg?raw=true)
 
+## Step 7: Attach the Netduino and Breadboard to the Chassis
+
+Using double-sided tape (also to be had from radio-shack), put the netduino and the breadboard (already has tape on it) on the chassis. Location is up to you, but it may be better to put the breadboard towards the front, in case you want to attach some sensors directly to it.
+
+# Part 2: Wiring the Robot Up
+
+## Step 1: Wire up the Motors
+
+Run the motor wires to the M1 and M2 headers, so that each motor has two wires going to a single header group:
+
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/14.jpeg?raw=true)
+
+The correct order can be adjusted later when you run the controller.
+
+## Step 2: Attach the Headers to the Motor Controller Shield and Mount on the Netduino
+
+The motor controller shield comes with the stacking headers unattached. :( You'll need to solder them on to mount it to the Netduino. They need to be soldered on the outside strip of the board. Once you've soldered them, you can plug it directly into the Netduino.
+
+
+## Step 3: Wire up the Power
+
+The motor controller board will power the arduino, but you must run the power from the batteries to the Motor Controller Shield as show in the image above.
+
+# Part 3: Deploying Robot Code
+
+Once you have the robot built and wired, you can deploy the code in the [TestTwoWheeledRobot.cs](https://github.com/xamarin/Xamarin.Robotics/tree/master/Source/Xamarin.Robotics/Xamarin.Robotics.Micro.Core.Netduino2Tests) to make it go. Note there is some obstacle avoidance code there if you have an IR sensor attached. Ping Frank Krueger if you want to wire that up. Otherwise, you can just delete that code.
+
+The trick here is to leave the jumper off the Motor Controller Board until you're ready to go. Once you place the jumper on the board, it'll allow the power to go to the motors.
