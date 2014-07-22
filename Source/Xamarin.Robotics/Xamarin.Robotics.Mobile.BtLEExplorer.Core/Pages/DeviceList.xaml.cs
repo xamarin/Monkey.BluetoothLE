@@ -28,7 +28,9 @@ namespace Xamarin.Robotics.Mobile.BtLEExplorer
 
 			adapter.ScanTimeoutElapsed += (sender, e) => {
 				adapter.StopScanningForDevices(); // not sure why it doesn't stop already, if the timeout elapses... or is this a fake timeout we made?
-				DisplayAlert("Timeout", "Bluetooth scan timeout elapsed", "OK", null);
+				Device.BeginInvokeOnMainThread ( () => {
+					DisplayAlert("Timeout", "Bluetooth scan timeout elapsed", "OK", "");
+				});
 			};
 
 			ScanAllButton.Activated += (sender, e) => {
@@ -44,6 +46,7 @@ namespace Xamarin.Robotics.Mobile.BtLEExplorer
 			if (((ListView)sender).SelectedItem == null) {
 				return;
 			}
+			Debug.WriteLine (" xxxxxxxxxxxx  OnItemSelected " + e.SelectedItem.ToString ());
 			StopScanning ();
 
 			var device = e.SelectedItem as IDevice;

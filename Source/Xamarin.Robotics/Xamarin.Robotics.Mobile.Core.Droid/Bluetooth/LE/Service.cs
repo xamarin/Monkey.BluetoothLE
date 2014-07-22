@@ -75,7 +75,9 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 		public event EventHandler CharacteristicsDiscovered = delegate {}; // not implemented
 		public void DiscoverCharacteristics()
 		{
-			throw new NotImplementedException ("This is only in iOS right now, needs to be added to Android");
+
+			//throw new NotImplementedException ("This is only in iOS right now, needs to be added to Android");
+			this.CharacteristicsDiscovered (this, new EventArgs ());
 		}
 	}
 }

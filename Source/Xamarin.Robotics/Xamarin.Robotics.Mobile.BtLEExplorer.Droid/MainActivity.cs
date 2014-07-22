@@ -24,6 +24,9 @@ namespace Xamarin.Robotics.Mobile.BtLEExplorer.Droid
 
 			Xamarin.Forms.Forms.Init (this, bundle);
 
+			var a = new Xamarin.Robotics.Mobile.Core.Bluetooth.LE.Adapter ();
+			App.SetAdapter (a);
+
 			SetPage (App.GetMainPage ());
 		}
 	}
