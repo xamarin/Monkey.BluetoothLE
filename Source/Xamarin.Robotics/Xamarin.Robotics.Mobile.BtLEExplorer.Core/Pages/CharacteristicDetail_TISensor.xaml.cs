@@ -21,9 +21,11 @@ namespace Xamarin.Robotics.Mobile.BtLEExplorer
 		{
 			InitializeComponent ();
 			this.characteristic = characteristic;
+
+			Title = characteristic.Name;
 		}
 
-		protected override void OnAppearing ()
+		protected override async void OnAppearing ()
 		{
 			base.OnAppearing ();
 
@@ -40,6 +42,9 @@ namespace Xamarin.Robotics.Mobile.BtLEExplorer
 
 				// request the value to be read
 				characteristic.StartUpdates ();
+			} else if (characteristic.CanRead) {
+				var c = await characteristic.ReadAsync();
+				UpdateDisplay(c);
 			}
 		}
 		protected override void OnDisappearing() 
