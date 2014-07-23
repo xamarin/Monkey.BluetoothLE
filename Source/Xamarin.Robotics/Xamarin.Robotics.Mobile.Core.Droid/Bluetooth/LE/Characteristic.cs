@@ -168,9 +168,18 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 				// odd way to do things to me, but I'm a Bluetooth newbie. Google has a example here (but ono real explaination as
 				// to what is going on):
 				// http://developer.android.com/guide/topics/connectivity/bluetooth-le.html#notification
-				BluetoothGattDescriptor descriptor = _nativeCharacteristic.Descriptors[0];
-				descriptor.SetValue(BluetoothGattDescriptor.EnableNotificationValue.ToArray());
-				_gatt.WriteDescriptor(descriptor);
+				//
+				// HACK: further detail, in the Xamarin.Forms client this only seems to work with a breakpoint on it
+				// (ie. it probably needs to wait until the above 'SetCharacteristicNofication' is done before doing this...?????? [CD]
+				System.Threading.Thread.Sleep(100); // HACK: did i mention this was a hack?????????? [CD] 50ms was too short, 100ms seems to work
+
+				if (_nativeCharacteristic.Descriptors.Count > 0) {
+					BluetoothGattDescriptor descriptor = _nativeCharacteristic.Descriptors [0];
+					descriptor.SetValue (BluetoothGattDescriptor.EnableNotificationValue.ToArray ());
+					_gatt.WriteDescriptor (descriptor);
+				} else {
+					Console.WriteLine ("RequestValue, FAILED: _nativeCharacteristic.Descriptors was empty, not sure why");
+				}
 			}
 
 			Console.WriteLine ("RequestValue, Succesful: " + successful.ToString());

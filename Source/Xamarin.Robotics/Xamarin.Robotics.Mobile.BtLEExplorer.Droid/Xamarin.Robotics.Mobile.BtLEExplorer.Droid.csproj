@@ -74,6 +74,8 @@
     <AndroidResource Include="Resources\drawable\bluetooth.png" />
     <AndroidResource Include="Resources\drawable\glyphish_29_heart.png" />
     <AndroidResource Include="Resources\drawable\glyphish_31_circle_x.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\Icon.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\Icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.2.1.6229\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.1.6229\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
@@ -90,5 +92,9 @@
       <Project>{A1E14BEA-A9D9-46C5-83AA-8891A13E4837}</Project>
       <Name>Xamarin.Robotics.Mobile.BtLEExplorer.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\drawable-xhdpi\" />
+    <Folder Include="Resources\drawable-xxhdpi\" />
   </ItemGroup>
 </Project>
