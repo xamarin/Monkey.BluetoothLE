@@ -51,7 +51,6 @@ namespace Xamarin.Robotics.Micro.SpecializedBlocks
             if (connections != null) {
                 foreach (var c in connections) {
                     c.Connect ();
-                    c.PropogateValue ();
                 }
             }
         }

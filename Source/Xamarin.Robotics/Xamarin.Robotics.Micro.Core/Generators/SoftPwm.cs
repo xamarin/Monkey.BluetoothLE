@@ -4,9 +4,11 @@ using System.Threading;
 namespace Xamarin.Robotics.Micro.Generators
 {
     /// <summary>
-    /// Represents a PulseWidthModulation Generator
+    /// A Pulse Width Modulation Generator that can
+    /// generates waveforms in software. The maximum
+    /// Frequency is about 100 Hz.
     /// </summary>
-	public class Pwm : BlockBase
+	public class SoftPwm : BlockBase
 	{
 		public OutputPort Output { get; private set; }
 
@@ -15,7 +17,7 @@ namespace Xamarin.Robotics.Micro.Generators
 
 		Thread th;
 
-		public Pwm ()
+		public SoftPwm ()
 		{
 			Output = AddOutput ("Output", Units.Digital);
 			DutyCycleInput = AddInput ("DutyCycleInput", Units.Ratio, 0.5);

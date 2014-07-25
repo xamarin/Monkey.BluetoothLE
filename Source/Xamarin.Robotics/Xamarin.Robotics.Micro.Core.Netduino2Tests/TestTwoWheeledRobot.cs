@@ -93,7 +93,21 @@ namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
         }
     }
 
-    public class TestDrunkenRobot
+    public class TestDrunkenRobotWithHbridge
+    {
+        public static void Run ()
+        {
+            var leftMotor = HBridgeMotor.CreateForNetduino (PWMChannels.PWM_PIN_D3, Pins.GPIO_PIN_D1, Pins.GPIO_PIN_D2);
+            var rightMotor = HBridgeMotor.CreateForNetduino (PWMChannels.PWM_PIN_D6, Pins.GPIO_PIN_D4, Pins.GPIO_PIN_D5);
+
+            var robot = new TwoWheeledRobot (leftMotor, rightMotor);
+
+            new SineWave (0.1, 0.5, 0.5, updateFrequency: 9).Output.ConnectTo (robot.SpeedInput);
+            new SineWave (0.5, 0.333, 0, updateFrequency: 11).Output.ConnectTo (robot.DirectionInput);
+        }
+    }
+
+    public class TestDrunkenRobotWithMotorShield
     {
         public static void Run ()
         {
@@ -105,15 +119,16 @@ namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
         }
     }
 
-    public class TestWallBouncingRobot
+    public class TestWallBouncingRobotWithHBridge
     {
         public static void Run ()
         {
             //
             // Start with the basic robot
             //
-            var shield = new AdafruitMotorShield ();
-            var robot = new TwoWheeledRobot (shield.GetMotor (1), shield.GetMotor (2));
+            var leftMotor = HBridgeMotor.CreateForNetduino (PWMChannels.PWM_PIN_D3, Pins.GPIO_PIN_D1, Pins.GPIO_PIN_D2);
+            var rightMotor = HBridgeMotor.CreateForNetduino (PWMChannels.PWM_PIN_D6, Pins.GPIO_PIN_D4, Pins.GPIO_PIN_D5);
+            var robot = new TwoWheeledRobot (leftMotor, rightMotor);
 
             //
             // Create a range finder and scope it
@@ -154,7 +169,7 @@ namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
                     new Connection (new Constant (0).Output, robot.SpinInput),
                 },
                 new[] {
-                    new Connection (new Constant (0.3).Output, robot.SpinInput),
+                    new Connection (new Constant (0.6).Output, robot.SpinInput),
                     new Connection (new Constant (0).Output, robot.DirectionInput),
                     new Connection (new Constant (0).Output, robot.SpeedInput),
                 });

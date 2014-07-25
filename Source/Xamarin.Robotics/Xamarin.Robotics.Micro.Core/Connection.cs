@@ -33,13 +33,5 @@ namespace Xamarin.Robotics.Micro
         {
             From.DisconnectFrom (To);
         }
-
-        /// <summary>
-        /// Forces setting From's value on To.
-        /// </summary>
-        public void PropogateValue ()
-        {
-            To.Value = From.Value;
-        }
     }
 }

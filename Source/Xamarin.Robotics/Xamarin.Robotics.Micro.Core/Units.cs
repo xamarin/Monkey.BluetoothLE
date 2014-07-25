@@ -20,6 +20,11 @@ namespace Xamarin.Robotics.Micro
         Digital,
 
         /// <summary>
+        /// Values greater than or equal to 0.5 are true. Others are false.
+        /// </summary>
+        Boolean,
+
+        /// <summary>
         /// Measured in Meters.
         /// </summary>
         Distance,

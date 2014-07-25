@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>Xamarin.Robotics.Micro.Core</AssemblyName>
     <OutputType>Library</OutputType>
-    <RootNamespace>Xamarin.Robotics</RootNamespace>
+    <RootNamespace>Xamarin.Robotics.Micro</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -34,12 +34,16 @@
     <Compile Include="ConfigPort.cs" />
     <Compile Include="Connection.cs" />
     <Compile Include="Devices\Netduino\AnalogInputPin.cs" />
+    <Compile Include="Devices\Netduino\PwmOutputPin.cs" />
     <Compile Include="Devices\Netduino\DigitalInputPin.cs" />
+    <Compile Include="Devices\Netduino\DigitalOutputPin.cs" />
     <Compile Include="Generators\Constant.cs" />
-    <Compile Include="Generators\Pwm.cs" />
+    <Compile Include="Generators\IPwm.cs" />
+    <Compile Include="Generators\SoftPwm.cs" />
     <Compile Include="IBlock.cs" />
     <Compile Include="InputPort.cs" />
     <Compile Include="Motors\AdafruitMotorShield.cs" />
+    <Compile Include="Motors\HBridgeMotor.cs" />
     <Compile Include="Motors\IDCMotor.cs" />
     <Compile Include="OutputPort.cs" />
     <Compile Include="Port.cs" />

@@ -147,6 +147,9 @@ namespace Xamarin.Robotics.Micro
 				return;
 			connectedPorts.Add (other);
 			other.connectedPorts.Add (this);
+
+            // Propagate
+            other.Value = this.Value;
 		}
 
         /// <summary>

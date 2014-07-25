@@ -9,7 +9,8 @@ namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
 		{
             // TestSensors.Run ();
             // TestDrunkenRobot.Run ();
-            TestWallBouncingRobot.Run ();
+            TestWallBouncingRobotWithHBridge.Run ();
+            // TestDrunkenRobotWithHbridge.Run ();
 		}
 	}
 }

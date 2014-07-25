@@ -147,6 +147,11 @@ namespace Xamarin.Robotics.Micro.Motors
         /// </summary>
         public InputPort SpeedInput { get; private set; }
 
+        /// <summary>
+        /// When true, the wheels spin "freely"
+        /// </summary>
+        public InputPort IsNeutralInput { get; private set; }
+
         public AdafruitDCMotor (AdafruitMotorShield shield, byte pwmPin, byte in1Pin, byte in2Pin)
         {
             this.shield = shield;
@@ -155,6 +160,7 @@ namespace Xamarin.Robotics.Micro.Motors
             this.in2Pin = in2Pin;
 
             SpeedInput = AddInput ("SpeedInput", Units.Ratio);
+            IsNeutralInput = AddInput ("IsNeutralInput", Units.Boolean);
             
             SetDirection ();
             SetSpeed ();
@@ -178,26 +184,28 @@ namespace Xamarin.Robotics.Micro.Motors
 
         void SetDirection ()
         {
-            var d = SpeedInput.Value;
-
-            // Note, always switch low (false) first to avoid glitches
-
-            if (d < 0) {
-                // Reverse
+            if (IsNeutralInput.Value >= 0.5) {
                 shield.SetPin (in1Pin, false);
-                shield.SetPin (in2Pin, true);
-                isReversed = true;
+                shield.SetPin (in2Pin, false);
             }
             else {
-                // Forward
-                shield.SetPin (in2Pin, false);
-                shield.SetPin (in1Pin, true);
-                isReversed = false;
-            }
+                var d = SpeedInput.Value;
 
-            // Neutral:
-            //shield.SetPin (in1Pin, false);
-            //shield.SetPin (in2Pin, false);
+                // Note, always switch low (false) first to avoid glitches
+
+                if (d < 0) {
+                    // Reverse
+                    shield.SetPin (in1Pin, false);
+                    shield.SetPin (in2Pin, true);
+                    isReversed = true;
+                }
+                else {
+                    // Forward
+                    shield.SetPin (in2Pin, false);
+                    shield.SetPin (in1Pin, true);
+                    isReversed = false;
+                }
+            }
         }
     }
 }
