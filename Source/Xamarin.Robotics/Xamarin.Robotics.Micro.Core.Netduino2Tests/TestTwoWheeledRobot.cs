@@ -10,86 +10,58 @@ using Xamarin.Robotics.Micro.SpecializedBlocks;
 
 namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
 {
-    public class TwoWheeledRobot : BlockBase
+    public class TestTwoEyedRobotWithHbridge
     {
-        IDCMotor leftMotor;
-        IDCMotor rightMotor;
-
-        /// <summary>
-        /// Speed from 0 to 1.
-        /// </summary>
-        public InputPort SpeedInput { get; private set; }
-
-        /// <summary>
-        /// Direction to travel. 0 = straight ahead. -1 if full left turn, +1 is full right turn.
-        /// </summary>
-        public InputPort DirectionInput { get; private set; }
-
-        /// <summary>
-        /// Direction to spin. 0 = no spinning. -1 if full left spinning, +1 is full right spinning.
-        /// Spinning is an exclusive action of driving with Speed and Direction
-        /// </summary>
-        public InputPort SpinInput { get; private set; }
-
-        public TwoWheeledRobot (IDCMotor leftMotor, IDCMotor rightMotor)
+        public static void Run ()
         {
-            this.leftMotor = leftMotor;
-            this.rightMotor = rightMotor;
+            var scope = new DebugScope ();
 
-            DirectionInput = AddInput ("DirectionInput", Units.Scalar);
-            SpeedInput = AddInput ("SpeedInput", Units.Ratio);
-            SpinInput = AddInput ("SpinInput", Units.Scalar);
+            //
+            // Create the robot
+            //
+            var leftMotor = HBridgeMotor.CreateForNetduino (PWMChannels.PWM_PIN_D3, Pins.GPIO_PIN_D1, Pins.GPIO_PIN_D2);
+            leftMotor.CalibrationInput.Value = 1;
 
-            Update ();
+            var rightMotor = HBridgeMotor.CreateForNetduino (PWMChannels.PWM_PIN_D6, Pins.GPIO_PIN_D4, Pins.GPIO_PIN_D5);
+            rightMotor.CalibrationInput.Value = 1;
 
-            SpeedInput.ValueChanged += (s, e) => Update ();
-            DirectionInput.ValueChanged += (s, e) => Update ();
-            SpinInput.ValueChanged += (s, e) => Update ();
-        }
+            //
+            // Create his eyes
+            //
+            var leftRange = new SharpGP2D12 { Name = "LeftRange" };
+            var rightRange = new SharpGP2D12 { Name = "RightRange" };
+            leftRange.AnalogInput.ConnectTo (new AnalogInputPin (AnalogChannels.ANALOG_PIN_A0, 10).Analog);
+            rightRange.AnalogInput.ConnectTo (new AnalogInputPin (AnalogChannels.ANALOG_PIN_A1, 10).Analog);
+            
+            scope.ConnectTo (leftRange.DistanceOutput);
+            scope.ConnectTo (rightRange.DistanceOutput);
 
-        void Update ()
-        {
-            var spinning = System.Math.Abs (SpinInput.Value) > 0.01;
-            if (spinning) {
+            //
+            // Now some intelligence
+            // Each motor is driven by the distance sensor's reading
+            //
+            var nearDist = 0.1;
+            var farDist = 0.5;
+            var minSpeed = 0.4;
 
-                var rate = System.Math.Min (System.Math.Abs (SpinInput.Value), 1);
-
-                if (SpinInput.Value < 0) {
-                    leftMotor.SpeedInput.Value = -rate;
-                    rightMotor.SpeedInput.Value = rate;
+            TransformFunction distanceToSpeed = d => {
+                if (d < nearDist) {
+                    return -minSpeed;
                 }
-                else {
-                    leftMotor.SpeedInput.Value = rate;
-                    rightMotor.SpeedInput.Value = -rate;
+                if (d > farDist) {
+                    return 1;
                 }
+                var a = (d - nearDist) / (farDist - nearDist);
+                return a * (1 - minSpeed) + minSpeed;
+            };
 
-            }
-            else {
-                // Debug.Print ("Robot Direction = " + DirectionInput.Value);
+            var leftSpeed = new Transform (distanceToSpeed);
+            leftSpeed.Input.ConnectTo (leftRange.DistanceOutput);
+            leftSpeed.Output.ConnectTo (leftMotor.SpeedInput);
 
-                // The motors always move forwards
-                var dir = System.Math.Max (System.Math.Min (DirectionInput.Value, 1), -1);
-                var spd = System.Math.Max (System.Math.Min (SpeedInput.Value, 1), 0);
-
-                if (System.Math.Abs (dir) < 0.01) {
-                    leftMotor.SpeedInput.Value = spd;
-                    rightMotor.SpeedInput.Value = spd;
-                    return;
-                }
-
-                // We turn by slowing one wheel down in proportion
-                // to the steepness of the turn
-                if (dir < 0) {
-                    // To turn left, favor the right wheel
-                    leftMotor.SpeedInput.Value = spd * (1 + dir);
-                    rightMotor.SpeedInput.Value = spd;
-                }
-                else {
-                    // To turn right, favor the left wheel
-                    leftMotor.SpeedInput.Value = spd;
-                    rightMotor.SpeedInput.Value = spd * (1 - dir);
-                }
-            }
+            var rightSpeed = new Transform (distanceToSpeed);
+            rightSpeed.Input.ConnectTo (rightRange.DistanceOutput);
+            rightSpeed.Output.ConnectTo (rightMotor.SpeedInput);
         }
     }
 

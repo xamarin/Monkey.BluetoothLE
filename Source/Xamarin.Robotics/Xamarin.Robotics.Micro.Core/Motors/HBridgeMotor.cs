@@ -12,6 +12,12 @@ namespace Xamarin.Robotics.Micro.Motors
         public InputPort SpeedInput { get; private set; }
 
         /// <summary>
+        /// Not all motors are created equally. This number scales the Speed Input so
+        /// that you can match motor speeds without changing your logic.
+        /// </summary>
+        public InputPort CalibrationInput { get; private set; }
+
+        /// <summary>
         /// When true, the wheels spin "freely"
         /// </summary>
         public InputPort IsNeutralInput { get; private set; }
@@ -29,10 +35,13 @@ namespace Xamarin.Robotics.Micro.Motors
         public OutputPort PwmDutyCycleOutput { get; private set; }
         public OutputPort PwmFrequencyOutput { get; private set; }
 
+        
+
         const double DefaultFrequency = 1600;
 
         public HBridgeMotor (IPwm pwm = null)
         {
+            CalibrationInput = AddInput ("CalibrationInput", Units.Ratio, 1);
             SpeedInput = AddInput ("SpeedInput", Units.Ratio, 0);
             IsNeutralInput = AddInput ("IsNeutralInput", Units.Boolean, 0);
 
@@ -60,8 +69,9 @@ namespace Xamarin.Robotics.Micro.Motors
                 PwmDutyCycleOutput.Value = 0;
             }
             else {
-                var speed = System.Math.Min (System.Math.Abs (SpeedInput.Value), 1);
-                var rev = SpeedInput.Value < 0;
+                var calSpeed = SpeedInput.Value * CalibrationInput.Value;
+                var speed = System.Math.Min (System.Math.Abs (calSpeed), 1);
+                var rev = calSpeed < 0;
                 
                 A1Output.Value = rev ? 0 : 1;
                 A2Output.Value = rev ? 1 : 0;
