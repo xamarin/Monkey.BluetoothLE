@@ -36,6 +36,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="TestSensors.cs" />
     <Compile Include="TestTwoWheeledRobot.cs" />
+    <Compile Include="TestTwoWheeledRobotShield.cs" />
     <Compile Include="TwoWheeledRobot.cs" />
   </ItemGroup>
   <ItemGroup>
