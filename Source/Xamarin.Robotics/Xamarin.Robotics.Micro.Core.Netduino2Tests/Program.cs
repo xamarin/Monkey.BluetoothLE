@@ -18,12 +18,17 @@ namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
                 Thread.Sleep(250);
             }
 
-            //TestDrunkenRobotWithMotorShield.Run();
+            // MotorShield (deprecated)
+            // TestDrunkenRobotWithMotorShield.Run();
 
             // TestSensors.Run ();
             // TestDrunkenRobot.Run ();
             // TestWallBouncingRobotWithHBridge.Run ();
+            
+            // No eyes, just motors
             // TestDrunkenRobotWithHbridge.Run ();
+            
+            // Requires IR sensors
             TestTwoEyedRobotWithHbridge.Run ();
 		}
 	}
