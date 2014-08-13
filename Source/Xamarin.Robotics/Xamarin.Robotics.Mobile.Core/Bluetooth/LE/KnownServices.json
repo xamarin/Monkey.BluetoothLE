@@ -32,5 +32,8 @@
 	"f000aa50-0451-4000-b000-000000000000":"TI SensorTag Gyroscope",
 	"f000aa60-0451-4000-b000-000000000000":"TI SensorTag Test",
 	"f000ccc0-0451-4000-b000-000000000000":"TI SensorTag Connection Control",
-	"f000ffc0-0451-4000-b000-000000000000":"TI SensorTag OvertheAir Download"
+	"f000ffc0-0451-4000-b000-000000000000":"TI SensorTag OvertheAir Download",
+
+
+	"713d0000-503e-4c75-ba94-3148f18d941e":"TXRX_SERV_UUID RedBearLabs Biscuit Service"
 }
