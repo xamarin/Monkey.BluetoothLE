@@ -18,7 +18,7 @@
 	      	<StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">	
 		     	<StackLayout Padding="5,0,0,0" VerticalOptions="StartAndExpand" Orientation="Vertical">
 		        	<Label Text="{Binding Name, Converter={StaticResource strConverter}}" YAlign="Center" Font="Medium" />
-		        	<Label Text="(descriptors: todo)" YAlign="Center" Font="Micro" />
+		        	<Label Text="{Binding ID, Converter={StaticResource guidConverter}}" YAlign="Center" Font="Micro" />
 		        </StackLayout>
 	         </StackLayout>
 	      </ViewCell>
