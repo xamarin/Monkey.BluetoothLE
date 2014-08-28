@@ -1,19 +1,14 @@
 ﻿using System;
 using Xamarin.Forms;
+using Xamarin.Robotics.Mobile.Core.Bluetooth.LE;
 
-namespace Xamarin.Robotics.Mobile.Robotroller.Core
+namespace Xamarin.Robotics.Mobile.Robotroller
 {
 	public class App
 	{
-		public static Page GetMainPage ()
+		public static Page GetMainPage (IAdapter adapter)
 		{	
-			return new ContentPage { 
-				Content = new Label {
-					Text = "Hello, Forms!",
-					VerticalOptions = LayoutOptions.CenterAndExpand,
-					HorizontalOptions = LayoutOptions.CenterAndExpand,
-				},
-			};
+			return new NavigationPage (new DeviceList (adapter));
 		}
 	}
 }

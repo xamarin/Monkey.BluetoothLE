@@ -50,7 +50,6 @@
     <Compile Include="Bluetooth\LE\KnownDescriptors.cs" />
     <Compile Include="Bluetooth\LE\Extensions.cs" />
     <Compile Include="Bluetooth\LE\LEStream.cs" />
-    <Compile Include="Bluetooth\LE\DeviceEx.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

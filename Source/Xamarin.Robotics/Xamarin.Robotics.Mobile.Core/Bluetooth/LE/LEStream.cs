@@ -2,6 +2,8 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Diagnostics;
+using System.Threading;
 
 namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -11,8 +13,15 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 
 		readonly IDevice device;
 		IService service;
+		ICharacteristic receive;
+		ICharacteristic transmit;
+		ICharacteristic reset;
 
-		static readonly Guid SerialServiceId = new Guid ("713D0000-503E-4C75-BA94-3148F18D941E");
+		static readonly Guid ServiceId = new Guid ("713D0000-503E-4C75-BA94-3148F18D941E");
+
+		static readonly Guid ReceiveCharId = new Guid ("713D0002-503E-4C75-BA94-3148F18D941E");
+		static readonly Guid TransmitCharId = new Guid ("713D0003-503E-4C75-BA94-3148F18D941E");
+		static readonly Guid ResetCharId = new Guid ("713D0004-503E-4C75-BA94-3148F18D941E");
 
 		public LEStream (IDevice device)
 		{
@@ -22,16 +31,30 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 
 		async Task InitializeAsync ()
 		{
-			service = await device.GetServiceAsync (SerialServiceId);
-		}
+			Debug.WriteLine ("LEStream: Looking for service " + ServiceId + "...");
+			service = await device.GetServiceAsync (ServiceId);
+			Debug.WriteLine ("LEStream: Got service: " + service.ID);
 
+			Debug.WriteLine ("LEStream: Getting characteristics...");
+			receive = await service.GetCharacteristicAsync (ReceiveCharId);
+			transmit = await service.GetCharacteristicAsync (TransmitCharId);
+			reset = await service.GetCharacteristicAsync (ResetCharId);
+			Debug.WriteLine ("LEStream: Got characteristics");
+		}
 
 
 		#region implemented abstract members of Stream
 
 		public override int Read (byte[] buffer, int offset, int count)
 		{
-			initTask.Wait ();
+			var t = ReadAsync (buffer, offset, count, CancellationToken.None);
+			t.Wait ();
+			return t.Result;
+		}
+
+		public override async Task<int> ReadAsync (byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+		{
+			await initTask;
 			throw new NotImplementedException ();
 		}
 

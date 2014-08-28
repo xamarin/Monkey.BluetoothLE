@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Diagnostics;
 
 namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -31,6 +34,82 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 				id = id.Substring (4, 4);
 			}
 			return "0x" + id;
+		}
+
+		/// <summary>
+		/// Asynchronously gets the requested service
+		/// </summary>
+		public static Task ConnectAsync (this IAdapter adapter, IDevice device)
+		{
+			if (device.State == DeviceState.Connected)
+				return Task.FromResult<object> (null);
+
+			var tcs = new TaskCompletionSource<object> ();
+			EventHandler<DeviceConnectionEventArgs> h = null;
+			h = (sender, e) => {
+				Debug.WriteLine ("CCC: " + e.Device.ID + " " + e.Device.State);
+				if (e.Device.ID == device.ID && device.State == DeviceState.Connected) {
+					adapter.DeviceConnected -= h;
+					tcs.SetResult (null);
+				}
+			};
+			adapter.DeviceConnected += h;
+
+			adapter.ConnectToDevice (device);
+
+			return tcs.Task;
+		}
+
+		/// <summary>
+		/// Asynchronously gets the requested service
+		/// </summary>
+		public static Task<IService> GetServiceAsync (this IDevice device, Guid id)
+		{
+			if (device.Services.Count > 0) {
+				return Task.FromResult (device.Services.First (x => x.ID == id));
+			}
+
+			var tcs = new TaskCompletionSource<IService> ();
+			EventHandler h = null;
+			h = (sender, e) => {
+				device.ServicesDiscovered -= h;
+				try {
+					var s = device.Services.First (x => x.ID == id);
+					tcs.SetResult (s);
+				} catch (Exception ex) {
+					tcs.SetException (ex);
+				}
+			};
+			device.ServicesDiscovered += h;
+			device.DiscoverServices ();
+
+			return tcs.Task;
+		}
+
+		/// <summary>
+		/// Asynchronously gets the requested characteristic
+		/// </summary>
+		public static Task<ICharacteristic> GetCharacteristicAsync (this IService service, Guid id)
+		{
+			if (service.Characteristics.Count > 0) {
+				return Task.FromResult (service.Characteristics.First (x => x.ID == id));
+			}
+
+			var tcs = new TaskCompletionSource<ICharacteristic> ();
+			EventHandler h = null;
+			h = (sender, e) => {
+				service.CharacteristicsDiscovered -= h;
+				try {
+					var s = service.Characteristics.First (x => x.ID == id);
+					tcs.SetResult (s);
+				} catch (Exception ex) {
+					tcs.SetException (ex);
+				}
+			};
+			service.CharacteristicsDiscovered += h;
+			service.DiscoverCharacteristics ();
+
+			return tcs.Task;
 		}
 	}
 }
