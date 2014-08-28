@@ -34,7 +34,7 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 			_items = new Dictionary<Guid, KnownCharacteristic> ();
 			//TODO: switch over to CharacteristicStack.Text when it gets bound.
 			KnownCharacteristic characteristic;
-			string itemsJson = ResourceLoader.GetEmbeddedResourceString (Assembly.GetExecutingAssembly (), "KnownCharacteristics.json");
+			string itemsJson = ResourceLoader.GetEmbeddedResourceString (typeof(KnownCharacteristics).GetTypeInfo ().Assembly, "KnownCharacteristics.json");
 			var json = JValue.Parse (itemsJson);
 			foreach (var item in json.Children() ) {
 				JProperty prop = item as JProperty;

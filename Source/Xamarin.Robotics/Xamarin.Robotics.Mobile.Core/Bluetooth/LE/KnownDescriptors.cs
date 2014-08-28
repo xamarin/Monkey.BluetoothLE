@@ -34,7 +34,7 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 			_items = new Dictionary<Guid, KnownDescriptor> ();
 			//TODO: switch over to DescriptorStack.Text when it gets bound.
 			KnownDescriptor descriptor;
-			string itemsJson = ResourceLoader.GetEmbeddedResourceString (Assembly.GetExecutingAssembly (), "KnownDescriptors.json");
+			string itemsJson = ResourceLoader.GetEmbeddedResourceString (typeof(KnownDescriptors).GetTypeInfo ().Assembly, "KnownDescriptors.json");
 			var json = JValue.Parse (itemsJson);
 			foreach (var item in json.Children() ) {
 				JProperty prop = item as JProperty;

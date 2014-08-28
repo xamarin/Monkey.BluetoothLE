@@ -38,7 +38,7 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 			_items = new Dictionary<Guid, KnownService> ();
 			//TODO: switch over to ServiceStack.Text when it gets bound.
 			KnownService service;
-			string itemsJson = ResourceLoader.GetEmbeddedResourceString (Assembly.GetExecutingAssembly (), "KnownServices.json");
+			string itemsJson = ResourceLoader.GetEmbeddedResourceString (typeof(KnownServices).GetTypeInfo ().Assembly, "KnownServices.json");
 			var json = JValue.Parse (itemsJson);
 			foreach (var item in json.Children() ) {
 				JProperty prop = item as JProperty;
