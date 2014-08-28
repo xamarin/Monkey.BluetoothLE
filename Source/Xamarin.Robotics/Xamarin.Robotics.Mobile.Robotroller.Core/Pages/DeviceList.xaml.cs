@@ -5,6 +5,7 @@ using Xamarin.Robotics.Mobile.Core.Bluetooth.LE;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Xamarin.Robotics.Mobile.Robotroller
 {	
@@ -53,9 +54,11 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 				await adapter.ConnectAsync (device);
 				Debug.WriteLine ("Trying to read...");
 				using (var s = new LEStream (device)) {
-					var buffer = new byte [4];
-					var n = await s.ReadAsync (buffer, 0, 4);
-					Debug.WriteLine ("READ: " + System.Text.Encoding.UTF8.GetString (buffer, 0, n));
+					var buffer = new byte [16];
+					for (;;) {
+						var n = await s.ReadAsync (buffer, 0, buffer.Length);
+						Debug.WriteLine ("LEStream.Read: " + string.Join (" ", buffer.Take (n).Select (x => x.ToString ())));
+					}
 				}
 			} catch (Exception ex) {
 				Debug.WriteLine ("Stream failed");

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Diagnostics;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -23,6 +24,10 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 		static readonly Guid TransmitCharId = new Guid ("713D0003-503E-4C75-BA94-3148F18D941E");
 		static readonly Guid ResetCharId = new Guid ("713D0004-503E-4C75-BA94-3148F18D941E");
 
+		const int ReadBufferSize = 64*1024;
+		readonly List<byte> readBuffer = new List<byte> (ReadBufferSize * 2);
+		readonly AutoResetEvent dataReceived = new AutoResetEvent (false);
+
 		public LEStream (IDevice device)
 		{
 			this.device = device;
@@ -40,6 +45,27 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 			transmit = await service.GetCharacteristicAsync (TransmitCharId);
 			reset = await service.GetCharacteristicAsync (ResetCharId);
 			Debug.WriteLine ("LEStream: Got characteristics");
+
+			receive.ValueUpdated += HandleReceiveValueUpdated;
+			receive.StartUpdates ();
+		}
+
+		void HandleReceiveValueUpdated (object sender, CharacteristicReadEventArgs e)
+		{
+			var bytes = e.Characteristic.Value;
+			if (bytes == null || bytes.Length == 0)
+				return;
+
+//			Debug.WriteLine ("ReceiveChar.Value: " + string.Join (" ", bytes.Select (x => x.ToString ())));
+
+			lock (readBuffer) {
+				if (readBuffer.Count + bytes.Length > ReadBufferSize) {
+					readBuffer.RemoveRange (0, ReadBufferSize / 2);
+				}
+				readBuffer.AddRange (bytes);
+			}
+
+			dataReceived.Set ();
 		}
 
 
@@ -55,7 +81,20 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 		public override async Task<int> ReadAsync (byte[] buffer, int offset, int count, CancellationToken cancellationToken)
 		{
 			await initTask;
-			throw new NotImplementedException ();
+
+			while (!cancellationToken.IsCancellationRequested) {
+				lock (readBuffer) {
+					if (readBuffer.Count > 0) {
+						var n = Math.Min (count, readBuffer.Count);
+						readBuffer.CopyTo (0, buffer, offset, n);
+						readBuffer.RemoveRange (0, n);
+						return n;
+					}
+				}
+				await Task.Run (() => dataReceived.WaitOne ());
+			}
+
+			return 0;
 		}
 
 		public override void Write (byte[] buffer, int offset, int count)

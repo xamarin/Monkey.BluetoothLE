@@ -8,15 +8,17 @@ namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
 	{
 		public static void Main()
 		{
-            var led = new Microsoft.SPOT.Hardware.OutputPort(Pins.ONBOARD_LED, false);
+            using (var led = new Microsoft.SPOT.Hardware.OutputPort (Pins.ONBOARD_LED, false)) {
 
-            for (var i = 0; i < 3; i++)
-            {
-                led.Write(true);
-                Thread.Sleep(250);
-                led.Write(false);
-                Thread.Sleep(250);
+                for (var i = 0; i < 3; i++) {
+                    led.Write (true);
+                    Thread.Sleep (250);
+                    led.Write (false);
+                    Thread.Sleep (250);
+                }
             }
+
+            TestBLEMini.Run ();
 
             // MotorShield (deprecated)
             // TestDrunkenRobotWithMotorShield.Run();
@@ -29,7 +31,7 @@ namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
             // TestDrunkenRobotWithHbridge.Run ();
             
             // Requires IR sensors
-            TestTwoEyedRobotWithHbridge.Run ();
+            // TestTwoEyedRobotWithHbridge.Run ();
 		}
 	}
 }
