@@ -30,6 +30,12 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
+    <Compile Include="..\Xamarin.Robotics.Mobile.Core\Messaging\Messaging.cs">
+      <Link>Messaging\Messaging.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Robotics.Mobile.Core\Messaging\MessagingServer.cs">
+      <Link>Messaging\MessagingServer.cs</Link>
+    </Compile>
     <Compile Include="BlockBase.cs" />
     <Compile Include="ConfigPort.cs" />
     <Compile Include="Connection.cs" />
@@ -76,6 +82,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Hardware.PWM" />
+    <Reference Include="Microsoft.SPOT.Hardware.SerialPort" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
     <Reference Include="Microsoft.SPOT.TinyCore" />

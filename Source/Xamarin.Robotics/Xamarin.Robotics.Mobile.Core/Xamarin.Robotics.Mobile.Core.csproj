@@ -50,6 +50,9 @@
     <Compile Include="Bluetooth\LE\KnownDescriptors.cs" />
     <Compile Include="Bluetooth\LE\Extensions.cs" />
     <Compile Include="Bluetooth\LE\LEStream.cs" />
+    <Compile Include="Messaging\MessagingClient.cs" />
+    <Compile Include="Messaging\MessagingServer.cs" />
+    <Compile Include="Messaging\Messaging.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -64,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utils\" />
+    <Folder Include="Messaging\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

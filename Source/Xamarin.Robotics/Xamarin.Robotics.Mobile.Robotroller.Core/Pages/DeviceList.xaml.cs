@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Xamarin.Robotics.Messaging;
 
 namespace Xamarin.Robotics.Mobile.Robotroller
 {	
@@ -54,10 +55,10 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 				await adapter.ConnectAsync (device);
 				Debug.WriteLine ("Trying to read...");
 				using (var s = new LEStream (device)) {
-					var buffer = new byte [16];
+					var m = new Message ();
 					for (;;) {
-						var n = await s.ReadAsync (buffer, 0, buffer.Length);
-						Debug.WriteLine ("LEStream.Read: " + string.Join (" ", buffer.Take (n).Select (x => x.ToString ())));
+						await m.ReadAsync (s);
+						Debug.WriteLine ("Message.Read: " + m.Operation + ": " + string.Join (" ", m.Data.Select (x => x.ToString ())));
 					}
 				}
 			} catch (Exception ex) {
