@@ -122,14 +122,26 @@ namespace Xamarin.Robotics.Messaging
 					r.Add ((object)(data [p+1] != 0));
 					p += 2;
 					break;
+                case 'b':
+                    r.Add ((object)data[p + 1]);
+                    p += 2;
+                    break;
 				case 'I':
 					r.Add ((object)BitConverter.ToInt32 (data, p + 1));
 					p += 5;
 					break;
+                case 'D':
+                    r.Add ((object)BitConverter.ToDouble (data, p + 1));
+                    p += 9;
+                    break;
+                case 'F':
+                    r.Add ((object)BitConverter.ToSingle (data, p + 1));
+                    p += 5;
+                    break;
 				case 'S':
 					{
 						var slen = data[p+1];
-						r.Add ((object)Encoding.UTF8.GetString (data, p + 2, slen));
+						r.Add ((object)new string (Encoding.UTF8.GetChars(data, p + 2, slen)));
 						p += 2 + slen;
 					}
 					break;
