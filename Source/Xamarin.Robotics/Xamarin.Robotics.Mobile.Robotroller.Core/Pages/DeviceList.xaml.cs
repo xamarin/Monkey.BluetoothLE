@@ -41,7 +41,7 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 			};
 		}
 
-		public async void OnItemSelected (object sender, SelectedItemChangedEventArgs e)
+		public void OnItemSelected (object sender, SelectedItemChangedEventArgs e)
 		{
 			if (((ListView)sender).SelectedItem == null) {
 				return;
@@ -50,21 +50,14 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 
 			var device = e.SelectedItem as IDevice;
 
-			try {
-				Debug.WriteLine ("Connecting to "+device.Name+"...");
-				await adapter.ConnectAsync (device);
-				Debug.WriteLine ("Trying to read...");
-				using (var s = new LEStream (device)) {
-					var m = new Message ();
-					for (;;) {
-						await m.ReadAsync (s);
-						Debug.WriteLine ("Message.Read: " + m.Operation + ": " + string.Join (" ", m.Data.Select (x => x.ToString ())));
-					}
-				}
-			} catch (Exception ex) {
-				Debug.WriteLine ("Stream failed");
-				Debug.WriteLine (ex);
-			}
+			var servicePage = new DeviceDetail(adapter, device.ID);
+			// load services on the next page
+			Navigation.PushAsync(servicePage);
+
+			((ListView)sender).SelectedItem = null; // clear selection
+
+
+
 		}
 
 		void StartScanning () {

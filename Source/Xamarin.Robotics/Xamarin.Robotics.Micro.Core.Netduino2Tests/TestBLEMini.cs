@@ -21,17 +21,20 @@ namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
             var serialPort = new SerialPort (SerialPorts.COM3, 57600, Parity.None, 8, StopBits.One);
             serialPort.Open ();
 
-            var server = new MessagingServer (serialPort);
+            var server = new ControlServer (serialPort);
 
             var led = new Microsoft.SPOT.Hardware.OutputPort (Pins.ONBOARD_LED, false);
             var lv = false;
 
+            var iVar = server.RegisterVariable ("eye", 0);
+
             for (var i = 0; true; i++) {
-                server.SendBytes (new byte[] { 0xAA, 0x55, (byte)i });
+
+                server.SetVariableValue (iVar, i);
 
                 led.Write (lv);
                 lv = !lv;
-                Thread.Sleep (2000);
+                Thread.Sleep (1000);
             }            
         }
     }

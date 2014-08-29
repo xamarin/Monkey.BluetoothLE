@@ -50,9 +50,10 @@
     <Compile Include="Bluetooth\LE\KnownDescriptors.cs" />
     <Compile Include="Bluetooth\LE\Extensions.cs" />
     <Compile Include="Bluetooth\LE\LEStream.cs" />
-    <Compile Include="Messaging\MessagingClient.cs" />
-    <Compile Include="Messaging\MessagingServer.cs" />
-    <Compile Include="Messaging\Messaging.cs" />
+    <Compile Include="Messaging\Message.cs" />
+    <Compile Include="Messaging\Control.cs" />
+    <Compile Include="Messaging\ControlClient.cs" />
+    <Compile Include="Messaging\ControlServer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
