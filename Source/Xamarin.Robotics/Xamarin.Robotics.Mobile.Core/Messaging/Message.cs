@@ -56,6 +56,9 @@ namespace Xamarin.Robotics.Messaging
 
 		static byte[] Serialize (object[] arguments)
 		{
+			if (arguments == null || arguments.Length == 0)
+				return new byte[0];
+
 			var parts = new ByteList ();
 			parts.Add ((byte)arguments.Length);
 			foreach (var a in arguments) {
@@ -113,14 +116,25 @@ namespace Xamarin.Robotics.Messaging
 			var count = data[0];
 
 			var p = 1;
-			while (p < len) {
+			while (p < len && r.Count < count) {
 				switch ((char)data[p]) {
+				case 'B':
+					r.Add ((object)(data [p+1] != 0));
+					p += 2;
+					break;
 				case 'I':
 					r.Add ((object)BitConverter.ToInt32 (data, p + 1));
 					p += 5;
 					break;
+				case 'S':
+					{
+						var slen = data[p+1];
+						r.Add ((object)Encoding.UTF8.GetString (data, p + 2, slen));
+						p += 2 + slen;
+					}
+					break;
 				default:
-					throw new NotImplementedException ("Have not implemented type: " + (char)data[p]);
+					throw new NotSupportedException ("Cannot read type: " + (char)data[p]);
 				}
 			}
 
@@ -130,8 +144,6 @@ namespace Xamarin.Robotics.Messaging
 			return r.ToArray ();
 			#endif
 		}
-
-		//		static int WriteString (byte[] data, 
 
 		#if !MF_FRAMEWORK_VERSION_V4_3
 
@@ -149,27 +161,32 @@ namespace Xamarin.Robotics.Messaging
 
 			for (;;) {
 				if (IsValidMessage (readBuffer, bufferSize)) {
-					Operation = readBuffer [0];
-					var dataSize = readBuffer [1];
+					Operation = readBuffer [1];
+					var dataSize = readBuffer [2];
 					var data = new byte[dataSize];
-					Array.Copy (readBuffer, 2, data, 0, dataSize);
+					Array.Copy (readBuffer, 3, data, 0, dataSize);
 					try {
 						Arguments = Deserialize (data);
 						// Debug.WriteLine ("Message.Read: message");
 						return;
-					} catch (Exception) {
-						// Bad message, skip the lead byte and try again
-						// Debug.WriteLine ("Message.Read: BAD message");
+					} catch (Exception ex) {
+						// Bad message, skip the whole thing
+						Debug.WriteLine ("Message.Read: BAD message data: " + ex);
 						Array.Copy (readBuffer, 1, readBuffer, 0, bufferSize - 1);
+						bufferSize = 0;
 					}
 				} else {
 					var bytesNeeded = GetBytesNeeded (readBuffer, bufferSize);
 					if (bytesNeeded > 0) {
-						bufferSize += await stream.ReadAsync (readBuffer, bufferSize, bytesNeeded);
+						var n = await stream.ReadAsync (readBuffer, bufferSize, bytesNeeded);
+                        if (n > 0) {
+                            bufferSize += n;
+                        }
 					} else {
 						// Bad message, skip the lead byte and try again
 						// Debug.WriteLine ("Message.Read: BAD message");
 						Array.Copy (readBuffer, 1, readBuffer, 0, bufferSize - 1);
+						bufferSize--;
 					}
 				}
 			}
@@ -180,9 +197,9 @@ namespace Xamarin.Robotics.Messaging
 			return Task.Run (() => Write (stream));
 		}
 
-		#endif
+#endif
 
-		/// <summary>
+        /// <summary>
 		/// Reading is a blocking operation that keeps trying until the stream
 		/// produces a valid message. This simplifies reading messages from
 		/// continuous streams.
@@ -196,27 +213,32 @@ namespace Xamarin.Robotics.Messaging
 
 			for (;;) {
 				if (IsValidMessage (readBuffer, bufferSize)) {
-					Operation = readBuffer [0];
-					var dataSize = readBuffer [1];
+					Operation = readBuffer [1];
+					var dataSize = readBuffer [2];
 					var data = new byte[dataSize];
+					Array.Copy (readBuffer, 3, data, 0, dataSize);
 					try {
 						Arguments = Deserialize (data);
 						// Debug.WriteLine ("Message.Read: message");
-						Array.Copy (readBuffer, 2, data, 0, dataSize);
 						return;
 					} catch (Exception) {
-						// Bad message, skip the lead byte and try again
+						// Bad message, skip the whole thing
 						// Debug.WriteLine ("Message.Read: BAD message");
 						Array.Copy (readBuffer, 1, readBuffer, 0, bufferSize - 1);
+						bufferSize = 0;
 					}
 				} else {
 					var bytesNeeded = GetBytesNeeded (readBuffer, bufferSize);
 					if (bytesNeeded > 0) {
-						bufferSize += stream.Read (readBuffer, bufferSize, bytesNeeded);
+						var n = stream.Read (readBuffer, bufferSize, bytesNeeded);
+                        if (n > 0) {
+                            bufferSize += n;
+                        }
 					} else {
 						// Bad message, skip the lead byte and try again
 						// Debug.WriteLine ("Message.Read: BAD message");
 						Array.Copy (readBuffer, 1, readBuffer, 0, bufferSize - 1);
+						bufferSize--;
 					}
 				}
 			}
@@ -236,42 +258,49 @@ namespace Xamarin.Robotics.Messaging
 				throw new InvalidOperationException ("Cannot transmit more than 255 bytes at a time.");
 			}
 
+            stream.WriteByte ((byte)'M');
 			stream.WriteByte ((byte)Operation);
 			stream.WriteByte ((byte)data.Length);
-			stream.Write (data, 0, data.Length);
 			byte sum = 0;
-			for (var i = 0; i < data.Length; i++) {
-				sum += data [i];
+			if (data.Length > 0) {
+				stream.Write (data, 0, data.Length);
+				for (var i = 0; i < data.Length; i++) {
+					sum += data [i];
+				}
 			}
 			stream.WriteByte (sum);
 		}
 
 		static int GetBytesNeeded (byte[] buffer, int bufferSize)
 		{
-			if (bufferSize <= 0)
-				return 3;
-			if (bufferSize == 1)
-				return 2;
+			if (bufferSize > 0 && buffer[0] != 'M')
+				return 0;
 
-			var dataSize = buffer [1];
-			var messageSize = dataSize + 3;
+			if (bufferSize <= 2)
+				return 4 - bufferSize;
+
+			var dataSize = buffer [2];
+			var messageSize = dataSize + 4;
 
 			return messageSize - bufferSize;
 		}
 
 		static bool IsValidMessage (byte[] buffer, int bufferSize)
 		{
+            if (bufferSize < 4 || buffer[0] != 'M')
+                return false;
+
 			if (GetBytesNeeded (buffer, bufferSize) != 0)
 				return false;
 
-			var dataSize = buffer [1];
+			var dataSize = buffer [2];
 			byte sum = 0;
 
 			for (var i = 0; i < dataSize; i++) {
-				sum += buffer [i + 2];
+				sum += buffer [i + 3];
 			}
 
-			var checkSum = buffer [2 + dataSize];
+			var checkSum = buffer [3 + dataSize];
 
 			return sum == checkSum;
 		}

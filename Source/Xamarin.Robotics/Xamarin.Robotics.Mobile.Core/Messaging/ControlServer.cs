@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 
 #if MF_FRAMEWORK_VERSION_V4_3
 using VariableList = System.Collections.ArrayList;
@@ -21,7 +22,8 @@ namespace Xamarin.Robotics.Messaging
 
 		public ControlServer (Stream stream)
 		{
-			this.stream = stream;			
+			this.stream = stream;
+            Start ();
 		}
 
         void SendVariable (Variable v)
@@ -52,6 +54,52 @@ namespace Xamarin.Robotics.Messaging
         {
             v.Value = value;
             SendVariableValue (v);
+        }
+
+        void Start ()
+        {
+			#if MF_FRAMEWORK_VERSION_V4_3
+			new Thread (Run).Start ();
+			#else
+			System.Threading.Tasks.Task.Factory.StartNew (Run, System.Threading.Tasks.TaskCreationOptions.LongRunning);
+			#endif
+        }
+
+        void Run ()
+        {
+            var m = new Message ();
+
+            for (; ; ) {
+                try {
+                    m.Read (stream);
+                    ProcessMessage (m);
+                }
+                catch (Exception ex) {
+#if MF_FRAMEWORK_VERSION_V4_3
+                    Microsoft.SPOT.Debug.Print ("!! " + ex + "\n");
+#endif
+                    throw;
+                }
+            }
+        }
+
+        void ProcessMessage (Message m)
+        {
+#if MF_FRAMEWORK_VERSION_V4_3
+            Microsoft.SPOT.Debug.Print ("Received message: " + (ControlOp)m.Operation + "\n");
+#endif
+
+            switch ((ControlOp)m.Operation) {
+                case ControlOp.GetVariables:
+                    foreach (Variable v in variables) {
+                        SendVariable (v);
+						#if MF_FRAMEWORK_VERSION_V4_3
+                        Microsoft.SPOT.Debug.Print ("Sent " + v.Name);
+						Thread.Sleep (10); // Throttle
+						#endif
+                    }
+                    break;
+            }
         }
 
 

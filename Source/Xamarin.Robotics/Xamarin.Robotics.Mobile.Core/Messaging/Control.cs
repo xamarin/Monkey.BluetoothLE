@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Diagnostics;
+using System.ComponentModel;
 
 #if MF_FRAMEWORK_VERSION_V4_3
 using Microsoft.SPOT;
@@ -21,10 +22,20 @@ namespace Xamarin.Robotics.Messaging
 	/// </summary>
 	public class Variable
 	{
-		public int Id;
-		public string Name;
-		public bool IsWriteable;
-		public virtual object Value { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsWriteable { get; set; }
+
+		object val;
+		public virtual object Value {
+			get { return val; }
+			set { SetValue (value); }
+		}
+
+		public virtual void SetValue (object newVal)
+		{
+			val = newVal;
+		}
 	}
 
 	public class VariableEventArgs : EventArgs

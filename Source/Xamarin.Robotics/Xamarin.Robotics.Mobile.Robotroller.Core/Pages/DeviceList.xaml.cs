@@ -15,6 +15,8 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 		readonly IAdapter adapter;
 		ObservableCollection<IDevice> devices;
 
+		bool autoScan = false;
+
 		public DeviceList (IAdapter adapter)
 		{
 			InitializeComponent ();
@@ -29,11 +31,10 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 			};
 
 			adapter.ScanTimeoutElapsed += (sender, e) => {
-//				adapter.StopScanningForDevices(); // not sure why it doesn't stop already, if the timeout elapses... or is this a fake timeout we made?
-//				Device.BeginInvokeOnMainThread ( () => {
-//					DisplayAlert("Timeout", "Bluetooth scan timeout elapsed", "OK", "");
-//				});
 				Debug.WriteLine ("Scan timeout");
+				if (autoScan) {
+					StartScanning ();
+				}
 			};
 
 			Appearing += (sender, e) => {
@@ -55,9 +56,6 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 			Navigation.PushAsync(servicePage);
 
 			((ListView)sender).SelectedItem = null; // clear selection
-
-
-
 		}
 
 		void StartScanning () {

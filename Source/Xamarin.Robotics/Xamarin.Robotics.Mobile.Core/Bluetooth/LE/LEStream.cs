@@ -56,7 +56,7 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 			if (bytes == null || bytes.Length == 0)
 				return;
 
-//			Debug.WriteLine ("ReceiveChar.Value: " + string.Join (" ", bytes.Select (x => x.ToString ())));
+//			Debug.WriteLine ("Receive.Value: " + string.Join (" ", bytes.Select (x => x.ToString ("X2"))));
 
 			lock (readBuffer) {
 				if (readBuffer.Count + bytes.Length > ReadBufferSize) {
@@ -64,6 +64,8 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 				}
 				readBuffer.AddRange (bytes);
 			}
+
+			reset.Write (new byte[] { 1 });
 
 			dataReceived.Set ();
 		}
@@ -97,15 +99,35 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 			return 0;
 		}
 
+		DateTime lastWriteTime = DateTime.Now;
+		static readonly TimeSpan WriteInterval = TimeSpan.FromMilliseconds (10);
+
 		public override void Write (byte[] buffer, int offset, int count)
 		{
-			initTask.Wait ();
-			throw new NotImplementedException ();
+			WriteAsync (buffer, offset, count).Wait ();
+		}
+
+		public override async Task WriteAsync (byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+		{
+			await initTask;
+
+			var b = buffer;
+			if (offset != 0 || count != b.Length) {
+				b = new byte[count];
+				Array.Copy (buffer, offset, b, 0, count);
+			}
+
+			// Throttle
+			var dt = DateTime.Now - lastWriteTime;
+			if (dt < WriteInterval) {
+				await Task.Delay (WriteInterval - dt);
+			}
+			lastWriteTime = DateTime.Now;
+			transmit.Write (b);
 		}
 
 		public override void Flush ()
 		{
-			throw new NotImplementedException ();
 		}
 
 		public override long Seek (long offset, SeekOrigin origin)

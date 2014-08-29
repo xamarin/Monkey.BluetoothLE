@@ -20,7 +20,7 @@
 	      	<StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">	
 		     	<StackLayout Padding="5,0,0,0" VerticalOptions="StartAndExpand" Orientation="Vertical">
 		        	<Label Text="{Binding Name, Converter={StaticResource strConverter}}" YAlign="Center" Font="Medium" />
-		        	<Label Text="{Binding Path=ID, Converter={StaticResource guidConverter}}" YAlign="Center" Font="Micro" />
+		        	<Label Text="{Binding Value}" YAlign="Center" Font="Medium" />
 		        </StackLayout>
 	         </StackLayout>
 	      </ViewCell>

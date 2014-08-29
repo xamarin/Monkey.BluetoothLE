@@ -46,6 +46,7 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 				var device = await ConnectAsync ();
 				using (var s = new LEStream (device)) {
 					var cc = new ControlClient (s);
+					listView.ItemsSource = cc.Variables;
 					await cc.RunAsync (cts.Token);
 				}
 			} catch (Exception ex) {
