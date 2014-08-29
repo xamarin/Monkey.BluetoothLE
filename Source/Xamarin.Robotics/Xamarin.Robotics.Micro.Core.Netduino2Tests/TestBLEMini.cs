@@ -1,4 +1,5 @@
 using Microsoft.SPOT;
+using Microsoft.SPOT.Hardware;
 using SecretLabs.NETMF.Hardware.Netduino;
 using System;
 using System.IO.Ports;
@@ -26,11 +27,23 @@ namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
             var led = new Microsoft.SPOT.Hardware.OutputPort (Pins.ONBOARD_LED, false);
             var lv = false;
 
-            var iVar = server.RegisterVariable ("eye", 0);
+            var a0 = new AnalogInput (AnalogChannels.ANALOG_PIN_A0, -1);
+            var a1 = new AnalogInput (AnalogChannels.ANALOG_PIN_A1, -1);
+
+            var uptimeVar = server.RegisterVariable ("Uptime (s)", 0);
+            var a0Var = server.RegisterVariable ("Analog 0", 0);
+            var a1Var = server.RegisterVariable ("Analog 1", 0);
+
+            var magicCmd = server.RegisterCommand ("Magic", () => {
+                Debug.Print ("MAAAGIIICC");
+                return 42;
+            });
 
             for (var i = 0; true; i++) {
 
-                server.SetVariableValue (iVar, i);
+                uptimeVar.Value = i;
+                a0Var.Value = a0.Read ();
+                a1Var.Value = a1.Read ();
 
                 led.Write (lv);
                 lv = !lv;

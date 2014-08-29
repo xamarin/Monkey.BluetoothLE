@@ -99,9 +99,6 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 			return 0;
 		}
 
-		DateTime lastWriteTime = DateTime.Now;
-		static readonly TimeSpan WriteInterval = TimeSpan.FromMilliseconds (10);
-
 		public override void Write (byte[] buffer, int offset, int count)
 		{
 			WriteAsync (buffer, offset, count).Wait ();
@@ -117,13 +114,11 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 				Array.Copy (buffer, offset, b, 0, count);
 			}
 
-			// Throttle
-			var dt = DateTime.Now - lastWriteTime;
-			if (dt < WriteInterval) {
-				await Task.Delay (WriteInterval - dt);
-			}
-			lastWriteTime = DateTime.Now;
+			// Write the data
 			transmit.Write (b);
+
+			// Throttle
+			await Task.Delay (TimeSpan.FromMilliseconds (b.Length)); // 1 ms/byte is slow but reliable
 		}
 
 		public override void Flush ()

@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace Xamarin.Robotics.Mobile.Robotroller
 {	
-	public partial class DeviceDetail : ContentPage
+	public partial class DeviceDetail : TabbedPage
 	{	
 		readonly IAdapter adapter;
 		readonly Guid deviceId;
@@ -26,8 +26,19 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 			};
 		}
 
-		public void OnItemSelected (object sender, SelectedItemChangedEventArgs e)
+		public void OnVariableSelected (object sender, SelectedItemChangedEventArgs e)
 		{
+			((ListView)sender).SelectedItem = null;
+		}
+
+		public async void OnCommandSelected (object sender, SelectedItemChangedEventArgs e)
+		{
+			var command = e.SelectedItem as Xamarin.Robotics.Messaging.Command;
+
+			if (client != null && command != null) {
+				await client.ExecuteCommandAsync (command);
+			}
+			((ListView)sender).SelectedItem = null;
 		}
 
 		async Task<IDevice> ConnectAsync ()
@@ -38,6 +49,8 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 			Debug.WriteLine ("Trying to read...");
 			return device;
 		}
+
+		ControlClient client;
 			
 		async Task RunControlAsync ()
 		{
@@ -45,13 +58,16 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 			try {
 				var device = await ConnectAsync ();
 				using (var s = new LEStream (device)) {
-					var cc = new ControlClient (s);
-					listView.ItemsSource = cc.Variables;
-					await cc.RunAsync (cts.Token);
+					client = new ControlClient (s);
+					variablesList.ItemsSource = client.Variables;
+					commandsList.ItemsSource = client.Commands;
+					await client.RunAsync (cts.Token);
 				}
 			} catch (Exception ex) {
 				Debug.WriteLine ("Stream failed");
 				Debug.WriteLine (ex);
+			} finally {
+				client = null;
 			}
 		}
 	}

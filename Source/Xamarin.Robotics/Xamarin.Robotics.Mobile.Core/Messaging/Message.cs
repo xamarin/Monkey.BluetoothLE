@@ -16,18 +16,16 @@ using ObjectList = System.Collections.Generic.List<object>;
 namespace Xamarin.Robotics.Messaging
 {
 	/// <summary>
-	/// Messages are just packets with an operation and a payload of bytes.
-	/// This class also assists with encoding and decoding data through the use
-	/// of BinaryReaders and BinaryWriters.
-	/// It is also capable of serializing itself to and from a continuous stream
-	/// of messages.
+	/// Messages are packets with an operation code and a payload of .NET primitive objects.
+	/// They are capable of serializing themselves to and from continuous streams.
+    /// Messages are currently constrained to a max payload size of 255 bytes.
 	/// </summary>
 	public class Message
 	{
 		public byte Operation { get; private set; }
 		public object[] Arguments { get; private set; }
 
-		const int ReadBufferSize = 258;
+		const int ReadBufferSize = 260;
 
 		byte[] readBuffer = null;
 
@@ -62,7 +60,10 @@ namespace Xamarin.Robotics.Messaging
 			var parts = new ByteList ();
 			parts.Add ((byte)arguments.Length);
 			foreach (var a in arguments) {
-				if (a is int) {
+                if (a == null) {
+                    parts.Add ((byte)'N');
+                }
+				else if (a is int) {
 					var v = (int)a;
 					parts.Add ((byte)'I');
 					AddAll (parts, BitConverter.GetBytes (v));
@@ -118,6 +119,10 @@ namespace Xamarin.Robotics.Messaging
 			var p = 1;
 			while (p < len && r.Count < count) {
 				switch ((char)data[p]) {
+                case 'N':
+                    r.Add ((object)null);
+                    p += 1;
+                    break;
 				case 'B':
 					r.Add ((object)(data [p+1] != 0));
 					p += 2;
@@ -184,7 +189,6 @@ namespace Xamarin.Robotics.Messaging
 					} catch (Exception ex) {
 						// Bad message, skip the whole thing
 						Debug.WriteLine ("Message.Read: BAD message data: " + ex);
-						Array.Copy (readBuffer, 1, readBuffer, 0, bufferSize - 1);
 						bufferSize = 0;
 					}
 				} else {
@@ -235,8 +239,7 @@ namespace Xamarin.Robotics.Messaging
 						return;
 					} catch (Exception) {
 						// Bad message, skip the whole thing
-						// Debug.WriteLine ("Message.Read: BAD message");
-						Array.Copy (readBuffer, 1, readBuffer, 0, bufferSize - 1);
+						// Debug.WriteLine ("Message.Read: BAD message data");
 						bufferSize = 0;
 					}
 				} else {
@@ -257,11 +260,12 @@ namespace Xamarin.Robotics.Messaging
 		}
 
 		/// <summary>
-		/// Messages are encoded with a two byte header:
+		/// Messages are encoded with a three byte header:
+        ///   MAGIC
 		///   OPERATION
 		///   DATA BYTE COUNT
-		/// Followed up to 255 bytes of data
-		/// Followed by a 1 byte checksum of just the data
+		/// Followed up to 255 bytes of DATA
+		/// Followed by a 1 byte CHECKSUM of just the data
 		/// </summary>
 		public void Write (Stream stream)
 		{

@@ -6,19 +6,17 @@ using System.ComponentModel;
 
 #if MF_FRAMEWORK_VERSION_V4_3
 using Microsoft.SPOT;
-using ByteList = System.Collections.ArrayList;
-using ObjectList = System.Collections.ArrayList;
 #else
-using System.Threading.Tasks;
-using ByteList = System.Collections.Generic.List<byte>;
-using ObjectList = System.Collections.Generic.List<object>;
 #endif
 
 namespace Xamarin.Robotics.Messaging
 {
 	/// <summary>
-	/// Metadata that is rarely transmitted along the wire but is
-	/// available for UIs, etc.
+	/// A variable is a named value that is kept in sync between the server and client.
+    /// When the server updates a variable, it gets sent to the clients.
+    /// When the client wants to change a value, it can send a request to the server.
+    /// Simple IDs are used during network transfer of values.
+    /// Values can be any of the types supported by Message.
 	/// </summary>
 	public class Variable
 	{
@@ -38,38 +36,67 @@ namespace Xamarin.Robotics.Messaging
 		}
 	}
 
-	public class VariableEventArgs : EventArgs
-	{
-		public Variable Variable;
-	}
+    public delegate void VariableChangedAction (Variable v);
 
-    public delegate void VariableUpdateEventHandler (object sender, VariableEventArgs e);
-
+	
 	/// <summary>
-	/// Command metadata.
+	/// Commands are operations that the server can perform at the request of the client.
+    /// They are a basic RPC mechanism without arguments.
 	/// </summary>
 	public class Command
 	{
-		public int Id;
-		public string Name;
+		public int Id { get; set; }
+		public string Name { get; set; }
 	}
 
-	public class CommandEventArgs : EventArgs
-	{
-		public int CommandId;
-	}
+    public delegate object CommandFunc ();
 
-    public delegate void CommandEventHandler (object sender, CommandEventArgs e);
-
+	
+    /// <summary>
+    /// These are all the operations that ControlServer and ControlClient
+    /// use to communicate using Messages.
+    /// </summary>
     public enum ControlOp : byte
     {
-        None = 0,
-
+        /// <summary>
+        /// Variable (int varId, string name, bool writeable, object value)
+        /// </summary>
 		Variable = 0x01,
+
+        /// <summary>
+        /// VariableValue (int varId, object value)
+        /// </summary>
 		VariableValue = 0x02,
 
+        /// <summary>
+        /// Command (int cmdId, string name)
+        /// </summary>
+        Command = 0x03,
+
+        /// <summary>
+        /// CommandResult (int cmdId, int executionId, object result)
+        /// </summary>
+        CommandResult = 0x04,
+
+        /// <summary>
+        /// GetVariables ()
+        /// </summary>
         GetVariables = 0x81,
+
+        /// <summary>
+        /// SetVariableValue (int varId, object value)
+        /// </summary>
 		SetVariableValue = 0x82,
+
+        /// <summary>
+        /// GetCommands ()
+        /// </summary>
+        GetCommands = 0x83,
+
+        /// <summary>
+        /// ExecuteCommand (int cmdId, int executionId)
+        /// </summary>
+        ExecuteCommand = 0x84,
     } 
 }
 
