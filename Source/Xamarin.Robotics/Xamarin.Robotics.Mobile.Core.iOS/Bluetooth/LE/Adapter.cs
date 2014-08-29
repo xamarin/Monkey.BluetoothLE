@@ -2,6 +2,8 @@
 using MonoTouch.CoreBluetooth;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Diagnostics;
 
 namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -63,6 +65,7 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 
 			_central.UpdatedState += (object sender, EventArgs e) => {
 				Console.WriteLine ("UpdatedState: " + _central.State);
+				stateChanged.Set ();
 			};
 
 
@@ -109,15 +112,31 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 			StartScanningForDevices (serviceUuid: Guid.Empty);
 		}
 
+		readonly AutoResetEvent stateChanged = new AutoResetEvent (false);
+
+		async Task WaitForState (CBCentralManagerState state)
+		{
+			Debug.WriteLine ("Adapter: Waiting for state: " + state);
+
+			while (_central.State != state) {
+				await Task.Run (() => stateChanged.WaitOne ());
+			}
+		}
+
 		public async void StartScanningForDevices (Guid serviceUuid)
 		{
-			Console.WriteLine ("Adapter: Starting a scan for devices.");
+			//
+			// Wait for the PoweredOn state
+			//
+			await WaitForState (CBCentralManagerState.PoweredOn);
+
+			Debug.WriteLine ("Adapter: Starting a scan for devices.");
 
 			CBUUID[] serviceUuids = null; // TODO: convert to list so multiple Uuids can be detected
 			if (serviceUuid != Guid.Empty) {
 				var suuid = CBUUID.FromString (serviceUuid.ToString ());
 				serviceUuids = new CBUUID[] { suuid };
-				Console.WriteLine ("Adapter: Scanning for " + suuid);
+				Debug.WriteLine ("Adapter: Scanning for " + suuid);
 			}
 
 			// clear out the list
@@ -133,6 +152,7 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 			// if we're still scanning
 			if (this._isScanning) {
 				Console.WriteLine ("BluetoothLEManager: Scan timeout has elapsed.");
+				this._isScanning = false;
 				this._central.StopScan ();
 				this.ScanTimeoutElapsed (this, new EventArgs ());
 			}
