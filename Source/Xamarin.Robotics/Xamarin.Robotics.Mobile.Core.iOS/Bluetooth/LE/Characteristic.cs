@@ -112,10 +112,13 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 			var nsdata = NSData.FromArray (data);
 			var descriptor = (CBCharacteristic)_nativeCharacteristic;
 
-//			_parentDevice.WriteValue (nsdata, descriptor, CBCharacteristicWriteType.WithoutResponse);
-			_parentDevice.WriteValue (nsdata, descriptor, CBCharacteristicWriteType.WithResponse);
+			var t = (Properties & CharacteristicPropertyType.AppleWriteWithoutResponse) != 0 ?
+				CBCharacteristicWriteType.WithoutResponse :
+				CBCharacteristicWriteType.WithResponse;
 
-			Console.WriteLine ("** Characteristic.Write, Type = WithoutResponse, Data = " + data);
+			_parentDevice.WriteValue (nsdata, descriptor, t);
+
+//			Console.WriteLine ("** Characteristic.Write, Type = " + t + ", Data = " + string.Join (" ", data.Select (x => x.ToString ("X2"))));
 
 			return;
 		}
