@@ -8,6 +8,7 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 		//Superset
 		Broadcast = 1, //0x1
 		Read = 2, //0x2
+		AppleWriteWithoutResponse = 4, //0x4
 		WriteWithoutResponse = 8, //0x8
 		Notify = 16, //0x10
 		Indicate = 32, //0x20
