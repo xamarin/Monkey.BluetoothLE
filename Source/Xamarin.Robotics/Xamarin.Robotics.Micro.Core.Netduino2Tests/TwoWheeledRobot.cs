@@ -31,16 +31,6 @@ namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
         /// </summary>
         public InputPort SpinInput { get; private set; }
 
-        /// <summary>
-        /// Not all motors are created equal. Change this value to slow/speed up the left motor.
-        /// </summary>
-        public InputPort LeftMotorCalibrationInput { get; private set; }
-
-        /// <summary>
-        /// Not all motors are created equal. Change this value to slow/speed up the right motor.
-        /// </summary>
-        public InputPort RightMotorCalibrationInput { get; private set; }
-
         public TwoWheeledRobot (IDCMotor leftMotor, IDCMotor rightMotor)
         {
             this.leftMotor = leftMotor;
@@ -91,13 +81,13 @@ namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
                 // to the steepness of the turn
                 if (dir < 0) {
                     // To turn left, favor the right wheel
-                    leftMotor.SpeedInput.Value = spd * (1 + dir) * LeftMotorCalibrationInput.Value;
-                    rightMotor.SpeedInput.Value = spd * RightMotorCalibrationInput.Value;
+                    leftMotor.SpeedInput.Value = spd * (1 + dir);
+                    rightMotor.SpeedInput.Value = spd;
                 }
                 else {
                     // To turn right, favor the left wheel
-                    leftMotor.SpeedInput.Value = spd * LeftMotorCalibrationInput.Value;
-                    rightMotor.SpeedInput.Value = spd * (1 - dir) * RightMotorCalibrationInput.Value;
+                    leftMotor.SpeedInput.Value = spd;
+                    rightMotor.SpeedInput.Value = spd * (1 - dir);
                 }
             }
         }

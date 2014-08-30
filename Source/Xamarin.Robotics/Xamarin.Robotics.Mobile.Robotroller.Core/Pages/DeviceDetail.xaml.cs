@@ -77,7 +77,7 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 
 		IGyro boundGyro;
 		DateTime lastGyroUpdateTime = DateTime.Now;
-		static readonly TimeSpan GyroUpdateInterval = TimeSpan.FromSeconds (2.0);
+		static readonly TimeSpan GyroUpdateInterval = TimeSpan.FromSeconds (1.0/2);
 
 		void UnbindGyro ()
 		{

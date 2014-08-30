@@ -26,6 +26,15 @@ namespace Xamarin.Robotics.Micro
             get { return block.Name + "." + Name; }
         }
 
+        public string FullNameWithUnits
+        {
+            get
+            {
+                var u = ValueUnits.ToShortString ();
+                return FullName + (u.Length > 0 ? " " + u : "");
+            }
+        }
+
 		/// <summary>
 		/// Values need to change by this much in order to
 		/// cause change notifications.
@@ -164,6 +173,15 @@ namespace Xamarin.Robotics.Micro
                 return;
             connectedPorts.Remove (other);
             other.connectedPorts.Remove (this);
+        }
+
+        public void ConnectTo (Xamarin.Robotics.Messaging.ControlServer server, bool writeable = false, string name = null)
+        {
+            var v = server.RegisterVariable (
+                name ?? FullNameWithUnits,
+                Value,
+                writeable ? (Xamarin.Robotics.Messaging.VariableChangedAction)(x => Value = x.DoubleValue) : null);
+            ValueChanged += (s, e) => v.Value = Value;
         }
 	}
 

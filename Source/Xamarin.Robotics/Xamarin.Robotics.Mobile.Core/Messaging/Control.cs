@@ -34,6 +34,19 @@ namespace Xamarin.Robotics.Messaging
 		{
 			val = newVal;
 		}
+
+        public double DoubleValue
+        {
+            get
+            {
+                if (val == null) return 0.0;
+                if (val is double) return (double)val;
+                if (val is float) return (float)val;
+                if (val is int) return (int)val;
+                if (val is byte) return (byte)val;
+                return 0.0;
+            }
+        }
 	}
 
     public delegate void VariableChangedAction (Variable v);

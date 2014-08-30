@@ -18,7 +18,9 @@ namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
                 }
             }
 
-            TestBLEMini.Run ();
+            // Frank tests
+            // TestBLEMini.Run ();
+            TestRCCar.Run ();
 
             // MotorShield (deprecated)
             // TestDrunkenRobotWithMotorShield.Run();
