@@ -118,7 +118,7 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 
 			_parentDevice.WriteValue (nsdata, descriptor, t);
 
-//			Console.WriteLine ("** Characteristic.Write, Type = " + t + ", Data = " + string.Join (" ", data.Select (x => x.ToString ("X2"))));
+//			Console.WriteLine ("** Characteristic.Write, Type = " + t + ", Data = " + BitConverter.ToString (data));
 
 			return;
 		}

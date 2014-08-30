@@ -40,4 +40,13 @@
 		</ListView>
 	</ContentPage>
 
+	<ContentPage Title="Joystick" Appearing="OnJoystickAppearing" Disappearing="OnJoystickDisappearing">
+		<Frame>
+			<StackLayout Orientation="Vertical">
+				<Label Text="Pitching the phone downward increases the speed."/>
+				<Label Text="Rolling the phone from side to side causes turning."/>
+			</StackLayout>
+		</Frame>
+	</ContentPage>
+
 </TabbedPage>

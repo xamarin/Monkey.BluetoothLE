@@ -106,6 +106,10 @@ namespace Xamarin.Robotics.Mobile.Core.Bluetooth.LE
 
 		public override async Task WriteAsync (byte[] buffer, int offset, int count, CancellationToken cancellationToken)
 		{
+			if (count > 20) {
+				throw new ArgumentOutOfRangeException ("count", "This function is limited to buffers of 20 bytes and less.");
+			}
+
 			await initTask;
 
 			var b = buffer;

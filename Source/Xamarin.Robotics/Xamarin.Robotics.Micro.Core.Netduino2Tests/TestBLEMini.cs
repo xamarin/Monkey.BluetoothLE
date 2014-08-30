@@ -31,6 +31,10 @@ namespace Xamarin.Robotics.Micro.Core.Netduino2Tests
             var a1 = new AnalogInput (AnalogChannels.ANALOG_PIN_A1, -1);
 
             var uptimeVar = server.RegisterVariable ("Uptime (s)", 0);
+
+            server.RegisterVariable ("Speed", 0, v => { });
+            server.RegisterVariable ("Turn", 0, v => { });
+
             var a0Var = server.RegisterVariable ("Analog 0", 0);
             var a1Var = server.RegisterVariable ("Analog 1", 0);
 

@@ -25,9 +25,10 @@ namespace Xamarin.Robotics.Messaging
 		public byte Operation { get; private set; }
 		public object[] Arguments { get; private set; }
 
-		const int ReadBufferSize = 260;
+		const int BufferSize = 260;
 
 		byte[] readBuffer = null;
+		byte[] writeBuffer = null;
 
 		public Message ()
 		{
@@ -106,7 +107,7 @@ namespace Xamarin.Robotics.Messaging
 			#endif
 		}
 
-		static object[] Deserialize (byte[] data)
+		object[] Deserialize (byte[] data)
 		{
 			if (data.Length < 1 || data[0] == 0)
 				return new object[0];
@@ -124,7 +125,7 @@ namespace Xamarin.Robotics.Messaging
                     p += 1;
                     break;
 				case 'B':
-					r.Add ((object)(data [p+1] != 0));
+					r.Add ((object)(data [p + 1] != 0));
 					p += 2;
 					break;
                 case 'b':
@@ -135,17 +136,31 @@ namespace Xamarin.Robotics.Messaging
 					r.Add ((object)BitConverter.ToInt32 (data, p + 1));
 					p += 5;
 					break;
-                case 'D':
-                    r.Add ((object)BitConverter.ToDouble (data, p + 1));
-                    p += 9;
+                case 'D': {
+                        double d = 0.0;
+#if MF_FRAMEWORK_VERSION_V4_3
+                        d = ReadDouble (data, p + 1);
+#else
+                        d = BitConverter.ToDouble (data, p + 1);
+#endif
+                        r.Add ((object)d);
+                        p += 9;
+                    }
                     break;
-                case 'F':
-                    r.Add ((object)BitConverter.ToSingle (data, p + 1));
-                    p += 5;
+                case 'F': {
+                        float f = 0.0f;
+#if MF_FRAMEWORK_VERSION_V4_3
+                        f = ReadSingle (data, p + 1);
+#else
+                        f = BitConverter.ToSingle (data, p + 1);
+#endif
+                        r.Add ((object)f);
+                        p += 5;
+                    }
                     break;
 				case 'S':
 					{
-						var slen = data[p+1];
+						var slen = data[p + 1];
 						r.Add ((object)new string (Encoding.UTF8.GetChars(data, p + 2, slen)));
 						p += 2 + slen;
 					}
@@ -162,6 +177,22 @@ namespace Xamarin.Robotics.Messaging
 			#endif
 		}
 
+#if MF_FRAMEWORK_VERSION_V4_3
+        byte[] doubleBuffer = null;
+        double ReadDouble (byte[] data, int startIndex)
+        {
+            if (doubleBuffer == null) doubleBuffer = new byte[8];
+            Array.Copy (data, startIndex, doubleBuffer, 0, 8);
+            return BitConverter.ToDouble (doubleBuffer, 0);
+        }
+        float ReadSingle (byte[] data, int startIndex)
+        {
+            if (doubleBuffer == null) doubleBuffer = new byte[8];
+            Array.Copy (data, startIndex, doubleBuffer, 0, 4);
+            return BitConverter.ToSingle (doubleBuffer, 0);
+        }
+#endif
+
 		#if !MF_FRAMEWORK_VERSION_V4_3
 
 		/// <summary>
@@ -173,7 +204,7 @@ namespace Xamarin.Robotics.Messaging
 		public async Task ReadAsync (Stream stream)
 		{
 			if (readBuffer == null)
-				readBuffer = new byte[ReadBufferSize];
+				readBuffer = new byte[BufferSize];
 			var bufferSize = 0;
 
 			for (;;) {
@@ -224,10 +255,13 @@ namespace Xamarin.Robotics.Messaging
 		public void Read (Stream stream)
 		{
 			if (readBuffer == null)
-				readBuffer = new byte[ReadBufferSize];
+				readBuffer = new byte[BufferSize];
 			var bufferSize = 0;
 
 			for (;;) {
+                if (bufferSize >= 4 && readBuffer[1] == (byte)ControlOp.SetVariableValue) {
+                    readBuffer[0] = (byte)'M';
+                }
 				if (IsValidMessage (readBuffer, bufferSize)) {
 					Operation = readBuffer [1];
 					var dataSize = readBuffer [2];
@@ -247,6 +281,9 @@ namespace Xamarin.Robotics.Messaging
 					if (bytesNeeded > 0) {
 						var n = stream.Read (readBuffer, bufferSize, bytesNeeded);
                         if (n > 0) {
+#if MF_FRAMEWORK_VERSION_V4_3
+                            //Microsoft.SPOT.Debug.Print ("Read " + n + " bytes: " + BitConverter.ToString (readBuffer, bufferSize, n));
+#endif
                             bufferSize += n;
                         }
 					} else {
@@ -274,17 +311,23 @@ namespace Xamarin.Robotics.Messaging
 				throw new InvalidOperationException ("Cannot transmit more than 255 bytes at a time.");
 			}
 
-            stream.WriteByte ((byte)'M');
-			stream.WriteByte ((byte)Operation);
-			stream.WriteByte ((byte)data.Length);
+			if (writeBuffer == null) {
+				writeBuffer = new byte[BufferSize];
+			}
+
+			writeBuffer[0] = ((byte)'M');
+			writeBuffer[1] = ((byte)Operation);
+			writeBuffer[2] = ((byte)data.Length);
 			byte sum = 0;
 			if (data.Length > 0) {
-				stream.Write (data, 0, data.Length);
 				for (var i = 0; i < data.Length; i++) {
+					writeBuffer [3 + i] = data [i];
 					sum += data [i];
 				}
 			}
-			stream.WriteByte (sum);
+			writeBuffer [3 + data.Length] = sum;
+
+			stream.Write (writeBuffer, 0, 4 + data.Length);
 		}
 
 		static int GetBytesNeeded (byte[] buffer, int bufferSize)

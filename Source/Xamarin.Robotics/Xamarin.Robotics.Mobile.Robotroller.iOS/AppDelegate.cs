@@ -7,25 +7,46 @@ using MonoTouch.UIKit;
 
 using Xamarin.Forms;
 using Xamarin.Robotics.Mobile.Core.Bluetooth.LE;
+using MonoTouch.CoreMotion;
 
 namespace Xamarin.Robotics.Mobile.Robotroller.iOS
 {
 	[Register ("AppDelegate")]
-	public partial class AppDelegate : UIApplicationDelegate
+	public partial class AppDelegate : UIApplicationDelegate, IGyro
 	{
 		UIWindow window;
 
-		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
+		App app;
+
+		CMMotionManager man = new CMMotionManager ();
+
+		public override bool FinishedLaunching (UIApplication application, NSDictionary launchOptions)
 		{
 			Xamarin.Forms.Forms.Init ();
 
-			window = new UIWindow (UIScreen.MainScreen.Bounds);
+			// Pitch is speed pi/2 -> 0
+			// Roll turning speed -p1/2 -> p1/2
+			man.StartDeviceMotionUpdates (new NSOperationQueue (), (m, e) => {
+				Roll = m.Attitude.Roll;
+				Pitch = m.Attitude.Pitch;
+				Yaw = m.Attitude.Yaw;
+				GyroUpdated (this, EventArgs.Empty);
+			});
 
-			window.RootViewController = App.GetMainPage (Adapter.Current).CreateViewController ();
+			app = new App (Adapter.Current, this);
+
+			window = new UIWindow (UIScreen.MainScreen.Bounds);
+			window.RootViewController = app.GetMainPage ().CreateViewController ();
 			window.MakeKeyAndVisible ();
 
 			return true;
 		}
+
+		public double Roll { get; private set; }
+		public double Pitch { get; private set; }
+		public double Yaw { get; private set; }
+
+		public event EventHandler GyroUpdated = delegate {};
 	}
 }
 

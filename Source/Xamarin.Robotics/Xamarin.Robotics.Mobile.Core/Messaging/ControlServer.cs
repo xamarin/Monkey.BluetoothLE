@@ -79,7 +79,8 @@ namespace Xamarin.Robotics.Messaging
                 ChangedAction = changedAction,
                 Id = id++,
                 Name = name,
-                Value = value,                
+                Value = value,  
+                IsWriteable = changedAction != null,
             };
             variables.Add (v);
             SendVariable (v);
@@ -161,7 +162,7 @@ namespace Xamarin.Robotics.Messaging
                         foreach (ServerVariable v in variables) {
                             if (v.Id == id) {
                                 v.Value = val;
-                                DebugPrint ("Set " + v.Name);
+                                DebugPrint ("Set " + v.Name + " = " + val);
                                 break;
                             }
                         }
