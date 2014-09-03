@@ -9,7 +9,4 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 		double Yaw { get; }
 		event EventHandler GyroUpdated;
 	}
-
-
 }
-

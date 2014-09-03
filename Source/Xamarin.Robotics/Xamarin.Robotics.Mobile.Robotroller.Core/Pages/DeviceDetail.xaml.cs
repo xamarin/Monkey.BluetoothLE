@@ -28,6 +28,11 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 			this.Appearing += async (sender, e) => {
 				await RunControlAsync ();
 			};
+
+			adapter.DeviceDisconnected += (sender, e) => {
+				// if device disconnects, return to main list screen
+				Navigation.PopToRootAsync();
+			};
 		}
 
 		public void OnVariableSelected (object sender, SelectedItemChangedEventArgs e)
@@ -113,6 +118,11 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 						if (turnVariable != null) {
 							turnVariable.Value = turn;
 						}
+
+						// let's show the values we're sending to the robot
+						Device.BeginInvokeOnMainThread(() => {
+							JoystickOutput.Text = String.Format("Speed: {0}   Turn:{1}", Math.Round(speed,2), Math.Round(turn,2));
+						});
 					},
 					CancellationToken.None,
 					TaskCreationOptions.None,

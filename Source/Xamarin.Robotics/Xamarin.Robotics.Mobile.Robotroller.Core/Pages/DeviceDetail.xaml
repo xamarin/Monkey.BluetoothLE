@@ -13,7 +13,7 @@
 
 
 
-	<ContentPage Title="Variables">
+	<ContentPage Title="Variables" Icon="glyphish_19_gear.png">
 		<ListView x:Name="variablesList" ItemSelected="OnVariableSelected">
 		  <ListView.ItemTemplate>
 		    <DataTemplate>
@@ -30,7 +30,7 @@
 		</ListView>
 	</ContentPage>
 
-	<ContentPage Title="Commands">
+	<ContentPage Title="Commands" Icon="glyphish_55_network.png">
 		<ListView x:Name="commandsList" ItemSelected="OnCommandSelected">
 		  <ListView.ItemTemplate>
 		    <DataTemplate>
@@ -40,11 +40,12 @@
 		</ListView>
 	</ContentPage>
 
-	<ContentPage Title="Joystick" Appearing="OnJoystickAppearing" Disappearing="OnJoystickDisappearing">
+	<ContentPage Title="Joystick" Appearing="OnJoystickAppearing" Disappearing="OnJoystickDisappearing"  Icon="glyphish_09_arrows_out.png">
 		<Frame>
 			<StackLayout Orientation="Vertical">
 				<Label Text="Pitching the phone downward increases the speed."/>
 				<Label Text="Rolling the phone from side to side causes turning."/>
+				<Label Text="" x:Name="JoystickOutput" />
 			</StackLayout>
 		</Frame>
 	</ContentPage>

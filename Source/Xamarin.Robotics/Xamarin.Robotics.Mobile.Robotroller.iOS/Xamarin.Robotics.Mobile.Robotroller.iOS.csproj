@@ -99,6 +99,17 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
+    <BundleResource Include="Resources\Default%402x.png" />
+    <BundleResource Include="Resources\Icon-60%402x.png" />
+    <BundleResource Include="Resources\Icon-76.png" />
+    <BundleResource Include="Resources\Icon-76%402x.png" />
+    <BundleResource Include="Resources\Icon-Small-40.png" />
+    <BundleResource Include="Resources\Icon-Small-40%402x.png" />
+    <BundleResource Include="Resources\Icon-Small.png" />
+    <BundleResource Include="Resources\Icon-Small%402x.png" />
+    <BundleResource Include="Resources\glyphish_09_arrows_out.png" />
+    <BundleResource Include="Resources\glyphish_19_gear.png" />
+    <BundleResource Include="Resources\glyphish_55_network.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -124,5 +135,8 @@
       <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
       <Name>Xamarin.Robotics.Mobile.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="Resources\iTunesArtwork%402x.png" />
   </ItemGroup>
 </Project>

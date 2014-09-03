@@ -31,6 +31,7 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 			};
 
 			adapter.ScanTimeoutElapsed += (sender, e) => {
+				IsBusy = false;
 				Debug.WriteLine ("Scan timeout");
 				if (autoScan) {
 					StartScanning ();
@@ -60,6 +61,7 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 
 		void StartScanning () {
 			if (!adapter.IsScanning) {
+				IsBusy = true;
 				devices.Clear();
 				adapter.StartScanningForDevices();
 				Debug.WriteLine ("adapter.StartScanningForDevices()");
@@ -72,6 +74,7 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 				if(adapter.IsScanning) {
 					Debug.WriteLine ("Still scanning, stopping the scan");
 					adapter.StopScanningForDevices();
+					IsBusy = false;
 				}
 			}).Start();
 		}
