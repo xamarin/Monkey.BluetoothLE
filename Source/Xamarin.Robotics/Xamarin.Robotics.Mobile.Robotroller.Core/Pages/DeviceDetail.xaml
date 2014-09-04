@@ -14,7 +14,7 @@
 
 
 	<ContentPage Title="Variables" Icon="glyphish_19_gear.png">
-		<ListView x:Name="variablesList" ItemSelected="OnVariableSelected">
+		<ListView x:Name="variablesList" ItemSelected="OnVariableSelected" RowHeight="50">
 		  <ListView.ItemTemplate>
 		    <DataTemplate>
 		      <ViewCell>
@@ -30,6 +30,7 @@
 		</ListView>
 	</ContentPage>
 
+
 	<ContentPage Title="Commands" Icon="glyphish_55_network.png">
 		<ListView x:Name="commandsList" ItemSelected="OnCommandSelected">
 		  <ListView.ItemTemplate>
@@ -40,14 +41,31 @@
 		</ListView>
 	</ContentPage>
 
+
 	<ContentPage Title="Joystick" Appearing="OnJoystickAppearing" Disappearing="OnJoystickDisappearing"  Icon="glyphish_09_arrows_out.png">
 		<Frame>
 			<StackLayout Orientation="Vertical">
 				<Label Text="Pitching the phone downward increases the speed."/>
 				<Label Text="Rolling the phone from side to side causes turning."/>
-				<Label Text="" x:Name="JoystickOutput" />
+				<Label Text="" x:Name="JoystickOutputSpeed" />
+				<Label Text="" x:Name="JoystickOutputTurn" />
 			</StackLayout>
 		</Frame>
+	</ContentPage>
+
+
+	<ContentPage Title="Sliders" Icon="glyphish_09_arrows_out.png">
+		<StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand" Padding="40,20,40,20">
+			<BoxView Color="Transparent" />
+			<Label Text="Speed" />
+			<Slider Minimum="0" Maximum="1" x:Name="SpeedSlider" ValueChanged="OnSlidersChanged" />
+			<BoxView Color="Transparent"  />
+			<Label Text="Direction (L to R)"/>
+			<Slider Minimum="0" Maximum="2" Value="1" x:Name="TurnSlider" ValueChanged="OnSlidersChanged" />
+			<BoxView Color="Transparent" />
+			<Button Text="Center" Clicked="OnCenterClicked" VerticalOptions="EndAndExpand" />
+			<Button Text="Reset speed &amp; direction" Clicked="OnResetClicked" VerticalOptions="EndAndExpand" />
+		</StackLayout>
 	</ContentPage>
 
 </TabbedPage>

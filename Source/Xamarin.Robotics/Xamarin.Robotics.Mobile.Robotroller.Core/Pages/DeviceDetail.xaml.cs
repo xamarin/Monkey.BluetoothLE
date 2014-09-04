@@ -80,6 +80,10 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 			}
 		}
 
+
+		#region Joystick
+		// use device gyroscope for speed and direction
+		// gets wired/unwired when 
 		IGyro boundGyro;
 		DateTime lastGyroUpdateTime = DateTime.Now;
 		static readonly TimeSpan GyroUpdateInterval = TimeSpan.FromSeconds (1.0/2);
@@ -121,7 +125,8 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 
 						// let's show the values we're sending to the robot
 						Device.BeginInvokeOnMainThread(() => {
-							JoystickOutput.Text = String.Format("Speed: {0}   Turn:{1}", Math.Round(speed,2), Math.Round(turn,2));
+							JoystickOutputSpeed.Text = String.Format("Speed: {0}", Math.Round(speed,2));
+							JoystickOutputTurn.Text = String.Format("Turn: {0}", Math.Round(turn,2));
 						});
 					},
 					CancellationToken.None,
@@ -148,6 +153,52 @@ namespace Xamarin.Robotics.Mobile.Robotroller
 		{
 			UnbindGyro ();
 		}
+		#endregion
+
+
+
+		#region Sliders
+		// hacky attempt to use sliders for speed and direction
+		public void OnSlidersChanged (object sender, EventArgs e)
+		{
+			// re-use the gyro update interval, but for slider value changes
+			var now = DateTime.Now;
+			if (now - lastGyroUpdateTime > GyroUpdateInterval) {
+				lastGyroUpdateTime = now;
+				Task.Factory.StartNew (
+					() => {
+						if (client == null)
+							return;
+
+						var speed = SpeedSlider.Value;
+
+						var speedVariable = client.Variables.FirstOrDefault (x => x.Name == "Speed");
+						if (speedVariable != null) {
+							speedVariable.Value = speed;
+						}
+
+						var turn = TurnSlider.Value - 1;
+
+						var turnVariable = client.Variables.FirstOrDefault (x => x.Name == "Turn");
+						if (turnVariable != null) {
+							turnVariable.Value = turn;
+						}
+					},
+					CancellationToken.None,
+					TaskCreationOptions.None,
+					scheduler);
+			}
+		}
+
+		public void OnCenterClicked (object sender, EventArgs e) {
+			TurnSlider.Value = 1;
+		}
+
+		public void OnResetClicked (object sender, EventArgs e) {
+			SpeedSlider.Value = 0;
+			TurnSlider.Value = 1;
+		}
+
+		#endregion
 	}
 }
-

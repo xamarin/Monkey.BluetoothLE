@@ -13,7 +13,7 @@
 	<ContentPage.ToolbarItems>
 	</ContentPage.ToolbarItems>
 
-	<ListView x:Name="listView" ItemSelected="OnItemSelected">
+	<ListView x:Name="listView" ItemSelected="OnItemSelected" RowHeight="50">
 	  <ListView.ItemTemplate>
 	    <DataTemplate>
 	      <ViewCell>
