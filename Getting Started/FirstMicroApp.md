@@ -7,7 +7,7 @@ Once you've got your [build environment and hardware](https://github.com/xamarin
 ## Xamarin Studio
 
  1. Launch Xamarin Studio and create a new solution of type **C# > MicroFramework > MicroFramework Console Applicaiton** and name it whatever you want:
-~[](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/FirstApp/01%20-%20New%20Solution.png)
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/FirstApp/01%20-%20New%20Solution.png)
 
  2. Double click on the **References** folder in the Solution Pad and add:
  	* Microsoft.Spot.Hardware
