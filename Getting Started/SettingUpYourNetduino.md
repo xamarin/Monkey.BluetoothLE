@@ -21,7 +21,7 @@ If your Netduino isn't running 4.3.1, you will not be able to deploy from a Mac,
 If you're using a Mac, you'll need to have Xamarin Studio installed, and then you'll need to install the Micro Framework Plug-in. To install:
 
  1. From the **Xamarin Studio** menu choose **Add-in Manager**, select the **Gallery** tab, and then in the Search, type `MicroFramework`(you may have to click on the Refresh button):
- ![image]
+ ![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/ConfiguringEnv/01%20-%20Microframework%20XS%20Add%20In%20Install.png)
  
  2. Click **Install**. The add-in will download and install all the appropriate packages. You will likely have to enter your password up to four times, as it moves files into place.
  
