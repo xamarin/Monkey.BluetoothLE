@@ -2,6 +2,7 @@
 using System.Threading;
 using Microsoft.SPOT.Debugger;
 using System.Collections.Generic;
+using MonoDevelop.Ide;
 
 namespace MonoDevelop.MicroFramework
 {
@@ -58,45 +59,53 @@ namespace MonoDevelop.MicroFramework
 			timer = new System.Threading.Timer(new System.Threading.TimerCallback(updateTargetsList), null, 1000, 1000);
 		}
 
+		static object locker = new object();
+
 		private static void StopListening()
 		{
 			listening = false;
 			if(timer != null)
 			{
-				timer.Dispose();
-				timer = null;
+				lock(locker)
+				{
+					timer.Dispose();
+					timer = null;
+					LibUsb_AsyncUsbStream.Exit();
+				}
 			}
 		}
 
 		private static void updateTargetsList(object state)
 		{
-			var devices = PortDefinition.Enumerate(PortFilter.Usb);
-			var targetsToKeep = new List<MicroFrameworkExecutionTarget>();
-			bool changed = false;
-			foreach(var device in devices)
+			lock(locker)
 			{
-				bool targetExist = false;
-				foreach(var target in targets)
+				var devices = PortDefinition.Enumerate(PortFilter.Usb);
+				var targetsToKeep = new List<MicroFrameworkExecutionTarget>();
+				bool changed = false;
+				foreach(var device in devices)
 				{
-					if(target.PortDefinition.Port == (device as PortDefinition).Port)
+					bool targetExist = false;
+					foreach(var target in targets)
 					{
-						targetsToKeep.Add(target);
-						targetExist = true;
-						break;
+						if(target.PortDefinition.Port == (device as PortDefinition).Port)
+						{
+							targetsToKeep.Add(target);
+							targetExist = true;
+							break;
+						}
+					}
+					if(!targetExist)
+					{
+						changed = true;
+						var newTarget = new MicroFrameworkExecutionTarget(device as PortDefinition);
+						targets.Add(newTarget);
+						targetsToKeep.Add(newTarget);
 					}
 				}
-				if(!targetExist)
-				{
-					changed = true;
-					var newTarget = new MicroFrameworkExecutionTarget(device as PortDefinition);
-					targets.Add(newTarget);
-					targetsToKeep.Add(newTarget);
-				}
+				changed |= targets.RemoveAll((target) => !targetsToKeep.Contains(target)) > 0;
+				if(changed && deviceListChanged != null)
+					deviceListChanged(null);
 			}
-			changed |= targets.RemoveAll((target) => !targetsToKeep.Contains(target)) > 0;
-			if(changed && deviceListChanged != null)
-				deviceListChanged(null);
-
 		}
 	}
 }

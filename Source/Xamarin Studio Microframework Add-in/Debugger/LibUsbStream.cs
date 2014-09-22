@@ -207,6 +207,11 @@ namespace Microsoft.SPOT.Debugger
 		}
 
 		#endregion
+
+		public static void Exit()
+		{
+			UsbDevice.Exit();
+		}
 	}
 
 	[Serializable]

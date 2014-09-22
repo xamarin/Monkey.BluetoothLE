@@ -72,7 +72,7 @@ namespace Microsoft.SPOT.Debugger
 
 						m_isFrameworkAssembly = (frameworkAssemblies.Contains (name.ToLower ()));
 					} else {
-						m_isFrameworkAssembly = pdbxFile.PdbxPath.ToLower ().Contains (@"\microsoft .net micro framework\");
+						m_isFrameworkAssembly = pdbxFile.PdbxPath.ToLower().Contains(Path.PathSeparator + ".net micro framework" + Path.PathSeparator);
 					}
 				}
 
