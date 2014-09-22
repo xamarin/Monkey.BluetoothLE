@@ -7,7 +7,7 @@ Once you've got your [build environment and hardware](https://github.com/xamarin
 ## Xamarin Studio
 
  1. Launch Xamarin Studio and create a new solution of type **C# > MicroFramework > MicroFramework Console Applicaiton** and name it whatever you want:
-~[]()
+~[](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/FirstApp/01%20-%20New%20Solution.png)
 
  2. Double click on the **References** folder in the Solution Pad and add:
  	* Microsoft.Spot.Hardware
@@ -67,13 +67,13 @@ This code does the following things:
 ## Xamarin Studio
 
  1. Make sure your Netduino is plugged in. It should show up in the build bar at the top:
-![Xamarin Studio Build Bar]()
+![Xamarin Studio Build Bar](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/FirstApp/03%20-%20Build%20Bar.png)
 
  2. Hit the ">" button to deploy.
  
 The app should deploy and after a moment, the LED should start blinking on the Netduino:
 
-![]
+![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/FirstApp/05%20-%20blinking%20Netduino.gif)
 
 You should also see the debug output in the **Application Output** window:
 
