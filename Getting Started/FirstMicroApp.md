@@ -7,7 +7,7 @@ Once you've got your [build environment and hardware](https://github.com/xamarin
 ## Xamarin Studio
 
  1. Launch Xamarin Studio and create a new solution of type **C# > MicroFramework > MicroFramework Console Applicaiton** and name it whatever you want:
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/FirstApp/01%20-%20New%20Solution.png)
+![New Solution Dialog](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/FirstApp/01%20-%20New%20Solution.png)
 
  2. Double-click on the **References** folder in the Solution Pad and add:
  	* Microsoft.Spot.Hardware
@@ -17,7 +17,7 @@ Once you've got your [build environment and hardware](https://github.com/xamarin
 ## Visual Studio
 
  1. Launch Visual Studio and create a new solution of type **Visual C# > Micro Framework > Console Application** and name it whatever you want:
- ![]()
+ ![New Solution Dialog](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/FirstApp/02%20-%20New%20Solution%20(VS).png)
  
 2. Right-click on the **References** folder in the Solution Explorer and add:
  	* Microsoft.Spot.Hardware
@@ -101,7 +101,7 @@ Looping3
  1. Make sure your Netduino is plugged in.
   	
  2. Double-click on the **Properties** item in the Solution Explorer, select **.NET Micro Framework** on the left, and the under **Deployment** choose **USB** and in the **Device** drop down, choose your Netduino device:
- ![]()
+ ![Device Chooser](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/FirstApp/04%20-%20VS%20Device%20Choose.png)
 
  3. Click the **Start >** button in the toolbar to deploy to yoru device.
  
