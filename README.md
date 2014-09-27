@@ -1,8 +1,8 @@
-# Xamarin.Robotics
+# Robotics, from Xamarin.Labs
 
 ![Xamarin Robotics](https://github.com/xamarin/Xamarin.Robotics/raw/master/Support%20Files/Images/Xamarin.Robotics%20Overview_Thumb.png)
 
-Xamarin Robotics is a full-stack framework that aims to make Robotics and Wearable development much easier by providing a foundation that provides core functionality both for bulding both mobile apps that are Wearables/Robotics aware, as well as .NET Micro Framework based applications that run on microcontrollers such as the Netduino and use peripherals such as sensors, servor, actuators, motor drivers, etc.
+Xamarin.Labs Robotics is a full-stack framework that aims to make Robotics and Wearable development much easier by providing a foundation that provides core functionality both for bulding both mobile apps that are Wearables/Robotics aware, as well as .NET Micro Framework based applications that run on microcontrollers such as the Netduino and use peripherals such as sensors, servor, actuators, motor drivers, etc.
 
 ## Architecture
  
@@ -35,7 +35,7 @@ The Microcontroller stack consists of two parts:
 
 [image of robot]
 
-The best way to get started with Xamarin.Robotics is to build a robot! Check out our [Getting Started guides](https://github.com/xamarin/Xamarin.Robotics/tree/master/Getting%20Started) for step by step instructions on how to do just that.
+The best way to get started with Xamarin.Labs Robotics is to build a robot! Check out our [Getting Started guides](https://github.com/xamarin/Xamarin.Robotics/tree/master/Getting%20Started) for step by step instructions on how to do just that.
 
 # Authors
 Bryan Costanich, Frank Krueger, Craig Dunn, David Karlas, Oleg Rakhmatulin
