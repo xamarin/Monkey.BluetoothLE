@@ -1,6 +1,6 @@
 # Getting Started
 
-These guides will get you up an running with Xamarin.Robotics. By the end of these guides, you'll have a working motile robot that you can drive around with your iOS or Android device over bluetooth!
+These guides will get you up an running with Robotics from Xamarin.Labs. By the end of these guides, you'll have a working motile robot that you can drive around with your iOS or Android device over bluetooth!
 
 [image of robot + xam.forms app]
 
@@ -17,7 +17,7 @@ In order to build the Robot above, you'll need the following items. All told, yo
  * **iOS or Android Device w/BLE Support** - If using an iOS device, you'll need an iPhone 4 or later. If using an Android Device, you'll want to make sure that it has BLE support and is running at least Android v4.3.
 
 ## Step 1 - Setup Basics
-The first step to using Xamarin.Robotics is to setup your hardware, build enivronment, and test your micro-controller out with a simple app.
+The first step to using Robotics is to setup your hardware, build enivronment, and test your micro-controller out with a simple app.
 
 ### 1. [Configuring Your Build Environment and Hardware](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/ConfiguringBuildEnv.md)
 
