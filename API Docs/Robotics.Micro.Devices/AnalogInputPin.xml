@@ -1,0 +1,68 @@
+<Type Name="AnalogInputPin" FullName="Robotics.Micro.Devices.AnalogInputPin">
+  <TypeSignature Language="C#" Value="public class AnalogInputPin : Robotics.Micro.SpecializedBlocks.PollingBlock" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit AnalogInputPin extends Robotics.Micro.SpecializedBlocks.PollingBlock" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Robotics.Micro.SpecializedBlocks.PollingBlock</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AnalogInputPin (Microsoft.SPOT.Hardware.Cpu.AnalogChannel pin, double updateFrequency = 1);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype Microsoft.SPOT.Hardware.Cpu/AnalogChannel pin, float64 updateFrequency) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="pin" Type="Microsoft.SPOT.Hardware.Cpu+AnalogChannel" />
+        <Parameter Name="updateFrequency" Type="System.Double" />
+      </Parameters>
+      <Docs>
+        <param name="pin">To be added.</param>
+        <param name="updateFrequency">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Analog">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.Port Analog { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.Port Analog" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.Port</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Poll">
+      <MemberSignature Language="C#" Value="protected override void Poll ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Poll() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

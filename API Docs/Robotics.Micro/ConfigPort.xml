@@ -1,0 +1,40 @@
+<Type Name="ConfigPort" FullName="Robotics.Micro.ConfigPort">
+  <TypeSignature Language="C#" Value="public class ConfigPort : Robotics.Micro.Port" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit ConfigPort extends Robotics.Micro.Port" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Robotics.Micro.Port</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ConfigPort (Robotics.Micro.BlockBase block, string name, Robotics.Micro.Units units, double initialValue = 0);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Robotics.Micro.BlockBase block, string name, valuetype Robotics.Micro.Units units, float64 initialValue) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="block" Type="Robotics.Micro.BlockBase" />
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="units" Type="Robotics.Micro.Units" />
+        <Parameter Name="initialValue" Type="System.Double" />
+      </Parameters>
+      <Docs>
+        <param name="block">To be added.</param>
+        <param name="name">To be added.</param>
+        <param name="units">To be added.</param>
+        <param name="initialValue">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

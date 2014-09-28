@@ -1,0 +1,47 @@
+<Type Name="IDCMotor" FullName="Robotics.Micro.Motors.IDCMotor">
+  <TypeSignature Language="C#" Value="public interface IDCMotor" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IDCMotor" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="IsNeutralInput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.InputPort IsNeutralInput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.InputPort IsNeutralInput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SpeedInput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.InputPort SpeedInput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.InputPort SpeedInput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

@@ -1,0 +1,68 @@
+<Type Name="PollingI2CBlock" FullName="Robotics.Micro.SpecializedBlocks.PollingI2CBlock">
+  <TypeSignature Language="C#" Value="public abstract class PollingI2CBlock : Robotics.Micro.SpecializedBlocks.I2CBlock" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit PollingI2CBlock extends Robotics.Micro.SpecializedBlocks.I2CBlock" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Robotics.Micro.SpecializedBlocks.I2CBlock</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public PollingI2CBlock (byte address, int clockRateKhz = 400);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(unsigned int8 address, int32 clockRateKhz) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="address" Type="System.Byte" />
+        <Parameter Name="clockRateKhz" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="address">To be added.</param>
+        <param name="clockRateKhz">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Poll">
+      <MemberSignature Language="C#" Value="protected abstract void Poll ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void Poll() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="UpdateFrequency">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.Port UpdateFrequency { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.Port UpdateFrequency" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.Port</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

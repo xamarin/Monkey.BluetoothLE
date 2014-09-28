@@ -1,0 +1,23 @@
+<Type Name="TransformFunction" FullName="Robotics.Micro.SpecializedBlocks.TransformFunction">
+  <TypeSignature Language="C#" Value="public delegate double TransformFunction(double input);" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed TransformFunction extends System.MulticastDelegate" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="input" Type="System.Double" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Double</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="input">To be added.</param>
+    <summary>To be added.</summary>
+    <returns>To be added.</returns>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

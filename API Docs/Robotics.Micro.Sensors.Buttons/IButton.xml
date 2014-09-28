@@ -1,0 +1,30 @@
+<Type Name="IButton" FullName="Robotics.Micro.Sensors.Buttons.IButton">
+  <TypeSignature Language="C#" Value="public interface IButton" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IButton" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Clicked">
+      <MemberSignature Language="C#" Value="public event Microsoft.SPOT.EventHandler Clicked;" />
+      <MemberSignature Language="ILAsm" Value=".event class Microsoft.SPOT.EventHandler Clicked" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Microsoft.SPOT.EventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

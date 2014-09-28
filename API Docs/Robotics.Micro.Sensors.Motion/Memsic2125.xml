@@ -1,0 +1,95 @@
+<Type Name="Memsic2125" FullName="Robotics.Micro.Sensors.Motion.Memsic2125">
+  <TypeSignature Language="C#" Value="public class Memsic2125 : Robotics.Micro.BlockBase" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Memsic2125 extends Robotics.Micro.BlockBase" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Robotics.Micro.BlockBase</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Memsic2125 ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="XAccelerationOutput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.OutputPort XAccelerationOutput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.OutputPort XAccelerationOutput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.OutputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="XPwmInput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.InputPort XPwmInput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.InputPort XPwmInput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="YAccelerationOutput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.OutputPort YAccelerationOutput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.OutputPort YAccelerationOutput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.OutputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="YPwmInput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.InputPort YPwmInput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.InputPort YPwmInput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

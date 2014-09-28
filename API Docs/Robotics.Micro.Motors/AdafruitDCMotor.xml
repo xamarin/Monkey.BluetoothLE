@@ -1,0 +1,76 @@
+<Type Name="AdafruitDCMotor" FullName="Robotics.Micro.Motors.AdafruitDCMotor">
+  <TypeSignature Language="C#" Value="public class AdafruitDCMotor : Robotics.Micro.BlockBase, Robotics.Micro.Motors.IDCMotor" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit AdafruitDCMotor extends Robotics.Micro.BlockBase implements class Robotics.Micro.Motors.IDCMotor" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Robotics.Micro.BlockBase</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>Robotics.Micro.Motors.IDCMotor</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AdafruitDCMotor (Robotics.Micro.Motors.AdafruitMotorShield shield, byte pwmPin, byte in1Pin, byte in2Pin);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Robotics.Micro.Motors.AdafruitMotorShield shield, unsigned int8 pwmPin, unsigned int8 in1Pin, unsigned int8 in2Pin) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="shield" Type="Robotics.Micro.Motors.AdafruitMotorShield" />
+        <Parameter Name="pwmPin" Type="System.Byte" />
+        <Parameter Name="in1Pin" Type="System.Byte" />
+        <Parameter Name="in2Pin" Type="System.Byte" />
+      </Parameters>
+      <Docs>
+        <param name="shield">To be added.</param>
+        <param name="pwmPin">To be added.</param>
+        <param name="in1Pin">To be added.</param>
+        <param name="in2Pin">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsNeutralInput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.InputPort IsNeutralInput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.InputPort IsNeutralInput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SpeedInput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.InputPort SpeedInput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.InputPort SpeedInput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

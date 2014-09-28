@@ -1,0 +1,196 @@
+<Type Name="BlockBase" FullName="Robotics.Micro.BlockBase">
+  <TypeSignature Language="C#" Value="public abstract class BlockBase" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract BlockBase extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected BlockBase ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AddConfig">
+      <MemberSignature Language="C#" Value="protected Robotics.Micro.ConfigPort AddConfig (string name, Robotics.Micro.Units units, double initialValue = 0);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance class Robotics.Micro.ConfigPort AddConfig(string name, valuetype Robotics.Micro.Units units, float64 initialValue) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.ConfigPort</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="units" Type="Robotics.Micro.Units" />
+        <Parameter Name="initialValue" Type="System.Double" />
+      </Parameters>
+      <Docs>
+        <param name="name">To be added.</param>
+        <param name="units">To be added.</param>
+        <param name="initialValue">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AddInput">
+      <MemberSignature Language="C#" Value="protected Robotics.Micro.InputPort AddInput (string name, Robotics.Micro.Units units, double initialValue = 0);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance class Robotics.Micro.InputPort AddInput(string name, valuetype Robotics.Micro.Units units, float64 initialValue) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="units" Type="Robotics.Micro.Units" />
+        <Parameter Name="initialValue" Type="System.Double" />
+      </Parameters>
+      <Docs>
+        <param name="name">To be added.</param>
+        <param name="units">To be added.</param>
+        <param name="initialValue">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AddOutput">
+      <MemberSignature Language="C#" Value="protected Robotics.Micro.OutputPort AddOutput (string name, Robotics.Micro.Units units, double initialValue = 0);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance class Robotics.Micro.OutputPort AddOutput(string name, valuetype Robotics.Micro.Units units, float64 initialValue) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.OutputPort</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="units" Type="Robotics.Micro.Units" />
+        <Parameter Name="initialValue" Type="System.Double" />
+      </Parameters>
+      <Docs>
+        <param name="name">To be added.</param>
+        <param name="units">To be added.</param>
+        <param name="initialValue">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AddPort">
+      <MemberSignature Language="C#" Value="protected Robotics.Micro.Port AddPort (string name, Robotics.Micro.Units units, double initialValue = 0);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance class Robotics.Micro.Port AddPort(string name, valuetype Robotics.Micro.Units units, float64 initialValue) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.Port</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="units" Type="Robotics.Micro.Units" />
+        <Parameter Name="initialValue" Type="System.Double" />
+      </Parameters>
+      <Docs>
+        <param name="name">To be added.</param>
+        <param name="units">To be added.</param>
+        <param name="initialValue">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DebugWriteLine">
+      <MemberSignature Language="C#" Value="protected void DebugWriteLine (string text = &quot;&quot;);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void DebugWriteLine(string text) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="text" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="text">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Name">
+      <MemberSignature Language="C#" Value="public string Name { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Name" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Time">
+      <MemberSignature Language="C#" Value="protected double Time ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance float64 Time() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Double</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToString">
+      <MemberSignature Language="C#" Value="public override string ToString ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance string ToString() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

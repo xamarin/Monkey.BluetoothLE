@@ -1,0 +1,47 @@
+<Type Name="IPwm" FullName="Robotics.Micro.Generators.IPwm">
+  <TypeSignature Language="C#" Value="public interface IPwm" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IPwm" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="DutyCycleInput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.InputPort DutyCycleInput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.InputPort DutyCycleInput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FrequencyInput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.InputPort FrequencyInput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.InputPort FrequencyInput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

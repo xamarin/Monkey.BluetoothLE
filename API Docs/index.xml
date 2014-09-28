@@ -1,9 +1,9 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="Robotics.Mobile.Core" Version="1.0.5384.14133">
+    <Assembly Name="Robotics.Micro.Core" Version="1.0.0.0">
       <Attributes>
         <Attribute>
-          <AttributeName>System.Diagnostics.Debuggable(System.Diagnostics.DebuggableAttribute+DebuggingModes.IgnoreSymbolStoreSequencePoints | System.Diagnostics.DebuggableAttribute+DebuggingModes.DisableOptimizations)</AttributeName>
+          <AttributeName>System.Diagnostics.Debuggable(System.Diagnostics.DebuggableAttribute+DebuggingModes.IgnoreSymbolStoreSequencePoints)</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyCompany("")</AttributeName>
@@ -12,25 +12,22 @@
           <AttributeName>System.Reflection.AssemblyConfiguration("")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyCopyright("bryancostanich")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyCopyright("Copyright ©  2013")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyDescription("")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyProduct("")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyFileVersion("1.0.0.0")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyTitle("Robotics.Mobile.Core.Contracts")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyProduct("Robotics.Device.CoreLib")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTitle("Robotics.Device.CoreLib")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyTrademark("")</AttributeName>
-        </Attribute>
-        <Attribute>
-          <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
-        </Attribute>
-        <Attribute>
-          <AttributeName>System.Runtime.Versioning.TargetFramework(".NETPortable,Version=v4.5,Profile=Profile78", FrameworkDisplayName=".NET Portable Subset")</AttributeName>
         </Attribute>
       </Attributes>
     </Assembly>
@@ -47,6 +44,71 @@
       <Type Name="Message" Kind="Class" />
       <Type Name="Variable" Kind="Class" />
       <Type Name="VariableChangedAction" Kind="Delegate" />
+    </Namespace>
+    <Namespace Name="Robotics.Micro">
+      <Type Name="BlockBase" Kind="Class" />
+      <Type Name="ConfigPort" Kind="Class" />
+      <Type Name="Connection" Kind="Class" />
+      <Type Name="DebugScope" Kind="Class" />
+      <Type Name="IBlock" Kind="Interface" />
+      <Type Name="InputPort" Kind="Class" />
+      <Type Name="IScope" Kind="Interface" />
+      <Type Name="OutputPort" Kind="Class" />
+      <Type Name="Port" Kind="Class" />
+      <Type Name="Units" Kind="Enumeration" />
+      <Type Name="UnitsEx" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Robotics.Micro.Devices">
+      <Type Name="AnalogInputPin" Kind="Class" />
+      <Type Name="DigitalInputPin" Kind="Class" />
+      <Type Name="DigitalOutputPin" Kind="Class" />
+      <Type Name="PwmOutputPin" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Robotics.Micro.Generators">
+      <Type Name="Constant" Kind="Class" />
+      <Type Name="Generator" Kind="Class" />
+      <Type Name="IPwm" Kind="Interface" />
+      <Type Name="SineWave" Kind="Class" />
+      <Type Name="SoftPwm" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Robotics.Micro.Motors">
+      <Type Name="AdafruitDCMotor" Kind="Class" />
+      <Type Name="AdafruitMotorShield" Kind="Class" />
+      <Type Name="HBridgeMotor" Kind="Class" />
+      <Type Name="IDCMotor" Kind="Interface" />
+    </Namespace>
+    <Namespace Name="Robotics.Micro.Sensors.Buttons">
+      <Type Name="IButton" Kind="Interface" />
+      <Type Name="PushButton" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Robotics.Micro.Sensors.Light">
+      <Type Name="GenericAmbientLightSensor" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Robotics.Micro.Sensors.Location">
+      <Type Name="Bmp085" Kind="Class" />
+      <Type Name="Grove3AxisDigitalCompass" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Robotics.Micro.Sensors.Motion">
+      <Type Name="IAccelerometer" Kind="Interface" />
+      <Type Name="Memsic2125" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Robotics.Micro.Sensors.Proximity">
+      <Type Name="IRangeFinder" Kind="Interface" />
+      <Type Name="SharpGP2D12" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Robotics.Micro.Sensors.Temperature">
+      <Type Name="Thermistor" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Robotics.Micro.SpecializedBlocks">
+      <Type Name="CelsiusToFahrenheit" Kind="Class" />
+      <Type Name="DutyCycleMeter" Kind="Class" />
+      <Type Name="I2CBlock" Kind="Class" />
+      <Type Name="LookupTable" Kind="Class" />
+      <Type Name="PollingBlock" Kind="Class" />
+      <Type Name="PollingI2CBlock" Kind="Class" />
+      <Type Name="Switch" Kind="Class" />
+      <Type Name="Transform" Kind="Class" />
+      <Type Name="TransformFunction" Kind="Delegate" />
     </Namespace>
     <Namespace Name="Robotics.Mobile.Core.Bluetooth.LE">
       <Type Name="BluetoothKnownItemManager" Kind="Class" />
@@ -79,113 +141,23 @@
   <ExtensionMethods>
     <ExtensionMethod>
       <Targets>
-        <Target Type="T:Robotics.Mobile.Core.Bluetooth.LE.IAdapter" />
+        <Target Type="T:Robotics.Micro.Units" />
       </Targets>
-      <Member MemberName="ConnectAsync">
-        <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task ConnectAsync (this Robotics.Mobile.Core.Bluetooth.LE.IAdapter adapter, Robotics.Mobile.Core.Bluetooth.LE.IDevice device);" />
-        <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task ConnectAsync(class Robotics.Mobile.Core.Bluetooth.LE.IAdapter adapter, class Robotics.Mobile.Core.Bluetooth.LE.IDevice device) cil managed" />
-        <MemberType>ExtensionMethod</MemberType>
-        <ReturnValue>
-          <ReturnType>System.Threading.Tasks.Task</ReturnType>
-        </ReturnValue>
-        <Parameters>
-          <Parameter Name="adapter" Type="Robotics.Mobile.Core.Bluetooth.LE.IAdapter" RefType="this" />
-          <Parameter Name="device" Type="Robotics.Mobile.Core.Bluetooth.LE.IDevice" />
-        </Parameters>
-        <Docs>
-          <param name="adapter">To be added.</param>
-          <param name="device">To be added.</param>
-          <summary>To be added.</summary>
-        </Docs>
-        <Link Type="Robotics.Mobile.Core.Bluetooth.LE.Extensions" Member="M:Robotics.Mobile.Core.Bluetooth.LE.Extensions.ConnectAsync(Robotics.Mobile.Core.Bluetooth.LE.IAdapter,Robotics.Mobile.Core.Bluetooth.LE.IDevice)" />
-      </Member>
-    </ExtensionMethod>
-    <ExtensionMethod>
-      <Targets>
-        <Target Type="T:Robotics.Mobile.Core.Bluetooth.LE.IService" />
-      </Targets>
-      <Member MemberName="GetCharacteristicAsync">
-        <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task&lt;Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic&gt; GetCharacteristicAsync (this Robotics.Mobile.Core.Bluetooth.LE.IService service, Guid id);" />
-        <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task`1&lt;class Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic&gt; GetCharacteristicAsync(class Robotics.Mobile.Core.Bluetooth.LE.IService service, valuetype System.Guid id) cil managed" />
-        <MemberType>ExtensionMethod</MemberType>
-        <ReturnValue>
-          <ReturnType>System.Threading.Tasks.Task&lt;Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic&gt;</ReturnType>
-        </ReturnValue>
-        <Parameters>
-          <Parameter Name="service" Type="Robotics.Mobile.Core.Bluetooth.LE.IService" RefType="this" />
-          <Parameter Name="id" Type="System.Guid" />
-        </Parameters>
-        <Docs>
-          <param name="service">To be added.</param>
-          <param name="id">To be added.</param>
-          <summary>To be added.</summary>
-        </Docs>
-        <Link Type="Robotics.Mobile.Core.Bluetooth.LE.Extensions" Member="M:Robotics.Mobile.Core.Bluetooth.LE.Extensions.GetCharacteristicAsync(Robotics.Mobile.Core.Bluetooth.LE.IService,System.Guid)" />
-      </Member>
-    </ExtensionMethod>
-    <ExtensionMethod>
-      <Targets>
-        <Target Type="T:Robotics.Mobile.Core.Bluetooth.LE.IDevice" />
-      </Targets>
-      <Member MemberName="GetServiceAsync">
-        <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task&lt;Robotics.Mobile.Core.Bluetooth.LE.IService&gt; GetServiceAsync (this Robotics.Mobile.Core.Bluetooth.LE.IDevice device, Guid id);" />
-        <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task`1&lt;class Robotics.Mobile.Core.Bluetooth.LE.IService&gt; GetServiceAsync(class Robotics.Mobile.Core.Bluetooth.LE.IDevice device, valuetype System.Guid id) cil managed" />
-        <MemberType>ExtensionMethod</MemberType>
-        <ReturnValue>
-          <ReturnType>System.Threading.Tasks.Task&lt;Robotics.Mobile.Core.Bluetooth.LE.IService&gt;</ReturnType>
-        </ReturnValue>
-        <Parameters>
-          <Parameter Name="device" Type="Robotics.Mobile.Core.Bluetooth.LE.IDevice" RefType="this" />
-          <Parameter Name="id" Type="System.Guid" />
-        </Parameters>
-        <Docs>
-          <param name="device">To be added.</param>
-          <param name="id">To be added.</param>
-          <summary>To be added.</summary>
-        </Docs>
-        <Link Type="Robotics.Mobile.Core.Bluetooth.LE.Extensions" Member="M:Robotics.Mobile.Core.Bluetooth.LE.Extensions.GetServiceAsync(Robotics.Mobile.Core.Bluetooth.LE.IDevice,System.Guid)" />
-      </Member>
-    </ExtensionMethod>
-    <ExtensionMethod>
-      <Targets>
-        <Target Type="T:System.Guid" />
-      </Targets>
-      <Member MemberName="PartialFromUuid">
-        <MemberSignature Language="C#" Value="public static string PartialFromUuid (this Guid uuid);" />
-        <MemberSignature Language="ILAsm" Value=".method public static hidebysig string PartialFromUuid(valuetype System.Guid uuid) cil managed" />
+      <Member MemberName="ToShortString">
+        <MemberSignature Language="C#" Value="public static string ToShortString (this Robotics.Micro.Units units);" />
+        <MemberSignature Language="ILAsm" Value=".method public static hidebysig string ToShortString(valuetype Robotics.Micro.Units units) cil managed" />
         <MemberType>ExtensionMethod</MemberType>
         <ReturnValue>
           <ReturnType>System.String</ReturnType>
         </ReturnValue>
         <Parameters>
-          <Parameter Name="uuid" Type="System.Guid" RefType="this" />
+          <Parameter Name="units" Type="Robotics.Micro.Units" RefType="this" />
         </Parameters>
         <Docs>
-          <param name="uuid">To be added.</param>
+          <param name="units">To be added.</param>
           <summary>To be added.</summary>
         </Docs>
-        <Link Type="Robotics.Mobile.Core.Bluetooth.LE.Extensions" Member="M:Robotics.Mobile.Core.Bluetooth.LE.Extensions.PartialFromUuid(System.Guid)" />
-      </Member>
-    </ExtensionMethod>
-    <ExtensionMethod>
-      <Targets>
-        <Target Type="T:System.Int32" />
-      </Targets>
-      <Member MemberName="UuidFromPartial">
-        <MemberSignature Language="C#" Value="public static Guid UuidFromPartial (this int partial);" />
-        <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Guid UuidFromPartial(int32 partial) cil managed" />
-        <MemberType>ExtensionMethod</MemberType>
-        <ReturnValue>
-          <ReturnType>System.Guid</ReturnType>
-        </ReturnValue>
-        <Parameters>
-          <Parameter Name="partial" Type="System.Int32" RefType="this" />
-        </Parameters>
-        <Docs>
-          <param name="partial">To be added.</param>
-          <summary>To be added.</summary>
-        </Docs>
-        <Link Type="Robotics.Mobile.Core.Bluetooth.LE.Extensions" Member="M:Robotics.Mobile.Core.Bluetooth.LE.Extensions.UuidFromPartial(System.Int32)" />
+        <Link Type="Robotics.Micro.UnitsEx" Member="M:Robotics.Micro.UnitsEx.ToShortString(Robotics.Micro.Units)" />
       </Member>
     </ExtensionMethod>
   </ExtensionMethods>

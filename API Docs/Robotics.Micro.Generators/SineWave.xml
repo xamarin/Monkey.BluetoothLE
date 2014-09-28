@@ -1,0 +1,108 @@
+<Type Name="SineWave" FullName="Robotics.Micro.Generators.SineWave">
+  <TypeSignature Language="C#" Value="public class SineWave : Robotics.Micro.Generators.Generator" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit SineWave extends Robotics.Micro.Generators.Generator" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Robotics.Micro.Generators.Generator</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public SineWave (double frequency = 1, double amplitude = 1, double offset = 0, double updateFrequency = 1);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(float64 frequency, float64 amplitude, float64 offset, float64 updateFrequency) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="frequency" Type="System.Double" />
+        <Parameter Name="amplitude" Type="System.Double" />
+        <Parameter Name="offset" Type="System.Double" />
+        <Parameter Name="updateFrequency" Type="System.Double" />
+      </Parameters>
+      <Docs>
+        <param name="frequency">To be added.</param>
+        <param name="amplitude">To be added.</param>
+        <param name="offset">To be added.</param>
+        <param name="updateFrequency">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AmplitudeInput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.InputPort AmplitudeInput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.InputPort AmplitudeInput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FrequencyInput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.InputPort FrequencyInput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.InputPort FrequencyInput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Generate">
+      <MemberSignature Language="C#" Value="protected override double Generate (double time);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance float64 Generate(float64 time) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Double</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="time" Type="System.Double" />
+      </Parameters>
+      <Docs>
+        <param name="time">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OffsetInput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.InputPort OffsetInput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.InputPort OffsetInput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

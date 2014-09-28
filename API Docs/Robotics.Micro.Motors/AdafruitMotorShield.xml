@@ -1,0 +1,132 @@
+<Type Name="AdafruitMotorShield" FullName="Robotics.Micro.Motors.AdafruitMotorShield">
+  <TypeSignature Language="C#" Value="public class AdafruitMotorShield : Robotics.Micro.SpecializedBlocks.I2CBlock" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit AdafruitMotorShield extends Robotics.Micro.SpecializedBlocks.I2CBlock" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Robotics.Micro.SpecializedBlocks.I2CBlock</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AdafruitMotorShield (uint pwmFrequency = 1600, byte address = 96, int clockRateKhz = 400);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(unsigned int32 pwmFrequency, unsigned int8 address, int32 clockRateKhz) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="pwmFrequency" Type="System.UInt32" />
+        <Parameter Name="address" Type="System.Byte" />
+        <Parameter Name="clockRateKhz" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="pwmFrequency">To be added.</param>
+        <param name="address">To be added.</param>
+        <param name="clockRateKhz">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DefaultAddress">
+      <MemberSignature Language="C#" Value="public const byte DefaultAddress = 96;" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal unsigned int8 DefaultAddress = (96)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Byte</ReturnType>
+      </ReturnValue>
+      <MemberValue>96</MemberValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetMotor">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.Motors.AdafruitDCMotor GetMotor (int num);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Robotics.Micro.Motors.AdafruitDCMotor GetMotor(int32 num) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.Motors.AdafruitDCMotor</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="num" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="num">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Reset">
+      <MemberSignature Language="C#" Value="public void Reset ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Reset() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetPin">
+      <MemberSignature Language="C#" Value="public void SetPin (byte pin, bool value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetPin(unsigned int8 pin, bool value) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pin" Type="System.Byte" />
+        <Parameter Name="value" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="pin">To be added.</param>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetPwm">
+      <MemberSignature Language="C#" Value="public void SetPwm (byte pin, ushort value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetPwm(unsigned int8 pin, unsigned int16 value) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pin" Type="System.Byte" />
+        <Parameter Name="value" Type="System.UInt16" />
+      </Parameters>
+      <Docs>
+        <param name="pin">To be added.</param>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

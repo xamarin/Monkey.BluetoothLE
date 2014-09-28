@@ -1,13 +1,12 @@
-<Type Name="Command" FullName="Robotics.Messaging.Command">
-  <TypeSignature Language="C#" Value="public class Command" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Command extends System.Object" />
+<Type Name="DebugScope" FullName="Robotics.Micro.DebugScope">
+  <TypeSignature Language="C#" Value="public class DebugScope : Robotics.Micro.BlockBase" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit DebugScope extends Robotics.Micro.BlockBase" />
   <AssemblyInfo>
     <AssemblyName>Robotics.Micro.Core</AssemblyName>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>System.Object</BaseTypeName>
+    <BaseTypeName>Robotics.Micro.BlockBase</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
@@ -16,12 +15,11 @@
   </Docs>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Command ();" />
+      <MemberSignature Language="C#" Value="public DebugScope ();" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
-        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
@@ -29,33 +27,34 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Id">
-      <MemberSignature Language="C#" Value="public int Id { get; set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance int32 Id" />
-      <MemberType>Property</MemberType>
+    <Member MemberName="ConnectTo">
+      <MemberSignature Language="C#" Value="public void ConnectTo (Robotics.Micro.Port port);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void ConnectTo(class Robotics.Micro.Port port) cil managed" />
+      <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
-        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
+        <ReturnType>System.Void</ReturnType>
       </ReturnValue>
+      <Parameters>
+        <Parameter Name="port" Type="Robotics.Micro.Port" />
+      </Parameters>
       <Docs>
+        <param name="port">To be added.</param>
         <summary>To be added.</summary>
-        <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Name">
-      <MemberSignature Language="C#" Value="public string Name { get; set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance string Name" />
+    <Member MemberName="UpdatePeriod">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.Port UpdatePeriod { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.Port UpdatePeriod" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
-        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>System.String</ReturnType>
+        <ReturnType>Robotics.Micro.Port</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>

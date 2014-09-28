@@ -1,0 +1,52 @@
+<Type Name="DigitalInputPin" FullName="Robotics.Micro.Devices.DigitalInputPin">
+  <TypeSignature Language="C#" Value="public class DigitalInputPin : Robotics.Micro.BlockBase" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit DigitalInputPin extends Robotics.Micro.BlockBase" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Robotics.Micro.BlockBase</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public DigitalInputPin (Microsoft.SPOT.Hardware.Cpu.Pin pin, bool glitchFilter = false);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype Microsoft.SPOT.Hardware.Cpu/Pin pin, bool glitchFilter) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="pin" Type="Microsoft.SPOT.Hardware.Cpu+Pin" />
+        <Parameter Name="glitchFilter" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="pin">To be added.</param>
+        <param name="glitchFilter">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Output">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.Port Output { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.Port Output" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.Port</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

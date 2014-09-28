@@ -1,0 +1,63 @@
+<Type Name="IAccelerometer" FullName="Robotics.Micro.Sensors.Motion.IAccelerometer">
+  <TypeSignature Language="C#" Value="public interface IAccelerometer" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IAccelerometer" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="XAcceleration">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.OutputPort XAcceleration { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.OutputPort XAcceleration" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.OutputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="YAcceleration">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.OutputPort YAcceleration { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.OutputPort YAcceleration" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.OutputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ZAcceleration">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.OutputPort ZAcceleration { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.OutputPort ZAcceleration" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.OutputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

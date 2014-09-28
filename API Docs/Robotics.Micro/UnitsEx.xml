@@ -1,0 +1,38 @@
+<Type Name="UnitsEx" FullName="Robotics.Micro.UnitsEx">
+  <TypeSignature Language="C#" Value="public static class UnitsEx" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit UnitsEx extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="ToShortString">
+      <MemberSignature Language="C#" Value="public static string ToShortString (this Robotics.Micro.Units units);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig string ToShortString(valuetype Robotics.Micro.Units units) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="units" Type="Robotics.Micro.Units" RefType="this" />
+      </Parameters>
+      <Docs>
+        <param name="units">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

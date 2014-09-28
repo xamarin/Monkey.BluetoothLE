@@ -1,13 +1,12 @@
-<Type Name="Command" FullName="Robotics.Messaging.Command">
-  <TypeSignature Language="C#" Value="public class Command" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Command extends System.Object" />
+<Type Name="CelsiusToFahrenheit" FullName="Robotics.Micro.SpecializedBlocks.CelsiusToFahrenheit">
+  <TypeSignature Language="C#" Value="public class CelsiusToFahrenheit : Robotics.Micro.BlockBase" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit CelsiusToFahrenheit extends Robotics.Micro.BlockBase" />
   <AssemblyInfo>
     <AssemblyName>Robotics.Micro.Core</AssemblyName>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>System.Object</BaseTypeName>
+    <BaseTypeName>Robotics.Micro.BlockBase</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
@@ -16,12 +15,11 @@
   </Docs>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Command ();" />
+      <MemberSignature Language="C#" Value="public CelsiusToFahrenheit ();" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
-        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
@@ -29,16 +27,15 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Id">
-      <MemberSignature Language="C#" Value="public int Id { get; set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance int32 Id" />
+    <Member MemberName="Celsius">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.InputPort Celsius { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.InputPort Celsius" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
-        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -46,16 +43,15 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Name">
-      <MemberSignature Language="C#" Value="public string Name { get; set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance string Name" />
+    <Member MemberName="Fahrenheit">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.OutputPort Fahrenheit { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.OutputPort Fahrenheit" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
-        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>System.String</ReturnType>
+        <ReturnType>Robotics.Micro.OutputPort</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>

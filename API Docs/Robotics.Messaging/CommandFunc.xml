@@ -2,7 +2,8 @@
   <TypeSignature Language="C#" Value="public delegate object CommandFunc();" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed CommandFunc extends System.MulticastDelegate" />
   <AssemblyInfo>
-    <AssemblyName>Robotics.Mobile.Core</AssemblyName>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
   </AssemblyInfo>
   <Base>

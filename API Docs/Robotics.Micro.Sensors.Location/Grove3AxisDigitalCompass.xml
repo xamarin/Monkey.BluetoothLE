@@ -1,0 +1,132 @@
+<Type Name="Grove3AxisDigitalCompass" FullName="Robotics.Micro.Sensors.Location.Grove3AxisDigitalCompass">
+  <TypeSignature Language="C#" Value="public class Grove3AxisDigitalCompass : Robotics.Micro.SpecializedBlocks.PollingI2CBlock" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Grove3AxisDigitalCompass extends Robotics.Micro.SpecializedBlocks.PollingI2CBlock" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Robotics.Micro.SpecializedBlocks.PollingI2CBlock</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Grove3AxisDigitalCompass (byte address = 30, int clockRateKhz = 400);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(unsigned int8 address, int32 clockRateKhz) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="address" Type="System.Byte" />
+        <Parameter Name="clockRateKhz" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="address">To be added.</param>
+        <param name="clockRateKhz">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DefaultAddress">
+      <MemberSignature Language="C#" Value="public const byte DefaultAddress = 30;" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal unsigned int8 DefaultAddress = (30)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Byte</ReturnType>
+      </ReturnValue>
+      <MemberValue>30</MemberValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MaxGaussInput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.Port MaxGaussInput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.Port MaxGaussInput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.Port</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Poll">
+      <MemberSignature Language="C#" Value="protected override void Poll ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Poll() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="XGaussOutput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.Port XGaussOutput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.Port XGaussOutput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.Port</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="YGaussOutput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.Port YGaussOutput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.Port YGaussOutput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.Port</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ZGaussOutput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.Port ZGaussOutput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.Port ZGaussOutput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.Port</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

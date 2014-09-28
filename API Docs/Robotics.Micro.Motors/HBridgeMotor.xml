@@ -1,0 +1,174 @@
+<Type Name="HBridgeMotor" FullName="Robotics.Micro.Motors.HBridgeMotor">
+  <TypeSignature Language="C#" Value="public class HBridgeMotor : Robotics.Micro.BlockBase, Robotics.Micro.Motors.IDCMotor" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit HBridgeMotor extends Robotics.Micro.BlockBase implements class Robotics.Micro.Motors.IDCMotor" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Robotics.Micro.BlockBase</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>Robotics.Micro.Motors.IDCMotor</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public HBridgeMotor (Robotics.Micro.Generators.IPwm pwm = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Robotics.Micro.Generators.IPwm pwm) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="pwm" Type="Robotics.Micro.Generators.IPwm" />
+      </Parameters>
+      <Docs>
+        <param name="pwm">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="A1Output">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.OutputPort A1Output { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.OutputPort A1Output" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.OutputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="A2Output">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.OutputPort A2Output { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.OutputPort A2Output" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.OutputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CalibrationInput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.InputPort CalibrationInput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.InputPort CalibrationInput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateForNetduino">
+      <MemberSignature Language="C#" Value="public static Robotics.Micro.Motors.HBridgeMotor CreateForNetduino (Microsoft.SPOT.Hardware.Cpu.PWMChannel enable, Microsoft.SPOT.Hardware.Cpu.Pin a1, Microsoft.SPOT.Hardware.Cpu.Pin a2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class Robotics.Micro.Motors.HBridgeMotor CreateForNetduino(valuetype Microsoft.SPOT.Hardware.Cpu/PWMChannel enable, valuetype Microsoft.SPOT.Hardware.Cpu/Pin a1, valuetype Microsoft.SPOT.Hardware.Cpu/Pin a2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.Motors.HBridgeMotor</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="enable" Type="Microsoft.SPOT.Hardware.Cpu+PWMChannel" />
+        <Parameter Name="a1" Type="Microsoft.SPOT.Hardware.Cpu+Pin" />
+        <Parameter Name="a2" Type="Microsoft.SPOT.Hardware.Cpu+Pin" />
+      </Parameters>
+      <Docs>
+        <param name="enable">To be added.</param>
+        <param name="a1">To be added.</param>
+        <param name="a2">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsNeutralInput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.InputPort IsNeutralInput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.InputPort IsNeutralInput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PwmDutyCycleOutput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.OutputPort PwmDutyCycleOutput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.OutputPort PwmDutyCycleOutput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.OutputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PwmFrequencyOutput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.OutputPort PwmFrequencyOutput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.OutputPort PwmFrequencyOutput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.OutputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SpeedInput">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.InputPort SpeedInput { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Micro.InputPort SpeedInput" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.InputPort</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

@@ -2,7 +2,8 @@
   <TypeSignature Language="C#" Value="public enum ControlOp" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed ControlOp extends System.Enum" />
   <AssemblyInfo>
-    <AssemblyName>Robotics.Mobile.Core</AssemblyName>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
   </AssemblyInfo>
   <Base>
@@ -18,6 +19,7 @@
       <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Messaging.ControlOp Command = unsigned int8(3)" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -32,6 +34,7 @@
       <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Messaging.ControlOp CommandResult = unsigned int8(4)" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -46,6 +49,7 @@
       <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Messaging.ControlOp ExecuteCommand = unsigned int8(132)" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -60,6 +64,7 @@
       <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Messaging.ControlOp GetCommands = unsigned int8(131)" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -74,6 +79,7 @@
       <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Messaging.ControlOp GetVariables = unsigned int8(129)" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -88,6 +94,7 @@
       <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Messaging.ControlOp SetVariableValue = unsigned int8(130)" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -102,6 +109,7 @@
       <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Messaging.ControlOp Variable = unsigned int8(1)" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -116,6 +124,7 @@
       <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Messaging.ControlOp VariableValue = unsigned int8(2)" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
