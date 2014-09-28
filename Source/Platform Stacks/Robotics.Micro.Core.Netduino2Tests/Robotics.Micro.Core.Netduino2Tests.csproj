@@ -51,5 +51,6 @@
     <Reference Include="SecretLabs.NETMF.Hardware" />
     <Reference Include="SecretLabs.NETMF.Hardware.Netduino" />
     <Reference Include="System" />
+    <Reference Include="SecretLabs.NETMF.Hardware.PWM" />
   </ItemGroup>
 </Project>
