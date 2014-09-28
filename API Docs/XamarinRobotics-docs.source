@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<monodoc>
+  <node label="Xamarin.Robotics Framework" name="Xamarin.Robotics" parent="libraries"/>
+  <source provider="ecma" basefile="Xamarin.Robotics" path="Xamarin.Robotics"/>
+</monodoc>
