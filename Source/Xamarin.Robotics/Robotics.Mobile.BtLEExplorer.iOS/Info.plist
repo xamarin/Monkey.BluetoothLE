@@ -5,7 +5,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Xamarin.Robotics.BluetoothLEExplorerForms.iOS</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.your-company.Xamarin.Robotics.BluetoothLEExplorerForms.iOS</string>
+	<string>com.Xamarin.Robotics.BluetoothLEExplorerForms.iOS</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
