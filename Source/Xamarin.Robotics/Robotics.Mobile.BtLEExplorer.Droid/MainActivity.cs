@@ -7,7 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 
-using Forms.Platform.Android;
+using Xamarin.Forms.Platform.Android;
 using Android.Content.PM;
 
 
@@ -22,7 +22,7 @@ namespace Robotics.Mobile.BtLEExplorer.Droid
 		{
 			base.OnCreate (bundle);
 
-			Forms.Forms.Init (this, bundle);
+			Xamarin.Forms.Forms.Init (this, bundle);
 
 			var a = new Robotics.Mobile.Core.Bluetooth.LE.Adapter ();
 			App.SetAdapter (a);
