@@ -31,15 +31,9 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="..\Xamarin.Robotics.Mobile.Core\Messaging\Control.cs">
-      <Link>Messaging\Control.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Robotics.Mobile.Core\Messaging\ControlServer.cs">
-      <Link>Messaging\ControlServer.cs</Link>
-    </Compile>
-    <Compile Include="..\Xamarin.Robotics.Mobile.Core\Messaging\Message.cs">
-      <Link>Messaging\Message.cs</Link>
-    </Compile>
+    <Compile Include="Messaging\Control.cs" />
+    <Compile Include="Messaging\ControlServer.cs" />
+    <Compile Include="Messaging\Message.cs" />
     <Compile Include="BlockBase.cs" />
     <Compile Include="ConfigPort.cs" />
     <Compile Include="Connection.cs" />
