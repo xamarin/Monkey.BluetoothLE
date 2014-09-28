@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Forms;
+using Xamarin.Forms;
 using Robotics.Mobile.Core.Bluetooth.LE;
 using System.Diagnostics;
 using System.Linq;

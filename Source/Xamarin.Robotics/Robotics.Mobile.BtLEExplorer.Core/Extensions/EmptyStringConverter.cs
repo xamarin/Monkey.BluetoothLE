@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using Forms;
+using Xamarin.Forms;
 
 namespace Robotics.Mobile.BtLEExplorer
 {

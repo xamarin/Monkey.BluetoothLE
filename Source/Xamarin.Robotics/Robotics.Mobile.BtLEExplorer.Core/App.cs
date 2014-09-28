@@ -1,5 +1,5 @@
 ﻿using System;
-using Forms;
+using Xamarin.Forms;
 using Robotics.Mobile.Core.Bluetooth.LE;
 
 namespace Robotics.Mobile.BtLEExplorer
