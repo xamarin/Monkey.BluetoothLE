@@ -25,8 +25,12 @@ task :default => "xamarin-component/xamarin-component.exe" do
 		--getting-started="GettingStarted.md" \
 		--icon="icons/Xamarin.Labs.Robotics_128x128.png" \
 		--icon="icons/Xamarin.Labs.Robotics_512x512.png" \
+		--library="ios":"bin/Robotics.Mobile.Core.iOS/Robotics.Mobile.Core.dll" \
 		--library="ios":"bin/Robotics.Mobile.Core.iOS/Robotics.Mobile.Core.iOS.dll" \
+		--library="ios":"bin/Robotics.Mobile.Core.iOS/Newtonsoft.Json.dll" \
+		--library="android":"bin/Robotics.Mobile.Core.Droid/Robotics.Mobile.Core.dll" \
 		--library="android":"bin/Robotics.Mobile.Core.Droid/Robotics.Mobile.Core.Droid.dll" \
+		--library="android":"bin/Robotics.Mobile.Core.Droid/Newtonsoft.Json.dll" \
 		--sample="iOS Sample. Demonstrates Awesomeness on iOS.":"samples/SampleDoesNotExist.sln" \
 		--sample="Android Sample. Demonstrates Awesomeness on Android":"samples/SampleDoesNotExist.sln"
 		END
