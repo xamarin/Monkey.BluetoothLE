@@ -1,0 +1,162 @@
+<Type Name="CharacteristicPropertyType" FullName="Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType">
+  <TypeSignature Language="C#" Value="public enum CharacteristicPropertyType" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed CharacteristicPropertyType extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Mobile.Core</AssemblyName>
+    <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Flags</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="AppleWriteWithoutResponse">
+      <MemberSignature Language="C#" Value="AppleWriteWithoutResponse" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType AppleWriteWithoutResponse = int32(4)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="AuthenticatedSignedWrites">
+      <MemberSignature Language="C#" Value="AuthenticatedSignedWrites" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType AuthenticatedSignedWrites = int32(64)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Broadcast">
+      <MemberSignature Language="C#" Value="Broadcast" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType Broadcast = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ExtendedProperties">
+      <MemberSignature Language="C#" Value="ExtendedProperties" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType ExtendedProperties = int32(128)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Indicate">
+      <MemberSignature Language="C#" Value="Indicate" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType Indicate = int32(32)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="IndicateEncryptionRequired">
+      <MemberSignature Language="C#" Value="IndicateEncryptionRequired" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType IndicateEncryptionRequired = int32(512)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Notify">
+      <MemberSignature Language="C#" Value="Notify" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType Notify = int32(16)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="NotifyEncryptionRequired">
+      <MemberSignature Language="C#" Value="NotifyEncryptionRequired" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType NotifyEncryptionRequired = int32(256)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Read">
+      <MemberSignature Language="C#" Value="Read" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType Read = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="WriteWithoutResponse">
+      <MemberSignature Language="C#" Value="WriteWithoutResponse" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType WriteWithoutResponse = int32(8)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.CharacteristicPropertyType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

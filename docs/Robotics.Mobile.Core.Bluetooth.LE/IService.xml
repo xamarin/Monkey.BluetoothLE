@@ -1,0 +1,130 @@
+<Type Name="IService" FullName="Robotics.Mobile.Core.Bluetooth.LE.IService">
+  <TypeSignature Language="C#" Value="public interface IService" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IService" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Mobile.Core</AssemblyName>
+    <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+  </AssemblyInfo>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Characteristics">
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IList&lt;Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic&gt; Characteristics { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.IList`1&lt;class Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic&gt; Characteristics" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IList&lt;Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CharacteristicsDiscovered">
+      <MemberSignature Language="C#" Value="public event EventHandler CharacteristicsDiscovered;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler CharacteristicsDiscovered" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DiscoverCharacteristics">
+      <MemberSignature Language="C#" Value="public void DiscoverCharacteristics ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void DiscoverCharacteristics() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FindCharacteristic">
+      <MemberSignature Language="C#" Value="public Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic FindCharacteristic (Robotics.Mobile.Core.Bluetooth.LE.KnownCharacteristic characteristic);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic FindCharacteristic(valuetype Robotics.Mobile.Core.Bluetooth.LE.KnownCharacteristic characteristic) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="characteristic" Type="Robotics.Mobile.Core.Bluetooth.LE.KnownCharacteristic" />
+      </Parameters>
+      <Docs>
+        <param name="characteristic">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ID">
+      <MemberSignature Language="C#" Value="public Guid ID { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Guid ID" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Guid</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsPrimary">
+      <MemberSignature Language="C#" Value="public bool IsPrimary { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsPrimary" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Name">
+      <MemberSignature Language="C#" Value="public string Name { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Name" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

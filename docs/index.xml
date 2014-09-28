@@ -1,0 +1,192 @@
+<Overview>
+  <Assemblies>
+    <Assembly Name="Robotics.Mobile.Core" Version="1.0.5384.14133">
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Diagnostics.Debuggable(System.Diagnostics.DebuggableAttribute+DebuggingModes.IgnoreSymbolStoreSequencePoints | System.Diagnostics.DebuggableAttribute+DebuggingModes.DisableOptimizations)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCompany("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyConfiguration("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCopyright("bryancostanich")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyDescription("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyProduct("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTitle("Robotics.Mobile.Core.Contracts")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTrademark("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Runtime.Versioning.TargetFramework(".NETPortable,Version=v4.5,Profile=Profile78", FrameworkDisplayName=".NET Portable Subset")</AttributeName>
+        </Attribute>
+      </Attributes>
+    </Assembly>
+  </Assemblies>
+  <Remarks>To be added.</Remarks>
+  <Copyright>To be added.</Copyright>
+  <Types>
+    <Namespace Name="Robotics.Messaging">
+      <Type Name="Command" Kind="Class" />
+      <Type Name="CommandFunc" Kind="Delegate" />
+      <Type Name="ControlClient" Kind="Class" />
+      <Type Name="ControlOp" Kind="Enumeration" />
+      <Type Name="ControlServer" Kind="Class" />
+      <Type Name="Message" Kind="Class" />
+      <Type Name="Variable" Kind="Class" />
+      <Type Name="VariableChangedAction" Kind="Delegate" />
+    </Namespace>
+    <Namespace Name="Robotics.Mobile.Core.Bluetooth.LE">
+      <Type Name="BluetoothKnownItemManager" Kind="Class" />
+      <Type Name="CharacteristicPropertyType" Kind="Enumeration" />
+      <Type Name="CharacteristicReadEventArgs" Kind="Class" />
+      <Type Name="DeviceBase" Kind="Class" />
+      <Type Name="DeviceConnectionEventArgs" Kind="Class" />
+      <Type Name="DeviceDiscoveredEventArgs" Kind="Class" />
+      <Type Name="DeviceState" Kind="Enumeration" />
+      <Type Name="Extensions" Kind="Class" />
+      <Type Name="IAdapter" Kind="Interface" />
+      <Type Name="ICharacteristic" Kind="Interface" />
+      <Type Name="IDescriptor" Kind="Interface" />
+      <Type Name="IDevice" Kind="Interface" />
+      <Type Name="IService" Kind="Interface" />
+      <Type Name="KnownCharacteristic" Kind="Structure" />
+      <Type Name="KnownCharacteristics" Kind="Class" />
+      <Type Name="KnownDescriptor" Kind="Structure" />
+      <Type Name="KnownDescriptors" Kind="Class" />
+      <Type Name="KnownService" Kind="Structure" />
+      <Type Name="KnownServices" Kind="Class" />
+      <Type Name="LEStream" Kind="Class" />
+      <Type Name="ServicesDiscoveredEventArgs" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Robotics.Mobile.Core.Utils">
+      <Type Name="ResourceLoader" Kind="Class" />
+    </Namespace>
+  </Types>
+  <Title>Robotics.Mobile.Core</Title>
+  <ExtensionMethods>
+    <ExtensionMethod>
+      <Targets>
+        <Target Type="T:Robotics.Mobile.Core.Bluetooth.LE.IAdapter" />
+      </Targets>
+      <Member MemberName="ConnectAsync">
+        <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task ConnectAsync (this Robotics.Mobile.Core.Bluetooth.LE.IAdapter adapter, Robotics.Mobile.Core.Bluetooth.LE.IDevice device);" />
+        <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task ConnectAsync(class Robotics.Mobile.Core.Bluetooth.LE.IAdapter adapter, class Robotics.Mobile.Core.Bluetooth.LE.IDevice device) cil managed" />
+        <MemberType>ExtensionMethod</MemberType>
+        <ReturnValue>
+          <ReturnType>System.Threading.Tasks.Task</ReturnType>
+        </ReturnValue>
+        <Parameters>
+          <Parameter Name="adapter" Type="Robotics.Mobile.Core.Bluetooth.LE.IAdapter" RefType="this" />
+          <Parameter Name="device" Type="Robotics.Mobile.Core.Bluetooth.LE.IDevice" />
+        </Parameters>
+        <Docs>
+          <param name="adapter">To be added.</param>
+          <param name="device">To be added.</param>
+          <summary>To be added.</summary>
+        </Docs>
+        <Link Type="Robotics.Mobile.Core.Bluetooth.LE.Extensions" Member="M:Robotics.Mobile.Core.Bluetooth.LE.Extensions.ConnectAsync(Robotics.Mobile.Core.Bluetooth.LE.IAdapter,Robotics.Mobile.Core.Bluetooth.LE.IDevice)" />
+      </Member>
+    </ExtensionMethod>
+    <ExtensionMethod>
+      <Targets>
+        <Target Type="T:Robotics.Mobile.Core.Bluetooth.LE.IService" />
+      </Targets>
+      <Member MemberName="GetCharacteristicAsync">
+        <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task&lt;Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic&gt; GetCharacteristicAsync (this Robotics.Mobile.Core.Bluetooth.LE.IService service, Guid id);" />
+        <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task`1&lt;class Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic&gt; GetCharacteristicAsync(class Robotics.Mobile.Core.Bluetooth.LE.IService service, valuetype System.Guid id) cil managed" />
+        <MemberType>ExtensionMethod</MemberType>
+        <ReturnValue>
+          <ReturnType>System.Threading.Tasks.Task&lt;Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic&gt;</ReturnType>
+        </ReturnValue>
+        <Parameters>
+          <Parameter Name="service" Type="Robotics.Mobile.Core.Bluetooth.LE.IService" RefType="this" />
+          <Parameter Name="id" Type="System.Guid" />
+        </Parameters>
+        <Docs>
+          <param name="service">To be added.</param>
+          <param name="id">To be added.</param>
+          <summary>To be added.</summary>
+        </Docs>
+        <Link Type="Robotics.Mobile.Core.Bluetooth.LE.Extensions" Member="M:Robotics.Mobile.Core.Bluetooth.LE.Extensions.GetCharacteristicAsync(Robotics.Mobile.Core.Bluetooth.LE.IService,System.Guid)" />
+      </Member>
+    </ExtensionMethod>
+    <ExtensionMethod>
+      <Targets>
+        <Target Type="T:Robotics.Mobile.Core.Bluetooth.LE.IDevice" />
+      </Targets>
+      <Member MemberName="GetServiceAsync">
+        <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task&lt;Robotics.Mobile.Core.Bluetooth.LE.IService&gt; GetServiceAsync (this Robotics.Mobile.Core.Bluetooth.LE.IDevice device, Guid id);" />
+        <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task`1&lt;class Robotics.Mobile.Core.Bluetooth.LE.IService&gt; GetServiceAsync(class Robotics.Mobile.Core.Bluetooth.LE.IDevice device, valuetype System.Guid id) cil managed" />
+        <MemberType>ExtensionMethod</MemberType>
+        <ReturnValue>
+          <ReturnType>System.Threading.Tasks.Task&lt;Robotics.Mobile.Core.Bluetooth.LE.IService&gt;</ReturnType>
+        </ReturnValue>
+        <Parameters>
+          <Parameter Name="device" Type="Robotics.Mobile.Core.Bluetooth.LE.IDevice" RefType="this" />
+          <Parameter Name="id" Type="System.Guid" />
+        </Parameters>
+        <Docs>
+          <param name="device">To be added.</param>
+          <param name="id">To be added.</param>
+          <summary>To be added.</summary>
+        </Docs>
+        <Link Type="Robotics.Mobile.Core.Bluetooth.LE.Extensions" Member="M:Robotics.Mobile.Core.Bluetooth.LE.Extensions.GetServiceAsync(Robotics.Mobile.Core.Bluetooth.LE.IDevice,System.Guid)" />
+      </Member>
+    </ExtensionMethod>
+    <ExtensionMethod>
+      <Targets>
+        <Target Type="T:System.Guid" />
+      </Targets>
+      <Member MemberName="PartialFromUuid">
+        <MemberSignature Language="C#" Value="public static string PartialFromUuid (this Guid uuid);" />
+        <MemberSignature Language="ILAsm" Value=".method public static hidebysig string PartialFromUuid(valuetype System.Guid uuid) cil managed" />
+        <MemberType>ExtensionMethod</MemberType>
+        <ReturnValue>
+          <ReturnType>System.String</ReturnType>
+        </ReturnValue>
+        <Parameters>
+          <Parameter Name="uuid" Type="System.Guid" RefType="this" />
+        </Parameters>
+        <Docs>
+          <param name="uuid">To be added.</param>
+          <summary>To be added.</summary>
+        </Docs>
+        <Link Type="Robotics.Mobile.Core.Bluetooth.LE.Extensions" Member="M:Robotics.Mobile.Core.Bluetooth.LE.Extensions.PartialFromUuid(System.Guid)" />
+      </Member>
+    </ExtensionMethod>
+    <ExtensionMethod>
+      <Targets>
+        <Target Type="T:System.Int32" />
+      </Targets>
+      <Member MemberName="UuidFromPartial">
+        <MemberSignature Language="C#" Value="public static Guid UuidFromPartial (this int partial);" />
+        <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Guid UuidFromPartial(int32 partial) cil managed" />
+        <MemberType>ExtensionMethod</MemberType>
+        <ReturnValue>
+          <ReturnType>System.Guid</ReturnType>
+        </ReturnValue>
+        <Parameters>
+          <Parameter Name="partial" Type="System.Int32" RefType="this" />
+        </Parameters>
+        <Docs>
+          <param name="partial">To be added.</param>
+          <summary>To be added.</summary>
+        </Docs>
+        <Link Type="Robotics.Mobile.Core.Bluetooth.LE.Extensions" Member="M:Robotics.Mobile.Core.Bluetooth.LE.Extensions.UuidFromPartial(System.Int32)" />
+      </Member>
+    </ExtensionMethod>
+  </ExtensionMethods>
+</Overview>

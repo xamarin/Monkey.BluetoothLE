@@ -1,0 +1,54 @@
+<Type Name="KnownCharacteristics" FullName="Robotics.Mobile.Core.Bluetooth.LE.KnownCharacteristics">
+  <TypeSignature Language="C#" Value="public static class KnownCharacteristics" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed KnownCharacteristics extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Mobile.Core</AssemblyName>
+    <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="LoadItemsFromJson">
+      <MemberSignature Language="C#" Value="public static void LoadItemsFromJson ();" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void LoadItemsFromJson() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Lookup">
+      <MemberSignature Language="C#" Value="public static Robotics.Mobile.Core.Bluetooth.LE.KnownCharacteristic Lookup (Guid id);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Robotics.Mobile.Core.Bluetooth.LE.KnownCharacteristic Lookup(valuetype System.Guid id) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.KnownCharacteristic</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="id" Type="System.Guid" />
+      </Parameters>
+      <Docs>
+        <param name="id">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

@@ -1,0 +1,80 @@
+<Type Name="ControlServer" FullName="Robotics.Messaging.ControlServer">
+  <TypeSignature Language="C#" Value="public class ControlServer" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit ControlServer extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Mobile.Core</AssemblyName>
+    <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ControlServer (System.IO.Stream stream);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.IO.Stream stream) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="stream" Type="System.IO.Stream" />
+      </Parameters>
+      <Docs>
+        <param name="stream">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RegisterCommand">
+      <MemberSignature Language="C#" Value="public Robotics.Messaging.Command RegisterCommand (string name, Robotics.Messaging.CommandFunc func);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Robotics.Messaging.Command RegisterCommand(string name, class Robotics.Messaging.CommandFunc func) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Messaging.Command</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="func" Type="Robotics.Messaging.CommandFunc" />
+      </Parameters>
+      <Docs>
+        <param name="name">To be added.</param>
+        <param name="func">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RegisterVariable">
+      <MemberSignature Language="C#" Value="public Robotics.Messaging.Variable RegisterVariable (string name, object value, Robotics.Messaging.VariableChangedAction changedAction = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Robotics.Messaging.Variable RegisterVariable(string name, object value, class Robotics.Messaging.VariableChangedAction changedAction) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Messaging.Variable</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="value" Type="System.Object" />
+        <Parameter Name="changedAction" Type="Robotics.Messaging.VariableChangedAction" />
+      </Parameters>
+      <Docs>
+        <param name="name">To be added.</param>
+        <param name="value">To be added.</param>
+        <param name="changedAction">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

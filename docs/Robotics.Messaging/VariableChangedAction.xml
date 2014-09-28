@@ -1,0 +1,22 @@
+<Type Name="VariableChangedAction" FullName="Robotics.Messaging.VariableChangedAction">
+  <TypeSignature Language="C#" Value="public delegate void VariableChangedAction(Variable v);" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed VariableChangedAction extends System.MulticastDelegate" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Mobile.Core</AssemblyName>
+    <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="v" Type="Robotics.Messaging.Variable" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="v">To be added.</param>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

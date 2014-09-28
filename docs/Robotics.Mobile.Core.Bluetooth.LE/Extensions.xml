@@ -1,0 +1,124 @@
+<Type Name="Extensions" FullName="Robotics.Mobile.Core.Bluetooth.LE.Extensions">
+  <TypeSignature Language="C#" Value="public static class Extensions" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit Extensions extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Mobile.Core</AssemblyName>
+    <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="ConnectAsync">
+      <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task ConnectAsync (this Robotics.Mobile.Core.Bluetooth.LE.IAdapter adapter, Robotics.Mobile.Core.Bluetooth.LE.IDevice device);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task ConnectAsync(class Robotics.Mobile.Core.Bluetooth.LE.IAdapter adapter, class Robotics.Mobile.Core.Bluetooth.LE.IDevice device) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="adapter" Type="Robotics.Mobile.Core.Bluetooth.LE.IAdapter" RefType="this" />
+        <Parameter Name="device" Type="Robotics.Mobile.Core.Bluetooth.LE.IDevice" />
+      </Parameters>
+      <Docs>
+        <param name="adapter">To be added.</param>
+        <param name="device">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetCharacteristicAsync">
+      <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task&lt;Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic&gt; GetCharacteristicAsync (this Robotics.Mobile.Core.Bluetooth.LE.IService service, Guid id);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task`1&lt;class Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic&gt; GetCharacteristicAsync(class Robotics.Mobile.Core.Bluetooth.LE.IService service, valuetype System.Guid id) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="service" Type="Robotics.Mobile.Core.Bluetooth.LE.IService" RefType="this" />
+        <Parameter Name="id" Type="System.Guid" />
+      </Parameters>
+      <Docs>
+        <param name="service">To be added.</param>
+        <param name="id">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetServiceAsync">
+      <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task&lt;Robotics.Mobile.Core.Bluetooth.LE.IService&gt; GetServiceAsync (this Robotics.Mobile.Core.Bluetooth.LE.IDevice device, Guid id);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task`1&lt;class Robotics.Mobile.Core.Bluetooth.LE.IService&gt; GetServiceAsync(class Robotics.Mobile.Core.Bluetooth.LE.IDevice device, valuetype System.Guid id) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Robotics.Mobile.Core.Bluetooth.LE.IService&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="device" Type="Robotics.Mobile.Core.Bluetooth.LE.IDevice" RefType="this" />
+        <Parameter Name="id" Type="System.Guid" />
+      </Parameters>
+      <Docs>
+        <param name="device">To be added.</param>
+        <param name="id">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PartialFromUuid">
+      <MemberSignature Language="C#" Value="public static string PartialFromUuid (this Guid uuid);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig string PartialFromUuid(valuetype System.Guid uuid) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="uuid" Type="System.Guid" RefType="this" />
+      </Parameters>
+      <Docs>
+        <param name="uuid">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="UuidFromPartial">
+      <MemberSignature Language="C#" Value="public static Guid UuidFromPartial (this int partial);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Guid UuidFromPartial(int32 partial) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Guid</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="partial" Type="System.Int32" RefType="this" />
+      </Parameters>
+      <Docs>
+        <param name="partial">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
