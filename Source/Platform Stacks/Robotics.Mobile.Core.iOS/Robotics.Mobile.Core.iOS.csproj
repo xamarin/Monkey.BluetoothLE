@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Robotics.Mobile.Core</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>Xamarin.Robotics.Mobile.Core.iOS</AssemblyName>
+    <AssemblyName>Robotics.Mobile.Core.iOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
