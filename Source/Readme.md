@@ -11,7 +11,7 @@ Welcome to the Source Code section of Robotics.
 	* **Mobile Stack** - The library/code that can be used in Xamarin mobile applications to communicate to various peripherals and micro-controllers.
  
  * **[Xamarin Studio Microframework Add-in](https://github.com/xamarin/Xamarin.Labs-Robotics/tree/master/Source/Xamarin%20Studio%20Microframework%20Add-in)** - Add-in for Xamarin Studio (Mac and Windows) that allows deployment to .NET Microframework devices. Includes two projects:
- 	* **[Add-in Project](https://github.com/xamarin/Xamarin.Labs-Robotics/tree/master/Source/Xamarin%20Studio%20Microframework%20Add-in/Add-in%20Project)** - The actual add-in project.
+ 	* **[Add-in Project](https://github.com/xamarin/Xamarin.Labs-Robotics/tree/master/Source/Xamarin%20Studio%20Microframework%20Add-in/Add-In%20Project)** - The actual add-in project.
  	* **[MFMetaDataProcessor](https://github.com/xamarin/Xamarin.Labs-Robotics/tree/master/Source/Xamarin%20Studio%20Microframework%20Add-in/MFMetaDataProcessor)** - Tool to convert .NET .exes into a format that is consumable by .NET MF Microcontrollers. Used by the Xamarin Studio Add-in after building an .exe to create a deployable .NET Microcontroller package.
  
 ## Author Credits
