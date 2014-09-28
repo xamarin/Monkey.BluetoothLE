@@ -31,9 +31,6 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="Messaging\Control.cs" />
-    <Compile Include="Messaging\ControlServer.cs" />
-    <Compile Include="Messaging\Message.cs" />
     <Compile Include="BlockBase.cs" />
     <Compile Include="ConfigPort.cs" />
     <Compile Include="Connection.cs" />
