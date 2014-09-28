@@ -37,6 +37,7 @@
     <Reference Include="Robotics.Micro.Core">
       <HintPath>..\..\..\Binaries\Robotics.Micro.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.SPOT.TinyCore" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
