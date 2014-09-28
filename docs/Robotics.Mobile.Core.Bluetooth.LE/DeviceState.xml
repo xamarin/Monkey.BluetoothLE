@@ -1,0 +1,59 @@
+<Type Name="DeviceState" FullName="Robotics.Mobile.Core.Bluetooth.LE.DeviceState">
+  <TypeSignature Language="C#" Value="public enum DeviceState" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed DeviceState extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Mobile.Core</AssemblyName>
+    <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Connected">
+      <MemberSignature Language="C#" Value="Connected" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Mobile.Core.Bluetooth.LE.DeviceState Connected = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.DeviceState</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Connecting">
+      <MemberSignature Language="C#" Value="Connecting" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Mobile.Core.Bluetooth.LE.DeviceState Connecting = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.DeviceState</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Disconnected">
+      <MemberSignature Language="C#" Value="Disconnected" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Robotics.Mobile.Core.Bluetooth.LE.DeviceState Disconnected = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.DeviceState</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

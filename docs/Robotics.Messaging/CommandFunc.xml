@@ -1,0 +1,20 @@
+<Type Name="CommandFunc" FullName="Robotics.Messaging.CommandFunc">
+  <TypeSignature Language="C#" Value="public delegate object CommandFunc();" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed CommandFunc extends System.MulticastDelegate" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Mobile.Core</AssemblyName>
+    <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters />
+  <ReturnValue>
+    <ReturnType>System.Object</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <summary>To be added.</summary>
+    <returns>To be added.</returns>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

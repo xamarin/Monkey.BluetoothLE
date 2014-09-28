@@ -1,0 +1,212 @@
+<Type Name="IAdapter" FullName="Robotics.Mobile.Core.Bluetooth.LE.IAdapter">
+  <TypeSignature Language="C#" Value="public interface IAdapter" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IAdapter" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Mobile.Core</AssemblyName>
+    <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+  </AssemblyInfo>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="ConnectedDevices">
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IList&lt;Robotics.Mobile.Core.Bluetooth.LE.IDevice&gt; ConnectedDevices { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.IList`1&lt;class Robotics.Mobile.Core.Bluetooth.LE.IDevice&gt; ConnectedDevices" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IList&lt;Robotics.Mobile.Core.Bluetooth.LE.IDevice&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ConnectToDevice">
+      <MemberSignature Language="C#" Value="public void ConnectToDevice (Robotics.Mobile.Core.Bluetooth.LE.IDevice device);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void ConnectToDevice(class Robotics.Mobile.Core.Bluetooth.LE.IDevice device) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="device" Type="Robotics.Mobile.Core.Bluetooth.LE.IDevice" />
+      </Parameters>
+      <Docs>
+        <param name="device">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DeviceConnected">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;Robotics.Mobile.Core.Bluetooth.LE.DeviceConnectionEventArgs&gt; DeviceConnected;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class Robotics.Mobile.Core.Bluetooth.LE.DeviceConnectionEventArgs&gt; DeviceConnected" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;Robotics.Mobile.Core.Bluetooth.LE.DeviceConnectionEventArgs&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DeviceDisconnected">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;Robotics.Mobile.Core.Bluetooth.LE.DeviceConnectionEventArgs&gt; DeviceDisconnected;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class Robotics.Mobile.Core.Bluetooth.LE.DeviceConnectionEventArgs&gt; DeviceDisconnected" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;Robotics.Mobile.Core.Bluetooth.LE.DeviceConnectionEventArgs&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DeviceDiscovered">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;Robotics.Mobile.Core.Bluetooth.LE.DeviceDiscoveredEventArgs&gt; DeviceDiscovered;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class Robotics.Mobile.Core.Bluetooth.LE.DeviceDiscoveredEventArgs&gt; DeviceDiscovered" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;Robotics.Mobile.Core.Bluetooth.LE.DeviceDiscoveredEventArgs&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DisconnectDevice">
+      <MemberSignature Language="C#" Value="public void DisconnectDevice (Robotics.Mobile.Core.Bluetooth.LE.IDevice device);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void DisconnectDevice(class Robotics.Mobile.Core.Bluetooth.LE.IDevice device) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="device" Type="Robotics.Mobile.Core.Bluetooth.LE.IDevice" />
+      </Parameters>
+      <Docs>
+        <param name="device">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DiscoveredDevices">
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IList&lt;Robotics.Mobile.Core.Bluetooth.LE.IDevice&gt; DiscoveredDevices { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.IList`1&lt;class Robotics.Mobile.Core.Bluetooth.LE.IDevice&gt; DiscoveredDevices" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IList&lt;Robotics.Mobile.Core.Bluetooth.LE.IDevice&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsScanning">
+      <MemberSignature Language="C#" Value="public bool IsScanning { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsScanning" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ScanTimeoutElapsed">
+      <MemberSignature Language="C#" Value="public event EventHandler ScanTimeoutElapsed;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler ScanTimeoutElapsed" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="StartScanningForDevices">
+      <MemberSignature Language="C#" Value="public void StartScanningForDevices ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void StartScanningForDevices() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="StartScanningForDevices">
+      <MemberSignature Language="C#" Value="public void StartScanningForDevices (Guid serviceUuid);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void StartScanningForDevices(valuetype System.Guid serviceUuid) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="serviceUuid" Type="System.Guid" />
+      </Parameters>
+      <Docs>
+        <param name="serviceUuid">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="StopScanningForDevices">
+      <MemberSignature Language="C#" Value="public void StopScanningForDevices ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void StopScanningForDevices() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

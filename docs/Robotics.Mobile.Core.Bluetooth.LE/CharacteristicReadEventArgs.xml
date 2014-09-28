@@ -1,0 +1,47 @@
+<Type Name="CharacteristicReadEventArgs" FullName="Robotics.Mobile.Core.Bluetooth.LE.CharacteristicReadEventArgs">
+  <TypeSignature Language="C#" Value="public class CharacteristicReadEventArgs : EventArgs" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit CharacteristicReadEventArgs extends System.EventArgs" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Mobile.Core</AssemblyName>
+    <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.EventArgs</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public CharacteristicReadEventArgs ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Characteristic">
+      <MemberSignature Language="C#" Value="public Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic Characteristic { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic Characteristic" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.5384.14133</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Mobile.Core.Bluetooth.LE.ICharacteristic</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
