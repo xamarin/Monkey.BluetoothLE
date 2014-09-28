@@ -73,6 +73,15 @@
     <Compile Include="SpecializedBlocks\Switch.cs" />
     <Compile Include="SpecializedBlocks\Transform.cs" />
     <Compile Include="Units.cs" />
+    <Compile Include="..\Robotics.Mobile.Core\Messaging\Control.cs">
+      <Link>Messaging\Control.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Mobile.Core\Messaging\ControlServer.cs">
+      <Link>Messaging\ControlServer.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Mobile.Core\Messaging\Message.cs">
+      <Link>Messaging\Message.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Hardware" />
@@ -83,4 +92,7 @@
     <Reference Include="Microsoft.SPOT.TinyCore" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Messaging\" />
+  </ItemGroup>
 </Project>
