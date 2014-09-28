@@ -3,7 +3,7 @@ require "rake/clean"
 CLEAN.include "*.xam"
 CLEAN.include "xamarin-component"
 
-COMPONENT = "awesome-1.0.xam"
+COMPONENT = "Xamarin.Labs.Robotics-1.0.xam"
 
 file "xamarin-component/xamarin-component.exe" do
 	puts "* Downloading xamarin-component..."
@@ -23,12 +23,12 @@ task :default => "xamarin-component/xamarin-component.exe" do
 		--details="Details.md" \
 		--license="License.md" \
 		--getting-started="GettingStarted.md" \
-		--icon="icons/awesome_128x128.png" \
-		--icon="icons/awesome_512x512.png" \
-		--library="ios":"bin/Awesome.iOS.dll" \
-		--library="android":"bin/Awesome.Android.dll" \
-		--sample="iOS Sample. Demonstrates Awesomeness on iOS.":"samples/Awesome.iOS.sln" \
-		--sample="Android Sample. Demonstrates Awesomeness on Android":"samples/Awesome.Android.sln"
+		--icon="icons/Xamarin.Labs.Robotics_128x128.png" \
+		--icon="icons/Xamarin.Labs.Robotics_512x512.png" \
+		--library="ios":"bin/Robotics.Mobile.Core.iOS/Robotics.Mobile.Core.iOS.dll" \
+		--library="android":"bin/Robotics.Mobile.Core.Droid/Robotics.Mobile.Core.Droid.dll" \
+		--sample="iOS Sample. Demonstrates Awesomeness on iOS.":"samples/SampleDoesNotExist.sln" \
+		--sample="Android Sample. Demonstrates Awesomeness on Android":"samples/SampleDoesNotExist.sln"
 		END
 	puts "* Creating #{COMPONENT}..."
 	puts line.strip.gsub "\t\t", "\\\n    "
