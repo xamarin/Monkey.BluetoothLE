@@ -22,11 +22,5 @@ mdoc assemble -o Xamarin.Labs.Robotics .
 sudo cp Xamarin.Labs.Robotics.{tree,zip} /Library/Frameworks/Mono.framework/External/monodoc/
 ```
 
-After the docs are installed, launch macdoc from the terminal and they should show up in the tree:
-
-```
-macdoc
-
-```
-
-You can also launch macdoc from within Xamarin Studio via **Help > API Documentation**.
+After the docs are installed, launch macdoc from within Xamarin Studio via **Help > API Documentation**. The docs should show up in the **Robotics from Xamarin.Labs** node:
+ ![](MacDoc.png)
