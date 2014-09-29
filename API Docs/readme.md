@@ -8,10 +8,10 @@ In order to have MacDoc know that the doc set exists, you must copy the `Robotic
 You can run this from the terminal from this folder by running:
 
 ```
-sudo cp Robotics-docs.source /Library/Frameworks/Mono.Framework/External/monodoc
+./ConfigDocs
 
 ```
-> Note, It'll prompt you to enter your password.
+> Note, It may prompt you to enter your password.
 
 ## Displaying the Docs
 
