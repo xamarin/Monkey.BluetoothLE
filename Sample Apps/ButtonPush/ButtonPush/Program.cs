@@ -1,8 +1,10 @@
 ﻿using System;
 using Microsoft.SPOT;
-using Microsoft.SPOT.Hardware;
+using H = Microsoft.SPOT.Hardware;
 using SecretLabs.NETMF.Hardware.Netduino;
 using System.Threading;
+using Robotics.Micro;
+using Robotics.Micro.Sensors.Buttons;
 
 namespace ButtonPush
 {
@@ -10,21 +12,28 @@ namespace ButtonPush
 	{
 		public static void Main()
 		{
-			// configure an output port for us to "write" to the LED
-			OutputPort led = new OutputPort(Pins.ONBOARD_LED, false); 
-			// note that if we didn't have the SecretLabs.NETMF.Hardware.Netduino DLL, we could also manually access it this way:
-			//OutputPort led = new OutputPort(Cpu.Pin.GPIO_Pin10, false); 
-			int i = 0;
+            PushButton button = new PushButton();
+            //button.ConnectTo(new DigitalInputPin(Pins.ONBOARD_BTN).Output);
+            InputPort buttonIn = new InputPort(button, "MyButton", Units.Digital);
+			buttonIn.ConnectTo(Pins.ONBOARD_BTN);
+            H.OutputPort led = new H.OutputPort(Pins.ONBOARD_LED, false);
+
+			bool _isLedOn = false;
+
+            button.Clicked += (s, e) => {
+				_isLedOn = !_isLedOn;
+				led.Write(_isLedOn);
+            };
+
+
 			while (true) 
 			{ 
-				led.Write(true); // turn on the LED 
-				Thread.Sleep(250); // sleep for 250ms 
-				led.Write(false); // turn off the LED 
-				Thread.Sleep(250); // sleep for 250ms 
-
-				Debug.Print ("Looping" + i);
-				i++;
 			} 			
 		}
+
+        static void button_Clicked(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 	}
 }
