@@ -31,8 +31,7 @@ task :default => "xamarin-component/xamarin-component.exe" do
 		--library="android":"bin/Robotics.Mobile.Core.Droid/Robotics.Mobile.Core.dll" \
 		--library="android":"bin/Robotics.Mobile.Core.Droid/Robotics.Mobile.Core.Droid.dll" \
 		--library="android":"bin/Robotics.Mobile.Core.Droid/Newtonsoft.Json.dll" \
-		--sample="iOS Sample. Demonstrates Awesomeness on iOS.":"samples/SampleDoesNotExist.sln" \
-		--sample="Android Sample. Demonstrates Awesomeness on Android":"samples/SampleDoesNotExist.sln"
+		--sample="Netduino .NET MF Sample - Onboard LED blinking. A simple micro framework project that blinks the onboard LED on a Netduino.":"../../Sample Apps/NetduinoBlink/NetduinoBlink.sln" \
 		#--monodoc="../../API Docs"
 		END
 	puts "* Creating #{COMPONENT}..."
