@@ -1,11 +1,6 @@
 # Source Code
 Welcome to the Source Code section of Robotics. 
 
- * **[Apps](https://github.com/xamarin/Xamarin.Labs-Robotics/tree/master/Source/Apps)** - A collection of Xamarin apps that use the Robotics framework.
- 
-	* **[BLE Explorer](https://github.com/xamarin/Xamarin.Labs-Robotics/tree/master/Source/Apps/BLE%20Explorer)** - A cross-platform Bluetooth Low Energy (BLE) explorer app built in Xamarin.Forms that runs on iOS and Android devices and allows you to scan, connect, and read/write to BLE devices.
- 	* **[Robotroller](https://github.com/xamarin/Xamarin.Labs-Robotics/tree/master/Source/Apps/Robotroller)** - A cross-platform app built in Xamarin.Forms that connects to the BLE Robot (TODO: add link to the getting started or whatever.)
-
  * **[Platform Stacks](https://github.com/xamarin/Xamarin.Labs-Robotics/tree/master/Source/Platform%20Stacks)** - The complete set of public libraries needed when writing Xamarin Robotics applications. Includes:
 	* **Micro Stack** - The library/code that runs on the Microcontroller and provides hardware abstractions for peripherals and sensors.
 	* **Mobile Stack** - The library/code that can be used in Xamarin mobile applications to communicate to various peripherals and micro-controllers.
@@ -19,9 +14,6 @@ Welcome to the Source Code section of Robotics.
  * **Micro Framework Platform Stack NuGet** - Coming soon. 
  
 ## Author Credits
-
-#### Apps
-Authors: Bryan Costanich, Frank Krueger, Craig Dunn
 
 #### Platform Stacks
 Authors: Bryan Costanich, Frank Krueger, Craig Dunn
