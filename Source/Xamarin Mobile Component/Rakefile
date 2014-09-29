@@ -33,6 +33,7 @@ task :default => "xamarin-component/xamarin-component.exe" do
 		--library="android":"bin/Robotics.Mobile.Core.Droid/Newtonsoft.Json.dll" \
 		--sample="iOS Sample. Demonstrates Awesomeness on iOS.":"samples/SampleDoesNotExist.sln" \
 		--sample="Android Sample. Demonstrates Awesomeness on Android":"samples/SampleDoesNotExist.sln"
+		#--monodoc="../../API Docs"
 		END
 	puts "* Creating #{COMPONENT}..."
 	puts line.strip.gsub "\t\t", "\\\n    "
