@@ -1,2 +1,11 @@
+# validate the xml
+echo "validating the xml"
+mdoc validate
+#
+# assemble the docs into a .tree and .zip file for consumption in the mono doc viewer
+echo "asembling docs"
 mdoc assemble -o Xamarin.Labs.Robotics .
+#
+# copy the docs over to the monodoc directory.
+echo "copying the docs to the monodoc directory"
 sudo cp Xamarin.Labs.Robotics.{tree,zip} /Library/Frameworks/Mono.framework/External/monodoc/

@@ -18,9 +18,9 @@ sudo cp Robotics-docs.source /Library/Frameworks/Mono.Framework/External/monodoc
 Once you've configured the doc set, you can compile and install the docs by running:
 
 ```
-mdoc assemble -o Xamarin.Labs.Robotics .
-sudo cp Xamarin.Labs.Robotics.{tree,zip} /Library/Frameworks/Mono.framework/External/monodoc/
+./Makedocs
 ```
+In terminal, from the API Docs directory.
 
 After the docs are installed, launch macdoc from within Xamarin Studio via **Help > API Documentation**. The docs should show up in the **Robotics from Xamarin.Labs** node:
  ![](MacDoc.png)
