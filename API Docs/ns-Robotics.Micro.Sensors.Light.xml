@@ -1,6 +1,6 @@
 <Namespace Name="Robotics.Micro.Sensors.Light">
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Contains various classes to support various light sensors.</summary>
     <remarks>To be added.</remarks>
   </Docs>
 </Namespace>

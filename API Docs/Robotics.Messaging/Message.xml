@@ -11,7 +11,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Messages are packets with an operation code and a payload of .NET primitive objects. They are capable of serializing themselves to and from continuous streams. Messages are currently constrained to a max payload size of 255 bytes..</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -121,7 +121,7 @@
       </Parameters>
       <Docs>
         <param name="stream">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Reading is a blocking operation that keeps trying until the stream produces a valid message. This simplifies reading messages from continuous streams.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -147,8 +147,8 @@
         <Parameter Name="stream" Type="System.IO.Stream" />
       </Parameters>
       <Docs>
-        <param name="stream">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="stream">The stream to read into.</param>
+        <summary>Reading is a blocking operation that keeps trying until the stream produces a valid message. This simplifies reading messages from continuous streams.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -169,7 +169,12 @@
       </Parameters>
       <Docs>
         <param name="stream">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Messages are encoded with a three byte header:
+          MAGIC
+          OPERATION
+          DATA BYTE COUNT
+        Followed up to 255 bytes of DATA
+        Followed by a 1 byte CHECKSUM of just the data.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

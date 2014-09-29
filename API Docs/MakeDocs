@@ -1,0 +1,2 @@
+mdoc assemble -o Xamarin.Labs.Robotics .
+sudo cp Xamarin.Labs.Robotics.{tree,zip} /Library/Frameworks/Mono.framework/External/monodoc/

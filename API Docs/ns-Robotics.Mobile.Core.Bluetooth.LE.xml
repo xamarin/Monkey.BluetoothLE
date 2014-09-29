@@ -1,6 +1,6 @@
 <Namespace Name="Robotics.Mobile.Core.Bluetooth.LE">
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Cross-platform (iOS and Android currently supported) framework for enumerating, connnecting to, and communicating with Bluetooth Low-Energy (BLE) devices from Xamarin Mobile applications.</summary>
     <remarks>To be added.</remarks>
   </Docs>
 </Namespace>

@@ -1,6 +1,6 @@
 <Namespace Name="Robotics.Mobile.Core.Utils">
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Contains various utility classes used internally to support the Mobile library.</summary>
     <remarks>To be added.</remarks>
   </Docs>
 </Namespace>

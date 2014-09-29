@@ -1,6 +1,6 @@
 <Namespace Name="Robotics.Micro.Sensors.Location">
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Contains classes that support various location sensors such as GPS and compasses.</summary>
     <remarks>To be added.</remarks>
   </Docs>
 </Namespace>

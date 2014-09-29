@@ -1,6 +1,6 @@
 <Namespace Name="Robotics.Messaging">
   <Docs>
-    <summary>To be added.</summary>
+    <summary>High-level Messaging framework for communicating between Xamarin Mobile apps and .NET Microframework devices via Bluetooth LE, USB, or WiFi.</summary>
     <remarks>To be added.</remarks>
   </Docs>
 </Namespace>

@@ -1,6 +1,6 @@
 <Namespace Name="Robotics.Micro.Devices">
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Contains classes to support various .NET Microframework (MF) hardware such as the Netduino. Allows strongly-typed access to device-specific hardware.</summary>
     <remarks>To be added.</remarks>
   </Docs>
 </Namespace>

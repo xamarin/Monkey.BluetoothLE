@@ -1,6 +1,6 @@
 <Namespace Name="Robotics.Micro.Motors">
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Contains classes to manage various motors and accessories such H-bridges, Motor Shields, and DC Motors.</summary>
     <remarks>To be added.</remarks>
   </Docs>
 </Namespace>

@@ -1,6 +1,6 @@
 <Namespace Name="Robotics.Micro.Sensors.Proximity">
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Contains classes that support various proximity sensors such as infrarred (IR) range finders.</summary>
     <remarks>To be added.</remarks>
   </Docs>
 </Namespace>
