@@ -192,6 +192,7 @@ namespace MFMetaDataProcessor
             {
                 return types.SelectMany(
                     (item, index) => item.CustomAttributes
+                        .Where(attr => attr.AttributeType.FullName != "System.Runtime.CompilerServices.ExtensionAttribute")
                         .Distinct(new CustomAttributeComparer())
                         .OrderByDescending(attr => attr.AttributeType.FullName)
                         .Select(attr => new Tuple<CustomAttribute, UInt16>(attr, (UInt16)index)));
@@ -199,7 +200,8 @@ namespace MFMetaDataProcessor
             }
             return types.SelectMany(
                 (item, index) => item.CustomAttributes
-                    .Select( attr => new Tuple<CustomAttribute, UInt16>(attr, (UInt16)index)));
+                    .Where(attr => attr.AttributeType.FullName != "System.Runtime.CompilerServices.ExtensionAttribute")
+                    .Select(attr => new Tuple<CustomAttribute, UInt16>(attr, (UInt16)index)));
         }
 
         private static Boolean IsAttribute(
