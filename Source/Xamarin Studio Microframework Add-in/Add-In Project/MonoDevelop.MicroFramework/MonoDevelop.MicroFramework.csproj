@@ -4,6 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{7DBEB09D-BB9F-4D92-A141-A009135475EF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{9A860B71-DD7C-4511-B00A-34197E15A799}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -127,6 +128,18 @@
     <EmbeddedResource Include="Debug\DiagnosticStrings.resx">
       <LogicalName>Microsoft.SPOT.Debugger.DiagnosticStrings.resources</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="icons\project-microframework-console-32.png">
+      <LogicalName>project-microframework-console-32.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="icons\project-microframework-console-32%402x.png">
+      <LogicalName>project-microframework-console-32@2x.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="icons\project-microframework-library-32.png">
+      <LogicalName>project-microframework-library-32.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="icons\project-microframework-library-32%402x.png">
+      <LogicalName>project-microframework-library-32@2x.png</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -144,6 +157,7 @@
     <Folder Include="files\xbuild\Microsoft\" />
     <Folder Include="files\frameworks\Microsoft .NET Micro Framework\" />
     <Folder Include="files\frameworks\Microsoft .NET Micro Framework\v4.3\" />
+    <Folder Include="icons\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Debugger\Debugger.csproj">
@@ -1545,6 +1559,84 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\SecretLabs.NETMF.IO.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\MFUpdate.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\MFUpdate.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Hardware.OneWire.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Hardware.OneWire.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Hardware.PWM.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Hardware.PWM.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Security.PKCS11.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Security.PKCS11.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Update.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Update.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Wireless.IEEE_802_15_4.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Wireless.IEEE_802_15_4.Mac.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Wireless.IEEE_802_15_4.Mac.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Wireless.IEEE_802_15_4.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Wireless.IEEE_802_15_4.Phy.CC2420.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Wireless.IEEE_802_15_4.Phy.CC2420.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Wireless.IEEE_802_15_4.Phy.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.SPOT.Wireless.IEEE_802_15_4.Phy.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.VisualBasic.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\Microsoft.VisualBasic.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\System.Ftp.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\System.Ftp.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\System.Security.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\System.Security.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\System.Text.RegularExpressions.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\xbuild-framework\.NETMicroFramework\v4.3\System.Text.RegularExpressions.pdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -5,6 +5,7 @@ using Microsoft.Win32;
 using System.Reflection;
 using System.IO;
 using MonoDevelop.Ide;
+using System.Security.Cryptography;
 
 namespace MonoDevelop.MicroFramework
 {
@@ -14,6 +15,18 @@ namespace MonoDevelop.MicroFramework
 		{
 			//TNX TO: http://stackoverflow.com/a/8865284/661901
 			MonoDevelop.MacInterop.AppleScript.Run("do shell script \"cp -R \\\"" + sourceDirName + "\\\" \\\"" + destDirName + "\\\"\" with administrator privileges");
+		}
+
+		private static string GetChecksum(string file)
+		{
+			if(!File.Exists(file))
+				return "";
+			using(var stream = File.OpenRead(file))
+			using(var sha = new SHA256Managed())
+			{
+				byte[] checksum = sha.ComputeHash(stream);
+				return BitConverter.ToString(checksum);
+			}
 		}
 
 		protected override void Run()
@@ -33,7 +46,8 @@ namespace MonoDevelop.MicroFramework
 					registryKey.SetValue("InstallRoot", "/Library/Frameworks/Microsoft .NET Micro Framework/v4.3");
 				}
 				bool newlyInstalled = false;
-				if(!Directory.Exists("/Library/Frameworks/Mono.framework/External/xbuild-frameworks/.NETMicroFramework"))
+				if(!Directory.Exists("/Library/Frameworks/Mono.framework/External/xbuild-frameworks/.NETMicroFramework") ||
+				   !File.Exists("/Library/Frameworks/Mono.framework/External/xbuild-frameworks/.NETMicroFramework/v4.3/Microsoft.SPOT.Hardware.PWM.dll"))
 				{
 					DirectoryCopy(Path.Combine(addInFolder, "files", "xbuild-framework/"), "/Library/Frameworks/Mono.framework/External/xbuild-frameworks/");
 					newlyInstalled = true;
@@ -46,7 +60,8 @@ namespace MonoDevelop.MicroFramework
 					newlyInstalled = true;
 				}
 
-				if(!Directory.Exists("/Library/Frameworks/Microsoft .NET Micro Framework/v4.3/"))
+				if(!Directory.Exists("/Library/Frameworks/Microsoft .NET Micro Framework/v4.3/") ||
+				   (GetChecksum("/Library/Frameworks/Microsoft .NET Micro Framework/v4.3/Tools/MetaDataProcessor.exe") != GetChecksum(Path.Combine(addInFolder, "files/frameworks/Microsoft .NET Micro Framework/v4.3/Tools/MetaDataProcessor.exe"))))
 				{
 					DirectoryCopy(Path.Combine(addInFolder, "files", "frameworks/"),
 						"/Library/Frameworks/");
