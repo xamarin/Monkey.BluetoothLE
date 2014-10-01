@@ -30,12 +30,10 @@ namespace ButtonPush
 			// to the LED.
 			button.Output.ConnectTo (led.Input);
 
-			// Do nothing
+			// keep the program alive
 			while (true) {
 				System.Threading.Thread.Sleep (1000);
 			}
-
 		}
-
 	}
 }
