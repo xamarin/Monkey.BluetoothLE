@@ -1,6 +1,10 @@
-Monkey Robotics makes greatly simplifies the task of building complex [.NET Microframework (MF)](http://netmf.com) and communicating with them. 
+Monkey.Robotics makes greatly simplifies the task of building complex [.NET Microframework (MF)](http://netmf.com) powered robots and communicating with them from within Xamarin apps. With Monkey.Robotics, you can use C# through the entire stack, not just the Mobile Apps, but also on .NET MF microcontrollers.
 
-![Overview]()
+
+
+![Overview](Architectural_Overview@2x.png)
+
+
 
 
 First of all, give a short description of what your component does and
