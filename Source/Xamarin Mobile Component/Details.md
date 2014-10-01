@@ -1,5 +1,6 @@
 Monkey Robotics makes greatly simplifies the task of building complex [.NET Microframework (MF)](http://netmf.com) and communicating with them. 
 
+![Overview]()
 
 
 First of all, give a short description of what your component does and

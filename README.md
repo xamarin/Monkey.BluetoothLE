@@ -1,6 +1,6 @@
 # Robotics, from Xamarin.Labs
 
-![Xamarin Robotics](https://github.com/xamarin/Xamarin.Robotics/raw/master/Support%20Files/Images/Xamarin.Robotics%20Overview_Thumb.png)
+![Xamarin Robotics](https://github.com/xamarin/Xamarin.Robotics/raw/master/Support%20Files/Images/Architectural_Overview.png)
 
 Xamarin.Labs Robotics is a full-stack framework that aims to make Robotics and Wearable development much easier by providing a foundation that provides core functionality both for bulding both mobile apps that are Wearables/Robotics aware, as well as .NET Micro Framework based applications that run on microcontrollers such as the Netduino and use peripherals such as sensors, servor, actuators, motor drivers, etc.
 
@@ -13,7 +13,7 @@ It is split into two major platform stacks:
  
 The following diagram illustrates the topology of the entire stack:
 
-![Stack Topography](https://github.com/xamarin/Xamarin.Robotics/raw/master/Support%20Files/Images/Xamarin.Robotics%20Stack%20Topography_Thumb.png)
+![Stack Topography](https://github.com/xamarin/Xamarin.Robotics/raw/master/Support%20Files/Images/Platform_Stack_Topography.png)
 
 ### Mobile Stack
 
