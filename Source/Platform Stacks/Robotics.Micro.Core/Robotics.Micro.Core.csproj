@@ -41,7 +41,6 @@
     <Compile Include="Generators\Constant.cs" />
     <Compile Include="Generators\IPwm.cs" />
     <Compile Include="Generators\SoftPwm.cs" />
-    <Compile Include="IBlock.cs" />
     <Compile Include="InputPort.cs" />
     <Compile Include="Motors\AdafruitMotorShield.cs" />
     <Compile Include="Motors\HBridgeMotor.cs" />

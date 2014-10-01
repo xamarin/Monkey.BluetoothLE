@@ -131,9 +131,9 @@ namespace Robotics.Micro
         /// </summary>
         Port[] portsToUpdate = null;
 
-        readonly BlockBase block;
+        readonly Block block;
 
-		public Port (BlockBase block, string name, Units units, double initialValue = 0)
+		public Port (Block block, string name, Units units, double initialValue = 0)
 		{
             this.block = block;
 			Name = name ?? "";

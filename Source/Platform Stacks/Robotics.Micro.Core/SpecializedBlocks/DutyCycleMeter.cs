@@ -7,7 +7,7 @@ using Microsoft.SPOT;
 
 namespace Robotics.Micro.SpecializedBlocks
 {
-    public class DutyCycleMeter : BlockBase
+    public class DutyCycleMeter : Block
     {
 		public InputPort PwmInput { get; private set; }
         

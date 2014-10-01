@@ -4,7 +4,7 @@ using Robotics.Micro.Generators;
 
 namespace Robotics.Micro.Motors
 {
-    public class HBridgeMotor : BlockBase, IDCMotor
+    public class HBridgeMotor : Block, IDCMotor
     {
         /// <summary>
         /// 0 - 1 for the speed.

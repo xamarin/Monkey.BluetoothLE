@@ -7,7 +7,7 @@ using Microsoft.SPOT.Hardware;
 
 namespace Robotics.Micro.SpecializedBlocks
 {
-    public abstract class I2CBlock : BlockBase
+    public abstract class I2CBlock : Block
     {
         public const int DefaultClockRate = 400;
         const int TransactionTimeout = 1000;

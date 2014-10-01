@@ -9,7 +9,7 @@ namespace Robotics.Micro.Sensors.Buttons
 	/// <summary>
 	/// A simple push button. 
 	/// </summary>
-	public class PushButton : BlockBase, IButton
+	public class PushButton : Block, IButton
 	{
 		/// <summary>
 		/// This duration controls the debounce filter. It also has the effect

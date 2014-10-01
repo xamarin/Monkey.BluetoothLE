@@ -2,7 +2,7 @@
 
 namespace Robotics.Micro.SpecializedBlocks
 {
-    public class CelsiusToFahrenheit : BlockBase
+    public class CelsiusToFahrenheit : Block
     {
         public InputPort Celsius { get; private set; }
         public OutputPort Fahrenheit { get; private set; }

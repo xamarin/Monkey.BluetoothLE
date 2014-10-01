@@ -2,7 +2,7 @@
 
 namespace Robotics.Micro.Sensors.Temperature
 {
-    public class Thermistor : BlockBase
+    public class Thermistor : Block
     {
         /// <summary>
         /// Value that ranges from 0 to 1.

@@ -3,7 +3,7 @@ using Microsoft.SPOT;
 
 namespace Robotics.Micro.Generators
 {
-    public class Constant : BlockBase
+    public class Constant : Block
     {
         public OutputPort Output { get; private set; }
 

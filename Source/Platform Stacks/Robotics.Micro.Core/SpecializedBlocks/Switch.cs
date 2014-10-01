@@ -7,7 +7,7 @@ namespace Robotics.Micro.SpecializedBlocks
     /// This one is a little strange. It adds and removes
     /// connections based upon in integral number.
     /// </summary>
-    public class Switch : BlockBase
+    public class Switch : Block
     {
         public InputPort Input { get; private set; }
 

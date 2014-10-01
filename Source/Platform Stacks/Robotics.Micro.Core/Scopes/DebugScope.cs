@@ -8,7 +8,7 @@ using Microsoft.SPOT;
 
 namespace Robotics.Micro
 {
-    public class DebugScope : BlockBase
+    public class DebugScope : Block
     {
         public Port UpdatePeriod { get; private set; }
 

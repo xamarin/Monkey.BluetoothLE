@@ -3,7 +3,7 @@ using Robotics.Micro.SpecializedBlocks;
 
 namespace Robotics.Micro.Sensors.Motion
 {
-    public class Memsic2125 : BlockBase
+    public class Memsic2125 : Block
     {
 		public InputPort XPwmInput { get; private set; }
 		public InputPort YPwmInput { get; private set; }

@@ -3,7 +3,7 @@ using Microsoft.SPOT;
 
 namespace Robotics.Micro.SpecializedBlocks
 {
-    public class LookupTable : BlockBase, System.Collections.IEnumerable
+    public class LookupTable : Block, System.Collections.IEnumerable
     {
         public InputPort Input { get; private set; }
         public OutputPort Output { get; private set; }

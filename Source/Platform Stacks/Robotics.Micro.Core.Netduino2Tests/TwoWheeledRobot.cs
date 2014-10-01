@@ -10,7 +10,7 @@ using Robotics.Micro.SpecializedBlocks;
 
 namespace Robotics.Micro.Core.Netduino2Tests
 {
-    public class TwoWheeledRobot : BlockBase
+    public class TwoWheeledRobot : Block
     {
         IDCMotor leftMotor;
         IDCMotor rightMotor;

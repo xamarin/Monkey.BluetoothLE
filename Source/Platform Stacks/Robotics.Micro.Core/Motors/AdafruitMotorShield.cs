@@ -129,7 +129,7 @@ namespace Robotics.Micro.Motors
         }
     }
 
-    public class AdafruitDCMotor : BlockBase, IDCMotor
+    public class AdafruitDCMotor : Block, IDCMotor
     {
         readonly AdafruitMotorShield shield;
 

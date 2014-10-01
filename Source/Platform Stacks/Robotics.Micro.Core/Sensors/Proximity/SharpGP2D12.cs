@@ -4,7 +4,7 @@ using Robotics.Micro.SpecializedBlocks;
 
 namespace Robotics.Micro.Sensors.Proximity
 {
-    public class SharpGP2D12 : BlockBase, IRangeFinder
+    public class SharpGP2D12 : Block, IRangeFinder
     {
         public InputPort AnalogInput { get; private set; }
         public OutputPort DistanceOutput { get; private set; }

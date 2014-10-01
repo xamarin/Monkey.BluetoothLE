@@ -8,7 +8,7 @@ namespace Robotics.Micro.Generators
     /// generates waveforms in software. The maximum
     /// Frequency is about 100 Hz.
     /// </summary>
-	public class SoftPwm : BlockBase
+	public class SoftPwm : Block
 	{
 		public OutputPort Output { get; private set; }
 

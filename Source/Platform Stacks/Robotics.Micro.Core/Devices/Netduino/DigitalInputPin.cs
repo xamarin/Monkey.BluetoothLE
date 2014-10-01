@@ -6,7 +6,7 @@ using HWPort = Microsoft.SPOT.Hardware.Port;
 
 namespace Robotics.Micro.Devices
 {
-    public class DigitalInputPin : BlockBase
+    public class DigitalInputPin : Block
     {
         public Port Output { get; private set; }
 

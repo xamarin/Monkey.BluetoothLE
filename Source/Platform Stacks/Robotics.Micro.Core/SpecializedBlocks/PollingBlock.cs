@@ -7,7 +7,7 @@ using Microsoft.SPOT;
 
 namespace Robotics.Micro.SpecializedBlocks
 {
-    public abstract class PollingBlock : BlockBase
+    public abstract class PollingBlock : Block
     {
         public const double DefaultUpdateFrequency = 1;
 

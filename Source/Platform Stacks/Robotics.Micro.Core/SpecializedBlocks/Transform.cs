@@ -5,7 +5,7 @@ namespace Robotics.Micro.SpecializedBlocks
 {
     public delegate double TransformFunction (double input);
 
-    public class Transform : BlockBase
+    public class Transform : Block
     {
         public InputPort Input { get; private set; }
         public OutputPort Output { get; private set; }

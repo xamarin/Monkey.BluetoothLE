@@ -9,7 +9,7 @@ using HWOutputPort = Microsoft.SPOT.Hardware.OutputPort;
 
 namespace Robotics.Micro.Devices
 {
-    public class PwmOutputPin : BlockBase, IPwm
+    public class PwmOutputPin : Block, IPwm
     {
         public InputPort DutyCycleInput { get; private set; }
         public InputPort FrequencyInput { get; private set; }

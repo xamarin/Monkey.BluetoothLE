@@ -7,7 +7,7 @@ namespace Robotics.Micro
 	{
 //		readonly TUnits units;
 
-		public InputPort (BlockBase block, string name, Units units, double initialValue = 0)
+		public InputPort (Block block, string name, Units units, double initialValue = 0)
 			: base (block, name, units, initialValue)
 		{
 //			units = new TUnits ();

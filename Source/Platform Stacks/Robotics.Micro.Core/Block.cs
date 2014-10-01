@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Robotics.Micro
 {
-	public abstract class BlockBase
+	public abstract class Block
 	{
 		string name = null;
 		public string Name {
@@ -18,7 +18,7 @@ namespace Robotics.Micro
 			}
 		}
 
-		static BlockBase ()
+		static Block ()
 		{
 #if !MF_FRAMEWORK_VERSION_V4_3
 			sw = new System.Diagnostics.Stopwatch ();

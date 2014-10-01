@@ -8,7 +8,7 @@ using HWOutputPort = Microsoft.SPOT.Hardware.OutputPort;
 
 namespace Robotics.Micro.Devices
 {
-    public class DigitalOutputPin : BlockBase
+    public class DigitalOutputPin : Block
     {
         public InputPort Input { get; private set; }
 
