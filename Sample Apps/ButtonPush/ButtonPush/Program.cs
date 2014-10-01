@@ -15,7 +15,7 @@ namespace ButtonPush
             PushButton button = new PushButton();
             //button.ConnectTo(new DigitalInputPin(Pins.ONBOARD_BTN).Output);
             InputPort buttonIn = new InputPort(button, "MyButton", Units.Digital);
-			buttonIn.ConnectTo(Pins.ONBOARD_BTN);
+			//buttonIn.ConnectTo(Pins.ONBOARD_BTN);
             H.OutputPort led = new H.OutputPort(Pins.ONBOARD_LED, false);
 
 			bool _isLedOn = false;

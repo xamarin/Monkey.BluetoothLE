@@ -144,7 +144,10 @@ namespace Robotics.Messaging
 
         void ProcessMessage (Message m)
         {
-            DebugPrint ("Received message: " + (ControlOp)m.Operation);
+
+			//HACK
+			DebugPrint ("Received message: " + ((ControlOp)m.Operation).ToString ());
+            //DebugPrint ("Received message: " + (ControlOp)m.Operation);
 
             switch ((ControlOp)m.Operation) {
                 case ControlOp.GetVariables:
