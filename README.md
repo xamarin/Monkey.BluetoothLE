@@ -37,7 +37,7 @@ The Microcontroller stack uses reactive-like design patterns, in that it consist
 
 For example, the following program blinks the Netduino's onboard LED when the onboard button is pressed:
  
-```
+```csharp
 public class Program
 {
 	// create our pin references.
