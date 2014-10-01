@@ -1,5 +1,4 @@
-
-
+Monkey Robotics makes greatly simplifies the task of building complex [.NET Microframework (MF)](http://netmf.com) and communicating with them. 
 
 
 
