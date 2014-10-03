@@ -16,7 +16,7 @@ end
 task :default => "xamarin-component/xamarin-component.exe" do
 	line = <<-END
 	mono xamarin-component/xamarin-component.exe create-manually #{COMPONENT} \
-		--name="Monkey.Robotics" \
+		--name="Monkey.Robotics - Beta" \
 		--summary="Create robotic projects and integrate them with Xamarin apps." \
 		--publisher="Xamarin Inc." \
 		--docs="https://github.com/xamarin/Monkey.Robotics" \

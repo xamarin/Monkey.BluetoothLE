@@ -22,7 +22,7 @@ The following diagram illustrates the topology of the entire stack:
 The Mobile stack consists of three different parts:
 
  * **Low-level Bluetooth LE (BLE) API** - A cross-platform API (iOS and Android only right now) that supports communicating with BLE devices.
- * **Low-Level Wifi API** - A cross-platform API (iOS and Android only right now) that supports connecting to WiFi enabled devices.
+ * **Low-Level Wifi API** - A cross-platform API (iOS and Android only right now) that supports connecting to WiFi enabled devices. Note: this API is still in progress and has not yet shipped. For now, please use the BLE API.
  * **Messaging Framework** - A high-level cross-platform protocol for messaging peripherals via WiFi or BLE.
  * **Peripheral Libraries** - Strongly typed libraries for communicating with various vendor-specific peripherals such as health monitoring devices, smart watches, and the like.
 
