@@ -1,10 +1,14 @@
-# Monkey.Robotics
+# Monkey.Robotics - Beta
 
 Monkey.Robotics greatly simplifies the task of building complex [.NET Microframework (MF)](http://netmf.com) powered robots and communicating with them from within Xamarin apps. With Monkey.Robotics, you can use C# through the entire stack, not just the Mobile Apps, but also on .NET MF microcontrollers. You can also use it to communicate with non-.NET MF microcontroller such as the Arduino.
 
 ![Xamarin Robotics](https://github.com/xamarin/Xamarin.Robotics/raw/master/Support%20Files/Images/Architectural_Overview.png)
 
 Monkey.Robotics is a full-stack framework that aims to make Robotics and Wearable development much easier by providing a foundation that provides core functionality both for bulding both mobile apps that are Wearables/Robotics aware, as well as [.NET Micro Framework](http://netmf.com) based applications that run on microcontrollers such as the Netduino and use peripherals such as sensors, servor, actuators, motor drivers, etc.
+
+### Beta
+
+> Please Note: Monkey.Robotics is still a beta/work in progress and is not officially supported by Xamarin. It's a passion project put together by folks that love C# and Robotics. We're working on the docs as you read this. If you run into any issues, please file them [here](https://github.com/xamarin/Monkey.Robotics/issues). Thanks for trying it out!
 
 ## Architecture
  
@@ -69,9 +73,11 @@ public class Program
 
 # [Getting Started](https://github.com/xamarin/Xamarin.Robotics/tree/master/Getting%20Started)
 
-[image of robot]
+[image of robot to come]
 
 The best way to get started with Monkey.Robotics is to build a robot! Check out our [Getting Started guides](https://github.com/xamarin/Xamarin.Robotics/tree/master/Getting%20Started) for step by step instructions on how to do just that.
+
+> Please Note: these docs are a work in progress.
 
 # Authors
 Bryan Costanich, Frank Krueger, Craig Dunn, David Karlas, Oleg Rakhmatulin
