@@ -31,7 +31,6 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="BlockBase.cs" />
     <Compile Include="ConfigPort.cs" />
     <Compile Include="Connection.cs" />
     <Compile Include="Devices\Netduino\AnalogInputPin.cs" />
@@ -81,6 +80,7 @@
     <Compile Include="..\Robotics.Mobile.Core\Messaging\Message.cs">
       <Link>Messaging\Message.cs</Link>
     </Compile>
+    <Compile Include="Block.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Hardware" />
