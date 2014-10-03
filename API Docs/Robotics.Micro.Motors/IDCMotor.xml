@@ -7,7 +7,7 @@
   </AssemblyInfo>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Represents a standard DC motor.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -22,7 +22,7 @@
         <ReturnType>Robotics.Micro.InputPort</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Whether or not the motor is de-powered (put into a neutral/spin-freely state) when the input is 0.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -38,7 +38,7 @@
         <ReturnType>Robotics.Micro.InputPort</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The speed from -1 (fastest reverse) to 1 (fastest forward) of the motor.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>

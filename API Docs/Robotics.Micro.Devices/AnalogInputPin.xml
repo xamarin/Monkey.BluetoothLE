@@ -10,7 +10,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Represents an Analog Input Pin on a microcontroller. Analog inputs can can accept a range of input voltages, rather than high/low as with a Digital Input Pin.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -26,7 +26,7 @@
         <Parameter Name="updateFrequency" Type="System.Double" />
       </Parameters>
       <Docs>
-        <param name="pin">To be added.</param>
+        <param name="pin">The pin to bind to this input.</param>
         <param name="updateFrequency">To be added.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
@@ -43,8 +43,8 @@
         <ReturnType>Robotics.Micro.Port</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>The analog value read on this pin.</summary>
+        <value>Values range from 0 to 1 (ratio).</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

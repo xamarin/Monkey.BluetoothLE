@@ -14,8 +14,12 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a Pulse-width modulation (see: http://en.wikipedia.org/wiki/Pulse-width_modulation) output. </summary>
+    <remarks>PWM is used to 
+      drive things like servos and motors which expect a modulated signal to control speed. A PWM output can also be used to output 
+      an analog signal, but must be used in conjunction with a Digital-to-analog converter (see: http://en.wikipedia.org/wiki/Digital-to-analog_converter), or at a minimum, a capacitor and resistor combination to smooth the modulated signal into a constant output voltage.
+      Netduino boards have 0 volts (low) to 5 volts (high) output, so if you wanted to output 2.5 volts, you would need to 
+      assign a PWM duty cycle (ratio of on (high)/off (low)) of .5 to the pin.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">

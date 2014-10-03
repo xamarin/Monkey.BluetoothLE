@@ -14,8 +14,13 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents an H-bridge motor driver.</summary>
+    <remarks>H-bridges (see: http://en.wikipedia.org/wiki/H_bridge) are used to control motors because they allow you to 
+      control larger voltage loads with small inputs. For instance, if you tried to drive an electronic motor directly 
+      from a Netduino, you run the risk of burning out the Netduino, as it's not designed to handle high loads. However,
+      with an H-bridge, you can drive a motor using higher voltage directly from a power source such as batteries, but 
+      control that voltage with a lower voltage input (from the Netduino). H-bridges typically allow for not only 
+      speed control, but also forward/reverse.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -45,7 +50,7 @@
         <ReturnType>Robotics.Micro.OutputPort</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Connect this to the First A pin on the H-Bridge.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -61,7 +66,7 @@
         <ReturnType>Robotics.Micro.OutputPort</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Connect this to the Second A pin on the H-Bridge.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -77,7 +82,8 @@
         <ReturnType>Robotics.Micro.InputPort</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Not all motors are created equally. This number scales the Speed Input so
+        that you can match motor speeds without changing your logic.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -117,9 +123,10 @@
         <ReturnType>Robotics.Micro.InputPort</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>When true, the wheels spin "freely" at 0 speed.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>Powered electric motors tend to resist rotation (effectively they "brake"). Enabling 
+          this setting means that a 0 input effective puts the motor in neutral.</remarks>
       </Docs>
     </Member>
     <Member MemberName="PwmDutyCycleOutput">
@@ -165,8 +172,8 @@
         <ReturnType>Robotics.Micro.InputPort</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>0 - 1 for the speed.</summary>
+        <value>A value between 0 and 1, 0 being off, and 1 being fastest.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

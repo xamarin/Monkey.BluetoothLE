@@ -10,8 +10,10 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a Software Pulse-width Modulation (PWM) generator.</summary>
+    <remarks>A Pulse Width Modulation Generator that can generate waveforms in software. The maximum
+    Frequency is about 100 Hz. Generally, it's best to use the hardware PWM generators because 
+    they offer far better precision.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">

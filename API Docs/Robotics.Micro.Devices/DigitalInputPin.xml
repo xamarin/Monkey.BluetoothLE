@@ -10,7 +10,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Represents a Digital Input Pin on a microcontroller. Digital inputs can be 0 (low) and 1 (high).</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -26,7 +26,7 @@
         <Parameter Name="glitchFilter" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="pin">To be added.</param>
+        <param name="pin">The pin to bind to this input.</param>
         <param name="glitchFilter">To be added.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>

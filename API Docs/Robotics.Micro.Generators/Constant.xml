@@ -10,7 +10,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Represents a constant output generator. Generates a constant digital signal of 0 (low) or 1 (high).</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -41,7 +41,7 @@
         <ReturnType>Robotics.Micro.OutputPort</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Either 0 (low) or 1 (high).</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>

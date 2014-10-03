@@ -10,8 +10,8 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a Sine-wave generator.</summary>
+    <remarks>Creates a sine wave based on the parameters supplied.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">

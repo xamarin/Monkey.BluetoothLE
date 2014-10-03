@@ -10,8 +10,8 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents the Adafruit Motorshield.</summary>
+    <remarks>This class can be used to drive the Adafruit Motorshield.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
