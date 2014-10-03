@@ -71,13 +71,11 @@ public class Program
 }
 ``` 
 
-# [Getting Started](https://github.com/xamarin/Xamarin.Robotics/tree/master/Getting%20Started)
+# [Getting Started](Getting%20Started/)
 
-[image of robot to come]
+Check out the [Getting Started Guides](Getting%20Started/) to get up and running with Monkey.Robotics quickly.
 
-The best way to get started with Monkey.Robotics is to build a robot! Check out our [Getting Started guides](https://github.com/xamarin/Xamarin.Robotics/tree/master/Getting%20Started) for step by step instructions on how to do just that.
-
-> Please Note: these docs are a work in progress.
+> Please Note: these docs are a work in progress. :D
 
 # Authors
 Bryan Costanich, Frank Krueger, Craig Dunn, David Karlas, Oleg Rakhmatulin
