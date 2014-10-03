@@ -14,8 +14,8 @@ Solder a black and a red wire to the flat metal leads coming off each of the mot
 
 Screw the motor attachment block onto the motor with two of the long bolts. NOTE: the image shows the bolts backwards. While it'll work this way, it'll also put the bolt ends very close to the wheel wells when it's fully assembled, so I would reverse them as seen in the image below. Note that you'll create two of these assemblies, each mirroring each other:
 
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/02.jpg?raw=true)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/02.jpg?raw=true)
+![](Images/02.jpg)
+![](Images/02.jpg)
 
 Note that yours should have wires coming off the motor by this point.
 
@@ -23,32 +23,32 @@ Note that yours should have wires coming off the motor by this point.
 
 Use the small bolts to attache the motors to the plate as shown:
 
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/03.jpg?raw=true)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/04.jpg?raw=true)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/05.jpg?raw=true)
+![](Images/03.jpg)
+![](Images/04.jpg)
+![](Images/05.jpg)
 
 ## Step 4: Attach the Wheels and Tires
 
 Push the tire/wheel assembly onto the motor axle (it takes a bit of pressure and finesse). Then, using 4 small bolts and nuts, attach the front wheel to the front of the plate:
 
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/06.jpg?raw=true)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/07.jpg?raw=true)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/08.jpg?raw=true)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/09.jpg?raw=true)
+![](Images/06.jpg)
+![](Images/07.jpg)
+![](Images/08.jpg)
+![](Images/09.jpg)
 
 ## Step 5: Attach the Battery Pack
 
 Using two small bolts and nuts, attach the battery pack to the back of the chassis:
 
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/10.jpg?raw=true)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/11.jpg?raw=true)
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/12.jpg?raw=true)
+![](Images/10.jpg)
+![](Images/11.jpg)
+![](Images/12.jpg)
 
 ## Step 6: Run the Motor Wires through the Chassis
 
 This will get them out of the way and make it so they're long enough to reach the motor controller.
 
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/13.jpeg?raw=true)
+![](Images/13.jpeg)
 
 ## Step 7: Attach the Netduino and Breadboard to the Chassis
 
@@ -60,7 +60,7 @@ Using double-sided tape (also to be had from radio-shack), put the netduino and 
 
 Run the motor wires to the M1 and M2 headers, so that each motor has two wires going to a single header group:
 
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/14.jpeg?raw=true)
+![](Images/14.jpeg)
 
 The correct order can be adjusted later when you run the controller.
 
