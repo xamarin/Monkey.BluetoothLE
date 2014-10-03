@@ -35,6 +35,7 @@ task :default => "xamarin-component/xamarin-component.exe" do
 		--library="android":"bin/Robotics.Mobile.Core.Droid/Newtonsoft.Json.dll" \
 		--sample="Netduino .NET MF Sample - Onboard LED blinking. A simple micro framework project that blinks the onboard LED on a Netduino.":"../../Sample Apps/NetduinoBlink/NetduinoBlink.sln" \
 		--sample="Netduino .NET MF Sample - Button Press. A simple micro framework project that lights the onboard LED when the onboard button is pressed.":"../../Sample Apps/ButtonPush/ButtonPush.sln" \
+		--sample="Xamarin.Forms Mobile Sample - BLE Explorer. A complete mobile sample that runs on iOS and Android and allows you to list, connect to, and communicate with, BLE devices around you. .":"../../Sample Apps/BLE Explorer/BLE Explorer.sln" \
 		#--monodoc="../../API Docs"
 		END
 	puts "* Creating #{COMPONENT}..."
