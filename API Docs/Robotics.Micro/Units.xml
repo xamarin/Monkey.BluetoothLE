@@ -9,8 +9,9 @@
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a Unit of measure.</summary>
+    <remarks>Many of the APIs require a Unit to be specified. The Units enumeration contains the valid 
+      measurement types.</remarks>
   </Docs>
   <Members>
     <Member MemberName="Boolean">
@@ -24,7 +25,7 @@
         <ReturnType>Robotics.Micro.Units</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Values greater than or equal to 0.5 are true. Others are false.</summary>
       </Docs>
     </Member>
     <Member MemberName="Digital">
@@ -38,7 +39,7 @@
         <ReturnType>Robotics.Micro.Units</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Only values 0 (low) and 1 (high).</summary>
       </Docs>
     </Member>
     <Member MemberName="Distance">
@@ -52,7 +53,7 @@
         <ReturnType>Robotics.Micro.Units</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Measured in Meters.</summary>
       </Docs>
     </Member>
     <Member MemberName="EarthGravity">
@@ -80,7 +81,7 @@
         <ReturnType>Robotics.Micro.Units</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Measured in Hertz.</summary>
       </Docs>
     </Member>
     <Member MemberName="Gauss">
@@ -108,7 +109,7 @@
         <ReturnType>Robotics.Micro.Units</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>A value from 0 to 1 inclusive.</summary>
       </Docs>
     </Member>
     <Member MemberName="Resistance">
@@ -136,7 +137,7 @@
         <ReturnType>Robotics.Micro.Units</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>This value has no units and is just a number.</summary>
       </Docs>
     </Member>
     <Member MemberName="Temperature">
@@ -164,7 +165,7 @@
         <ReturnType>Robotics.Micro.Units</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Measured in Seconds.</summary>
       </Docs>
     </Member>
   </Members>

@@ -10,8 +10,9 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a simple realtime debugger scope.</summary>
+    <remarks>The DebugScope is a simple scope that listens to a signal on a port, samples it at specific time intervals and writes
+      that signal value to the debugger output.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -57,7 +58,7 @@
         <ReturnType>Robotics.Micro.Port</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The time, measured in seconds, at which to sample the signal.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>

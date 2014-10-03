@@ -7,8 +7,11 @@
   </AssemblyInfo>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a Scope.</summary>
+    <remarks>A Scope is a listener. Scopes are used to listen to any kind of signal going through a port and do interesting things with that
+      signal. For instance, the DebugScope is a simple scope that listens to a port and writes the signal (at specific
+      time intervals) to the debug console. You could, for instance, write a custom scope called Oscilliscope that took
+      the output from a block and graphed it.</remarks>
   </Docs>
   <Members>
     <Member MemberName="Connect">
