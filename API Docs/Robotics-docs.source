@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
 <monodoc>
-  <node label="Robotics from Xamarin.Labs" name="Xamarin_Labs.Robotics" parent="libraries"/>
-  <source provider="ecma" basefile="Xamarin.Labs.Robotics" path="Xamarin_Labs.Robotics"/>
+  <node label="Monkey.Robotics" name="Monkey.Robotics" parent="libraries"/>
+  <source provider="ecma" basefile="Monkey.Robotics" path="Monkey.Robotics"/>
 </monodoc>
