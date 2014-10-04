@@ -77,5 +77,10 @@ Check out the [Getting Started Guides](Getting%20Started/) to get up and running
 
 > Please Note: these docs are a work in progress. :D
 
+# [API Documentation](API%20Docs/)
+
+Check out the [API Documentation](API%20Docs/) if you want to browse the API and get reference documentation.
+
+
 # Authors
 Bryan Costanich, Frank Krueger, Craig Dunn, David Karlas, Oleg Rakhmatulin
