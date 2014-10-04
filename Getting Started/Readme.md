@@ -15,6 +15,15 @@ This guide will help you get your development environment and Micro Framework ha
 
 After you got your hardware and environment configured, it's time to build a simple app that blinks the onboard LED on your netduino to make sure everything is configured and running properly.
 
+## [Getting Started with the Micro Stack](Micro_Stack)
+
+The Micro Stack follows the Reactive Programming pattern with composible Blocks that represent components of the underlying circuits. Check out the [Getting Started with the Micro Stack guide](Micro_Stack) for more information.
+
+
+## [Getting Started with the Mobile Stack](Mobile_Stack)
+
+The Mobile Stack runs on iOS and Android devices via the Xamarin platform and enables BLE communication with microcontrollers. Check out the [Getting Started with the Mobile Stack guide](Mobile_Stack) for more information.
+
 
 ## [Build a Robot!](Build_a_Robot/)
 
