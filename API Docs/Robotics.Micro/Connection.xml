@@ -10,14 +10,23 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Represents a connection between two ports.</summary>
     <remarks>
       <para>
-      This is a reference to a connection. Creation of this object does not make the connection.
-    You need to call Connect to do that.
+        The Robotics microframework library loosely follows a Reactive Programming (see: http://en.wikipedia.org/wiki/Reactive_programming) 
+        pattern. This means that instead of a traditional event-driven model (which works well in tradition UI apps), components within 
+        any paritcular hardware configuration are actually bound to each other, such that an output signal from one block is automatically
+        passed to another block.
+      </para>
+      <para>
+        This reactive pattern works incredibly well for circuits because signals tend to be a constant, rather than periodic events such as
+        a person interacting with a UI. As such, the Connector class is necessary to actually bind two blocks together to handle the plumbing.
+      </para>
+      <para>
+        Note that it's not enough to simply create a connection object, but you must actually call the ConnectTo() method to bind two ports 
+        together.
       </para>
       <example>
-        
         <code lang="C#"><![CDATA[
   public class Program
   {
