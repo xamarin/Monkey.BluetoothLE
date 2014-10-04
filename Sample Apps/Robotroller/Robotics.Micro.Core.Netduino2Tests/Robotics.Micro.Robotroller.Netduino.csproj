@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AssemblyName>Robotics.Micro.Core.Netduino2Tests</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Robotics.Device.CoreLib.Netduino2Tests</RootNamespace>
+    <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{C12A111F-28FB-45AB-8F7E-609255CD2D7B}</ProjectGuid>
+    <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
+    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
+    <DeployDevice>Netduino</DeployDevice>
+    <DeployTransport>USB</DeployTransport>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="TestBLEMini.cs" />
+    <Compile Include="TestButton.cs" />
+    <Compile Include="TestRCCar.cs" />
+    <Compile Include="TestSensors.cs" />
+    <Compile Include="TestTwoWheeledRobot.cs" />
+    <Compile Include="TestTwoWheeledRobotShield.cs" />
+    <Compile Include="TwoWheeledRobot.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.SPOT.Hardware" />
+    <Reference Include="Microsoft.SPOT.Hardware.PWM" />
+    <Reference Include="Microsoft.SPOT.Hardware.SerialPort" />
+    <Reference Include="Microsoft.SPOT.Native" />
+    <Reference Include="Microsoft.SPOT.Net" />
+    <Reference Include="Microsoft.SPOT.TinyCore" />
+    <Reference Include="SecretLabs.NETMF.Hardware" />
+    <Reference Include="SecretLabs.NETMF.Hardware.Netduino" />
+    <Reference Include="System" />
+    <Reference Include="SecretLabs.NETMF.Hardware.PWM" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Robotics.Micro.Core\Robotics.Micro.Core.csproj">
+      <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
+      <Name>Robotics.Micro.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

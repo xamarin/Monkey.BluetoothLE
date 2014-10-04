@@ -6,9 +6,8 @@
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{9146775A-E315-4CEB-9CB2-3DBFC9D9A58C}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Xamarin.Robotics.Mobile.Robotroller.iOS</RootNamespace>
+    <RootNamespace>Robotics.Mobile.Robotroller.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>XamarinRoboticsMobileRobotrolleriOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,6 +21,7 @@
     <MtouchLink>None</MtouchLink>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchDebug>true</MtouchDebug>
+    <AssemblyName>RoboticsMobileRobotrolleriOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -32,6 +32,7 @@
     <MtouchLink>None</MtouchLink>
     <ConsolePause>false</ConsolePause>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <AssemblyName>RoboticsMobileRobotrolleriOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,6 +49,7 @@
     <MtouchI18n>
     </MtouchI18n>
     <MtouchArch>ARMv7</MtouchArch>
+    <AssemblyName>XamarinRoboticsMobileRobotrolleriOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -58,6 +60,7 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
+    <AssemblyName>XamarinRoboticsMobileRobotrolleriOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>full</DebugType>
@@ -70,6 +73,7 @@
     <BuildIpa>true</BuildIpa>
     <CodesignProvision>Automatic:AdHoc</CodesignProvision>
     <CodesignKey>iPhone Distribution</CodesignKey>
+    <AssemblyName>XamarinRoboticsMobileRobotrolleriOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
     <DebugType>full</DebugType>
@@ -81,6 +85,7 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <ConsolePause>false</ConsolePause>
     <CodesignProvision>Automatic:AppStore</CodesignProvision>
+    <AssemblyName>XamarinRoboticsMobileRobotrolleriOS</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -126,17 +131,17 @@
     <ITunesArtwork Include="Resources\iTunesArtwork%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Platform Stacks\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj">
-      <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
-      <Name>Robotics.Mobile.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Platform Stacks\Robotics.Mobile.Core.iOS\Robotics.Mobile.Core.iOS.csproj">
-      <Project>{453394D3-F7E4-49E4-8FAE-36F1D988AE15}</Project>
-      <Name>Robotics.Mobile.Core.iOS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Robotics.Mobile.Robotroller.Core\Robotics.Mobile.Robotroller.Core.csproj">
       <Project>{CEE2DCF6-7C07-4D21-A212-05876EC5E954}</Project>
       <Name>Robotics.Mobile.Robotroller.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\Platform Stacks\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj">
+      <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
+      <Name>Robotics.Mobile.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\Platform Stacks\Robotics.Mobile.Core.iOS\Robotics.Mobile.Core.iOS.csproj">
+      <Project>{453394D3-F7E4-49E4-8FAE-36F1D988AE15}</Project>
+      <Name>Robotics.Mobile.Core.iOS</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

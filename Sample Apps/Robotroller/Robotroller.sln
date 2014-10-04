@@ -1,11 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile.Core", "Mobile.Core", "{671419BD-1389-4B59-87C3-338F15D146C0}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Mobile.Core", "..\..\Source\Platform Stacks\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj", "{65733427-B647-4556-A87C-20937496780A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Mobile.Core.Droid", "..\..\Source\Platform Stacks\Robotics.Mobile.Core.Droid\Robotics.Mobile.Core.Droid.csproj", "{0040B1B9-6E22-438A-A6A7-A5A00B2B89B1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Mobile.Core.iOS", "..\..\Source\Platform Stacks\Robotics.Mobile.Core.iOS\Robotics.Mobile.Core.iOS.csproj", "{453394D3-F7E4-49E4-8FAE-36F1D988AE15}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetduinoRobot", "NetduinoRobot", "{54B1A705-65DD-436D-8630-D9F3B5ED24C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Micro.Core", "Robotics.Micro.Core\Robotics.Micro.Core.csproj", "{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Micro.Robotroller.Netduino", "Robotics.Micro.Core.Netduino2Tests\Robotics.Micro.Robotroller.Netduino.csproj", "{C12A111F-28FB-45AB-8F7E-609255CD2D7B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MobileApp", "MobileApp", "{70D60FAE-6E12-4883-B30C-9616822B905B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Mobile.Robotroller.Core", "Robotics.Mobile.Robotroller.Core\Robotics.Mobile.Robotroller.Core.csproj", "{CEE2DCF6-7C07-4D21-A212-05876EC5E954}"
 EndProject
@@ -89,6 +99,38 @@ Global
 		{9146775A-E315-4CEB-9CB2-3DBFC9D9A58C}.Release|iPhone.Build.0 = Release|iPhone
 		{9146775A-E315-4CEB-9CB2-3DBFC9D9A58C}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{9146775A-E315-4CEB-9CB2-3DBFC9D9A58C}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.AppStore|iPhone.Build.0 = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|iPhone.Build.0 = Release|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.AppStore|iPhone.Build.0 = Debug|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Release|iPhone.Build.0 = Release|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{CEE2DCF6-7C07-4D21-A212-05876EC5E954}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
 		{CEE2DCF6-7C07-4D21-A212-05876EC5E954}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
 		{CEE2DCF6-7C07-4D21-A212-05876EC5E954}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
@@ -122,7 +164,17 @@ Global
 		{EC6A5B67-5128-4F0B-A74D-E234F6A57476}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{EC6A5B67-5128-4F0B-A74D-E234F6A57476}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{65733427-B647-4556-A87C-20937496780A} = {671419BD-1389-4B59-87C3-338F15D146C0}
+		{0040B1B9-6E22-438A-A6A7-A5A00B2B89B1} = {671419BD-1389-4B59-87C3-338F15D146C0}
+		{453394D3-F7E4-49E4-8FAE-36F1D988AE15} = {671419BD-1389-4B59-87C3-338F15D146C0}
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0} = {54B1A705-65DD-436D-8630-D9F3B5ED24C9}
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B} = {54B1A705-65DD-436D-8630-D9F3B5ED24C9}
+		{CEE2DCF6-7C07-4D21-A212-05876EC5E954} = {70D60FAE-6E12-4883-B30C-9616822B905B}
+		{EC6A5B67-5128-4F0B-A74D-E234F6A57476} = {70D60FAE-6E12-4883-B30C-9616822B905B}
+		{9146775A-E315-4CEB-9CB2-3DBFC9D9A58C} = {70D60FAE-6E12-4883-B30C-9616822B905B}
+	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ..\..\Source\Platform Stacks\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj
+		StartupItem = Robotics.Mobile.Robotroller.iOS\Robotics.Mobile.Robotroller.iOS.csproj
 	EndGlobalSection
 EndGlobal
