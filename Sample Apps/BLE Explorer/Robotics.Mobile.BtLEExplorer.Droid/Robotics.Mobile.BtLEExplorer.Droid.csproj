@@ -88,11 +88,11 @@
       <Project>{A1E14BEA-A9D9-46C5-83AA-8891A13E4837}</Project>
       <Name>Robotics.Mobile.BtLEExplorer.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Platform Stacks\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj">
+    <ProjectReference Include="..\..\..\Source\Platform Stacks\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj">
       <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
       <Name>Robotics.Mobile.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Platform Stacks\Robotics.Mobile.Core.Droid\Robotics.Mobile.Core.Droid.csproj">
+    <ProjectReference Include="..\..\..\Source\Platform Stacks\Robotics.Mobile.Core.Droid\Robotics.Mobile.Core.Droid.csproj">
       <Project>{0040B1B9-6E22-438A-A6A7-A5A00B2B89B1}</Project>
       <Name>Robotics.Mobile.Core.Droid</Name>
     </ProjectReference>
