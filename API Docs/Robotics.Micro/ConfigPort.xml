@@ -10,8 +10,15 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>
+        ConfigPort is a specialized port that allows real-time configuration changes on a block. 
+    </summary>
+    <remarks>Certain Blocks can be configured to modify
+        their output based on parameters specified by a ConfigPort. The beauty of ConfigPorts is that as opposed to having
+        set-and-forget parameters, a ConfigPort is itself a port, meaning it can modify configuration in real-time, over time.
+        For example, you could use the SineWave Generator Block to generate a Sine Wave signal, and then feed that into the 
+        ConfigPort, so that the configuration values would be constantly changing, in synch with the sine wave.
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
