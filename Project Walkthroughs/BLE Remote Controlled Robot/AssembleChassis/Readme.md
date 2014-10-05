@@ -1,80 +1,89 @@
 # Assembling the Robot
-Putting together the chassis.
+
+First step is to assemble the robot chassis.
+
+Your parts should look something like this:
+
+![InitialParts](Images/Chassis_01.jpg)
+
+Peel the paper off the laser cut chassis plate (otherwise it'll peel later and your components may fall off):
+
+![](Images/Chassis_02.jpg)
 
 ## Step 1: Solder the Motor Wires
 
-Solder a black and a red wire to the flat metal leads coming off each of the motor. Photo to come later. :( To solder:
+Solder a black and a red wire to the flat metal leads coming off each of the motor.  Doesn't matter which wire to which side, you can change where they're plugged in later.
 
- 1. Remove the plastic motor retainers (it may help to use needle-nose pliers to pull them down, off the lip).
+ 1. Remove the plastic motor retainers (it may help to use needle-nose pliers to pull them down, off the lip):
+ ![](Images/Chassis_03.jpg) 
  2. heat your soldering iron, and tin the tip (you can get soldering iron tip cleaner and tinner at radioshack) 
- 3. bend the wire ends in half, put through the leads and clamp shut. 
- 4. Hold the iron on the wire + leads for about 5 seconds, and apply solder.
+ 3. bend the wire ends in half, put through the leads and clamp shut:
+ ![](Images/Chassis_04.jpg) 
+ 4. Hold the iron on the wire + leads for about 5 seconds, and apply solder. After soldering, put the plastic motor retainers back on:
+ ![](Images/Chassis_05.jpg) 
 
-## Step 2: Assemble the Motor
+## Step 2: Add Attachment Plate to Motors
 
-Screw the motor attachment block onto the motor with two of the long bolts. NOTE: the image shows the bolts backwards. While it'll work this way, it'll also put the bolt ends very close to the wheel wells when it's fully assembled, so I would reverse them as seen in the image below. Note that you'll create two of these assemblies, each mirroring each other:
+Screw the motor attachment block onto the motor with two of the long bolts. Note that you'll create two of these assemblies, each mirroring each other:
 
-![](Images/02.jpg)
-![](Images/02.jpg)
+![](Images/Chassis_07.jpg) 
 
-Note that yours should have wires coming off the motor by this point.
+## Step 3: Attach the Wheels
 
-## Step 3: Bolt the motors to the plate
+Push the tire/wheel assembly onto the motor axle (it takes a bit of pressure and finesse). Make sure the wheels are on the opposite side of the attachment plate. The round laser cut speed wheels are optional. You only need them if you want to add a speedometer in the future.
 
-Use the small bolts to attache the motors to the plate as shown:
-
-![](Images/03.jpg)
-![](Images/04.jpg)
-![](Images/05.jpg)
-
-## Step 4: Attach the Wheels and Tires
-
-Push the tire/wheel assembly onto the motor axle (it takes a bit of pressure and finesse). Then, using 4 small bolts and nuts, attach the front wheel to the front of the plate:
-
-![](Images/06.jpg)
-![](Images/07.jpg)
-![](Images/08.jpg)
-![](Images/09.jpg)
-
-## Step 5: Attach the Battery Pack
-
-Using two small bolts and nuts, attach the battery pack to the back of the chassis:
-
-![](Images/10.jpg)
-![](Images/11.jpg)
-![](Images/12.jpg)
-
-## Step 6: Run the Motor Wires through the Chassis
-
-This will get them out of the way and make it so they're long enough to reach the motor controller.
-
-![](Images/13.jpeg)
-
-## Step 7: Attach the Netduino and Breadboard to the Chassis
-
-Using double-sided tape (also to be had from radio-shack), put the netduino and the breadboard (already has tape on it) on the chassis. Location is up to you, but it may be better to put the breadboard towards the front, in case you want to attach some sensors directly to it.
-
-# Part 2: Wiring the Robot Up
-
-## Step 1: Wire up the Motors
-
-Run the motor wires to the M1 and M2 headers, so that each motor has two wires going to a single header group:
-
-![](Images/14.jpeg)
-
-The correct order can be adjusted later when you run the controller.
-
-## Step 2: Attach the Headers to the Motor Controller Shield and Mount on the Netduino
-
-The motor controller shield comes with the stacking headers unattached. :( You'll need to solder them on to mount it to the Netduino. They need to be soldered on the outside strip of the board. Once you've soldered them, you can plug it directly into the Netduino.
+![](Images/Chassis_09.jpg) 
 
 
-## Step 3: Wire up the Power
 
-The motor controller board will power the arduino, but you must run the power from the batteries to the Motor Controller Shield as show in the image above.
+## Step 4: Bolt the motors to the plate
 
-# Part 3: Deploying Robot Code
+Use the small bolts to attach the motors to the plate as shown:
 
-Once you have the robot built and wired, you can deploy the code in the [TestTwoWheeledRobot.cs](https://github.com/xamarin/Xamarin.Robotics/tree/master/Source/Xamarin.Robotics/Xamarin.Robotics.Micro.Core.Netduino2Tests) to make it go. Note there is some obstacle avoidance code there if you have an IR sensor attached. Ping Frank Krueger if you want to wire that up. Otherwise, you can just delete that code.
+![](Images/Chassis_10.jpg) 
 
-The trick here is to leave the jumper off the Motor Controller Board until you're ready to go. Once you place the jumper on the board, it'll allow the power to go to the motors.
+
+## Step 5: Run the Motor Wires through the Chassis
+
+Route the motor wires through the chassis plate as shown:
+
+![](Images/Chassis_11.jpg) 
+
+## Step 6: Attach the Front Wheel
+
+Then, using 4 small bolts and nuts, attach the front wheel to the front of the plate:
+
+![](Images/Chassis_13.jpg) 
+
+## Step 7: Put Double-Sided Tape on the Netduino and Battery Pack
+
+This will allow you to attach them to the chassis plate. You may wnat to put two layers of tape (as shown) to the Netduino to help route the battery pack wires under it later:
+
+![](Images/Chassis_14.jpg) 
+
+## Step 8: Attach Breadboard, Netduino and Breadboard to the Chassis Plate
+
+Make sure to run the battery pack wires under the Netduino.
+
+![](Images/Chassis_15.jpg) 
+
+![](Images/Chassis_16.jpg) 
+
+> Note: you may want to move the Netduino towards the side that doesn't have the USB port so you don't have to take the wheel off to plug a USB cable in. :)
+
+## Step 9: Plug the Battery Leads in
+
+Route the battery leads to the power rail on the bread board and plug the **red wire into the "+" rail** and the **black wire into the "-" rail**:
+
+![](Images/Chassis_19.jpg) 
+![](Images/Chassis_20.jpg) 
+
+
+## Step 9: Add the H-Bridge and the BLE Mini
+
+![](Images/Chassis_21.jpg) 
+
+![](Images/Chassis_22.jpg) 
+
+
+
