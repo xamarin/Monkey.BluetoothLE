@@ -10,7 +10,7 @@ Monkey.Robotics is a full-stack framework that aims to make Robotics and Wearabl
 
 > Please Note: Monkey.Robotics is still a beta/work in progress and is not officially supported by Xamarin. It's a passion project put together by folks that love C# and Robotics. We're working on the docs as you read this. If you run into any issues, please file them [here](https://github.com/xamarin/Monkey.Robotics/issues). Thanks for trying it out!
 
-## Architecture
+## Overivew
  
 It is split into two major platform stacks:
 
@@ -71,18 +71,23 @@ public class Program
 }
 ``` 
 
-# [Getting Started](Getting%20Started/)
+# Documentation and Guides
+
+## [Getting Started](Getting%20Started/)
 
 Start [here](Getting%20Started/) to get up and running with Monkey.Robotics quickly.
 
-# [API Documentation](API%20Docs/)
+## [API Documentation](API%20Docs/)
 
 Check out the [API Documentation](API%20Docs/) for reference and API browsing.
 
-# [Project Walkthroughs](Project%20Walkthroughs)
+## [Project Walkthroughs](Project%20Walkthroughs)
 
 Once you've gone through the Getting Started guides, why not try your hand at building a [robot project](Project%20Walkthroughs)?
 
-
 # Authors
 Bryan Costanich, Frank Krueger, Craig Dunn, David Karlas, Oleg Rakhmatulin
+
+# Follow us on Twitter
+
+[@MonkeyRobotics](https://twitter.com/MonkeyRobotics)
