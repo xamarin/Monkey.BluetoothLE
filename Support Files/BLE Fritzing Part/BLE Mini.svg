@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="153px" height="62px" viewBox="0 0 153 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.1 (8751) - http://www.bohemiancoding.com/sketch -->
+    <title>BLE Mini</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="BLE-Mini" sketch:type="MSLayerGroup">
+            <rect id="BLE" stroke="#979797" fill="#ED1C24" sketch:type="MSShapeGroup" x="3.64285714" y="0" width="149.357143" height="62" rx="3"></rect>
+            <rect id="USB" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup" x="0" y="21.8823529" width="14.5714286" height="17.0196078"></rect>
+            <g id="Button" transform="translate(23.071429, 42.549020)" sketch:type="MSShapeGroup">
+                <rect id="Rectangle-16" stroke="#979797" fill="#D8D8D8" x="0" y="0" width="7.28571429" height="14.5882353"></rect>
+                <ellipse id="Oval-404" fill="#383938" cx="3.64285714" cy="7.29411765" rx="2.42857143" ry="2.43137255"></ellipse>
+            </g>
+            <g id="Chip" transform="translate(31.571429, 51.058824)" sketch:type="MSShapeGroup">
+                <rect id="Rectangle-17" fill="#383938" x="3.64285714" y="0" width="15.7857143" height="9.7254902"></rect>
+                <g id="Group" transform="translate(19.428571, 0.000000)" stroke="#979797" stroke-linecap="square">
+                    <path d="M0.607142857,8.38316993 L3.03571429,8.37050654" id="Line-4"></path>
+                    <path d="M0.607142857,5.95179739 L3.03571429,5.93913399" id="Line-5"></path>
+                    <path d="M0.607142857,3.52042484 L3.03571429,3.50776144" id="Line-6"></path>
+                    <path d="M0.607142857,1.08905229 L3.03571429,1.07638889" id="Line-7"></path>
+                </g>
+                <g id="Group-2" stroke="#979797" stroke-linecap="square">
+                    <path d="M0.607142857,8.38316993 L3.03571429,8.37050654" id="Line-4"></path>
+                    <path d="M0.607142857,5.95179739 L3.03571429,5.93913399" id="Line-5"></path>
+                    <path d="M0.607142857,3.52042484 L3.03571429,3.50776144" id="Line-6"></path>
+                    <path d="M0.607142857,1.08905229 L3.03571429,1.07638889" id="Line-7"></path>
+                </g>
+            </g>
+            <rect id="Daughterboard" stroke="#979797" fill="#ED1C24" sketch:type="MSShapeGroup" x="68" y="14.5882353" width="82.5714286" height="46.1960784"></rect>
+            <g id="Chip" transform="translate(72.857143, 27.960784)" sketch:type="MSShapeGroup">
+                <rect id="Rectangle-19" fill="#383938" x="2.42857143" y="2.43137255" width="18.2142857" height="18.2352941"></rect>
+                <g id="Group" transform="translate(2.428571, 0.000000)" stroke="#979797" stroke-linecap="square">
+                    <path d="M1.82142857,1.82352941 L1.82142857,0.607843137" id="Line"></path>
+                    <path d="M4.25,1.82352941 L4.25,0.607843137" id="Line-2"></path>
+                    <path d="M6.67857143,1.82352941 L6.67857143,0.607843137" id="Line-3"></path>
+                    <path d="M9.10714286,1.82352941 L9.10714286,0.607843137" id="Line-4"></path>
+                    <path d="M11.5357143,1.82352941 L11.5357143,0.607843137" id="Line-5"></path>
+                    <path d="M13.9642857,1.82352941 L13.9642857,0.607843137" id="Line-6"></path>
+                    <path d="M16.3928571,1.82352941 L16.3928571,0.607843137" id="Line-7"></path>
+                </g>
+                <g id="Group-2" transform="translate(2.428571, 20.666667)" stroke="#979797" stroke-linecap="square">
+                    <path d="M1.82142857,1.82352941 L1.82142857,0.607843137" id="Line"></path>
+                    <path d="M4.25,1.82352941 L4.25,0.607843137" id="Line-2"></path>
+                    <path d="M6.67857143,1.82352941 L6.67857143,0.607843137" id="Line-3"></path>
+                    <path d="M9.10714286,1.82352941 L9.10714286,0.607843137" id="Line-4"></path>
+                    <path d="M11.5357143,1.82352941 L11.5357143,0.607843137" id="Line-5"></path>
+                    <path d="M13.9642857,1.82352941 L13.9642857,0.607843137" id="Line-6"></path>
+                    <path d="M16.3928571,1.82352941 L16.3928571,0.607843137" id="Line-7"></path>
+                </g>
+                <g id="Group-3" transform="translate(1.214286, 11.549020) rotate(-90.000000) translate(-1.214286, -11.549020) translate(-7.892857, 10.333333)" stroke="#979797" stroke-linecap="square">
+                    <path d="M1.82142857,1.82352941 L1.82142857,0.607843137" id="Line"></path>
+                    <path d="M4.25,1.82352941 L4.25,0.607843137" id="Line-2"></path>
+                    <path d="M6.67857143,1.82352941 L6.67857143,0.607843137" id="Line-3"></path>
+                    <path d="M9.10714286,1.82352941 L9.10714286,0.607843137" id="Line-4"></path>
+                    <path d="M11.5357143,1.82352941 L11.5357143,0.607843137" id="Line-5"></path>
+                    <path d="M13.9642857,1.82352941 L13.9642857,0.607843137" id="Line-6"></path>
+                    <path d="M16.3928571,1.82352941 L16.3928571,0.607843137" id="Line-7"></path>
+                </g>
+                <g id="Group-4" transform="translate(21.857143, 11.549020) rotate(-90.000000) translate(-21.857143, -11.549020) translate(12.750000, 10.333333)" stroke="#979797" stroke-linecap="square">
+                    <path d="M1.82142857,1.82352941 L1.82142857,0.607843137" id="Line"></path>
+                    <path d="M4.25,1.82352941 L4.25,0.607843137" id="Line-2"></path>
+                    <path d="M6.67857143,1.82352941 L6.67857143,0.607843137" id="Line-3"></path>
+                    <path d="M9.10714286,1.82352941 L9.10714286,0.607843137" id="Line-4"></path>
+                    <path d="M11.5357143,1.82352941 L11.5357143,0.607843137" id="Line-5"></path>
+                    <path d="M13.9642857,1.82352941 L13.9642857,0.607843137" id="Line-6"></path>
+                    <path d="M16.3928571,1.82352941 L16.3928571,0.607843137" id="Line-7"></path>
+                </g>
+            </g>
+            <g id="Misc.-Components" transform="translate(31.571429, 21.882353)" sketch:type="MSShapeGroup">
+                <rect id="Rectangle-20" fill="#D8D8D8" x="68" y="24.3137255" width="4.85714286" height="8.50980392"></rect>
+                <rect id="Rectangle-29" fill="#D8D8D8" x="0" y="6.07843137" width="4.85714286" height="8.50980392"></rect>
+                <rect id="Rectangle-30" fill="#383938" x="14.5714286" y="0" width="3.64285714" height="9.7254902"></rect>
+                <rect id="Rectangle-31" fill="#383938" x="14.5714286" y="14.5882353" width="3.64285714" height="9.7254902"></rect>
+                <rect id="Rectangle-21" fill="#D8D8D8" x="68" y="4.8627451" width="7.28571429" height="2.43137255"></rect>
+                <rect id="Rectangle-22" fill="#D8D8D8" x="68" y="12.1568627" width="6.07142857" height="2.43137255"></rect>
+                <rect id="Rectangle-23" fill="#D8D8D8" x="68" y="15.8039216" width="6.07142857" height="2.43137255"></rect>
+                <rect id="Rectangle-25" fill="#D8D8D8" x="80.1428571" y="12.1568627" width="6.07142857" height="2.43137255"></rect>
+                <rect id="Rectangle-24" fill="#D8D8D8" x="80.1428571" y="15.8039216" width="6.07142857" height="2.43137255"></rect>
+                <rect id="Rectangle-27" fill="#D8D8D8" x="80.1428571" y="3.64705882" width="6.07142857" height="2.43137255"></rect>
+                <rect id="Rectangle-28" fill="#D8D8D8" x="80.1428571" y="0" width="6.07142857" height="2.43137255"></rect>
+                <rect id="Rectangle-26" fill="#D8D8D8" x="80.1428571" y="7.29411765" width="6.07142857" height="2.43137255"></rect>
+            </g>
+            <g id="Pins" transform="translate(12.142857, 3.647059)" stroke="#9A916C" fill="#8C8C8C" sketch:type="MSShapeGroup">
+                <ellipse id="RST" cx="1.57855661" cy="1.58039123" rx="1.82142857" ry="1.82352941"></ellipse>
+                <ellipse id="P0_0" cx="10.0785566" cy="1.51960784" rx="1.82142857" ry="1.82352941"></ellipse>
+                <ellipse id="RX" cx="19.1856995" cy="1.58039123" rx="1.82142857" ry="1.82352941"></ellipse>
+                <ellipse id="TX" cx="27.6856995" cy="1.58039123" rx="1.82142857" ry="1.82352941"></ellipse>
+                <ellipse id="GND" cx="36.3071354" cy="1.58039123" rx="1.82142857" ry="1.82352941"></ellipse>
+                <ellipse id="VIN" cx="44.9285714" cy="1.58039123" rx="1.82142857" ry="1.82352941"></ellipse>
+            </g>
+            <g id="Pin-Names" transform="translate(10.928571, 7.294118)" font-weight="420" font-family="OCRA" sketch:type="MSTextLayer" sketch:alignment="right" font-size="4.8" fill="#FFFFFF">
+                <text id="RST" transform="translate(3.035714, 6.039216) rotate(-90.000000) translate(-3.035714, -6.039216) ">
+                    <tspan x="-1.796" y="8.03921569">RST</tspan>
+                </text>
+                <text id="P0_0" transform="translate(11.292842, 7.862745) rotate(-90.000000) translate(-11.292842, -7.862745) ">
+                    <tspan x="4.85055661" y="9.8627451">P0_0</tspan>
+                </text>
+                <text id="RX" transform="translate(20.642857, 4.215686) rotate(-90.000000) translate(-20.642857, -4.215686) ">
+                    <tspan x="17.4217143" y="6.21568627">RX</tspan>
+                </text>
+                <text id="TX" transform="translate(29.142857, 4.215686) rotate(-90.000000) translate(-29.142857, -4.215686) ">
+                    <tspan x="25.9217143" y="6.21568627">TX</tspan>
+                </text>
+                <text id="GND" transform="translate(37.642857, 6.039216) rotate(-90.000000) translate(-37.642857, -6.039216) ">
+                    <tspan x="32.8111429" y="8.03921569">GND</tspan>
+                </text>
+                <text id="VIN" transform="translate(46.142857, 6.039216) rotate(-90.000000) translate(-46.142857, -6.039216) ">
+                    <tspan x="41.3111429" y="8.03921569">VIN</tspan>
+                </text>
+            </g>
+            <text id="RedBearLabs-BLE-Mini" sketch:type="MSTextLayer" font-family="Droid Sans" font-size="6.075" font-weight="normal" sketch:alignment="middle" fill="#FFFFFF">
+                <tspan x="78.9344448" y="10.6470588">RedBearLabs BLE Mini</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

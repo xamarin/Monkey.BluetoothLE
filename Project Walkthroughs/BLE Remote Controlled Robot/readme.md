@@ -23,4 +23,4 @@ In order to build the Robot above, you'll need the following items. All told, yo
 
 ### 1 - [Assemble the Robot Chassis](AssembleChassis/Readme.md)
 
-### 2 - Moar Guides Coming!!
+### 2 - [Wire up the Robot](Wiring/Readme.md)
