@@ -11,8 +11,3 @@ The Micro Stack follows the Reactive Programming pattern with composible Blocks 
 ## [Getting Started with the Mobile Stack](Mobile_Stack)
 
 The Mobile Stack runs on iOS and Android devices via the Xamarin platform and enables BLE communication with microcontrollers. Check out the [Getting Started with the Mobile Stack guide](Mobile_Stack) for more information.
-
-
-## [Build a Robot!](Build_a_Robot/)
-
-Wanna build a robot that you can drive around with your iOS or Android device using a Xamarin.Forms app? Check out the complete guides [here](Build_a_Robot/).

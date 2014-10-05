@@ -73,13 +73,15 @@ public class Program
 
 # [Getting Started](Getting%20Started/)
 
-Check out the [Getting Started Guides](Getting%20Started/) to get up and running with Monkey.Robotics quickly.
-
-> Please Note: these docs are a work in progress. :D
+Start [here](Getting%20Started/) to get up and running with Monkey.Robotics quickly.
 
 # [API Documentation](API%20Docs/)
 
-Check out the [API Documentation](API%20Docs/) if you want to browse the API and get reference documentation.
+Check out the [API Documentation](API%20Docs/) for reference and API browsing.
+
+# [Project Walkthroughs](Project%20Walkthroughs)
+
+Once you've gone through the Getting Started guides, why not try your hand at building a [robot project](Project%20Walkthroughs)?
 
 
 # Authors
