@@ -39,8 +39,13 @@ namespace MFMetaDataProcessor
                 "System.Runtime.InteropServices.StructLayoutAttribute",
                 "System.Runtime.InteropServices.OutAttribute",
                 "System.Runtime.InteropServices.LayoutKind",
-                "System.SerializableAttribute"
-            };
+                "System.SerializableAttribute",
+                "System.Runtime.CompilerServices.ExtensionAttribute",
+                "System.Diagnostics.DebuggerBrowsableAttribute",
+                "System.Diagnostics.DebuggerBrowsableState",
+                "System.Diagnostics.DebuggerHiddenAttribute",
+                "System.Diagnostics.ConditionalAttribute",
+                "System.ParamArrayAttribute"            };
 
             NativeMethodsCrc = new NativeMethodsCrc(assemblyDefinition);
 
