@@ -83,10 +83,20 @@ namespace MFMetaDataProcessor
 
             MethodDefinitionTable = new TinyMethodDefinitionTable(methods, this);
 
+            var ignoringAttributes = new HashSet<String>(StringComparer.Ordinal)
+            {
+                "System.Runtime.CompilerServices.ExtensionAttribute",
+                "System.Diagnostics.DebuggerBrowsableAttribute",
+                "System.Diagnostics.DebuggerBrowsableState",
+                "System.Diagnostics.DebuggerHiddenAttribute",
+                "System.Diagnostics.ConditionalAttribute",
+                "System.ParamArrayAttribute"
+            };
+
             AttributesTable = new TinyAttributesTable(
-                GetAttributes(types, applyAttributesCompression),
-                GetAttributes(fields, applyAttributesCompression),
-                GetAttributes(methods, applyAttributesCompression),
+                GetAttributes(types, applyAttributesCompression, ignoringAttributes),
+                GetAttributes(fields, applyAttributesCompression, ignoringAttributes),
+                GetAttributes(methods, applyAttributesCompression, ignoringAttributes),
                 this);
 
             TypeSpecificationsTable = new TinyTypeSpecificationsTable(this);
@@ -186,13 +196,14 @@ namespace MFMetaDataProcessor
 
         private static IEnumerable<Tuple<CustomAttribute, UInt16>> GetAttributes(
             IEnumerable<ICustomAttributeProvider> types,
-            Boolean applyAttributesCompression)
+            Boolean applyAttributesCompression,
+            HashSet<String> ignoringAttributes)
         {
             if (applyAttributesCompression)
             {
                 return types.SelectMany(
                     (item, index) => item.CustomAttributes
-                        .Where(attr => attr.AttributeType.FullName != "System.Runtime.CompilerServices.ExtensionAttribute")
+                        .Where(attr => !ignoringAttributes.Contains(attr.AttributeType.FullName))
                         .Distinct(new CustomAttributeComparer())
                         .OrderByDescending(attr => attr.AttributeType.FullName)
                         .Select(attr => new Tuple<CustomAttribute, UInt16>(attr, (UInt16)index)));
@@ -200,7 +211,7 @@ namespace MFMetaDataProcessor
             }
             return types.SelectMany(
                 (item, index) => item.CustomAttributes
-                    .Where(attr => attr.AttributeType.FullName != "System.Runtime.CompilerServices.ExtensionAttribute")
+                    .Where(attr => !ignoringAttributes.Contains(attr.AttributeType.FullName))
                     .Select(attr => new Tuple<CustomAttribute, UInt16>(attr, (UInt16)index)));
         }
 
