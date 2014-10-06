@@ -5,13 +5,13 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>ButtonPush</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProductVersion>9.0.21022</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{32C38694-F01E-4B39-9093-F6E666956E88}</ProjectGuid>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
     <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
     <DeployDevice>Netduino</DeployDevice>
     <DeployTransport>USB</DeployTransport>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,11 +44,8 @@
     <Reference Include="SecretLabs.NETMF.Hardware" />
     <Reference Include="SecretLabs.NETMF.Hardware.Netduino" />
     <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Source\Platform Stacks\Robotics.Micro.Core\Robotics.Micro.Core.csproj">
-      <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
-      <Name>Robotics.Micro.Core</Name>
-    </ProjectReference>
+    <Reference Include="Robotics.Micro.Core">
+      <HintPath>..\..\..\Binaries\Robotics.Micro.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
