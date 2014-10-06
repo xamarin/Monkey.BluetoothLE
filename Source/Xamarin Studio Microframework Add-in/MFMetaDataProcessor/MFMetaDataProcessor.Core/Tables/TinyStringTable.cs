@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace MFMetaDataProcessor
 {
@@ -75,7 +76,8 @@ namespace MFMetaDataProcessor
             {
                 id = _lastAvailableId;
                 _idsByStrings.Add(value, id);
-                _lastAvailableId += (UInt16)(value.Length + 1);
+                var length = Encoding.UTF8.GetBytes(value).Length + 1;
+                _lastAvailableId += (UInt16)(length);
             }
             return id;
         }
