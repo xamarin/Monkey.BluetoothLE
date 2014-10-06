@@ -291,7 +291,14 @@ namespace MFMetaDataProcessor {
                 _writer.WriteUInt16((UInt16)handler.TryStart.Offset);
                 _writer.WriteUInt16((UInt16)handler.TryEnd.Offset);
                 _writer.WriteUInt16((UInt16)handler.HandlerStart.Offset);
-                _writer.WriteUInt16((UInt16)handler.HandlerEnd.Offset);
+                if (handler.HandlerEnd == null)
+                {
+                    _writer.WriteUInt16((UInt16)_body.Instructions.Last().Offset);
+                }
+                else
+                {
+                    _writer.WriteUInt16((UInt16)handler.HandlerEnd.Offset);
+                }
             }
 
             _writer.WriteByte((Byte)_body.ExceptionHandlers.Count);
