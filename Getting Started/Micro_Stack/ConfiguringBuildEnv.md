@@ -22,11 +22,12 @@ If you're using a Mac, you'll need to have Xamarin Studio installed, and then yo
 
  1. [Switch to the Alpha channel](http://developer.xamarin.com/recipes/cross-platform/ide/change_updates_channel/) and update Xamarin Studio. **The add-in needs Mono 3.10 which is currently in Alpha.**
  2. From the **Xamarin Studio** menu choose **Add-in Manager**, select the **Gallery** tab, and then in the Search, type `MicroFramework`(you may have to click on the Refresh button):
- ![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/ConfiguringEnv/01%20-%20Microframework%20XS%20Add%20In%20Install.png)
+ ![](Images/ConfiguringEnv/01%20-%20Microframework%20XS%20Add%20In%20Install.png)
  
  3. Click **Install**. The add-in will download and install all the appropriate packages. You will likely have to enter your password up to four times, as it moves files into place.
  
  4. Click **Enable** to enable the add-in, and then restart Xamarin Studio.
+ ![](Images/ConfiguringEnv/Enable.png)
  
 After that, you should be good to go.
  
