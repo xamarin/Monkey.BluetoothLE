@@ -1,6 +1,6 @@
 # Deploy the Code
 
-First, open the [Robotroller Solution](../../Sample%20Apps/Robotroller):
+First, open the [Robotroller Solution](../../../Sample%20Apps/Robotroller):
 
 ![Robotroller Solution](Images/Robotroller_Solution.png)
 
