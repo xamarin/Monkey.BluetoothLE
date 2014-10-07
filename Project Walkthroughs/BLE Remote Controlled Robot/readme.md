@@ -21,6 +21,9 @@ In order to build the Robot above, you'll need the following items. All told, yo
 
 ## Instructions
 
-### 1 - [Assemble the Robot Chassis](AssembleChassis/Readme.md)
+Make sure you [have you development and build environment setup](../../Getting%20Started/Micro_Stack/ConfiguringBuildEnv.md), and then follow teh guides below to get this thing up and running!
 
-### 2 - [Wire up the Robot](Wiring/Readme.md)
+ * ** Step 1** - [Assemble the Robot Chassis](AssembleChassis/Readme.md)
+ * ** Step 2** - [Wire up the Robot](Wiring/Readme.md)
+ * ** Step 3** - [Deploy the Robot Micro Code] - coming soon!
+ * ** Setp 4** - [Launch the Robot Mobile App] - coming soon!
