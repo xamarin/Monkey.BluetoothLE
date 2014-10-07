@@ -25,5 +25,5 @@ Make sure you [have you development and build environment setup](../../Getting%2
 
  * **Step 1** - [Assemble the Robot Chassis](AssembleChassis/Readme.md)
  * **Step 2** - [Wire up the Robot](Wiring/Readme.md)
- * **Step 3** - [Deploy the Robot Micro Code] - coming soon!
- * **Setp 4** - [Launch the Robot Mobile App] - coming soon!
+ * **Step 3** - [Deploy the Robot Code](Deploy/)
+ * **Step 4** - [Drive the Robot!](https://vimeo.com/108180270)
