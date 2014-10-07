@@ -57,7 +57,7 @@ Then, using 4 small bolts and nuts, attach the front wheel to the front of the p
 
 ## Step 7: Put Double-Sided Tape on the Netduino and Battery Pack
 
-This will allow you to attach them to the chassis plate. You may wnat to put two layers of tape (as shown) to the Netduino to help route the battery pack wires under it later:
+This will allow you to attach them to the chassis plate. You may want to put two layers of tape (as shown) to the Netduino to help route the battery pack wires under it later:
 
 ![](Images/Chassis_14.jpg) 
 
