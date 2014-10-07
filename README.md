@@ -1,5 +1,7 @@
 # Monkey.Robotics - Beta
 
+![](Robot_Tiny.jpg)
+
 Monkey.Robotics greatly simplifies the task of building complex [.NET Microframework (MF)](http://netmf.com) powered robots and communicating with them from within Xamarin apps. With Monkey.Robotics, you can use C# through the entire stack, not just the Mobile Apps, but also on .NET MF microcontrollers. You can also use it to communicate with non-.NET MF microcontroller such as the Arduino.
 
 ![Xamarin Robotics](https://github.com/xamarin/Xamarin.Robotics/raw/master/Support%20Files/Images/Architectural_Overview.png)

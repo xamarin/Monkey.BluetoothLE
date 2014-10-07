@@ -15,4 +15,6 @@ First, open the [Robotroller Solution](../../Sample%20Apps/Robotroller):
 
 ## 2 - Deploy the Mobile App
 
-Expand the **MobileApp** solution folders, and right click on the platform app
+Expand the **MobileApp** solution folders, and right-click on the platform app (e.g. iOS or Android), Set as Startup Project, and deploy.
+
+> Note: there is currently a bug in the Android app that we're working on, so for right now, only the iOS App works.
