@@ -5,17 +5,18 @@ The Mobile Stack of Xamarin.Robotics makes communication with the Micro Stack ea
 
 ## Installing the Mobile Component
 
-The Mobile Stack has 
-
-https://components.xamarin.com/view/monkey.robotics
+The Mobile Stack can be installed as a [component](https://components.xamarin.com/view/monkey.robotics), available in the Xamarin Component Store:
 
 ![Component](Images/Component_in_Store.png)
+
+To install into your app, double click on the **Components** folder and search for `Robotics`. Click on it and then choose **Add to App**.
+
+![Component Install Dialog](Images/Component_Install_Dialog.png)
 
 
 ## Integrating BLE
 
-
-The following code can be seen in action in the BLE Explorer sample app included in the component. It's also availabe in the [Monkey.Robotics Github repo](https://github.com/xamarin/Monkey.Robotics/tree/master/Sample%20Apps/BLE%20Explorer).
+The following code can be seen in action in the BLE Explorer sample app included in the component. It's also availabe [here](../Sample%20Apps/BLE%20Explorer). The following is an overview of working with the API, but for a full understanding of how to use it, make sure to check out the sample app.
 
 ### Get a Reference to the Adapter
 

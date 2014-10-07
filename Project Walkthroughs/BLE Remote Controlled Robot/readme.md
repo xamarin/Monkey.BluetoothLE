@@ -2,9 +2,9 @@
 
 These guides will walk you through building a two wheeled robot that you can remotely control over BLE from a Xamarin app that runs on iOS and Android using the same code base.
 
-These guides assume that you have your [Build Environment and Hardware Configured](../Getting%20Started/ConfiguringBuildEnv.md), adn that you're able to succesffuly [Deploy an App to your Netduino 2 or 2 Plus](../Getting%20Started/FirstMicroApp.md).
+These guides assume that you have your [Build Environment and Hardware Configured](../Getting%20Started/ConfiguringBuildEnv.md), and that you're able to succesffuly [Deploy an App to your Netduino 2 or 2 Plus](../Getting%20Started/FirstMicroApp.md).
 
-![robot](Robot.jpg)
+![robot](Robot_New.jpg)
 
 
 ## Requirements
@@ -23,7 +23,7 @@ In order to build the Robot above, you'll need the following items. All told, yo
 
 Make sure you [have you development and build environment setup](../../Getting%20Started/Micro_Stack/ConfiguringBuildEnv.md), and then follow teh guides below to get this thing up and running!
 
- * ** Step 1** - [Assemble the Robot Chassis](AssembleChassis/Readme.md)
- * ** Step 2** - [Wire up the Robot](Wiring/Readme.md)
- * ** Step 3** - [Deploy the Robot Micro Code] - coming soon!
- * ** Setp 4** - [Launch the Robot Mobile App] - coming soon!
+ * **Step 1** - [Assemble the Robot Chassis](AssembleChassis/Readme.md)
+ * **Step 2** - [Wire up the Robot](Wiring/Readme.md)
+ * **Step 3** - [Deploy the Robot Micro Code] - coming soon!
+ * **Setp 4** - [Launch the Robot Mobile App] - coming soon!
