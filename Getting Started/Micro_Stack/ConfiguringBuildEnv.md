@@ -26,7 +26,9 @@ If you're using a Mac, you'll need to have Xamarin Studio installed, and then yo
  
  3. Click **Install**. The add-in will download and install all the appropriate packages. You will likely have to enter your password up to four times, as it moves files into place.
  
- 4. Click **Enable** to enable the add-in, and then restart Xamarin Studio.
+ 4. Restart Xamarin Studio.
+ 
+ 4. Open the Add-in Manager again, find the MicroFramework extension under **Installed** > **IDE extensions**, select it and click **Enable** to enable the add-in:
  ![](Images/ConfiguringEnv/Enable.png)
  
 After that, you should be good to go.
