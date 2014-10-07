@@ -63,7 +63,7 @@ This will allow you to attach them to the chassis plate. You may wnat to put two
 
 ## Step 8: Attach Breadboard, Netduino and Breadboard to the Chassis Plate
 
-Make sure to run the battery pack wires under the Netduino.
+Make sure to run the battery pack wires under the Netduino, and note the orientation of the Netduino relative to the Breadboard.
 
 ![](Images/Chassis_15.jpg) 
 
