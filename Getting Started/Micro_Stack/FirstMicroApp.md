@@ -5,7 +5,7 @@ Once you've got your [build environment and hardware](https://github.com/xamarin
 ## Xamarin Studio
 
  1. Launch Xamarin Studio and create a new solution of type **C# > MicroFramework > MicroFramework Console Applicaiton** and name it whatever you want:
-![New Solution Dialog](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/FirstApp/01%20-%20New%20Solution.png)
+![New Solution Dialog](Images/FirstApp/01%20-%20New%20Solution.png)
 
  2. Double-click on the **References** folder in the Solution Pad and add:
  	* Microsoft.Spot.Hardware
@@ -15,7 +15,7 @@ Once you've got your [build environment and hardware](https://github.com/xamarin
 ## Visual Studio
 
  1. Launch Visual Studio and create a new solution of type **Visual C# > Micro Framework > Console Application** and name it whatever you want:
- ![New Solution Dialog](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/FirstApp/02%20-%20New%20Solution%20(VS).png)
+ ![New Solution Dialog](Images/FirstApp/02%20-%20New%20Solution%20(VS).png)
  
 2. Right-click on the **References** folder in the Solution Explorer and add:
  	* Microsoft.Spot.Hardware
@@ -72,13 +72,13 @@ This code does the following things:
 ## Xamarin Studio
 
  1. Make sure your Netduino is plugged in. It should show up in the build bar at the top:
-![Xamarin Studio Build Bar](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/FirstApp/03%20-%20Build%20Bar.png)
+![Xamarin Studio Build Bar](Images/FirstApp/03%20-%20Build%20Bar.png)
 
  2. Hit the ">" button to deploy.
  
 The app should deploy and after a moment, the LED should start blinking on the Netduino:
 
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/FirstApp/05%20-%20blinking%20Netduino.gif)
+![](Images/FirstApp/05%20-%20blinking%20Netduino.gif)
 
 You should also see the debug output in the **Application Output** window:
 
@@ -99,12 +99,12 @@ Looping3
  1. Make sure your Netduino is plugged in.
   	
  2. Double-click on the **Properties** item in the Solution Explorer, select **.NET Micro Framework** on the left, and the under **Deployment** choose **USB** and in the **Device** drop down, choose your Netduino device:
- ![Device Chooser](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/FirstApp/04%20-%20VS%20Device%20Choose.png)
+ ![Device Chooser](Images/FirstApp/04%20-%20VS%20Device%20Choose.png)
 
  3. Click the **Start >** button in the toolbar to deploy to yoru device.
  
 The app should deploy and after a moment, the LED should start blinking on the Netduino:
 
-![](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/Images/FirstApp/05%20-%20blinking%20Netduino.gif)
+![](Images/FirstApp/05%20-%20blinking%20Netduino.gif)
 
 
