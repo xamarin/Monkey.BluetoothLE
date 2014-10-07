@@ -7,7 +7,12 @@ First, open the [Robotroller Solution](../../Sample%20Apps/Robotroller):
 
 ## 1 - Deploy the Robot Micro Code
 
-Select 
+ 1. Right-click on the **Robotics.Micro.Robotroller.Netduino** project and select **Set as Startup Project**:
+ ![Set as Startup](Images/Set_as_Startup.png)
+
+ 2. Select **Debug** in the build bar, and your **Netduino 2** as the device and hit the **>** button to deploy.
 
 
 ## 2 - Deploy the Mobile App
+
+Expand the **MobileApp** solution folders, and right click on the platform app
