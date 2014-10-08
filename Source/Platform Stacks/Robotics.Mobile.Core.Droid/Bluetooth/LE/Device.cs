@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Android.Bluetooth;
+using System.Linq;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -45,12 +46,17 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		public override Guid ID {
 			get {
-				//TODO: not sure if this is right. hell, not even sure if a 
-				// device should have a UDDI. iOS BLE peripherals do, though.
-				// need to look at the BLE Spec
-
+				//TODO: verify - fix from Evolve player
+				Byte[] deviceGuid = new Byte[16];
+				String macWithoutColons = _nativeDevice.Address.Replace (":", "");
+				Byte[] macBytes = Enumerable.Range (0, macWithoutColons.Length)
+					.Where(x => x % 2 == 0)
+					.Select(x => Convert.ToByte(macWithoutColons.Substring(x, 2), 16))
+					.ToArray();
+				macBytes.CopyTo (deviceGuid, 10);
+				return new Guid(deviceGuid);
 				//return _nativeDevice.Address;
-				return Guid.Empty;
+				//return Guid.Empty;
 			}
 		}
 
