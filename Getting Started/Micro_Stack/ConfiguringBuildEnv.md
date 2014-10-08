@@ -44,5 +44,5 @@ If you're running Windows, you'll need to:
 
 ## Next Steps
 
-Once you have your hardware and development environment configured, it's time to [build and deploy a simple program to your Netduino](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/FirstMicroApp.md).
+Once you have your hardware and development environment configured, it's time to [build and deploy a simple program to your Netduino](FirstMicroApp.md).
 
