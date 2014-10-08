@@ -1,4 +1,4 @@
-Deploy a First Hack to Netduino
+# Deploy a First Hack to Netduino
 
 The first hack is very simple; the point is to get your build environment configured (drivers installed, etc.), so that you can build and deploy .NET Microframework code written in C# to a Netduino.
 
