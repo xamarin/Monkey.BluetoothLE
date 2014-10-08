@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonkeyRobotics.Mobile.Core", "MonkeyRobotics.Mobile.Core", "{D6AB04C7-C100-4383-B049-7193784D9CF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Mobile.Core", "MonkeyRobotics.Mobile.Core\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj", "{65733427-B647-4556-A87C-20937496780A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Mobile.Core", "..\..\Source\Platform Stacks\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj", "{65733427-B647-4556-A87C-20937496780A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Mobile.Core.Droid", "MonkeyRobotics.Mobile.Core\Robotics.Mobile.Core.Droid\Robotics.Mobile.Core.Droid.csproj", "{0040B1B9-6E22-438A-A6A7-A5A00B2B89B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Mobile.Core.Droid", "..\..\Source\Platform Stacks\Robotics.Mobile.Core.Droid\Robotics.Mobile.Core.Droid.csproj", "{0040B1B9-6E22-438A-A6A7-A5A00B2B89B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Mobile.Core.iOS", "MonkeyRobotics.Mobile.Core\Robotics.Mobile.Core.iOS\Robotics.Mobile.Core.iOS.csproj", "{453394D3-F7E4-49E4-8FAE-36F1D988AE15}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Mobile.Core.iOS", "..\..\Source\Platform Stacks\Robotics.Mobile.Core.iOS\Robotics.Mobile.Core.iOS.csproj", "{453394D3-F7E4-49E4-8FAE-36F1D988AE15}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RobotrollerMobileApp", "RobotrollerMobileApp", "{184365D2-6421-4F51-8970-E7CF252F84C6}"
 EndProject
@@ -135,6 +135,6 @@ Global
 		{9146775A-E315-4CEB-9CB2-3DBFC9D9A58C} = {184365D2-6421-4F51-8970-E7CF252F84C6}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = MonkeyRobotics.Mobile.Core\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj
+		StartupItem = Robotics.Mobile.Robotroller.Core\Robotics.Mobile.Robotroller.Core.csproj
 	EndGlobalSection
 EndGlobal
