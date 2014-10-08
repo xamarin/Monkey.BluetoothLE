@@ -101,7 +101,8 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		public bool CanRead {get{return (this.Properties & CharacteristicPropertyType.Read) != 0; }}
 		public bool CanUpdate {get{return (this.Properties & CharacteristicPropertyType.Notify) != 0; }}
-		public bool CanWrite {get{return (this.Properties & CharacteristicPropertyType.WriteWithoutResponse) != 0; }}
+		//NOTE: why this requires Apple, we have no idea. BLE stands for Mystery.
+		public bool CanWrite {get{return (this.Properties & CharacteristicPropertyType.WriteWithoutResponse | CharacteristicPropertyType.AppleWriteWithoutResponse) != 0; }}
 
 		// HACK: UNTESTED - this API has only been tested on iOS
 		public void Write (byte[] data)
