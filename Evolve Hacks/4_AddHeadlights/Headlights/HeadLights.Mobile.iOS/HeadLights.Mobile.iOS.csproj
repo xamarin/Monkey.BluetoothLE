@@ -95,17 +95,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HeadLights\HeadLights.csproj">
-      <Project>{6F75A05F-065A-4BAD-AF78-558BF5A888E2}</Project>
-      <Name>HeadLights</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Xamarin.Labs-Robotics\Source\Platform Stacks\Robotics.Mobile.Core.iOS\Robotics.Mobile.Core.iOS.csproj">
+    <ProjectReference Include="..\..\..\..\Source\Platform Stacks\Robotics.Mobile.Core.iOS\Robotics.Mobile.Core.iOS.csproj">
       <Project>{453394D3-F7E4-49E4-8FAE-36F1D988AE15}</Project>
       <Name>Robotics.Mobile.Core.iOS</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Xamarin.Labs-Robotics\Source\Platform Stacks\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj">
+    <ProjectReference Include="..\..\..\..\Source\Platform Stacks\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj">
       <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
       <Name>Robotics.Mobile.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HeadLights.Mobile\Headlights.Mobile.Core.csproj">
+      <Project>{6F75A05F-065A-4BAD-AF78-558BF5A888E2}</Project>
+      <Name>Headlights.Mobile.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
