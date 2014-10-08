@@ -7,18 +7,79 @@ namespace MFMetaDataProcessor
 {
     public sealed class TinyTablesContext
     {
-        private sealed class CustomAttributeComparer : IEqualityComparer<CustomAttribute>
-        {
-            public Boolean Equals(CustomAttribute lhs, CustomAttribute rhs)
+        private readonly HashSet<String> _ignoringAttributes =
+            new HashSet<String>(StringComparer.Ordinal)
             {
-                return String.Equals(lhs.AttributeType.FullName, rhs.AttributeType.FullName, StringComparison.Ordinal);
-            }
+                // Assembly-level attributes
+                "System.Reflection.AssemblyCultureAttribute",
+                "System.Reflection.AssemblyVersionAttribute",
+                "System.Reflection.AssemblyFileVersionAttribute",
+                "System.Reflection.AssemblyTrademarkAttribute",
+                "System.Reflection.AssemblyTitleAttribute",
+                "System.Reflection.AssemblyProductAttribute",
+                "System.Reflection.AssemblyKeyNameAttribute",
+                "System.Reflection.AssemblyKeyFileAttribute",
+                "System.Reflection.AssemblyInformationalVersionAttribute",
+                "System.Reflection.AssemblyFlagsAttribute",
+                "System.Reflection.AssemblyDescriptionAttribute",
+                "System.Reflection.AssemblyDelaySignAttribute",
+                "System.Reflection.AssemblyDefaultAliasAttribute",
+                "System.Reflection.AssemblyCopyrightAttribute",
+                "System.Reflection.AssemblyConfigurationAttribute",
+                "System.Reflection.AssemblyCompanyAttribute",
+                "System.Runtime.InteropServices.ComVisibleAttribute",
+                "System.Runtime.InteropServices.GuidAttribute",
 
-            public Int32 GetHashCode(CustomAttribute that)
-            {
-                return that.AttributeType.FullName.GetHashCode();
-            }
-        }
+                // Compiler-specific attributes
+                "System.ParamArrayAttribute",
+                "System.SerializableAttribute",
+                "System.NonSerializedAttribute",
+                "System.Runtime.InteropServices.StructLayoutAttribute",
+                "System.Runtime.InteropServices.LayoutKind",
+                "System.Runtime.InteropServices.OutAttribute",
+                "System.Runtime.CompilerServices.ExtensionAttribute",
+                "System.Runtime.CompilerServices.MethodImplAttribute",
+                "System.Runtime.CompilerServices.InternalsVisibleToAttribute",
+                "System.Runtime.CompilerServices.IndexerNameAttribute",
+                "System.Runtime.CompilerServices.MethodImplOptions",
+                "System.Reflection.FieldNoReflectionAttribute",
+                "System.Reflection.DefaultMemberAttribute",
+
+                // Debugger-specific attributes
+                "System.Diagnostics.DebuggableAttribute",
+                "System.Diagnostics.DebuggerNonUserCodeAttribute",
+                "System.Diagnostics.DebuggerStepThroughAttribute",
+                "System.Diagnostics.DebuggerDisplayAttribute",
+                "System.Diagnostics.DebuggerBrowsableAttribute",
+                "System.Diagnostics.DebuggerBrowsableState",
+                "System.Diagnostics.DebuggerHiddenAttribute",
+
+                // Compile-time attributes
+                "System.AttributeUsageAttribute",
+                "System.CLSCompliantAttribute",
+                "System.FlagsAttribute",
+                "System.ObsoleteAttribute",
+                "System.Diagnostics.ConditionalAttribute",
+
+                // Intellisense filtering attributes
+                "System.ComponentModel.EditorBrowsableAttribute",
+
+                // Not supported attributes
+                "System.MTAThreadAttribute",
+                "System.STAThreadAttribute",
+                "System.Reflection.DefaultMemberAttribute",
+
+                // VB.NET-specific attributes
+                "Microsoft.VisualBasic.ComClassAttribute",
+                "Microsoft.VisualBasic.HideModuleNameAttribute",
+                "Microsoft.VisualBasic.MyGroupCollectionAttribute",
+                "Microsoft.VisualBasic.VBFixedArrayAttribute",
+                "Microsoft.VisualBasic.VBFixedStringAttribute",
+                "Microsoft.VisualBasic.CompilerServices.DesignerGeneratedAttribute",
+                "Microsoft.VisualBasic.CompilerServices.OptionCompareAttribute",
+                "Microsoft.VisualBasic.CompilerServices.OptionTextAttribute",
+                "Microsoft.VisualBasic.CompilerServices.StandardModuleAttribute",
+            };
 
         public TinyTablesContext(
             AssemblyDefinition assemblyDefinition,
@@ -28,24 +89,10 @@ namespace MFMetaDataProcessor
         {
             AssemblyDefinition = assemblyDefinition;
 
-            var assemblyAttributes = new HashSet<String>(
-                assemblyDefinition.CustomAttributes.Select(item => item.AttributeType.FullName),
-                StringComparer.Ordinal)
+            foreach (var item in assemblyDefinition.CustomAttributes)
             {
-                "System.Reflection.AssemblyCultureAttribute",
-                "System.Reflection.AssemblyVersionAttribute",
-                "System.Runtime.CompilerServices.MethodImplAttribute",
-                "System.Runtime.CompilerServices.MethodImplOptions",
-                "System.Runtime.InteropServices.StructLayoutAttribute",
-                "System.Runtime.InteropServices.OutAttribute",
-                "System.Runtime.InteropServices.LayoutKind",
-                "System.SerializableAttribute",
-                "System.Runtime.CompilerServices.ExtensionAttribute",
-                "System.Diagnostics.DebuggerBrowsableAttribute",
-                "System.Diagnostics.DebuggerBrowsableState",
-                "System.Diagnostics.DebuggerHiddenAttribute",
-                "System.Diagnostics.ConditionalAttribute",
-                "System.ParamArrayAttribute"            };
+                _ignoringAttributes.Add(item.AttributeType.FullName);
+            }
 
             NativeMethodsCrc = new NativeMethodsCrc(assemblyDefinition);
 
@@ -57,7 +104,7 @@ namespace MFMetaDataProcessor
                 mainModule.AssemblyReferences, this);
 
             var typeReferences = mainModule.GetTypeReferences()
-                .Where(item => !IsAttribute(item, assemblyAttributes))
+                .Where(item => !IsAttribute(item))
                 .ToList();
             TypeReferencesTable = new TinyTypeReferenceTable(
                 typeReferences, this);
@@ -88,20 +135,10 @@ namespace MFMetaDataProcessor
 
             MethodDefinitionTable = new TinyMethodDefinitionTable(methods, this);
 
-            var ignoringAttributes = new HashSet<String>(StringComparer.Ordinal)
-            {
-                "System.Runtime.CompilerServices.ExtensionAttribute",
-                "System.Diagnostics.DebuggerBrowsableAttribute",
-                "System.Diagnostics.DebuggerBrowsableState",
-                "System.Diagnostics.DebuggerHiddenAttribute",
-                "System.Diagnostics.ConditionalAttribute",
-                "System.ParamArrayAttribute"
-            };
-
             AttributesTable = new TinyAttributesTable(
-                GetAttributes(types, applyAttributesCompression, ignoringAttributes),
-                GetAttributes(fields, applyAttributesCompression, ignoringAttributes),
-                GetAttributes(methods, applyAttributesCompression, ignoringAttributes),
+                GetAttributes(types, applyAttributesCompression),
+                GetAttributes(fields, applyAttributesCompression),
+                GetAttributes(methods, applyAttributesCompression),
                 this);
 
             TypeSpecificationsTable = new TinyTypeSpecificationsTable(this);
@@ -199,35 +236,32 @@ namespace MFMetaDataProcessor
 
         public TinyResourceFileTable ResourceFileTable { get; private set; }
 
-        private static IEnumerable<Tuple<CustomAttribute, UInt16>> GetAttributes(
+        private IEnumerable<Tuple<CustomAttribute, UInt16>> GetAttributes(
             IEnumerable<ICustomAttributeProvider> types,
-            Boolean applyAttributesCompression,
-            HashSet<String> ignoringAttributes)
+            Boolean applyAttributesCompression)
         {
             if (applyAttributesCompression)
             {
                 return types.SelectMany(
                     (item, index) => item.CustomAttributes
-                        .Where(attr => !ignoringAttributes.Contains(attr.AttributeType.FullName))
-                        .Distinct(new CustomAttributeComparer())
+                        .Where(attr => !IsAttribute(attr.AttributeType))
                         .OrderByDescending(attr => attr.AttributeType.FullName)
                         .Select(attr => new Tuple<CustomAttribute, UInt16>(attr, (UInt16)index)));
                 
             }
             return types.SelectMany(
                 (item, index) => item.CustomAttributes
-                    .Where(attr => !ignoringAttributes.Contains(attr.AttributeType.FullName))
+                    .Where(attr => !IsAttribute(attr.AttributeType))
                     .Select(attr => new Tuple<CustomAttribute, UInt16>(attr, (UInt16)index)));
         }
 
-        private static Boolean IsAttribute(
-            MemberReference typeReference,
-            ICollection<String> attributesNames)
+        private Boolean IsAttribute(
+            MemberReference typeReference)
         {
             return
-                attributesNames.Contains(typeReference.FullName) ||
+                _ignoringAttributes.Contains(typeReference.FullName) ||
                 (typeReference.DeclaringType != null &&
-                    attributesNames.Contains(typeReference.DeclaringType.FullName));
+                    _ignoringAttributes.Contains(typeReference.DeclaringType.FullName));
         }
 
         private static List<TypeDefinition> GetOrderedTypes(
