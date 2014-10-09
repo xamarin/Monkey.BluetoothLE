@@ -26,7 +26,12 @@ namespace Robotics.Mobile.Robotroller
 
 			adapter.DeviceDiscovered += (object sender, DeviceDiscoveredEventArgs e) => {
 				Device.BeginInvokeOnMainThread(() => {
-					devices.Add (e.Device);
+					if (e.Device.Name != null) {
+                            			if (e.Device.Name.ToLower().Contains("biscuit")) {
+                                			devices.Add(e.Device);
+                            			}
+                            
+                        		}
 				});
 			};
 
