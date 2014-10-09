@@ -38,7 +38,7 @@ If you're running Windows, you'll need to:
 
  1. Install either Visual Studio 2012 or [Visual Studio 2012 Express](http://www.microsoft.com/en-us/download/details.aspx?id=34673).
  2. Install the [.NET Micro Framework SDK v4.3 QFE1](http://www.netduino.com/downloads/MicroFrameworkSDK_NETMF43_QFE1.msi).
- 3. Install the [Netduino SDK 4.3.1](http://www.netduino.com/downloads/MicroFrameworkSDK_NETMF43_QFE1.msi).
+ 3. Install the [Netduino SDK 4.3.1](http://www.netduino.com/downloads/netduinosdk_NETMF43.exe).
 
 **Note, if you want to use Visual Studio 2013, there is experimental support [here](http://forums.netduino.com/index.php?/topic/10201-experimental-visual-studio-2013-support/).**
 
