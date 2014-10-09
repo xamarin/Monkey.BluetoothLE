@@ -16,7 +16,7 @@ Check out this [video](https://vimeo.com/108180270) of a Monkey.Robotics-powered
 
 > Please Note: Monkey.Robotics is still a beta/work in progress and is not officially supported by Xamarin. It's a passion project put together by folks that love C# and Robotics. We're working on the docs as you read this. If you run into any issues, please file them [here](https://github.com/xamarin/Monkey.Robotics/issues). Thanks for trying it out!
 
-## Overivew
+## Overview
  
 It is split into two major platform stacks:
 
