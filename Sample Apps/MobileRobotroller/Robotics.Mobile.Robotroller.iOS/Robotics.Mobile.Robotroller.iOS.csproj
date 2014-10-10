@@ -135,11 +135,11 @@
       <Project>{CEE2DCF6-7C07-4D21-A212-05876EC5E954}</Project>
       <Name>Robotics.Mobile.Robotroller.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\Platform Stacks\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj">
+    <ProjectReference Include="..\MonkeyRobotics.Mobile.Core\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj">
       <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
       <Name>Robotics.Mobile.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\Platform Stacks\Robotics.Mobile.Core.iOS\Robotics.Mobile.Core.iOS.csproj">
+    <ProjectReference Include="..\MonkeyRobotics.Mobile.Core\Robotics.Mobile.Core.iOS\Robotics.Mobile.Core.iOS.csproj">
       <Project>{453394D3-F7E4-49E4-8FAE-36F1D988AE15}</Project>
       <Name>Robotics.Mobile.Core.iOS</Name>
     </ProjectReference>

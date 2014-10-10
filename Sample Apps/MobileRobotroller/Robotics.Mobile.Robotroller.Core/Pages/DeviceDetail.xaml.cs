@@ -54,7 +54,7 @@ namespace Robotics.Mobile.Robotroller
 		{
 			var device = adapter.DiscoveredDevices.First (x => x.ID == deviceId);
 			Debug.WriteLine ("Connecting to " + device.Name + "...");
-			await adapter.ConnectAsync (device);
+			device = await adapter.ConnectAsync (device);
 			Debug.WriteLine ("Trying to read...");
 			return device;
 		}
@@ -68,7 +68,9 @@ namespace Robotics.Mobile.Robotroller
 				var device = await ConnectAsync ();
 				using (var s = new LEStream (device)) {
 					client = new ControlClient (s);
-					variablesList.ItemsSource = client.Variables;
+
+          var variables = client.Variables;
+					variablesList.ItemsSource = variables;
 					commandsList.ItemsSource = client.Commands;
 					await client.RunAsync (cts.Token);
 				}
