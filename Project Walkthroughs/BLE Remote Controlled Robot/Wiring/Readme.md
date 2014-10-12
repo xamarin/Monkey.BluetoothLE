@@ -22,7 +22,7 @@ Wire the Robot as follows:
 | H-Bridge 8 | Breadboard Lower 6V (`+`) Rail
 | H-Bridge 16 | Breadboard Upper 5V (`+`) Rail
 | Breadboard Upper Ground (`-`) Rail | Breadboard Lower Ground (`-`) Rail
-| Left Motor | H-Bridge 3, 4
+| Left Motor | H-Bridge 3, 6
 | Right Motor | H-Bridge 11, 14
 | Battery Red (`+`) | Breadboard Lower 6V (`+`) Rail
 | Battery Black (`+`) | Breadboard Lower Ground (`-`) Rail
