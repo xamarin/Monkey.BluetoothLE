@@ -1,6 +1,6 @@
 # Creating your First Microframework App
 
-Once you've got your [build environment and hardware](https://github.com/xamarin/Xamarin.Robotics/blob/master/Getting%20Started/SettingUpYourNetduino.md) setup, it's time to create your first Microframework App. In this guide, we're going to build and deploy a simple app that blinks the onboard LED on the Netduino board.
+Once you've got your [build environment and hardware](https://github.com/xamarin/Monkey.Robotics/blob/master/Getting%20Started/Micro_Stack/ConfiguringBuildEnv.md) setup, it's time to create your first Microframework App. In this guide, we're going to build and deploy a simple app that blinks the onboard LED on the Netduino board.
 
 ## Xamarin Studio
 
