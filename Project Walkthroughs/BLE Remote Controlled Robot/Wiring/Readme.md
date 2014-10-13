@@ -10,7 +10,7 @@ Wire the Robot as follows:
 | Netduino D3 | H-Bridge 1
 | Netduino D4 | H-Bridge 10
 | Netduino D5 | H-Bridge 15
-| Netduino D6 | H-Bridge 11
+| Netduino D6 | H-Bridge 9
 | Netduino D7 | BLE TX
 | Netduino D8 | BLE RX
 | BLE GND | Ground (`-`) Rail
@@ -22,7 +22,7 @@ Wire the Robot as follows:
 | H-Bridge 8 | Breadboard Lower 6V (`+`) Rail
 | H-Bridge 16 | Breadboard Upper 5V (`+`) Rail
 | Breadboard Upper Ground (`-`) Rail | Breadboard Lower Ground (`-`) Rail
-| Left Motor | H-Bridge 3, 4
+| Left Motor | H-Bridge 3, 6
 | Right Motor | H-Bridge 11, 14
 | Battery Red (`+`) | Breadboard Lower 6V (`+`) Rail
 | Battery Black (`+`) | Breadboard Lower Ground (`-`) Rail
