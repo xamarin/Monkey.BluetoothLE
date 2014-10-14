@@ -8,7 +8,7 @@ In this guide, we're going to go over the installation and requirements for sett
 
 While Xamarin.Robotics works with both .NET Microframework devices and other peripherals such as BLE enabled sensors, etc., if you want to take advantage of the .NET Microframework portions of the Xamarin.Robotics platform, you'll need either a [Netduino](http://netduino.com/) 2 or 2 Plus running the 4.3.1 firmware. Other Netduinos may work, but we've only tested on the Netduino 2 and 2 Plus.
 
-**Note that firware updates must be done on a Windows machine. There is currently no way to update the firmware from a Mac.**
+**Note that firmware updates must be done on a Windows machine. There is currently no way to update the firmware from a Mac.**
 
 **Firmware and Instructions:**
 
