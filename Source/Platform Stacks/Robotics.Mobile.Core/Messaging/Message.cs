@@ -2,366 +2,236 @@
 using System.IO;
 using System.Text;
 using System.Diagnostics;
-
-#if MF_FRAMEWORK_VERSION_V4_3
-using Microsoft.SPOT;
-using ByteList = System.Collections.ArrayList;
-using ObjectList = System.Collections.ArrayList;
-#else
-using System.Threading.Tasks;
-using ByteList = System.Collections.Generic.List<byte>;
-using ObjectList = System.Collections.Generic.List<object>;
-#endif
+using Robotics.Serialization;
 
 namespace Robotics.Messaging
 {
 	/// <summary>
 	/// Messages are packets with an operation code and a payload of .NET primitive objects.
 	/// They are capable of serializing themselves to and from continuous streams.
-    /// Messages are currently constrained to a max payload size of 255 bytes.
 	/// </summary>
-	public class Message
+	public abstract class Message
 	{
-		public byte Operation { get; private set; }
-		public object[] Arguments { get; private set; }
-
-		const int BufferSize = 260;
-
-		byte[] readBuffer = null;
-		byte[] writeBuffer = null;
-
-		public Message ()
+		private enum VariableTypeIdentifier : byte
 		{
-			Operation = 0;
-			Arguments = new object[0];
+			BooleanType = (byte)'B',
+			ByteType = (byte)'b',
+			Int32Type = (byte)'I',
+			UInt32Type = (byte)'i',
+			Int64Type = (byte)'L',
+			UInt64Type = (byte)'l',
+			SingleType = (byte)'F',
+			DoubleType = (byte)'D',
+			StringType = (byte)'S',
+			ByteArrayType = (byte)'X',
 		}
 
-		public Message (byte operation)
-		{
-			Operation = operation;
-			Arguments = new object[0];
-		}
+		public ControlOp Operation { get; private set; }
 
-		public Message (byte operation, params object[] arguments)
+		protected Message (ControlOp operation)
 		{
 			Operation = operation;
-			Arguments = arguments ?? new object[0];
 		}
-
-		static void AddAll (ByteList list, byte[] bytes)
-		{
-			foreach (byte b in bytes) list.Add (b);
-		}
-
-		static byte[] Serialize (object[] arguments)
-		{
-			if (arguments == null || arguments.Length == 0)
-				return new byte[0];
-
-			var parts = new ByteList ();
-			parts.Add ((byte)arguments.Length);
-			foreach (var a in arguments) {
-                if (a == null) {
-                    parts.Add ((byte)'N');
-                }
-				else if (a is int) {
-					var v = (int)a;
-					parts.Add ((byte)'I');
-					AddAll (parts, BitConverter.GetBytes (v));
-				}
-				else if (a is string) {
-					var v = (string)a;
-					parts.Add ((byte)'S');
-					parts.Add ((byte)v.Length);
-					AddAll (parts, Encoding.UTF8.GetBytes (v));
-				}
-				else if (a is double) {
-					var v = (double)a;
-					parts.Add ((byte)'D');
-					AddAll (parts, BitConverter.GetBytes (v));
-				}
-				else if (a is float) {
-					var v = (float)a;
-					parts.Add ((byte)'F');
-					AddAll (parts, BitConverter.GetBytes (v));
-				}
-				else if (a is bool) {
-					var v = (bool)a;
-					parts.Add ((byte)'B');
-					parts.Add ((byte)(v ? 1 : 0));
-				}
-				else if (a is byte) {
-					var v = (byte)a;
-					parts.Add ((byte)'b');
-					parts.Add (v);
-				}
-				else {
-					throw new NotSupportedException ("Type not supported: " + a.GetType ());
-				}
-			}
-
-			#if MF_FRAMEWORK_VERSION_V4_3
-			return (byte[])parts.ToArray (typeof (byte));
-			#else
-			return parts.ToArray ();
-			#endif
-		}
-
-		object[] Deserialize (byte[] data)
-		{
-			if (data.Length < 1 || data[0] == 0)
-				return new object[0];
-
-			var r = new ObjectList ();
-
-			var len = data.Length;
-			var count = data[0];
-
-			var p = 1;
-			while (p < len && r.Count < count) {
-				switch ((char)data[p]) {
-                case 'N':
-                    r.Add ((object)null);
-                    p += 1;
-                    break;
-				case 'B':
-					r.Add ((object)(data [p + 1] != 0));
-					p += 2;
-					break;
-                case 'b':
-                    r.Add ((object)data[p + 1]);
-                    p += 2;
-                    break;
-				case 'I':
-					r.Add ((object)BitConverter.ToInt32 (data, p + 1));
-					p += 5;
-					break;
-                case 'D': {
-                        double d = 0.0;
-#if MF_FRAMEWORK_VERSION_V4_3
-                        d = ReadDouble (data, p + 1);
-#else
-                        d = BitConverter.ToDouble (data, p + 1);
-#endif
-                        r.Add ((object)d);
-                        p += 9;
-                    }
-                    break;
-                case 'F': {
-                        float f = 0.0f;
-#if MF_FRAMEWORK_VERSION_V4_3
-                        f = ReadSingle (data, p + 1);
-#else
-                        f = BitConverter.ToSingle (data, p + 1);
-#endif
-                        r.Add ((object)f);
-                        p += 5;
-                    }
-                    break;
-				case 'S':
-					{
-						var slen = data[p + 1];
-						r.Add ((object)new string (Encoding.UTF8.GetChars(data, p + 2, slen)));
-						p += 2 + slen;
-					}
-					break;
-				default:
-					throw new NotSupportedException ("Cannot read type: " + (char)data[p]);
-				}
-			}
-
-			#if MF_FRAMEWORK_VERSION_V4_3
-			return (object[])r.ToArray (typeof (object));
-			#else
-			return r.ToArray ();
-			#endif
-		}
-
-#if MF_FRAMEWORK_VERSION_V4_3
-        byte[] doubleBuffer = null;
-        double ReadDouble (byte[] data, int startIndex)
-        {
-            if (doubleBuffer == null) doubleBuffer = new byte[8];
-            Array.Copy (data, startIndex, doubleBuffer, 0, 8);
-            return BitConverter.ToDouble (doubleBuffer, 0);
-        }
-        float ReadSingle (byte[] data, int startIndex)
-        {
-            if (doubleBuffer == null) doubleBuffer = new byte[8];
-            Array.Copy (data, startIndex, doubleBuffer, 0, 4);
-            return BitConverter.ToSingle (doubleBuffer, 0);
-        }
-#endif
-
-		#if !MF_FRAMEWORK_VERSION_V4_3
 
 		/// <summary>
-		/// Reading is a blocking operation that keeps trying until the stream
+		/// Reading is a blocking operation that keeps trying until the reader
 		/// produces a valid message. This simplifies reading messages from
 		/// continuous streams.
 		/// </summary>
-		/// <param name="stream">Stream.</param>
-		public async Task ReadAsync (Stream stream)
+		public void Read (ObjectReader reader)
 		{
-			if (readBuffer == null)
-				readBuffer = new byte[BufferSize];
-			var bufferSize = 0;
+			this.ResetMembers();
 
-			for (;;) {
-				if (IsValidMessage (readBuffer, bufferSize)) {
-					Operation = readBuffer [1];
-					var dataSize = readBuffer [2];
-					var data = new byte[dataSize];
-					Array.Copy (readBuffer, 3, data, 0, dataSize);
-					try {
-						Arguments = Deserialize (data);
-						// Debug.WriteLine ("Message.Read: message");
-						return;
-					} catch (Exception ex) {
-						// Bad message, skip the whole thing
-						Debug.WriteLine ("Message.Read: BAD message data: " + ex);
-						bufferSize = 0;
-					}
-				} else {
-					var bytesNeeded = GetBytesNeeded (readBuffer, bufferSize);
-					if (bytesNeeded > 0) {
-						var n = await stream.ReadAsync (readBuffer, bufferSize, bytesNeeded);
-                        if (n > 0) {
-                            bufferSize += n;
-                        }
-					} else {
-						// Bad message, skip the lead byte and try again
-						// Debug.WriteLine ("Message.Read: BAD message");
-						Array.Copy (readBuffer, 1, readBuffer, 0, bufferSize - 1);
-						bufferSize--;
-					}
+			if (reader.ReadStartObject())
+			{
+				while (reader.ReadNextMemberKey())
+				{
+					this.ReadMember(reader);
 				}
-			}
-		}
 
-		public Task WriteAsync (Stream stream)
-		{
-			return Task.Run (() => Write (stream));
-		}
-
-#endif
-
-        /// <summary>
-		/// Reading is a blocking operation that keeps trying until the stream
-		/// produces a valid message. This simplifies reading messages from
-		/// continuous streams.
-		/// </summary>
-		/// <param name="stream">Stream.</param>
-		public void Read (Stream stream)
-		{
-			if (readBuffer == null)
-				readBuffer = new byte[BufferSize];
-			var bufferSize = 0;
-
-			for (;;) {
-                if (bufferSize >= 4 && readBuffer[1] == (byte)ControlOp.SetVariableValue) {
-                    readBuffer[0] = (byte)'M';
-                }
-				if (IsValidMessage (readBuffer, bufferSize)) {
-					Operation = readBuffer [1];
-					var dataSize = readBuffer [2];
-					var data = new byte[dataSize];
-					Array.Copy (readBuffer, 3, data, 0, dataSize);
-					try {
-						Arguments = Deserialize (data);
-						// Debug.WriteLine ("Message.Read: message");
-						return;
-					} catch (Exception) {
-						// Bad message, skip the whole thing
-						// Debug.WriteLine ("Message.Read: BAD message data");
-						bufferSize = 0;
-					}
-				} else {
-					var bytesNeeded = GetBytesNeeded (readBuffer, bufferSize);
-					if (bytesNeeded > 0) {
-						var n = stream.Read (readBuffer, bufferSize, bytesNeeded);
-                        if (n > 0) {
-#if MF_FRAMEWORK_VERSION_V4_3
-                            //Microsoft.SPOT.Debug.Print ("Read " + n + " bytes: " + BitConverter.ToString (readBuffer, bufferSize, n));
-#endif
-                            bufferSize += n;
-                        }
-					} else {
-						// Bad message, skip the lead byte and try again
-						// Debug.WriteLine ("Message.Read: BAD message");
-						Array.Copy (readBuffer, 1, readBuffer, 0, bufferSize - 1);
-						bufferSize--;
-					}
-				}
+				reader.ReadEndObject();
 			}
 		}
 
 		/// <summary>
-		/// Messages are encoded with a three byte header:
-        ///   MAGIC
+		/// Messages are encoded with a header:
 		///   OPERATION
-		///   DATA BYTE COUNT
-		/// Followed up to 255 bytes of DATA
-		/// Followed by a 1 byte CHECKSUM of just the data
+		/// Followed by the message body
 		/// </summary>
-		public void Write (Stream stream)
+		public void Write (ObjectWriter writer)
 		{
-			var data = Serialize (Arguments);
-			if (data.Length > 255) {
-				throw new InvalidOperationException ("Cannot transmit more than 255 bytes at a time.");
-			}
+			writer.WriteStartObject();
+			this.WriteMembers(writer);
+			writer.WriteEndObject();
+		}
+		protected abstract void WriteMembers(ObjectWriter writer);
 
-			if (writeBuffer == null) {
-				writeBuffer = new byte[BufferSize];
-			}
+		protected abstract void ResetMembers();
 
-			writeBuffer[0] = ((byte)'M');
-			writeBuffer[1] = ((byte)Operation);
-			writeBuffer[2] = ((byte)data.Length);
-			byte sum = 0;
-			if (data.Length > 0) {
-				for (var i = 0; i < data.Length; i++) {
-					writeBuffer [3 + i] = data [i];
-					sum += data [i];
+		protected abstract void ReadMember(ObjectReader reader);
+
+		protected void WriteVariableValue(ObjectWriter writer, int key, object value)
+		{
+			if (value is bool)
+			{
+				writer.WriteStartMember(key);
+				writer.WriteStartArray();
+				writer.WriteValue((int)VariableTypeIdentifier.BooleanType);
+				writer.WriteValue((bool)value);
+				writer.WriteEndArray();
+				writer.WriteEndMember();
+			}
+			else if (value is byte)
+			{
+				writer.WriteStartMember(key);
+				writer.WriteStartArray();
+				writer.WriteValue((int)VariableTypeIdentifier.ByteType);
+				writer.WriteValue((byte)value);
+				writer.WriteEndArray();
+				writer.WriteEndMember();
+			}
+			else if (value is int)
+			{
+				writer.WriteStartMember(key);
+				writer.WriteStartArray();
+				writer.WriteValue((int)VariableTypeIdentifier.Int32Type);
+				writer.WriteValue((int)value);
+				writer.WriteEndArray();
+				writer.WriteEndMember();
+			}
+			else if (value is uint)
+			{
+				writer.WriteStartMember(key);
+				writer.WriteStartArray();
+				writer.WriteValue((int)VariableTypeIdentifier.UInt32Type);
+				writer.WriteValue((uint)value);
+				writer.WriteEndArray();
+				writer.WriteEndMember();
+			}
+			else if (value is long)
+			{
+				writer.WriteStartMember(key);
+				writer.WriteStartArray();
+				writer.WriteValue((int)VariableTypeIdentifier.Int64Type);
+				writer.WriteValue((long)value);
+				writer.WriteEndArray();
+				writer.WriteEndMember();
+			}
+			else if (value is ulong)
+			{
+				writer.WriteStartMember(key);
+				writer.WriteStartArray();
+				writer.WriteValue((int)VariableTypeIdentifier.UInt64Type);
+				writer.WriteValue((ulong)value);
+				writer.WriteEndArray();
+				writer.WriteEndMember();
+			}
+			else if (value is float)
+			{
+				writer.WriteStartMember(key);
+				writer.WriteStartArray();
+				writer.WriteValue((int)VariableTypeIdentifier.SingleType);
+				writer.WriteValue((float)value);
+				writer.WriteEndArray();
+				writer.WriteEndMember();
+			}
+			else if (value is double)
+			{
+				writer.WriteStartMember(key);
+				writer.WriteStartArray();
+				writer.WriteValue((int)VariableTypeIdentifier.DoubleType);
+				writer.WriteValue((double)value);
+				writer.WriteEndArray();
+				writer.WriteEndMember();
+			}
+			else if (value is string)
+			{
+				writer.WriteStartMember(key);
+				writer.WriteStartArray();
+				writer.WriteValue((int)VariableTypeIdentifier.StringType);
+				writer.WriteValue((string)value);
+				writer.WriteEndArray();
+				writer.WriteEndMember();
+			}
+			else if (value is byte[])
+			{
+				writer.WriteStartMember(key);
+				writer.WriteStartArray();
+				writer.WriteValue((int)VariableTypeIdentifier.ByteArrayType);
+				writer.WriteValue((byte[])value);
+				writer.WriteEndArray();
+				writer.WriteEndMember();
+			}
+			else
+			{
+				throw new NotSupportedException();
+			}
+		}
+
+		protected object ReadVariableValue(ObjectReader reader)
+		{
+			object value = null;
+
+			if (reader.ReadStartArray())
+			{
+				VariableTypeIdentifier varType = (VariableTypeIdentifier)reader.ReadValueAsInt32();
+				switch (varType)
+				{
+					case VariableTypeIdentifier.BooleanType:
+						value = reader.ReadValueAsBoolean();
+						break;
+
+					case VariableTypeIdentifier.ByteType:
+						value = (byte)reader.ReadValueAsInt32();
+						break;
+
+					case VariableTypeIdentifier.Int32Type:
+						value = reader.ReadValueAsInt32();
+						break;
+
+					case VariableTypeIdentifier.UInt32Type:
+						value = reader.ReadValueAsUInt32();
+						break;
+
+					case VariableTypeIdentifier.Int64Type:
+						value = reader.ReadValueAsInt64();
+						break;
+
+					case VariableTypeIdentifier.UInt64Type:
+						value = reader.ReadValueAsUInt64();
+						break;
+
+					case VariableTypeIdentifier.SingleType:
+						value = reader.ReadValueAsSingle();
+						break;
+
+					case VariableTypeIdentifier.DoubleType:
+						value = reader.ReadValueAsDouble();
+						break;
+
+					case VariableTypeIdentifier.StringType:
+						// Currently limit strings to a maximum length of 255 octets
+						value = reader.ReadValueAsString(255);
+						break;
+
+					case VariableTypeIdentifier.ByteArrayType:
+						// Currently limit byte arrays to a maximum length of 255 octets
+						value = reader.ReadValueAsBytes(255);
+						break;
+
+					default:
+						throw new NotSupportedException();
 				}
-			}
-			writeBuffer [3 + data.Length] = sum;
 
-			stream.Write (writeBuffer, 0, 4 + data.Length);
-		}
-
-		static int GetBytesNeeded (byte[] buffer, int bufferSize)
-		{
-			if (bufferSize > 0 && buffer[0] != 'M')
-				return 0;
-
-			if (bufferSize <= 2)
-				return 4 - bufferSize;
-
-			var dataSize = buffer [2];
-			var messageSize = dataSize + 4;
-
-			return messageSize - bufferSize;
-		}
-
-		static bool IsValidMessage (byte[] buffer, int bufferSize)
-		{
-            if (bufferSize < 4 || buffer[0] != 'M')
-                return false;
-
-			if (GetBytesNeeded (buffer, bufferSize) != 0)
-				return false;
-
-			var dataSize = buffer [2];
-			byte sum = 0;
-
-			for (var i = 0; i < dataSize; i++) {
-				sum += buffer [i + 3];
+				reader.ReadEndArray();
 			}
 
-			var checkSum = buffer [3 + dataSize];
+			return value;
+		}
 
-			return sum == checkSum;
+		public override string ToString()
+		{
+			return this.Operation.ToString();
 		}
 	}
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -54,6 +54,14 @@
     <Compile Include="Messaging\Control.cs" />
     <Compile Include="Messaging\ControlClient.cs" />
     <Compile Include="Messaging\ControlServer.cs" />
+    <Compile Include="Messaging\Header.cs" />
+    <Compile Include="Messaging\Messages.cs" />
+    <Compile Include="Serialization\ObjectReader.cs" />
+    <Compile Include="Serialization\ObjectWriter.cs" />
+    <Compile Include="Serialization\PortableBinaryObjectReader.cs" />
+    <Compile Include="Serialization\PortableBinaryObjectWriter.cs" />
+    <Compile Include="Serialization\PortableBinaryToken.cs" />
+    <Compile Include="Serialization\StateManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
