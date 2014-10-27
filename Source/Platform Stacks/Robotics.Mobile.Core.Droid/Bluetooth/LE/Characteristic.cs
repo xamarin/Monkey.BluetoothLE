@@ -82,7 +82,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		public IList<IDescriptor> Descriptors {
 			get {
 				// if we haven't converted them to our xplat objects
-				if (this._descriptors != null) {
+				if (this._descriptors == null) {
 					this._descriptors = new List<IDescriptor> ();
 					// convert the internal list of them to the xplat ones
 					foreach (var item in this._nativeCharacteristic.Descriptors) {
