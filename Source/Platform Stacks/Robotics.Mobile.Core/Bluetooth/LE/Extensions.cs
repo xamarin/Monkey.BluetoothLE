@@ -48,10 +48,10 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			EventHandler<DeviceConnectionEventArgs> h = null;
 			h = (sender, e) => {
 				Debug.WriteLine ("CCC: " + e.Device.ID + " " + e.Device.State);
-        if (e.Device.ID == device.ID)// && device.State == DeviceState.Connected) 
-        {
+		        if (e.Device.ID == device.ID)
+		        {
 					adapter.DeviceConnected -= h;
-          tcs.SetResult (e.Device);
+          			tcs.SetResult (e.Device);
 				}
 			};
 			adapter.DeviceConnected += h;

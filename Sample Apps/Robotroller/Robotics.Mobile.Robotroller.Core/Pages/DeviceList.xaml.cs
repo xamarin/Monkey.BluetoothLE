@@ -26,6 +26,12 @@ namespace Robotics.Mobile.Robotroller
 
 			adapter.DeviceDiscovered += (object sender, DeviceDiscoveredEventArgs e) => {
 				Device.BeginInvokeOnMainThread(() => {
+					//TODO: uncomment this if there are a lot of Bluetooth devices around cluttering your list (and remove the line below)
+//					if (e.Device.Name != null) {
+//            			if (e.Device.Name.ToLower().Contains("biscuit")) {
+//                			devices.Add(e.Device);
+//            			}
+//            		}
 					devices.Add (e.Device);
 				});
 			};

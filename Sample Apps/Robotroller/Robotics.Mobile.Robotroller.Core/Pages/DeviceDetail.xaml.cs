@@ -54,7 +54,7 @@ namespace Robotics.Mobile.Robotroller
 		{
 			var device = adapter.DiscoveredDevices.First (x => x.ID == deviceId);
 			Debug.WriteLine ("Connecting to " + device.Name + "...");
-			await adapter.ConnectAsync (device);
+			device = await adapter.ConnectAsync (device);
 			Debug.WriteLine ("Trying to read...");
 			return device;
 		}
