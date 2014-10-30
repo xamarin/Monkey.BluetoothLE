@@ -135,6 +135,6 @@ Global
 		{9146775A-E315-4CEB-9CB2-3DBFC9D9A58C} = {184365D2-6421-4F51-8970-E7CF252F84C6}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Robotics.Mobile.Robotroller.Core\Robotics.Mobile.Robotroller.Core.csproj
+		StartupItem = Robotics.Mobile.Robotroller.iOS\Robotics.Mobile.Robotroller.iOS.csproj
 	EndGlobalSection
 EndGlobal
