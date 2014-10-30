@@ -67,7 +67,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Source\Platform Stacks\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj">
+    <ProjectReference Include="..\MonkeyRobotics.Mobile.Core\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj">
       <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
       <Name>Robotics.Mobile.Core</Name>
     </ProjectReference>

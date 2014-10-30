@@ -27,6 +27,7 @@
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
     <ConsolePause>false</ConsolePause>
+    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -57,6 +58,9 @@
     <Reference Include="Xamarin.Android.Support.v4">
       <HintPath>..\packages\Xamarin.Android.Support.v4.20.0.0.4\lib\MonoAndroid32\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -83,11 +87,11 @@
       <Project>{CEE2DCF6-7C07-4D21-A212-05876EC5E954}</Project>
       <Name>Robotics.Mobile.Robotroller.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\Platform Stacks\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj">
+    <ProjectReference Include="..\MonkeyRobotics.Mobile.Core\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj">
       <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
       <Name>Robotics.Mobile.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\Platform Stacks\Robotics.Mobile.Core.Droid\Robotics.Mobile.Core.Droid.csproj">
+    <ProjectReference Include="..\MonkeyRobotics.Mobile.Core\Robotics.Mobile.Core.Droid\Robotics.Mobile.Core.Droid.csproj">
       <Project>{0040B1B9-6E22-438A-A6A7-A5A00B2B89B1}</Project>
       <Name>Robotics.Mobile.Core.Droid</Name>
     </ProjectReference>

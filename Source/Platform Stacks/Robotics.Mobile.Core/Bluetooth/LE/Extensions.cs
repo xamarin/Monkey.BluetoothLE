@@ -39,18 +39,19 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		/// <summary>
 		/// Asynchronously gets the requested service
 		/// </summary>
-		public static Task ConnectAsync (this IAdapter adapter, IDevice device)
+		public static Task<IDevice> ConnectAsync (this IAdapter adapter, IDevice device)
 		{
 			if (device.State == DeviceState.Connected)
-				return Task.FromResult<object> (null);
+				return Task.FromResult<IDevice> (null);
 
-			var tcs = new TaskCompletionSource<object> ();
+			var tcs = new TaskCompletionSource<IDevice> ();
 			EventHandler<DeviceConnectionEventArgs> h = null;
 			h = (sender, e) => {
 				Debug.WriteLine ("CCC: " + e.Device.ID + " " + e.Device.State);
-				if (e.Device.ID == device.ID && device.State == DeviceState.Connected) {
+        if (e.Device.ID == device.ID)// && device.State == DeviceState.Connected) 
+        {
 					adapter.DeviceConnected -= h;
-					tcs.SetResult (null);
+          tcs.SetResult (e.Device);
 				}
 			};
 			adapter.DeviceConnected += h;
