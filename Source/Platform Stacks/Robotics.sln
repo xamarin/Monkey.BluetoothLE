@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Micro.Core", "Robo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Micro.Core.Netduino2Tests", "Robotics.Micro.Core.Netduino2Tests\Robotics.Micro.Core.Netduino2Tests.csproj", "{C12A111F-28FB-45AB-8F7E-609255CD2D7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Mobile.WP", "Robotics.Mobile.WP\Robotics.Mobile.WP.csproj", "{09458A2E-8CFE-4FC1-82BD-C1096F5948A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Mobile.Core.WP", "Robotics.Mobile.Core.WP\Robotics.Mobile.Core.WP.csproj", "{09458A2E-8CFE-4FC1-82BD-C1096F5948A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
