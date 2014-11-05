@@ -1,6 +1,6 @@
 ﻿using System;
 #if __UNIFIED__
-using CoreBluetooth;
+using MonoTouch.CoreBluetooth;
 #else
 using MonoTouch.CoreBluetooth;
 #endif
@@ -34,7 +34,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 			#if __UNIFIED__
 			// fixed for Unified https://bugzilla.xamarin.com/show_bug.cgi?id=14893
-			this._nativeDevice.DiscoveredCharacteristic += (object sender, CBServiceEventArgs e) => {
+			this._nativeDevice.DiscoverCharacteristic += (object sender, CBServiceEventArgs e) => {
 			#else
 			//BUGBUG/TODO: this event is misnamed in our SDK
 			this._nativeDevice.DiscoverCharacteristic += (object sender, CBServiceEventArgs e) => {
