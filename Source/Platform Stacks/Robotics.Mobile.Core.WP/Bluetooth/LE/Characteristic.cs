@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Devices.Bluetooth.GenericAttributeProfile;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
     public class Characteristic : ICharacteristic
     {
         public event EventHandler<CharacteristicReadEventArgs> ValueUpdated;
+
+        protected GattCharacteristic _nativeCharacteristic;
+
+        public Characteristic(GattCharacteristic nativeCharacteristic)
+        {
+            this._nativeCharacteristic = nativeCharacteristic;
+        }
 
         public Guid ID
         {

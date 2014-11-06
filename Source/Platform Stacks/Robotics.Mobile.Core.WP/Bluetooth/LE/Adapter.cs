@@ -93,7 +93,8 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         public void DisconnectDevice(IDevice device)
         {
-            throw new NotImplementedException();
+            //TODO DisconnetDevice
+            this._connectedDevices.Remove(device);
         }
 
     }
