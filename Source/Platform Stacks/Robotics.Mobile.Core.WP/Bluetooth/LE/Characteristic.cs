@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
+using Windows.Storage.Streams;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -20,12 +21,12 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         public Guid ID
         {
-            get { throw new NotImplementedException(); }
+            get { return _nativeCharacteristic.Uuid; }
         }
 
         public string Uuid
         {
-            get { throw new NotImplementedException(); }
+            get { return _nativeCharacteristic.Uuid.ToString(); }
         }
 
         public byte[] Value
@@ -45,32 +46,46 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         public object NativeCharacteristic
         {
-            get { throw new NotImplementedException(); }
+            get { return _nativeCharacteristic; }
         }
 
         public string Name
         {
-            get { throw new NotImplementedException(); }
+            get { return KnownCharacteristics.Lookup(this.ID).Name; }
         }
 
         public CharacteristicPropertyType Properties
         {
-            get { throw new NotImplementedException(); }
+            get { return (CharacteristicPropertyType)(int)this._nativeCharacteristic.CharacteristicProperties; }
         }
 
         public bool CanRead
         {
-            get { throw new NotImplementedException(); }
+            get 
+            {
+                if (CheckGattProperty(GattCharacteristicProperties.Read))
+                    return true;
+                return false;
+            }
         }
 
         public bool CanUpdate
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                if (CheckGattProperty(GattCharacteristicProperties.Notify))
+                    return true;
+                return false;
+            }
         }
 
         public bool CanWrite
         {
-            get { throw new NotImplementedException(); }
+            get {
+                if (CheckGattProperty(GattCharacteristicProperties.Write) || CheckGattProperty(GattCharacteristicProperties.WriteWithoutResponse))
+                    return true;
+                return false;
+            }
         }
 
         public void StartUpdates()
@@ -90,7 +105,22 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         public void Write(byte[] data)
         {
-            throw new NotImplementedException();
+            var dataWriter = new DataWriter();
+
+            dataWriter.WriteBytes(data);
+
+            var buffer = dataWriter.DetachBuffer();
+
+            _nativeCharacteristic.WriteValueAsync(buffer, GattWriteOption.WriteWithoutResponse);
+        }
+
+        public bool CheckGattProperty (GattCharacteristicProperties gattProperty)
+        {
+            if(((int)_nativeCharacteristic.CharacteristicProperties & (int)gattProperty) != 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

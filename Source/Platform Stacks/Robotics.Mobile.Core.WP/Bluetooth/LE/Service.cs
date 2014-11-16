@@ -53,20 +53,12 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
                 if (_characteristcs == null)
                 {
                     this._characteristcs = new List<ICharacteristic>();
-
-
-                    //TODO not able to read characteristics based on the UUID
-                    //_nativeService.C
-
-                    foreach (GattCharacteristic c in this._nativeService.GetCharacteristics(GattCharacteristicUuids.BatteryLevel))
-                    {
-                        this._characteristcs.Add(new Characteristic(c));
-                    }     
-
-                    foreach (GattCharacteristic c in this._nativeService.GetCharacteristics(_nativeService.Uuid))
-                    {
-                        this._characteristcs.Add(new Characteristic(c));
-                    }     
+    
+                    //TODO - there doesn't appear to be any way to search for characteristics using the WP Silverlight API
+                    //foreach (GattCharacteristic c in this._nativeService.GetCharacteristics(_nativeService.Uuid))
+                    //{
+                    //    this._characteristcs.Add(new Characteristic(c));
+                    //}    
                 }
                 return _characteristcs;
             }
@@ -80,12 +72,12 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         public void DiscoverCharacteristics()
         {
-            this.CharacteristicsDiscovered(this, new EventArgs());
+            throw new NotImplementedException();
+            //this.CharacteristicsDiscovered(this, new EventArgs());
         }
 
         Guid ExtractGuid(string id)
         {
-            //this is wrong
             int start = id.IndexOf('{') + 1;
 
             var guid = id.Substring(start, 36);

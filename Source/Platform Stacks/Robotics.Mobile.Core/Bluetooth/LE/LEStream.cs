@@ -95,7 +95,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				}
 				await Task.Run (() => dataReceived.WaitOne ());
 			}
-
 			return 0;
 		}
 

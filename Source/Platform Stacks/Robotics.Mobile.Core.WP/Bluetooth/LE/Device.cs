@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
+using Windows.Devices.Enumeration;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -18,8 +19,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
         public Device(BluetoothLEDevice nativeDevice)
         {
             this._nativeDevice = nativeDevice;
-
-            
         }
 
         public override Guid ID
@@ -49,7 +48,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         Guid ExtractGuid(string id)
         {
-            //this is wrong
+            //there's probably a safer way
             int start = id.IndexOf('{') + 1;
 
             var guid = id.Substring(start, 36);
@@ -83,7 +82,10 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
             {
                 Debug.WriteLine("Device.Discovered Service: " + item.DeviceId);
                 this._services.Add(new Service(item));
+            }
 
+            if (this.ServicesDiscovered != null)
+            {
                 this.ServicesDiscovered(this, new EventArgs());
             }
 

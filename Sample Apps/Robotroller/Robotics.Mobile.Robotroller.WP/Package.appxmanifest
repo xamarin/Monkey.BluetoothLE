@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
+
+  <Identity Name="717039a6-58cb-4ba4-9d6c-b37645aaf1da"
+            Publisher="CN=Adrian"
+            Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="14a9fc12-b03c-4349-9856-e09b978727c2" PhonePublisherId="1004f25d-aa6d-461e-9ebe-0e6684d51f5b"/>
+
+  <Properties>
+    <DisplayName>Robotics.Mobile.Robotroller.WP</DisplayName>
+    <PublisherDisplayName>Adrian</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Prerequisites>
+    <OSMinVersion>6.3.1</OSMinVersion>
+    <OSMaxVersionTested>6.3.1</OSMaxVersionTested>
+  </Prerequisites>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="x14a9fc12yb03cy4349y9856ye09b978727c2x"
+        Executable="AGHost.exe"
+        EntryPoint="MainPage.xaml">
+      <m3:VisualElements
+          DisplayName="Robotics.Mobile.Robotroller.WP"
+          Square150x150Logo="Assets\SquareTile150x150.png"
+          Square44x44Logo="Assets\Logo.png"
+          Description="Robotics.Mobile.Robotroller.WP"
+          ForegroundText="light"
+          BackgroundColor="#464646">
+        <m3:DefaultTile Square71x71Logo="Assets\SquareTile71x71.png"/>
+        <m3:SplashScreen Image="Assets\Splashscreen.png" />
+      </m3:VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="AgHost.BackgroundTask">
+          <BackgroundTasks>
+          <Task Type="systemEvent" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClientServer" />
+    <m2:DeviceCapability Name="bluetooth.genericAttributeProfile">
+      <m2:Device Id="any">
+        <m2:Function Type="name:genericAccess" />
+        <m2:Function Type="serviceId:713d0000-503e-4c75-ba94-3148f18d941e"/>
+        <m2:Function Type="serviceId:713d0001-503e-4c75-ba94-3148f18d941e"/>
+        <m2:Function Type="serviceId:713d0002-503e-4c75-ba94-3148f18d941e"/>
+        <m2:Function Type="serviceId:713d0003-503e-4c75-ba94-3148f18d941e"/>
+        <m2:Function Type="serviceId:713d0004-503e-4c75-ba94-3148f18d941e"/>
+        <m2:Function Type="serviceId:713d0005-503e-4c75-ba94-3148f18d941e"/>
+      </m2:Device>
+    </m2:DeviceCapability>
+  </Capabilities>
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>AgHostSvcs.dll</Path>
+        <ActivatableClass ActivatableClassId="AgHost.BackgroundTask" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+  </Extensions>
+</Package>
