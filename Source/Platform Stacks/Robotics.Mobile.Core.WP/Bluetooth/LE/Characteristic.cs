@@ -100,6 +100,13 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         public Task<ICharacteristic> ReadAsync()
         {
+            var tcs = new TaskCompletionSource<ICharacteristic>();
+
+            if (!CanRead)
+            {
+                throw new InvalidOperationException("Characteristic does not support READ");
+            }
+
             throw new NotImplementedException();
         }
 

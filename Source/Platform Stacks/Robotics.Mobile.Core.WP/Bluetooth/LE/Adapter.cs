@@ -69,11 +69,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
             foreach (var d in _discoveredDevices)
             {
                 if (device.BluetoothAddress == ((BluetoothLEDevice) d.NativeDevice).BluetoothAddress)
-#if DEBUG
-                    return false;
-#else
                     return true;
-#endif 
             }
             return false;
         }
@@ -88,7 +84,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
             //TODO ConectToDevice
             this._connectedDevices.Add(device);
             DeviceConnected(this, new DeviceConnectionEventArgs() {Device = device, ErrorMessage = "error"});
-
         }
 
         public void DisconnectDevice(IDevice device)

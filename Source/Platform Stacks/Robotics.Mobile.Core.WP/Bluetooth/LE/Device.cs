@@ -38,6 +38,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         public override int Rssi
         {
+            //throw new NotImplementedException();
             get { return 0; }
         }
 
