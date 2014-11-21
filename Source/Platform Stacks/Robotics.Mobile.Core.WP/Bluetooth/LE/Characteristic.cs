@@ -41,8 +41,20 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         public IList<IDescriptor> Descriptors
         {
-            get { throw new NotImplementedException(); }
+            get 
+            {
+                if(_descriptors == null)
+                {
+                    foreach (KnownDescriptor kd in KnownDescriptors.GetDescriptors())
+                    {
+                        var d = _nativeCharacteristic.GetDescriptors(kd.ID)[0];
+                        _descriptors.Add(new Descriptor(d));
+                    }
+                }
+                return _descriptors;
+            }
         }
+        private IList<IDescriptor> _descriptors = null;
 
         public object NativeCharacteristic
         {
@@ -90,12 +102,51 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         public void StartUpdates()
         {
-            throw new NotImplementedException();
+            bool successful = false;
+            if (CanRead)
+            {
+                Console.WriteLine("** Characteristic.RequestValue, PropertyType = Read, requesting read");
+                _nativeCharacteristic.ValueChanged += ValueChanged;
+
+                   
+
+                successful = true;
+            }
+            if (CanUpdate)
+            {
+                Console.WriteLine("** Characteristic.RequestValue, PropertyType = Notify, requesting updates");
+
+                RegisterForUpdates();
+            }
+        }
+
+        async Task RegisterForUpdates ()
+        {
+            await this._nativeCharacteristic.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
+
+            if (this.Descriptors.Count > 0)
+            {
+
+
+            }
+            else
+            {
+                Console.WriteLine("RequestValue, FAILED: _nativeCharacteristic.Descriptors was empty, not sure why");
+            }
+
+            //successful = true;
+
         }
 
         public void StopUpdates()
         {
-            throw new NotImplementedException();
+            this._nativeCharacteristic.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.None);
+                
+        }
+
+        void ValueChanged(GattCharacteristic sender, GattValueChangedEventArgs args)
+        {
+            
         }
 
         public Task<ICharacteristic> ReadAsync()

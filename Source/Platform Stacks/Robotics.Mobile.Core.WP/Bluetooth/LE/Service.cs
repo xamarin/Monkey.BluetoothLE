@@ -50,20 +50,30 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
         {
             get
             {
-                if (_characteristcs == null)
+                if (_characteristics == null)
                 {
-                    this._characteristcs = new List<ICharacteristic>();
-    
+                    this._characteristics = new List<ICharacteristic>();
+
                     //TODO - there doesn't appear to be any way to search for characteristics using the WP Silverlight API
+                    //so we're going to request the specific characteristics for now
+                    KnownCharacteristics.LoadItemsFromJson();
+
+                    foreach (KnownCharacteristic kc in KnownCharacteristics.GetCharacteristics())
+                    {
+                        var c = this._nativeService.GetCharacteristics(kc.ID).FirstOrDefault();
+                        if (c != null)
+                            this._characteristics.Add(new Characteristic(c));
+                    }
+                    
                     //foreach (GattCharacteristic c in this._nativeService.GetCharacteristics(_nativeService.Uuid))
                     //{
                     //    this._characteristcs.Add(new Characteristic(c));
                     //}    
                 }
-                return _characteristcs;
+                return _characteristics;
             }
         }
-        protected IList<ICharacteristic> _characteristcs; 
+        protected IList<ICharacteristic> _characteristics; 
 
         public ICharacteristic FindCharacteristic(KnownCharacteristic characteristic)
         {
@@ -72,8 +82,8 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         public void DiscoverCharacteristics()
         {
-            throw new NotImplementedException();
-            //this.CharacteristicsDiscovered(this, new EventArgs());
+            if(Characteristics != null && Characteristics.Count > 0)
+                this.CharacteristicsDiscovered(this, new EventArgs());
         }
 
         Guid ExtractGuid(string id)

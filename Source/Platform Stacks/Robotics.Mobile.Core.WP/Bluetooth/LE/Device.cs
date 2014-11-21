@@ -85,7 +85,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
                 this._services.Add(new Service(item));
             }
 
-            if (this.ServicesDiscovered != null)
+            if (this.ServicesDiscovered != null && this._services.Count > 0)
             {
                 this.ServicesDiscovered(this, new EventArgs());
             }
