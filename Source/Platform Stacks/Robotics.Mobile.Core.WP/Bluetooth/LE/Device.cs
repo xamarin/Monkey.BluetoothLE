@@ -66,6 +66,9 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
                     return DeviceState.Connected;
                 case BluetoothConnectionStatus.Disconnected:
                 default:
+#if DEBUG
+   //               return DeviceState.Connected;
+#endif
                     return DeviceState.Disconnected;
             }
         }

@@ -82,6 +82,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
         public void ConnectToDevice(IDevice device)
         {
             //TODO ConectToDevice
+ 
             this._connectedDevices.Add(device);
             DeviceConnected(this, new DeviceConnectionEventArgs() {Device = device, ErrorMessage = "error"});
         }

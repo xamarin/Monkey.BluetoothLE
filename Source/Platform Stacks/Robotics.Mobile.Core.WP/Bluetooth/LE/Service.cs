@@ -64,11 +64,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
                         if (c != null)
                             this._characteristics.Add(new Characteristic(c));
                     }
-                    
-                    //foreach (GattCharacteristic c in this._nativeService.GetCharacteristics(_nativeService.Uuid))
-                    //{
-                    //    this._characteristcs.Add(new Characteristic(c));
-                    //}    
                 }
                 return _characteristics;
             }
@@ -77,13 +72,17 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         public ICharacteristic FindCharacteristic(KnownCharacteristic characteristic)
         {
-            throw new NotImplementedException();
+            var c = this._nativeService.GetCharacteristics(characteristic.ID).FirstOrDefault();
+
+            return new Characteristic(c);
         }
 
         public void DiscoverCharacteristics()
         {
-            if(Characteristics != null && Characteristics.Count > 0)
+            if (Characteristics != null && Characteristics.Count > 0)
+            {
                 this.CharacteristicsDiscovered(this, new EventArgs());
+            }
         }
 
         Guid ExtractGuid(string id)
@@ -93,7 +92,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
             var guid = id.Substring(start, 36);
 
             return Guid.Parse(guid);
-
         }
     }
 }

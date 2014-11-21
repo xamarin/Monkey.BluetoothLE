@@ -54,7 +54,9 @@ namespace Robotics.Mobile.Robotroller
 		{
 			var device = adapter.DiscoveredDevices.First (x => x.ID == deviceId);
 			Debug.WriteLine ("Connecting to " + device.Name + "...");
-			device = await adapter.ConnectAsync (device);
+            if(device.State != DeviceState.Connected)//for WP [AS]
+			    device = await adapter.ConnectAsync (device);
+
 			Debug.WriteLine ("Trying to read...");
 			return device;
 		}
