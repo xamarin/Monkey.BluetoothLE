@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest"
+         xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest"
+         xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest"
+         xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
+
+  <Identity Name="6163428a-2bf7-4810-ba6f-35c94f2e3495"
+            Publisher="CN=Adrian"
+            Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="e88a843e-2830-4840-81cd-73afc0a8f050"
+                    PhonePublisherId="aee74b9d-a2dc-4af2-b019-fd9956e7b91b"/>
+
+  <Properties>
+    <DisplayName>Robotics.Mobile.BtLEExplorer.WP</DisplayName>
+    <PublisherDisplayName>Adrian</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Prerequisites>
+    <OSMinVersion>6.3.1</OSMinVersion>
+    <OSMaxVersionTested>6.3.1</OSMaxVersionTested>
+  </Prerequisites>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+                 Executable="AGHost.exe"
+                 EntryPoint="MainPage.xaml">
+      <m3:VisualElements
+          DisplayName="Robotics.Mobile.BtLEExplorer.WP"
+          Square150x150Logo="Assets\SquareTile150x150.png"
+          Square44x44Logo="Assets\Logo.png"
+          Description="Robotics.Mobile.BtLEExplorer.WP"
+          ForegroundText="light"
+          BackgroundColor="#464646">
+        <m3:DefaultTile Square71x71Logo="Assets\SquareTile71x71.png"/>
+        <m3:SplashScreen Image="Assets\SplashScreen.png" />
+      </m3:VisualElements>
+
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="AgHost.BackgroundTask">
+          <BackgroundTasks>
+          <Task Type="systemEvent" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
+
+    </Application>
+  </Applications>
+  <Capabilities>
+    <m2:DeviceCapability Name="bluetooth.genericAttributeProfile">
+      <m2:Device Id="any">
+        <m2:Function Type="name:genericAccess" />
+        <m2:Function Type="name:alertNotification" />
+        <m2:Function Type="name:battery" />
+        <m2:Function Type="name:bloodPressure" />
+        <m2:Function Type="name:currentTime" />
+        <m2:Function Type="name:cyclingPower" />
+        <m2:Function Type="name:cyclingSpeedAndCadence" />
+        <m2:Function Type="name:deviceInformation" />
+        <m2:Function Type="name:genericAttribute" />
+        <m2:Function Type="name:glucose" />
+        <m2:Function Type="name:healthThermometer" />
+        <m2:Function Type="name:heartRate" />
+        <m2:Function Type="name:humanInterfaceDevice" />
+        <m2:Function Type="name:immediateAlert" />
+        <m2:Function Type="name:linkLoss" />
+        <m2:Function Type="name:locationAndNavigation" />
+        <m2:Function Type="name:nextDstChange" />
+        <m2:Function Type="name:phoneAlertStatus" />
+        <m2:Function Type="name:referenceTimeUpdate" />
+        <m2:Function Type="name:runningSpeedAndCadence" />
+        <m2:Function Type="name:scanParameters" />
+        <m2:Function Type="name:txPower" />
+      </m2:Device>
+    </m2:DeviceCapability>
+  </Capabilities>
+
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>AgHostSvcs.dll</Path>
+        <ActivatableClass ActivatableClassId="AgHost.BackgroundTask" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+  </Extensions>
+
+</Package>
