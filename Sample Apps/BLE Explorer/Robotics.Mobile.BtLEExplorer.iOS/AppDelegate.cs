@@ -7,11 +7,12 @@ using MonoTouch.UIKit;
 
 using Xamarin.Forms;
 using Robotics.Mobile.Core.Bluetooth.LE;
+using Xamarin.Forms.Platform.iOS;
 
 namespace Robotics.Mobile.BtLEExplorer.iOS
 {
 	[Register ("AppDelegate")]
-	public partial class AppDelegate : UIApplicationDelegate
+	public partial class AppDelegate : FormsApplicationDelegate // new int 1.3
 	{
 		UIWindow window;
 
@@ -23,10 +24,9 @@ namespace Robotics.Mobile.BtLEExplorer.iOS
 
 			App.SetAdapter (Adapter.Current);
 
-			window.RootViewController = App.GetMainPage ().CreateViewController ();
-			window.MakeKeyAndVisible ();
+			LoadApplication (new App ());
 			
-			return true;
+			return base.FinishedLaunching (app, options);
 		}
 	}
 }

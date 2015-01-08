@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{86508A87-8074-402E-A5DF-AA9A0EADA0B0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Robotics.Mobile.Core</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>Robotics.Mobile.Core.iOS</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+    <Folder Include="BluetoothLE\" />
+    <Folder Include="Bluetooth\" />
+    <Folder Include="Bluetooth\LE\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\Robotics.Mobile.Core.iOS\BluetoothLE\BluetoothLEManager.cs">
+      <Link>BluetoothLE\BluetoothLEManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Mobile.Core.iOS\Bluetooth\LE\Adapter.cs">
+      <Link>Bluetooth\LE\Adapter.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Mobile.Core.iOS\Bluetooth\LE\Characteristic.cs">
+      <Link>Bluetooth\LE\Characteristic.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Mobile.Core.iOS\Bluetooth\LE\Descriptor.cs">
+      <Link>Bluetooth\LE\Descriptor.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Mobile.Core.iOS\Bluetooth\LE\Device.cs">
+      <Link>Bluetooth\LE\Device.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Mobile.Core.iOS\Bluetooth\LE\Service.cs">
+      <Link>Bluetooth\LE\Service.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj">
+      <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
+      <Name>Robotics.Mobile.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

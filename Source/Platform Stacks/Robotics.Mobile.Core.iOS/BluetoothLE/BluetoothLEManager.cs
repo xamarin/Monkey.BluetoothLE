@@ -1,7 +1,14 @@
 using System;
-using MonoTouch.CoreBluetooth;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
+#if __UNIFIED__
+using CoreBluetooth;
+using CoreFoundation;
+#else
+using MonoTouch.CoreBluetooth;
+using MonoTouch.CoreFoundation;
+#endif
 
 namespace Robotics.Mobile.Core.iOS
 {
@@ -73,7 +80,7 @@ namespace Robotics.Mobile.Core.iOS
 
 		protected BluetoothLEManager ()
 		{
-			_central = new CBCentralManager (MonoTouch.CoreFoundation.DispatchQueue.CurrentQueue);
+			_central = new CBCentralManager (DispatchQueue.CurrentQueue);
 			_central.DiscoveredPeripheral += (object sender, CBDiscoveredPeripheralEventArgs e) => {
 				Console.WriteLine ("DiscoveredPeripheral: " + e.Peripheral.Name);
 				this._discoveredDevices.Add (e.Peripheral);
@@ -127,7 +134,11 @@ namespace Robotics.Mobile.Core.iOS
 
 			// start scanning
 			this._isScanning = true;
+			#if __UNIFIED__
+			_central.ScanForPeripherals (peripheralUuids:null);
+			#else
 			_central.ScanForPeripherals (serviceUuids:null);
+			#endif
 
 			// in 10 seconds, stop the scan
 			await Task.Delay (10000);

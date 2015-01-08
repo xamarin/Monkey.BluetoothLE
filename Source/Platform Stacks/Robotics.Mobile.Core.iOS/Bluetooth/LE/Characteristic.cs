@@ -1,9 +1,16 @@
 ﻿using System;
 using System.Linq;
-using MonoTouch.CoreBluetooth;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
+#if __UNIFIED__
+using CoreBluetooth;
+using Foundation;
+#else
+using MonoTouch.CoreBluetooth;
 using MonoTouch.Foundation;
+#endif
+
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -148,7 +155,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		}
 
 		public void StopUpdates () {
-			bool successful = false;
+			//bool successful = false;
 			if (CanUpdate) {
 				_parentDevice.SetNotifyValue (false, _nativeCharacteristic);
 				Console.WriteLine ("** Characteristic.RequestValue, PropertyType = Notify, STOP updates");

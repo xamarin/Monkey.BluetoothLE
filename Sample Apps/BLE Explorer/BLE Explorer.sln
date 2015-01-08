@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Mobile.BtLEExplore
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Mobile.BtLEExplorer.Droid", "Robotics.Mobile.BtLEExplorer.Droid\Robotics.Mobile.BtLEExplorer.Droid.csproj", "{99B2DFE6-0DC5-403C-9653-58F13765F0B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Mobile.Core.iOS64", "..\..\Source\Platform Stacks\Robotics.Mobile.Core.iOS64\Robotics.Mobile.Core.iOS64.csproj", "{86508A87-8074-402E-A5DF-AA9A0EADA0B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +91,22 @@ Global
 		{65733427-B647-4556-A87C-20937496780A}.Release|iPhone.Build.0 = Release|Any CPU
 		{65733427-B647-4556-A87C-20937496780A}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{65733427-B647-4556-A87C-20937496780A}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.AppStore|iPhone.Build.0 = Release|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.Release|iPhone.Build.0 = Release|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{86508A87-8074-402E-A5DF-AA9A0EADA0B0}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{99B2DFE6-0DC5-403C-9653-58F13765F0B9}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
 		{99B2DFE6-0DC5-403C-9653-58F13765F0B9}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
 		{99B2DFE6-0DC5-403C-9653-58F13765F0B9}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
@@ -121,8 +139,5 @@ Global
 		{A1E14BEA-A9D9-46C5-83AA-8891A13E4837}.Release|iPhone.Build.0 = Release|Any CPU
 		{A1E14BEA-A9D9-46C5-83AA-8891A13E4837}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{A1E14BEA-A9D9-46C5-83AA-8891A13E4837}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Robotics.Mobile.BtLEExplorer.iOS\Robotics.Mobile.BtLEExplorer.iOS.csproj
 	EndGlobalSection
 EndGlobal
