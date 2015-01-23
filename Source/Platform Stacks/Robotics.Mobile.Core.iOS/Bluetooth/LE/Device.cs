@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+
 #if __UNIFIED__
 using CoreBluetooth;
+using Foundation;
 #else
 using MonoTouch.CoreBluetooth;
+using MonoTouch.Foundation;
 #endif
-using System.Collections.Generic;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -18,7 +21,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		{
 			this._nativeDevice = nativeDevice;
 
-			this._nativeDevice.DiscoveredService += (object sender, MonoTouch.Foundation.NSErrorEventArgs e) => {
+			this._nativeDevice.DiscoveredService += (object sender, NSErrorEventArgs e) => {
 				// why we have to do this check is beyond me. if a service has been discovered, the collection
 				// shouldn't be null, but sometimes it is. le sigh, apple.
 				if (this._nativeDevice.Services != null) {

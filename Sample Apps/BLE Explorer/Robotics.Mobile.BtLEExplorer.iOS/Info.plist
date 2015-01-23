@@ -44,7 +44,5 @@
 	</array>
 	<key>CFBundleDisplayName</key>
 	<string>BLE Explorer</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.bryancostanich.ble</string>
 </dict>
 </plist>

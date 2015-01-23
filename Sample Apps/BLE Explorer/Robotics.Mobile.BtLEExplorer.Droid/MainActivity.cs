@@ -16,7 +16,7 @@ namespace Robotics.Mobile.BtLEExplorer.Droid
 	[Activity (Label = "Robotics.Mobile.BtLEExplorer.Android.Android", 
 		MainLauncher = true, 
 		ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-	public class MainActivity : AndroidActivity
+	public class MainActivity : FormsApplicationActivity  // new int 1.3
 	{
 		protected override void OnCreate (Bundle bundle)
 		{
@@ -27,7 +27,7 @@ namespace Robotics.Mobile.BtLEExplorer.Droid
 			var a = new Robotics.Mobile.Core.Bluetooth.LE.Adapter ();
 			App.SetAdapter (a);
 
-			SetPage (App.GetMainPage ());
+			LoadApplication (new App ());
 		}
 	}
 }

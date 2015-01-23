@@ -1,9 +1,16 @@
 ﻿using System;
-using MonoTouch.CoreBluetooth;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Diagnostics;
+
+#if __UNIFIED__
+using CoreBluetooth;
+using CoreFoundation;
+#else
+using MonoTouch.CoreBluetooth;
+using MonoTouch.CoreFoundation;
+#endif
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -52,7 +59,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		protected Adapter ()
 		{
-			this._central = new CBCentralManager (MonoTouch.CoreFoundation.DispatchQueue.CurrentQueue);
+			this._central = new CBCentralManager (DispatchQueue.CurrentQueue);
 
 			_central.DiscoveredPeripheral += (object sender, CBDiscoveredPeripheralEventArgs e) => {
 				Console.WriteLine ("DiscoveredPeripheral: " + e.Peripheral.Name);
