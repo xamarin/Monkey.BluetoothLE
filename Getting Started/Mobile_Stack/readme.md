@@ -16,7 +16,7 @@ To install into your app, double click on the **Components** folder and search f
 
 ## Integrating BLE
 
-The following code can be seen in action in the BLE Explorer sample app included in the component. It's also availabe [here](../Sample%20Apps/BLE%20Explorer). The following is an overview of working with the API, but for a full understanding of how to use it, make sure to check out the sample app.
+The following code can be seen in action in the BLE Explorer sample app included in the component. It's also availabe [here](https://github.com/xamarin/Monkey.Robotics/tree/master/Sample%20Apps). The following is an overview of working with the API, but for a full understanding of how to use it, make sure to check out the sample app.
 
 ### Get a Reference to the Adapter
 
@@ -32,7 +32,6 @@ Once you have your adapter, you can start device scanning via `StartScanningForD
 
 ```csharp
 adapter.StartScanningForDevices(Guid.Empty);
-
 ```
 
 ### Connecting to a Device
