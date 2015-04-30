@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 
 using Xamarin.Forms;
 using Robotics.Mobile.Core.Bluetooth.LE;
-using MonoTouch.CoreMotion;
+using CoreMotion;
 
 namespace Robotics.Mobile.Robotroller.iOS
 {
