@@ -1,0 +1,17 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robotics.Micro.Robotroller.Netduino", "Robotics.Micro.Robotroller.Netduino.csproj", "{C12A111F-28FB-45AB-8F7E-609255CD2D7B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C12A111F-28FB-45AB-8F7E-609255CD2D7B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

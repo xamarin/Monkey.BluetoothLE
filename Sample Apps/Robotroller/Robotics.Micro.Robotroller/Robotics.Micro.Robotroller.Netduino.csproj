@@ -54,10 +54,4 @@
     <Reference Include="System" />
     <Reference Include="SecretLabs.NETMF.Hardware.PWM" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Robotics.Micro.Core\Robotics.Micro.Core.csproj">
-      <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
-      <Name>Robotics.Micro.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
