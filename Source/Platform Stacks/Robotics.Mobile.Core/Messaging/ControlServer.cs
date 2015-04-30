@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
-using Robotics.Serialization;
 
 #if MF_FRAMEWORK_VERSION_V4_3
 using VariableList = System.Collections.ArrayList;
@@ -19,8 +18,7 @@ namespace Robotics.Messaging
 	/// </summary>
 	public class ControlServer
 	{
-		readonly ObjectReader reader;
-		readonly ObjectWriter writer;
+		Stream stream;
 
 		readonly VariableList variables = new VariableList ();
 		readonly CommandList commands = new CommandList ();
@@ -30,30 +28,28 @@ namespace Robotics.Messaging
 			if (stream == null)
 				throw new ArgumentNullException ("stream");
 
-			this.reader = new PortableBinaryObjectReader(stream);
-			this.writer = new PortableBinaryObjectWriter(stream);
-
+			this.stream = stream;
 			Start ();
 		}
 
-		void SendVariable(Variable v)
+		void SendVariable (Variable v)
 		{
-			SendHeaderAndMessage(new VariableMessage(v));
+			new Message ((byte)ControlOp.Variable, v.Id, v.Name, v.IsWriteable, v.Value).Write (stream);
 		}
 
-		void SendVariableValue(Variable v)
+		void SendVariableValue (Variable v)
 		{
-			SendHeaderAndMessage(new VariableValueMessage(v));
+			new Message ((byte)ControlOp.VariableValue, v.Id, v.Value).Write (stream);
 		}
 
-		void SendCommand(Command c)
+		void SendCommand (Command c)
 		{
-			SendHeaderAndMessage(new CommandMessage(c));
+			new Message ((byte)ControlOp.Command, c.Id, c.Name).Write (stream);
 		}
 
-		void SendCommandResult(Command c, int exeId, object result)
+		void SendCommandResult (Command c, int exeId, object result)
 		{
-			SendHeaderAndMessage(new CommandResultMessage(c, exeId, result));
+			new Message ((byte)ControlOp.CommandResult, c.Id, exeId, result).Write (stream);
 		}
 
 		int id = 1;
@@ -113,12 +109,12 @@ namespace Robotics.Messaging
 			return c;
 		}
 
-		void SetVariableValue(Variable v, object value)
+		void SetVariableValue (Variable v, object value)
 		{
 			if (v == null)
-				throw new ArgumentNullException("v");
+				throw new ArgumentNullException ("v");
 			v.Value = value;
-			SendVariableValue(v);
+			SendVariableValue (v);
 		}
 
 		void Start ()
@@ -132,47 +128,12 @@ namespace Robotics.Messaging
 
 		void Run ()
 		{
-			// Preallocate messages (not thread-safe)
-			var header = new Header ();
-			var getVariablesMessage = new GetVariablesMessage();
-			var setVariableValueMessage = new SetVariableValueMessage();
-			var getCommandsMessage = new GetCommandsMessage();
-			var executeCommandMessage = new ExecuteCommandMessage();
+			var m = new Message ();
 
 			for (; ; ) {
 				try {
-					ReadHeader(header);
-
-					DebugPrint("Received header: " + header.ToString());
-
-					switch (header.Operation)
-					{
-						case ControlOp.GetVariables:
-							ReadMessage(getVariablesMessage);
-							ProcessMessage(getVariablesMessage);
-							break;
-
-						case ControlOp.SetVariableValue:
-							ReadMessage(setVariableValueMessage);
-							ProcessMessage(setVariableValueMessage);
-							break;
-
-						case ControlOp.GetCommands:
-							ReadMessage(getCommandsMessage);
-							ProcessMessage(getCommandsMessage);
-							break;
-
-						case ControlOp.ExecuteCommand:
-							ReadMessage(executeCommandMessage);
-							ProcessMessage(executeCommandMessage);
-							break;
-
-						default:
-							// Unrecognized operation
-							UnknownMessage unknownMessage = new UnknownMessage();
-							ReadMessage(unknownMessage);
-							break;
-					}
+					m.Read (stream);
+					ProcessMessage (m);
 				}
 				catch (Exception ex) {
 					DebugPrint ("!! " + ex + "\n");
@@ -181,82 +142,65 @@ namespace Robotics.Messaging
 			}
 		}
 
-		void ProcessMessage(GetVariablesMessage m)
+		void ProcessMessage (Message m)
 		{
-			foreach (Variable v in variables)
-			{
-				SendVariable(v);
-				DebugPrint("Sent Variable " + v.Name);
-#if MF_FRAMEWORK_VERSION_V4_3
-				Thread.Sleep (10); // Throttle
-#endif
-			}
-		}
 
-		void ProcessMessage(SetVariableValueMessage m)
-		{
-			foreach (ServerVariable v in variables)
-			{
-				if (v.Id == m.Id)
-				{
-					v.Value = m.Value;
-					DebugPrint("Set " + v.Name + " = " + m.Value);
-					break;
+			//HACK
+			DebugPrint ("Received message: " + ((ControlOp)m.Operation).ToString ());
+			//DebugPrint ("Received message: " + (ControlOp)m.Operation);
+
+			switch ((ControlOp)m.Operation) {
+			case ControlOp.GetVariables:
+				foreach (Variable v in variables) {
+					SendVariable (v);
+					DebugPrint ("Sent Variable " + v.Name);
+					#if MF_FRAMEWORK_VERSION_V4_3                        
+					Thread.Sleep (10); // Throttle
+					#endif
 				}
-			}
-		}
-
-		void ProcessMessage(GetCommandsMessage m)
-		{
-			foreach (Command c in commands)
-			{
-				SendCommand(c);
-				DebugPrint("Sent Command " + c.Name);
-#if MF_FRAMEWORK_VERSION_V4_3
-				Thread.Sleep (10); // Throttle
-#endif
-			}
-		}
-
-		void ProcessMessage(ExecuteCommandMessage m)
-		{
-			foreach (ServerCommand c in commands)
-			{
-				if (c.Id == m.CommandId)
-				{
-					var result = c.Function();
-					SendCommandResult(c, m.ExecutionId, result);
-					DebugPrint("Executed Command " + c.Name);
+				break;
+			case ControlOp.SetVariableValue: {
+					var id = (int)m.Arguments[0];
+					var val = m.Arguments[1];
+					foreach (ServerVariable v in variables) {
+						if (v.Id == id) {
+							v.Value = val;
+							DebugPrint ("Set " + v.Name + " = " + val);
+							break;
+						}
+					}
 				}
+				break;
+			case ControlOp.GetCommands:
+				foreach (Command c in commands) {
+					SendCommand (c);
+					DebugPrint ("Sent Command " + c.Name);
+					#if MF_FRAMEWORK_VERSION_V4_3
+					Thread.Sleep (10); // Throttle
+					#endif
+				}
+				break;
+			case ControlOp.ExecuteCommand: {
+					var id = (int)m.Arguments[0];
+					var executionId = (int)m.Arguments[1];
+					foreach (ServerCommand c in commands) {
+						if (c.Id == id) {
+							var result = c.Function ();
+							SendCommandResult (c, executionId, result);
+							DebugPrint ("Executed Command " + c.Name);
+						}
+					}
+				}
+				break;
 			}
-		}
-
-		void SendHeaderAndMessage(Message m)
-		{
-			var header = new Header(m.Operation);
-			header.Write(this.writer);
-			m.Write(this.writer);
-		}
-
-		void ReadHeader(Header h)
-		{
-			h.Read(this.reader);
-			DebugPrint("Received header: " + h.ToString());
-		}
-
-		void ReadMessage(Message m)
-		{
-			m.Read(this.reader);
-			DebugPrint("Received message: " + m.ToString());
 		}
 
 		[System.Diagnostics.Conditional("DEBUG")]
 		static void DebugPrint (string s)
 		{
-#if MF_FRAMEWORK_VERSION_V4_3
+			#if MF_FRAMEWORK_VERSION_V4_3
 			Microsoft.SPOT.Debug.Print (s);
-#endif
+			#endif
 		}
 	}
 }
-

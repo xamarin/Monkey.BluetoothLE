@@ -7,14 +7,12 @@ using System.Threading;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Robotics.Serialization;
 
 namespace Robotics.Messaging
 {
 	public class ControlClient
 	{
-		readonly ObjectReader reader;
-		readonly ObjectWriter writer;
+		readonly Stream stream;
 		readonly TaskScheduler scheduler;
 
 		class ClientVariable : Variable, INotifyPropertyChanged
@@ -72,33 +70,34 @@ namespace Robotics.Messaging
 
 		public ControlClient (Stream stream)
 		{
-			this.reader = new PortableBinaryObjectReader(stream);
-			this.writer = new PortableBinaryObjectWriter(stream);
+			this.stream = stream;
 			scheduler = TaskScheduler.FromCurrentSynchronizationContext ();
 		}
-			
+
 		Task GetVariablesAsync ()
 		{
 			Debug.WriteLine ("ControlClient.GetVariablesAsync");
-			return SendHeaderAndMessageAsync(new GetVariablesMessage ());
+			return (new Message ((byte)ControlOp.GetVariables)).WriteAsync (stream);
 		}
 
 		Task GetCommandsAsync ()
 		{
 			Debug.WriteLine ("ControlClient.GetCommandsAsync");
-			return SendHeaderAndMessageAsync(new GetCommandsMessage ());
+			return (new Message ((byte)ControlOp.GetCommands)).WriteAsync (stream);
 		}
 
 		Task SetVariableValueAsync (ClientVariable variable, object value)
 		{
-			return SendHeaderAndMessageAsync(new SetVariableValueMessage (variable, value));
+			// This is not async because it's always reading from a cache
+			// Variable updates come asynchronously
+			return (new Message ((byte)ControlOp.SetVariableValue, variable.Id, value)).WriteAsync (stream);
 		}
 
 		int eid = 1;
 
 		public Task ExecuteCommandAsync (Command command)
 		{
-			return SendHeaderAndMessageAsync(new ExecuteCommandMessage (command, eid++));
+			return (new Message ((byte)ControlOp.ExecuteCommand, command.Id, eid++)).WriteAsync (stream);
 		}
 
 		public async Task RunAsync (CancellationToken cancellationToken)
@@ -106,28 +105,27 @@ namespace Robotics.Messaging
 			await GetVariablesAsync ();
 			await GetCommandsAsync ();
 
-			var header = new Header ();
+			var m = new Message ();
 
 			while (!cancellationToken.IsCancellationRequested) {
 
-				await ReadHeaderAsync(header);
+				await m.ReadAsync (stream);
 
-				Debug.WriteLine ("Got header: " + header.ToString());
+				Debug.WriteLine ("Got message: " + (ControlOp)m.Operation + "(" + string.Join (", ", m.Arguments.Select (x => x.ToString ())) + ")");
 
-				switch ((ControlOp)header.Operation) {
+				switch ((ControlOp)m.Operation) {
 				case ControlOp.Variable:
 					{
-						var m = new VariableMessage();
-						await ReadMessageAsync(m);
-						var v = variables.FirstOrDefault (x => x.Id == m.Id);
+						var id = (int)m.Arguments [0];
+						var v = variables.FirstOrDefault (x => x.Id == id);
 						if (v == null) {
 							var cv = new ClientVariable {
 								Client = this,
-								Id = m.Id,
-								Name = m.Name,
-								IsWriteable = m.IsWriteable,
+								Id = id,
+								Name = (string)m.Arguments [1],
+								IsWriteable = (bool)m.Arguments [2],
 							};
-							cv.SetValue (m.Value);
+							cv.SetValue (m.Arguments [3]);
 							v = cv;
 							Schedule (() => variables.Add (v));
 						}
@@ -135,11 +133,10 @@ namespace Robotics.Messaging
 					break;
 				case ControlOp.VariableValue:
 					{
-						var m = new VariableValueMessage();
-						await ReadMessageAsync(m);
-						var cv = variables.FirstOrDefault (x => x.Id == m.Id) as ClientVariable;
+						var id = (int)m.Arguments [0];
+						var cv = variables.FirstOrDefault (x => x.Id == id) as ClientVariable;
 						if (cv != null) {
-							var newVal = m.Value;
+							var newVal = m.Arguments [1];
 							Schedule (() => cv.SetValue (newVal));
 						} else {
 							await GetVariablesAsync ();
@@ -148,55 +145,23 @@ namespace Robotics.Messaging
 					break;
 				case ControlOp.Command:
 					{
-						var m = new CommandMessage();
-						await ReadMessageAsync(m);
-						var c = commands.FirstOrDefault (x => x.Id == m.Id);
+						var id = (int)m.Arguments [0];
+						var c = commands.FirstOrDefault (x => x.Id == id);
 						if (c == null) {
 							var cc = new Command {
-								Id = m.Id,
-								Name = m.Name,
+								Id = id,
+								Name = (string)m.Arguments [1],
 							};
 							c = cc;
 							Schedule (() => commands.Add (c));
 						}
 					}
 					break;
-				default:
-					{
-						var m = new UnknownMessage();
-						await ReadMessageAsync(m);
-						Debug.WriteLine("Ignoring message: " + m.ToString());
-					}
-					break;
+					//				default:
+					//					Debug.WriteLine ("Ignoring message: " + m.Operation);
+					//					break;
 				}
 			}
 		}
-
-		private Task SendHeaderAndMessageAsync(Message m)
-		{
-			return Task.Run(() =>
-			{
-				var header = new Header(m.Operation);
-				header.Write(this.writer);
-				m.Write(this.writer);
-			});
-		}
-
-		private Task ReadHeaderAsync(Header h)
-		{
-			return Task.Run(() =>
-			{
-				h.Read(this.reader);
-			});
-		}
-
-		private Task ReadMessageAsync(Message m)
-		{
-			return Task.Run(() =>
-			{
-				m.Read(this.reader);
-			});
-		}
 	}
 }
-
