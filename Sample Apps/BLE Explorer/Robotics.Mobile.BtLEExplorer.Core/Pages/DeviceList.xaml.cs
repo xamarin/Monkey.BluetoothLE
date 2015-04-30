@@ -29,7 +29,7 @@ namespace Robotics.Mobile.BtLEExplorer
 			adapter.ScanTimeoutElapsed += (sender, e) => {
 				adapter.StopScanningForDevices(); // not sure why it doesn't stop already, if the timeout elapses... or is this a fake timeout we made?
 				Device.BeginInvokeOnMainThread ( () => {
-					DisplayAlert("Timeout", "Bluetooth scan timeout elapsed", "OK", "");
+					DisplayAlert("Timeout", "Bluetooth scan timeout elapsed", "OK");
 				});
 			};
 
