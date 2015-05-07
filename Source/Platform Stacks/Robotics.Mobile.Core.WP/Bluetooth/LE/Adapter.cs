@@ -40,6 +40,9 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         public async void StartScanningForDevices(Guid serviceUuid)
         {
+            if(this._isScanning == true)
+                return;
+
             this._discoveredDevices = new List<IDevice>();
 
             Console.WriteLine ("Adapter: Starting a scan for devices.");
@@ -59,6 +62,9 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
                     this._discoveredDevices.Add(d);
                     this.DeviceDiscovered(this, new DeviceDiscoveredEventArgs() {Device = d});
                 }
+
+                if (_isScanning == false)
+                    break;
             }
 
             this._isScanning = false;
@@ -76,13 +82,12 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         public void StopScanningForDevices()
         {
-            throw new NotImplementedException();
+            this._isScanning = false;
         }
 
         public void ConnectToDevice(IDevice device)
         {
             //TODO ConectToDevice
- 
             this._connectedDevices.Add(device);
             DeviceConnected(this, new DeviceConnectionEventArgs() {Device = device, ErrorMessage = "error"});
         }

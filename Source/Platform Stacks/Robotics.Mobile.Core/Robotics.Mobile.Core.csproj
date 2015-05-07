@@ -58,21 +58,18 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
     <None Include="BLE API Notes.md" />
-    <None Include="readme.md" />
     <None Include="packages.config" />
+    <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Bluetooth\LE\KnownServices.json" />
     <EmbeddedResource Include="Bluetooth\LE\KnownCharacteristics.json" />
     <EmbeddedResource Include="Bluetooth\LE\KnownDescriptors.json" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utils\" />
-    <Folder Include="Messaging\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\Sample Apps\BLE Explorer\packages\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
