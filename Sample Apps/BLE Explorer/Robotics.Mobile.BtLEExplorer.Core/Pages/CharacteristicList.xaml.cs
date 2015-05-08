@@ -14,6 +14,7 @@ namespace Robotics.Mobile.BtLEExplorer
 		IService service; 
 
 		ObservableCollection<ICharacteristic> characteristics;
+		Dictionary<Guid, ICharacteristic> guidToCharacteristic;
 
 		public CharacteristicList (IAdapter adapter, IDevice device, IService service)
 		{
@@ -22,6 +23,7 @@ namespace Robotics.Mobile.BtLEExplorer
 			this.device = device;
 			this.service = service;
 			this.characteristics = new ObservableCollection<ICharacteristic> ();
+			this.guidToCharacteristic = new Dictionary<Guid, ICharacteristic> ();
 
 			listView.ItemsSource = characteristics;
 
@@ -31,7 +33,11 @@ namespace Robotics.Mobile.BtLEExplorer
 				if (characteristics.Count == 0)
 					Device.BeginInvokeOnMainThread(() => {
 						foreach (var characteristic in service.Characteristics) {
-							characteristics.Add(characteristic);
+							if (!guidToCharacteristic.ContainsKey(characteristic.ID))
+							{
+								characteristics.Add(characteristic);
+								guidToCharacteristic.Add(characteristic.ID, characteristic);
+							}
 						}
 					});
 			};

@@ -12,17 +12,23 @@ namespace Robotics.Mobile.BtLEExplorer
 	{	
 		IAdapter adapter;
 		ObservableCollection<IDevice> devices;
+		Dictionary<Guid, IDevice> guidToDevices;
 
 		public DeviceList (IAdapter adapter)
 		{
 			InitializeComponent ();
 			this.adapter = adapter;
 			this.devices = new ObservableCollection<IDevice> ();
+			this.guidToDevices = new Dictionary<Guid, IDevice> ();
 			listView.ItemsSource = devices;
 
 			adapter.DeviceDiscovered += (object sender, DeviceDiscoveredEventArgs e) => {
 				Device.BeginInvokeOnMainThread(() => {
-					devices.Add (e.Device);
+					if (!guidToDevices.ContainsKey(e.Device.ID))
+					{
+						devices.Add (e.Device);
+						guidToDevices.Add(e.Device.ID, e.Device);
+					}
 				});
 			};
 
@@ -66,6 +72,7 @@ namespace Robotics.Mobile.BtLEExplorer
 				Debug.WriteLine ("adapter.StopScanningForDevices()");
 			} else {
 				devices.Clear();
+				guidToDevices.Clear ();
 				adapter.StartScanningForDevices(forService);
 				Debug.WriteLine ("adapter.StartScanningForDevices("+forService+")");
 			}
