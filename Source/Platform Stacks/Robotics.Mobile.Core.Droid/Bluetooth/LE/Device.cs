@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Android.Bluetooth;
 using System.Linq;
+using System.Threading;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -89,8 +90,17 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		public void Disconnect ()
 		{
-			this._gatt.Disconnect ();
-			this._gatt.Dispose ();
+			if (this._gatt != null) {
+				this._gatt.Disconnect ();
+				// From empirical results, simply gatt.disconnect follow by gatt.connect is not sufficient
+				// to reconnect to deviece (on Nexus 7 2013 with Adnroid 5.1.1)
+				// Calling gatt.Close() has more chance on the next connection attempt being successful. 
+				// Being said then, you should avoid using the same gatt client and gatt callback for more
+				// than one device. 
+				this._gatt.Close ();
+				this.GattCallback = null;
+				this._gatt = null;
+			}
 		}
 
 		#endregion

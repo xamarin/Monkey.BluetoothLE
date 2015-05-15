@@ -111,19 +111,30 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		public void ConnectToDevice (IDevice device)
 		{
 			var androidBleDevice = (Device)device;
-			var gattCallback = new GattCallback (androidBleDevice);
-			gattCallback.DeviceConnected += (object sender, DeviceConnectionEventArgs e) => {
-				this._connectedDevices.Add ( e.Device);
-				this.DeviceConnected (this, e);
-			};
+			if (androidBleDevice._gatt == null) {
+				var gattCallback = new GattCallback (androidBleDevice);
+				gattCallback.DeviceConnected += (object sender, DeviceConnectionEventArgs e) => {
+					this._connectedDevices.Add (e.Device);
+					this.DeviceConnected (this, e);
+				};
 
-			gattCallback.DeviceDisconnected += (object sender, DeviceConnectionEventArgs e) => {
-				this._connectedDevices.Remove(e.Device);
-				this.DeviceDisconnected (this, e);
-			};
+				gattCallback.DeviceDisconnected += (object sender, DeviceConnectionEventArgs e) => {
+					this._connectedDevices.Remove (e.Device);
+					this.DeviceDisconnected (this, e);
+				};
 
-			androidBleDevice.GattCallback = gattCallback;
-			androidBleDevice._gatt = ((BluetoothDevice)device.NativeDevice).ConnectGatt (Android.App.Application.Context, true, gattCallback);
+				androidBleDevice.GattCallback = gattCallback;
+				androidBleDevice._gatt = ((BluetoothDevice)device.NativeDevice).ConnectGatt (Android.App.Application.Context, false, gattCallback);
+				var success = androidBleDevice._gatt.Connect ();
+				Console.WriteLine(string.Format("Initial connection attempt is {0}", success));
+			} else {
+				switch (androidBleDevice.State) {
+				case DeviceState.Disconnected:
+					androidBleDevice.Disconnect ();
+					this.ConnectToDevice (androidBleDevice);
+					break;
+				}
+			}
 		}
 
 		public void DisconnectDevice (IDevice device)
