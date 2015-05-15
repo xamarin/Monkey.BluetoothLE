@@ -21,29 +21,7 @@ namespace Robotics.Mobile.BtLEExplorer
 			this.device = device;
 			this.services = new ObservableCollection<IService> ();
 			listView.ItemsSource = services;
-
-			// when device is connected
-			adapter.DeviceConnected += (s, e) => {
-				device = e.Device; // do we need to overwrite this?
-
-				// when services are discovered
-				device.ServicesDiscovered += (object se, EventArgs ea) => {
-					Debug.WriteLine("device.ServicesDiscovered");
-					//services = (List<IService>)device.Services;
-					if (services.Count == 0)
-						Device.BeginInvokeOnMainThread(() => {
-							foreach (var service in device.Services) {
-								services.Add(service);
-							}
-						});
-				};
-				// start looking for services
-				device.DiscoverServices ();
-
-			};
-			// TODO: add to IAdapter first
-			//adapter.DeviceFailedToConnect += (sender, else) => {};
-
+			adapter.DeviceConnected += this.OnDeviceConnected;
 			DisconnectButton.Activated += (sender, e) => {
 				adapter.DisconnectDevice (device);
 				Navigation.PopToRootAsync(); // disconnect means start over
@@ -70,6 +48,26 @@ namespace Robotics.Mobile.BtLEExplorer
 			Navigation.PushAsync(characteristicsPage);
 
 			((ListView)sender).SelectedItem = null; // clear selection
+		}
+
+		public void OnDeviceConnected(object sender, EventArgs args)
+		{
+			this.adapter.DeviceConnected -= this.OnDeviceConnected;
+			this.device.ServicesDiscovered += this.ServicesDiscovered;
+			this.device.DiscoverServices ();
+		}
+
+		public void ServicesDiscovered(object sender, EventArgs args)
+		{
+			this.device.ServicesDiscovered -= this.ServicesDiscovered;
+			Debug.WriteLine("device.ServicesDiscovered");
+			if (services.Count == 0) {
+				Device.BeginInvokeOnMainThread (() => {
+					foreach (var service in device.Services) {
+						services.Add (service);
+					}
+				});
+			}
 		}
 	}
 }
