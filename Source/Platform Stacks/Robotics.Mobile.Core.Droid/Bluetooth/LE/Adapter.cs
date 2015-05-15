@@ -19,7 +19,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		// class members
 		protected BluetoothManager _manager;
 		protected BluetoothAdapter _adapter;
-		protected GattCallback _gattCallback;
 
 		public bool IsScanning {
 			get { return this._isScanning; }
@@ -44,20 +43,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			// get a reference to the bluetooth system service
 			this._manager = (BluetoothManager) appContext.GetSystemService("bluetooth");
 			this._adapter = this._manager.Adapter;
-
-			this._gattCallback = new GattCallback (this);
-
-			this._gattCallback.DeviceConnected += (object sender, DeviceConnectionEventArgs e) => {
-				this._connectedDevices.Add ( e.Device);
-				this.DeviceConnected (this, e);
-			};
-
-			this._gattCallback.DeviceDisconnected += (object sender, DeviceConnectionEventArgs e) => {
-				// TODO: remove the disconnected device from the _connectedDevices list
-				// i don't think this will actually work, because i'm created a new underlying device here.
-				//if(this._connectedDevices.Contains(
-				this.DeviceDisconnected (this, e);
-			};
 		}
 
 		//TODO: scan for specific service type eg. HeartRateMonitor
@@ -125,9 +110,22 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		public void ConnectToDevice (IDevice device)
 		{
-			// returns the BluetoothGatt, which is the API for BLE stuff
-			// TERRIBLE API design on the part of google here.
-			((BluetoothDevice)device.NativeDevice).ConnectGatt (Android.App.Application.Context, true, this._gattCallback);
+			var gattCallback = new GattCallback ();
+			gattCallback.DeviceConnected += (object sender, DeviceConnectionEventArgs e) => {
+				this._connectedDevices.Add ( e.Device);
+				this.DeviceConnected (this, e);
+			};
+
+			gattCallback.DeviceDisconnected += (object sender, DeviceConnectionEventArgs e) => {
+				// TODO: remove the disconnected device from the _connectedDevices list
+				// i don't think this will actually work, because i'm created a new underlying device here.
+				//if(this._connectedDevices.Contains(
+				this.DeviceDisconnected (this, e);
+			};
+
+			var androidBleDevice = (Device)device;
+			androidBleDevice._gattCallback = gattCallback;
+			androidBleDevice._gatt = ((BluetoothDevice)device.NativeDevice).ConnectGatt (Android.App.Application.Context, true, gattCallback);
 		}
 
 		public void DisconnectDevice (IDevice device)

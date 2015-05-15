@@ -3,6 +3,9 @@ using Android.Bluetooth;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
+	/// <summary>
+	/// GattCallback has a 1 to 1 relation to each Device instance.
+	/// </summary>
 	public class GattCallback : BluetoothGattCallback
 	{
 
@@ -10,13 +13,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		public event EventHandler<DeviceConnectionEventArgs> DeviceDisconnected = delegate {};
 		public event EventHandler<ServicesDiscoveredEventArgs> ServicesDiscovered = delegate {};
 		public event EventHandler<CharacteristicReadEventArgs> CharacteristicValueUpdated = delegate {};
-
-		protected Adapter _adapter;
-
-		public GattCallback (Adapter adapter)
-		{
-			this._adapter = adapter;
-		}
 
 		public override void OnConnectionStateChange (BluetoothGatt gatt, GattStatus status, ProfileState newState)
 		{

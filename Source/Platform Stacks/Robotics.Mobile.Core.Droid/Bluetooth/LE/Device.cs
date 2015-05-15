@@ -16,12 +16,12 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		/// 
 		/// TODO: consider wrapping the Gatt and Callback into a single object and passing that around instead.
 		/// </summary>
-		protected BluetoothGatt _gatt;
+		internal BluetoothGatt _gatt;
 		/// <summary>
 		/// we also track this because of gogole's weird API. the gatt callback is where
 		/// we'll get notified when services are enumerated
 		/// </summary>
-		protected GattCallback _gattCallback;
+		internal GattCallback _gattCallback;
 
 		public Device (BluetoothDevice nativeDevice, BluetoothGatt gatt, 
 			GattCallback gattCallback, int rssi) : base ()
