@@ -110,21 +110,19 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		public void ConnectToDevice (IDevice device)
 		{
-			var gattCallback = new GattCallback ();
+			var androidBleDevice = (Device)device;
+			var gattCallback = new GattCallback (androidBleDevice);
 			gattCallback.DeviceConnected += (object sender, DeviceConnectionEventArgs e) => {
 				this._connectedDevices.Add ( e.Device);
 				this.DeviceConnected (this, e);
 			};
 
 			gattCallback.DeviceDisconnected += (object sender, DeviceConnectionEventArgs e) => {
-				// TODO: remove the disconnected device from the _connectedDevices list
-				// i don't think this will actually work, because i'm created a new underlying device here.
-				//if(this._connectedDevices.Contains(
+				this._connectedDevices.Remove(e.Device);
 				this.DeviceDisconnected (this, e);
 			};
 
-			var androidBleDevice = (Device)device;
-			androidBleDevice._gattCallback = gattCallback;
+			androidBleDevice.GattCallback = gattCallback;
 			androidBleDevice._gatt = ((BluetoothDevice)device.NativeDevice).ConnectGatt (Android.App.Application.Context, true, gattCallback);
 		}
 

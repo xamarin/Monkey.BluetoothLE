@@ -14,19 +14,25 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		public event EventHandler<ServicesDiscoveredEventArgs> ServicesDiscovered = delegate {};
 		public event EventHandler<CharacteristicReadEventArgs> CharacteristicValueUpdated = delegate {};
 
+		private Device _device;
+
+		public GattCallback(Device device)
+		{
+			this._device = device;
+		}
+
 		public override void OnConnectionStateChange (BluetoothGatt gatt, GattStatus status, ProfileState newState)
 		{
-			Console.WriteLine ("OnConnectionStateChange: ");
 			base.OnConnectionStateChange (gatt, status, newState);
 
-			//TODO: need to pull the cached RSSI in here, or read it (requires the callback)
-			Device device = new Device (gatt.Device, gatt, this, 0);
+			Console.WriteLine ("OnConnectionStateChange: ");
 
+			this._device._profileState = newState;
 			switch (newState) {
 			// disconnected
 			case ProfileState.Disconnected:
 				Console.WriteLine ("disconnected");
-				this.DeviceDisconnected (this, new DeviceConnectionEventArgs () { Device = device });
+				this.DeviceDisconnected (this, new DeviceConnectionEventArgs () { Device = this._device });
 				break;
 				// connecting
 			case ProfileState.Connecting:
@@ -35,7 +41,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				// connected
 			case ProfileState.Connected:
 				Console.WriteLine ("Connected");
-				this.DeviceConnected (this, new DeviceConnectionEventArgs () { Device = device });
+				this.DeviceConnected (this, new DeviceConnectionEventArgs () { Device = this._device });
 				break;
 				// disconnecting
 			case ProfileState.Disconnecting:
@@ -81,6 +87,12 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			this.CharacteristicValueUpdated (this, new CharacteristicReadEventArgs () { 
 				Characteristic = new Characteristic (characteristic, gatt, this) }
 			);
+		}
+
+		public override void OnReadRemoteRssi (BluetoothGatt gatt, int rssi, GattStatus status)
+		{
+			base.OnReadRemoteRssi (gatt, rssi, status);
+			this._device._rssi = rssi;
 		}
 	}
 }
