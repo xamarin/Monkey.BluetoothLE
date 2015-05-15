@@ -122,6 +122,11 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		internal GattCallback GattCallback
 		{
+			get
+			{
+				return this._gattCallback;
+			}
+
 			set
 			{
 				this._gattCallback = value;
@@ -131,7 +136,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 						var services = this._gatt.Services;
 						this._services = new List<IService> ();
 						foreach (var item in services) {
-							this._services.Add (new Service (item, this._gatt, this._gattCallback));
+							this._services.Add (new Service (item, this));
 						}
 						this.ServicesDiscovered (this, e);
 					};

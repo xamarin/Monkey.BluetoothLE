@@ -74,7 +74,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			Console.WriteLine ("OnCharacteristicRead: " + characteristic.GetStringValue (0));
 
 			this.CharacteristicValueUpdated (this, new CharacteristicReadEventArgs () { 
-				Characteristic = new Characteristic (characteristic, gatt, this) }
+				Characteristic = new Characteristic (characteristic, this._device) }
 			);
 		}
 
@@ -85,7 +85,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			Console.WriteLine ("OnCharacteristicChanged: " + characteristic.GetStringValue (0));
 
 			this.CharacteristicValueUpdated (this, new CharacteristicReadEventArgs () { 
-				Characteristic = new Characteristic (characteristic, gatt, this) }
+				Characteristic = new Characteristic (characteristic, this._device) }
 			);
 		}
 
