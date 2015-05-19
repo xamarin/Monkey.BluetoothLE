@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Android.Bluetooth;
 using System.Threading.Tasks;
+using Java.Util;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -45,22 +46,28 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			this._adapter = this._manager.Adapter;
 		}
 
-		//TODO: scan for specific service type eg. HeartRateMonitor
-		public async void StartScanningForDevices (Guid serviceUuid)
-		{
-			StartScanningForDevices ();
-//			throw new NotImplementedException ("Not implemented on Android yet, look at _adapter.StartLeScan() overload");
-		}
-		public async void StartScanningForDevices ()
+        public async void StartScanningForDevices ()
+        {
+            this.StartScanningForDevices(Guid.Empty);
+        }
+
+        public async void StartScanningForDevices (Guid serviceUuid)
 		{
 			Console.WriteLine ("Adapter: Starting a scan for devices.");
 
 			// clear out the list
 			this._discoveredDevices = new List<IDevice> ();
 
+            UUID[] serviceUuids = null;
+            if (serviceUuid != Guid.Empty)
+            {
+                serviceUuids = new UUID[1];
+                serviceUuids[0] = UUID.FromString(serviceUuid.ToString());
+            }
+
 			// start scanning
 			this._isScanning = true;
-			this._adapter.StartLeScan (this);
+            this._adapter.StartLeScan (serviceUuids, this);
 
 			// in 10 seconds, stop the scan
 			await Task.Delay (10000);
