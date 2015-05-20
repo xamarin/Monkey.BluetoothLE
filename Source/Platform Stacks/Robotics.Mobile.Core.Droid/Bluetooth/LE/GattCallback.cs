@@ -67,6 +67,12 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		}
 
+		public override void OnCharacteristicWrite (BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, GattStatus status)
+		{
+			base.OnCharacteristicWrite(gatt, characteristic, status);
+			Console.WriteLine (string.Format("OnCharacteristicWrite: Status: {0}", status));
+		}
+
 		public override void OnCharacteristicRead (BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, GattStatus status)
 		{
 			base.OnCharacteristicRead (gatt, characteristic, status);
