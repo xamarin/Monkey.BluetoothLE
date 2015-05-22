@@ -12,7 +12,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 	public class Characteristic : ICharacteristic
 	{
 		public event EventHandler<CharacteristicReadEventArgs> ValueUpdated = delegate {};
-
+		public event EventHandler<CharacteristicWrittenEventArgs> ValueWritten = delegate {};
 
 		protected BluetoothGattCharacteristic _nativeCharacteristic;
 		protected Device _device;
@@ -94,7 +94,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		//NOTE: why this requires Apple, we have no idea. BLE stands for Mystery.
 		public bool CanWrite {get{return (this.Properties & CharacteristicPropertyType.WriteWithoutResponse | CharacteristicPropertyType.AppleWriteWithoutResponse) != 0; }}
 
-		// HACK: UNTESTED - this API has only been tested on iOS
 		public void Write (byte[] data)
 		{
 			if (!CanWrite) {
@@ -103,11 +102,16 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 			var c = _nativeCharacteristic;
 			c.SetValue (data);
+			this._device.GattCallback.CharacteristicValueWritten += this.OnWritten;
 			this._device._gatt.WriteCharacteristic (c);
 			Console.WriteLine(".....Write");
 		}
 
-
+		public void OnWritten(object sender, CharacteristicWrittenEventArgs args)
+		{
+			this._device.GattCallback.CharacteristicValueWritten -= this.OnWritten;
+			this.ValueWritten (sender, args);
+		}
 
 		// HACK: UNTESTED - this API has only been tested on iOS
 		public Task<ICharacteristic> ReadAsync()
