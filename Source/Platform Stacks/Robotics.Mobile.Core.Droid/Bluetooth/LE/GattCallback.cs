@@ -13,6 +13,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		public event EventHandler<DeviceConnectionEventArgs> DeviceDisconnected = delegate {};
 		public event EventHandler<ServicesDiscoveredEventArgs> ServicesDiscovered = delegate {};
 		public event EventHandler<CharacteristicReadEventArgs> CharacteristicValueUpdated = delegate {};
+		public event EventHandler<CharacteristicWrittenEventArgs> CharacteristicValueWritten = delegate {};
 
 		private Device _device;
 
@@ -71,6 +72,9 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		{
 			base.OnCharacteristicWrite(gatt, characteristic, status);
 			Console.WriteLine (string.Format("OnCharacteristicWrite: Status: {0}", status));
+			this.CharacteristicValueWritten (this, new CharacteristicWrittenEventArgs () { 
+				Characteristic = new Characteristic (characteristic, this._device) }
+			);
 		}
 
 		public override void OnCharacteristicRead (BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, GattStatus status)

@@ -18,6 +18,9 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 	{
 		public event EventHandler<CharacteristicReadEventArgs> ValueUpdated = delegate {};
 
+		// TODO|github@stevenmoy.com: ValueWritten is not wired up yet.
+		public event EventHandler<CharacteristicWrittenEventArgs> ValueWritten = delegate {};
+
 		protected CBCharacteristic _nativeCharacteristic;
 		CBPeripheral _parentDevice;
 
