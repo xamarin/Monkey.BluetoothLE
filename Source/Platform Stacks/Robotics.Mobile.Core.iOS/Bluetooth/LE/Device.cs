@@ -21,20 +21,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		{
 			this._nativeDevice = nativeDevice;
 
-			this._nativeDevice.DiscoveredService += (object sender, NSErrorEventArgs e) => {
-				// why we have to do this check is beyond me. if a service has been discovered, the collection
-				// shouldn't be null, but sometimes it is. le sigh, apple.
-				if (this._nativeDevice.Services != null) {
-					foreach (CBService s in this._nativeDevice.Services) {
-						Console.WriteLine ("Device.Discovered Service: " + s.Description);
-						if(!ServiceExists(s)) {
-							this._services.Add (new Service(s, this._nativeDevice));
-						}
-					}
-					this.ServicesDiscovered(this, new EventArgs());
-				}
-			};
-
 			#if __UNIFIED__
 			// fixed for Unified https://bugzilla.xamarin.com/show_bug.cgi?id=14893
 			this._nativeDevice.DiscoveredCharacteristic += (object sender, CBServiceEventArgs e) => {
@@ -115,8 +101,25 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		#region public methods 
 
+        public void DiscoveredService(object sender, NSErrorEventArgs e)
+        {
+            this._nativeDevice.DiscoveredService -= this.DiscoveredService;
+            // why we have to do this check is beyond me. if a service has been discovered, the collection
+            // shouldn't be null, but sometimes it is. le sigh, apple.
+            if (this._nativeDevice.Services != null) {
+                foreach (CBService s in this._nativeDevice.Services) {
+                    Console.WriteLine ("Device.Discovered Service: " + s.Description);
+                    if(!ServiceExists(s)) {
+                        this._services.Add (new Service(s, this._nativeDevice));
+                    }
+                }
+                this.ServicesDiscovered(this, new EventArgs());
+            }
+        }
+
 		public override void DiscoverServices ()
 		{
+            this._nativeDevice.DiscoveredService += this.DiscoveredService;
 			this._nativeDevice.DiscoverServices();
 		}
 
