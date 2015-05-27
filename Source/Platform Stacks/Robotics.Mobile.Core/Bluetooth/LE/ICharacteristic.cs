@@ -8,8 +8,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 	{
 		// events
 		event EventHandler<CharacteristicReadEventArgs> ValueUpdated;
-
-		// TODO|github@stevenmoy.com: iOS implementation for ValueWritten is not wired up yet.
 		event EventHandler<CharacteristicWrittenEventArgs> ValueWritten;
 
 		// properties

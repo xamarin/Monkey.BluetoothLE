@@ -17,8 +17,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 	public class Characteristic : ICharacteristic
 	{
 		public event EventHandler<CharacteristicReadEventArgs> ValueUpdated = delegate {};
-
-		// TODO|github@stevenmoy.com: ValueWritten is not wired up yet.
 		public event EventHandler<CharacteristicWrittenEventArgs> ValueWritten = delegate {};
 
 		protected CBCharacteristic _nativeCharacteristic;
@@ -126,6 +124,11 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				CBCharacteristicWriteType.WithoutResponse :
 				CBCharacteristicWriteType.WithResponse;
 
+            if (t == CBCharacteristicWriteType.WithResponse)
+            {
+                _parentDevice.WroteCharacteristicValue += this.UpdatedWrite;
+            }
+
 			_parentDevice.WriteValue (nsdata, descriptor, t);
 
 //			Console.WriteLine ("** Characteristic.Write, Type = " + t + ", Data = " + BitConverter.ToString (data));
@@ -178,6 +181,15 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				Characteristic = new Characteristic(e.Characteristic, _parentDevice)
 			});
 		}
+
+        public void UpdatedWrite (object sender, CBCharacteristicEventArgs e)
+        {
+            this.ValueWritten(this, new CharacteristicWrittenEventArgs()
+            {
+                Characteristic = new Characteristic(e.Characteristic, _parentDevice)
+            });
+            _parentDevice.WroteCharacteristicValue -= this.UpdatedWrite;
+        }
 
 		//TODO: this is the exact same as ServiceUuid i think
 		public static Guid CharacteristicUuidToGuid ( CBUUID uuid)
