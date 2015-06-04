@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Threading;
 
+using System.Diagnostics;
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
 	public class Characteristic : ICharacteristic
@@ -46,10 +47,10 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 						try {
 							this.ValueUpdated (this, e);
 						} catch (Exception error) {
-							Console.WriteLine ("Characteristic.ValueUpdated on droid exception" + error);
+							Debug.WriteLine ("Characteristic.ValueUpdated on droid exception" + error);
 						}
 					}
-					Console.WriteLine ("Characteristic.droid read" + e.Characteristic.Value);
+					//Debug.WriteLine ("Characteristic.droid read" + BitConverter.ToString(e.Characteristic.Value));
 				};
 			}
 		}
@@ -122,7 +123,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			var c = _nativeCharacteristic;
 			c.SetValue (data);
 			this._gatt.WriteCharacteristic (c);
-			Console.WriteLine (".....Write Message: " + BitConverter.ToString (c.GetValue ()));
+			Debug.WriteLine (".....Write Message: " + BitConverter.ToString (c.GetValue ()));
 		}
 
 		public Task<ICharacteristic> ReadAsync ()
@@ -142,7 +143,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 					this._gattCallback.CharacteristicValueUpdated -= updated;
 				}
 
-				Console.WriteLine (".....CharacteristicValueUpdated.droid.ReadAsync: " + BitConverter.ToString (c.Value));
+				Debug.WriteLine (".....CharacteristicValueUpdated.droid.ReadAsync: " + BitConverter.ToString (c.Value));
 
 			};
 
@@ -151,7 +152,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				this._gattCallback.CharacteristicValueUpdated += updated;
 			}
 
-			Console.WriteLine (".....ReadAsync ");
+			Debug.WriteLine (".....ReadAsync ");
 
 			this._gatt.ReadCharacteristic (this._nativeCharacteristic);
 
@@ -163,11 +164,11 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 			bool successful = false;
 			if (CanRead) {
-				Console.WriteLine ("Characteristic.RequestValue, PropertyType = Read, requesting updates");
+				Debug.WriteLine ("Characteristic.RequestValue, PropertyType = Read, requesting updates");
 				successful = this._gatt.ReadCharacteristic (this._nativeCharacteristic);
 			}
 
-			if (CanUpdate || CanWrite) {
+			if (CanUpdate) {
 				Console.WriteLine ("Characteristic.RequestValue, PropertyType = Notify, requesting updates");
 
 				successful = this._gatt.SetCharacteristicNotification (this._nativeCharacteristic, true);
@@ -181,29 +182,29 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				//
 
 				if (successful == false) {
-					Console.WriteLine ("Characteristic.SetCharacteristicNotification failed!");
+					Debug.WriteLine ("Characteristic.SetCharacteristicNotification failed!");
 				}
 
 				if (_nativeCharacteristic.Descriptors.Count > 0) {
 
 					// Loop through descriptors of the characteristic
-					//foreach (BluetoothGattDescriptor _descriptor in _nativeCharacteristic.Descriptors) {
+					//foreach(BluetoothGattDescriptor _descriptor in _nativeCharacteristic.Descriptors){
 
-					BluetoothGattDescriptor descriptor =  _nativeCharacteristic.Descriptors[0];
-						descriptor.SetValue (BluetoothGattDescriptor.EnableNotificationValue.ToArray ());
+					BluetoothGattDescriptor descriptor = _nativeCharacteristic.Descriptors[0];
+					descriptor.SetValue (BluetoothGattDescriptor.EnableNotificationValue.ToArray ());
 
-						// Make ure the discriptor has bytes.
-						if (descriptor.GetValue ().Length > 0) {
+					// Make ure the discriptor has bytes.
+					if (descriptor.GetValue ().Length > 0) {
 
-							/*
+						/*
 								setup the discriptor after a wait to make sure SetCharacteristicNotification has time to initialize
 								Otherwise a Read- notify in forms will fail here
 								http://developer.android.com/guide/topics/connectivity/bluetooth-le.html#notification
 							*/
-							Task.Delay (2000).Wait (); // wait after a valid discriptor is found. 1500 miliseconds fails, 2000 passes in forms.
-							_gatt.WriteDescriptor (descriptor);
-							break;
-						}
+						Task.Delay (2000).Wait (); // wait after a valid discriptor is found. 1500 miliseconds fails, 2000 passes in forms.
+						_gatt.WriteDescriptor (descriptor);
+						//break;
+					}
 
 					//}
 
@@ -219,7 +220,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			bool successful = false;
 			if (CanUpdate || CanRead) {
 				successful = this._gatt.SetCharacteristicNotification (this._nativeCharacteristic, false);
-				Console.WriteLine ("Characteristic.RequestValue, PropertyType = Notify, STOP updates");
+				Debug.WriteLine ("Characteristic.RequestValue, PropertyType = Notify, STOP updates");
 			}
 		}
 	}
