@@ -187,9 +187,9 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				if (_nativeCharacteristic.Descriptors.Count > 0) {
 
 					// Loop through descriptors of the characteristic
-					foreach (BluetoothGattDescriptor _descriptor in _nativeCharacteristic.Descriptors) {
+					//foreach (BluetoothGattDescriptor _descriptor in _nativeCharacteristic.Descriptors) {
 
-						BluetoothGattDescriptor descriptor = _descriptor;
+					BluetoothGattDescriptor descriptor =  _nativeCharacteristic.Descriptors[0];
 						descriptor.SetValue (BluetoothGattDescriptor.EnableNotificationValue.ToArray ());
 
 						// Make ure the discriptor has bytes.
@@ -201,11 +201,11 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 								http://developer.android.com/guide/topics/connectivity/bluetooth-le.html#notification
 							*/
 							Task.Delay (2000).Wait (); // wait after a valid discriptor is found. 1500 miliseconds fails, 2000 passes in forms.
-							_gatt.WriteDescriptor (_descriptor);
+							_gatt.WriteDescriptor (descriptor);
 							break;
 						}
 
-					}
+					//}
 
 				} else {
 					Console.WriteLine ("RequestValue, FAILED: _nativeCharacteristic.Descriptors was empty, not sure why");
