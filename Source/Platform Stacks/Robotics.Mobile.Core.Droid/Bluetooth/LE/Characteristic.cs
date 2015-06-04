@@ -6,11 +6,14 @@ using System.Linq;
 using Java.Util;
 using Android.Media;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
 	public class Characteristic : ICharacteristic
 	{
+
 		public event EventHandler<CharacteristicReadEventArgs> ValueUpdated = delegate {};
 
 
@@ -37,13 +40,16 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				// wire up the characteristic value updating on the gattcallback
 				this._gattCallback.CharacteristicValueUpdated += (object sender, CharacteristicReadEventArgs e) => {
 					// it may be other characteristics, so we need to test
-					if(e.Characteristic.ID == this.ID) {
-						// update our underlying characteristic (this one will have a value)
-						//TODO: is this necessary? probably the underlying reference is the same.
-						//this._nativeCharacteristic = e.Characteristic;
 
-						this.ValueUpdated (this, e);
+					if (e.Characteristic.ID == this.ID) {
+						// update our underlying characteristic (this one will have a value)
+						try {
+							this.ValueUpdated (this, e);
+						} catch (Exception error) {
+							Console.WriteLine ("Characteristic.ValueUpdated on droid exception" + error);
+						}
 					}
+					Console.WriteLine ("Characteristic.droid read" + e.Characteristic.Value);
 				};
 			}
 		}
@@ -53,7 +59,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		}
 
 		public Guid ID {
-			get { return Guid.Parse( this._nativeCharacteristic.Uuid.ToString() ); }
+			get { return Guid.Parse (this._nativeCharacteristic.Uuid.ToString ()); }
 		}
 
 		public byte[] Value {
@@ -91,7 +97,9 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				}
 				return this._descriptors;
 			}
-		} protected IList<IDescriptor> _descriptors;
+		}
+
+		protected IList<IDescriptor> _descriptors;
 
 		public object NativeCharacteristic {
 			get {
@@ -99,12 +107,12 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			}
 		}
 
-		public bool CanRead {get{return (this.Properties & CharacteristicPropertyType.Read) != 0; }}
-		public bool CanUpdate {get{return (this.Properties & CharacteristicPropertyType.Notify) != 0; }}
-		//NOTE: why this requires Apple, we have no idea. BLE stands for Mystery.
-		public bool CanWrite {get{return (this.Properties & CharacteristicPropertyType.WriteWithoutResponse | CharacteristicPropertyType.AppleWriteWithoutResponse) != 0; }}
+		public bool CanRead { get { return (this.Properties & CharacteristicPropertyType.Read) != 0; } }
 
-		// HACK: UNTESTED - this API has only been tested on iOS
+		public bool CanUpdate { get { return (this.Properties & CharacteristicPropertyType.Notify) != 0; } }
+
+		public bool CanWrite { get { return (this.Properties & CharacteristicPropertyType.WriteWithoutResponse | CharacteristicPropertyType.AppleWriteWithoutResponse) != 0; } }
+
 		public void Write (byte[] data)
 		{
 			if (!CanWrite) {
@@ -114,15 +122,12 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			var c = _nativeCharacteristic;
 			c.SetValue (data);
 			this._gatt.WriteCharacteristic (c);
-			Console.WriteLine(".....Write");
+			Console.WriteLine (".....Write Message: " + BitConverter.ToString (c.GetValue ()));
 		}
 
-
-
-		// HACK: UNTESTED - this API has only been tested on iOS
-		public Task<ICharacteristic> ReadAsync()
+		public Task<ICharacteristic> ReadAsync ()
 		{
-			var tcs = new TaskCompletionSource<ICharacteristic>();
+			var tcs = new TaskCompletionSource<ICharacteristic> ();
 
 			if (!CanRead) {
 				throw new InvalidOperationException ("Characteristic does not support READ");
@@ -131,20 +136,23 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			updated = (object sender, CharacteristicReadEventArgs e) => {
 				// it may be other characteristics, so we need to test
 				var c = e.Characteristic;
-				tcs.SetResult(c);
+				tcs.SetResult (c);
 				if (this._gattCallback != null) {
 					// wire up the characteristic value updating on the gattcallback
 					this._gattCallback.CharacteristicValueUpdated -= updated;
 				}
-			};
 
+				Console.WriteLine (".....CharacteristicValueUpdated.droid.ReadAsync: " + BitConverter.ToString (c.Value));
+
+			};
 
 			if (this._gattCallback != null) {
 				// wire up the characteristic value updating on the gattcallback
 				this._gattCallback.CharacteristicValueUpdated += updated;
 			}
 
-			Console.WriteLine(".....ReadAsync");
+			Console.WriteLine (".....ReadAsync ");
+
 			this._gatt.ReadCharacteristic (this._nativeCharacteristic);
 
 			return tcs.Task;
@@ -152,15 +160,16 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		public void StartUpdates ()
 		{
-			// TODO: should be bool RequestValue? compare iOS API for commonality
+
 			bool successful = false;
 			if (CanRead) {
 				Console.WriteLine ("Characteristic.RequestValue, PropertyType = Read, requesting updates");
 				successful = this._gatt.ReadCharacteristic (this._nativeCharacteristic);
 			}
-			if (CanUpdate) {
+
+			if (CanUpdate || CanWrite) {
 				Console.WriteLine ("Characteristic.RequestValue, PropertyType = Notify, requesting updates");
-				
+
 				successful = this._gatt.SetCharacteristicNotification (this._nativeCharacteristic, true);
 
 				// [TO20131211@1634] It seems that setting the notification above isn't enough. You have to set the NOTIFY
@@ -170,31 +179,48 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				// to what is going on):
 				// http://developer.android.com/guide/topics/connectivity/bluetooth-le.html#notification
 				//
-				// HACK: further detail, in the Forms client this only seems to work with a breakpoint on it
-				// (ie. it probably needs to wait until the above 'SetCharacteristicNofication' is done before doing this...?????? [CD]
-				System.Threading.Thread.Sleep(100); // HACK: did i mention this was a hack?????????? [CD] 50ms was too short, 100ms seems to work
+
+				if (successful == false) {
+					Console.WriteLine ("Characteristic.SetCharacteristicNotification failed!");
+				}
 
 				if (_nativeCharacteristic.Descriptors.Count > 0) {
-					BluetoothGattDescriptor descriptor = _nativeCharacteristic.Descriptors [0];
-					descriptor.SetValue (BluetoothGattDescriptor.EnableNotificationValue.ToArray ());
-					_gatt.WriteDescriptor (descriptor);
+
+					// Loop through descriptors of the characteristic
+					foreach (BluetoothGattDescriptor _descriptor in _nativeCharacteristic.Descriptors) {
+
+						BluetoothGattDescriptor descriptor = _descriptor;
+						descriptor.SetValue (BluetoothGattDescriptor.EnableNotificationValue.ToArray ());
+
+						// Make ure the discriptor has bytes.
+						if (descriptor.GetValue ().Length > 0) {
+
+							/*
+								setup the discriptor after a wait to make sure SetCharacteristicNotification has time to initialize
+								Otherwise a Read- notify in forms will fail here
+								http://developer.android.com/guide/topics/connectivity/bluetooth-le.html#notification
+							*/
+							Task.Delay (2000).Wait (); // wait after a valid discriptor is found. 1500 miliseconds fails, 2000 passes in forms.
+							_gatt.WriteDescriptor (_descriptor);
+							break;
+						}
+
+					}
+
 				} else {
 					Console.WriteLine ("RequestValue, FAILED: _nativeCharacteristic.Descriptors was empty, not sure why");
 				}
 			}
 
-			Console.WriteLine ("RequestValue, Succesful: " + successful.ToString());
 		}
 
 		public void StopUpdates ()
 		{
 			bool successful = false;
-			if (CanUpdate) {
+			if (CanUpdate || CanRead) {
 				successful = this._gatt.SetCharacteristicNotification (this._nativeCharacteristic, false);
-				//TODO: determine whether 
 				Console.WriteLine ("Characteristic.RequestValue, PropertyType = Notify, STOP updates");
 			}
 		}
 	}
 }
-
