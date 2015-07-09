@@ -107,9 +107,8 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 			if (!DeviceExistsInDiscoveredList (bleDevice))
 				this._discoveredDevices.Add	(device);
-			// TODO: in the cross platform API, cache the RSSI
 			// TODO: shouldn't i only raise this if it's not already in the list?
-			this.DeviceDiscovered (this, new DeviceDiscoveredEventArgs { Device = device });
+			this.DeviceDiscovered (this, new DeviceDiscoveredEventArgs { Device = device, RSSI = rssi });
 		}
 
 		protected bool DeviceExistsInDiscoveredList(BluetoothDevice device)

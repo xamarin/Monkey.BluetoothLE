@@ -66,7 +66,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				Device d = new Device(e.Peripheral);
 				if(!ContainsDevice(this._discoveredDevices, e.Peripheral ) ){
 					this._discoveredDevices.Add (d);
-					this.DeviceDiscovered(this, new DeviceDiscoveredEventArgs() { Device = d });
+					this.DeviceDiscovered(this, new DeviceDiscoveredEventArgs() { Device = d, RSSI = (int)e.RSSI });
 				}
 			};
 
