@@ -36,7 +36,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		public byte[] Value {
 			get { 
-				if (_nativeCharacteristic.Value == null)
+				if (this._nativeCharacteristic.Value == null || this._nativeCharacteristic.Value.Length == 0)
 					return null;
 				return this._nativeCharacteristic.Value.ToArray(); 
 			}
