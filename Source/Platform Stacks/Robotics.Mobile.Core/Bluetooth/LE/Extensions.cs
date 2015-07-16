@@ -42,7 +42,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		public static Task<IDevice> ConnectAsync (this IAdapter adapter, IDevice device)
 		{
 			if (device.State == DeviceState.Connected)
-				return Task.FromResult<IDevice> (null);
+				return Task.FromResult<IDevice> (device);
 
 			var tcs = new TaskCompletionSource<IDevice> ();
 			EventHandler<DeviceConnectionEventArgs> h = null;
