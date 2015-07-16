@@ -8,6 +8,8 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		public int RSSI { get ; set ;}
 
+		public byte[] ScanRecords { get ; set ; }
+
 		public DeviceDiscoveredEventArgs() : base()
 		{}
 	}

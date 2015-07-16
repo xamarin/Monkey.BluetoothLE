@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Diagnostics;
+using System.Linq;
 
 #if __UNIFIED__
 using CoreBluetooth;
 using CoreFoundation;
+using Foundation;
 #else
 using MonoTouch.CoreBluetooth;
 using MonoTouch.CoreFoundation;
@@ -65,8 +67,17 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				Console.WriteLine ("DiscoveredPeripheral: " + e.Peripheral.Name);
 				Device d = new Device(e.Peripheral);
 				if(!ContainsDevice(this._discoveredDevices, e.Peripheral ) ){
+
+					byte[] scandata = null;
+
+					var advDataService = e.AdvertisementData.Where (item => new NSString ("kCBAdvDataServiceData").Equals (item.Key)) as KeyValuePair<NSObject, NSObject>;
+
+					NSMutableDictionary result = advDataService.Value as NSMutableDictionary;
+
+					var data = result[result.Keys[0]] as NSData;
+
 					this._discoveredDevices.Add (d);
-					this.DeviceDiscovered(this, new DeviceDiscoveredEventArgs() { Device = d, RSSI = (int)e.RSSI });
+					this.DeviceDiscovered(this, new DeviceDiscoveredEventArgs() { Device = d, RSSI = (int)e.RSSI, ScanRecords = data });
 				}
 			};
 

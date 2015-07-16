@@ -54,6 +54,20 @@
     <Compile Include="Messaging\Control.cs" />
     <Compile Include="Messaging\ControlClient.cs" />
     <Compile Include="Messaging\ControlServer.cs" />
+    <Compile Include="Bluetooth\Advertisement\AdElement.cs" />
+    <Compile Include="Bluetooth\Advertisement\Type128BitUUIDs.cs" />
+    <Compile Include="Bluetooth\Advertisement\Type16BitUUIDs.cs" />
+    <Compile Include="Bluetooth\Advertisement\Type32BitUUIDs.cs" />
+    <Compile Include="Bluetooth\Advertisement\TypeByteDump.cs" />
+    <Compile Include="Bluetooth\Advertisement\TypeFlags.cs" />
+    <Compile Include="Bluetooth\Advertisement\TypeManufacturerData.cs" />
+    <Compile Include="Bluetooth\Advertisement\TypeSecOOBFlags.cs" />
+    <Compile Include="Bluetooth\Advertisement\TypeSlaveConnectionIntervalRange.cs" />
+    <Compile Include="Bluetooth\Advertisement\TypeString.cs" />
+    <Compile Include="Bluetooth\Advertisement\TypeTXPowerLevel.cs" />
+    <Compile Include="Bluetooth\Advertisement\TypeUnknown.cs" />
+    <Compile Include="Bluetooth\Advertisement\AdParser.cs" />
+    <Compile Include="Bluetooth\Advertisement\Uuid.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -69,10 +83,11 @@
   <ItemGroup>
     <Folder Include="Utils\" />
     <Folder Include="Messaging\" />
+    <Folder Include="Bluetooth\Advertisement\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\..\smartkit-demo\packages\Newtonsoft.Json.7.0.1\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

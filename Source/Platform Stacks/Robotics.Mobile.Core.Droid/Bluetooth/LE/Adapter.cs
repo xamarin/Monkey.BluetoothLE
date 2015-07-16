@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Android.Bluetooth;
 using System.Threading.Tasks;
+using Robotics.Mobile.Core.Bluetooth.Advertisment;
+using System.Linq;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -105,10 +107,14 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 //			}
 			Device device = new Device (bleDevice, null, null, rssi);
 
-			if (!DeviceExistsInDiscoveredList (bleDevice))
+			if (!DeviceExistsInDiscoveredList (bleDevice)) {
+				
 				this._discoveredDevices.Add	(device);
-			// TODO: shouldn't i only raise this if it's not already in the list?
-			this.DeviceDiscovered (this, new DeviceDiscoveredEventArgs { Device = device, RSSI = rssi });
+
+//				List<AdElement> ads = AdParser.ParseAdData (scanRecord);
+
+				this.DeviceDiscovered (this, new DeviceDiscoveredEventArgs { Device = device, RSSI = rssi, ScanRecords = Parse(scanRecord) });
+			}
 		}
 
 		protected bool DeviceExistsInDiscoveredList(BluetoothDevice device)
@@ -134,6 +140,56 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			((Device) device).Disconnect();
 		}
 
+		// TODO : to remove
+		byte[] Parse (byte[] scanRecord)
+		{
+
+			var recs = AdRecord.Parse (scanRecord);
+
+			var servicesData = from rec in recs
+					where rec.Type == 22
+				select rec;
+
+
+			return servicesData.First().Data.Skip(2).ToArray();
+		}
+
+		public class AdRecord {
+
+			public byte[] Data { get ; private set ;}
+			public int Type { get ; private set ;}
+
+			public AdRecord(byte[] data, int type) {
+				Data = data;
+				Type = type;
+			}
+
+			// ...
+
+			public static List<AdRecord> Parse(byte[] scanRecord) {
+				List<AdRecord> records = new List<AdRecord>();
+
+				int index = 0;
+				while (index < scanRecord.Length) {
+
+					int length = scanRecord[index++];
+					//Done once we run out of records
+					if (length == 0) break;
+
+					int type = scanRecord[index];
+					//Done if our record isn't a valid type
+					if (type == 0) break;
+
+					byte[] data = scanRecord.Skip (index + 1).Take (length - 1).ToArray();// Arrays.copyOfRange(scanRecord, index+1, index+length);
+
+					records.Add(new AdRecord(data, type));
+					//Advance
+					index += length;
+				}
+
+				return records;
+			}
+		}
 	}
 }
 
