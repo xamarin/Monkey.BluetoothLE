@@ -10,6 +10,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		public event EventHandler<DeviceConnectionEventArgs> DeviceDisconnected = delegate {};
 		public event EventHandler<ServicesDiscoveredEventArgs> ServicesDiscovered = delegate {};
 		public event EventHandler<CharacteristicReadEventArgs> CharacteristicValueUpdated = delegate {};
+		public event EventHandler<CharacteristicReadEventArgs> CharacteristicValueWritten = delegate {};
 
 		protected Adapter _adapter;
 
@@ -85,6 +86,17 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			this.CharacteristicValueUpdated (this, new CharacteristicReadEventArgs () { 
 				Characteristic = new Characteristic (characteristic, gatt, this) }
 			);
+		}
+
+		public override void OnCharacteristicWrite (BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, GattStatus status)
+		{
+			base.OnCharacteristicWrite (gatt, characteristic, status);
+
+			if (null != this.CharacteristicValueWritten) {
+				this.CharacteristicValueWritten(this, new CharacteristicReadEventArgs () { 
+					Characteristic = new Characteristic (characteristic, gatt, this) }
+				);
+			}
 		}
 	}
 }
