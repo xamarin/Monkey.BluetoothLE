@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Android.Bluetooth;
 using System.Threading.Tasks;
-using Robotics.Mobile.Core.Bluetooth.Advertisment;
+using Robotics.Mobile.Core.Bluetooth;
 using System.Linq;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
