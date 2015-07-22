@@ -70,14 +70,14 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 					byte[] scandata = null;
 
-					var advDataService = e.AdvertisementData.Where (item => new NSString ("kCBAdvDataServiceData").Equals (item.Key)) as KeyValuePair<NSObject, NSObject>;
+					var advDataService = (KeyValuePair<NSObject, NSObject>) e.AdvertisementData.First (item => new NSString ("kCBAdvDataServiceData").Equals (item.Key));
 
 					NSMutableDictionary result = advDataService.Value as NSMutableDictionary;
 
 					var data = result[result.Keys[0]] as NSData;
 
 					this._discoveredDevices.Add (d);
-					this.DeviceDiscovered(this, new DeviceDiscoveredEventArgs() { Device = d, RSSI = (int)e.RSSI, ScanRecords = data });
+					this.DeviceDiscovered(this, new DeviceDiscoveredEventArgs() { Device = d, RSSI = (int)e.RSSI, ScanRecords = data.ToArray() });
 				}
 			};
 
