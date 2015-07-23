@@ -113,6 +113,36 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			this.ValueWritten (sender, args);
 		}
 
+        public Task<ICharacteristic> WriteAsync (byte[] data)
+        {
+            var tcs = new TaskCompletionSource<ICharacteristic>();
+
+            if (!CanWrite) {
+                throw new InvalidOperationException ("Characteristic does not support WRITE");
+            }
+
+            EventHandler<CharacteristicWrittenEventArgs> updated = null;
+            updated = (object sender, CharacteristicWrittenEventArgs e) => {
+                // it may be other characteristics, so we need to test
+                var c = e.Characteristic;
+                tcs.SetResult(c);
+                if (this._device.GattCallback != null) {
+                    // wire up the characteristic value updating on the gattcallback
+                    this._device.GattCallback.CharacteristicValueWritten -= updated;
+                }
+            };
+                
+            if (this._device.GattCallback != null) {
+                // wire up the characteristic value updating on the gattcallback
+                this._device.GattCallback.CharacteristicValueWritten += updated;
+            }
+
+            this._nativeCharacteristic.SetValue (data);
+            this._device._gatt.WriteCharacteristic (this._nativeCharacteristic);
+            Console.WriteLine(".....Write");
+            return tcs.Task;
+        }
+
 		// HACK: UNTESTED - this API has only been tested on iOS
 		public Task<ICharacteristic> ReadAsync()
 		{

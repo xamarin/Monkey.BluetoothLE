@@ -26,7 +26,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		{
 			base.OnConnectionStateChange (gatt, status, newState);
 
-			Console.WriteLine ("OnConnectionStateChange: ");
+            Console.WriteLine (string.Format("OnConnectionStateChange: GattStatus: {0} newState: {1}", status, newState));
 
 			this._device._profileState = newState;
 			switch (newState) {

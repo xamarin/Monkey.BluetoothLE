@@ -33,6 +33,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		Task<ICharacteristic> ReadAsync ();
 
 		void Write (byte[] data);
+        Task<ICharacteristic> WriteAsync(byte[] data);
 
 	}
 }

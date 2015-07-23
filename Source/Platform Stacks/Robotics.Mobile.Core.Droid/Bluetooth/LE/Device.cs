@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Android.Bluetooth;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -91,15 +93,29 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		public void Disconnect ()
 		{
 			if (this._gatt != null) {
-				this._gatt.Disconnect ();
-				// From empirical results, simply gatt.disconnect follow by gatt.connect is not sufficient
-				// to reconnect to deviece (on Nexus 7 2013 with Adnroid 5.1.1)
-				// Calling gatt.Close() has more chance on the next connection attempt being successful. 
-				// Being said then, you should avoid using the same gatt client and gatt callback for more
-				// than one device. 
-				this._gatt.Close ();
-				this.GattCallback = null;
-				this._gatt = null;
+                this._profileState = ProfileState.Disconnecting;
+
+                var tcs = new TaskCompletionSource<IDevice>();
+                EventHandler<DeviceConnectionEventArgs> h = null;
+                h = (object sender, DeviceConnectionEventArgs args) =>
+                {
+                        this.GattCallback.DeviceDisconnected -=h;
+                        this._gatt.Close ();
+                        this.GattCallback = null;
+                        this._gatt = null;
+                        tcs.SetResult(this);
+
+                };
+
+                this.GattCallback.DeviceDisconnected += h;
+                this._gatt.Disconnect ();
+
+                // Observation if one calls Bluetooth.Close() immediately after BluetoothGatt.Disconnect()
+                // we will encounter a race condition. So we have to wait for disconnect to propogate before
+                // calling close. 
+                Debug.WriteLine("about to wait for disconnect handlers before closing the device....");
+                tcs.Task.Wait();
+                Debug.WriteLine("exit waiting for disconnect handlers....");
 			}
 		}
 

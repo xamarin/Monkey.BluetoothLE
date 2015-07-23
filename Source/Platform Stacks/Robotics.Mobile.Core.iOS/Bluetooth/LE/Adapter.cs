@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Diagnostics;
+using Foundation;
 
 #if __UNIFIED__
 using CoreBluetooth;

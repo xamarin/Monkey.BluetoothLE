@@ -112,6 +112,40 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			return tcs.Task;
 		}
 
+        public Task<ICharacteristic> WriteAsync(byte[] data)
+        {
+            if (!CanWrite) {
+                throw new InvalidOperationException ("Characteristic does not support WRITE");
+            }
+            var nsdata = NSData.FromArray (data);
+            var descriptor = (CBCharacteristic)_nativeCharacteristic;
+
+            var t = (Properties & CharacteristicPropertyType.AppleWriteWithoutResponse) != 0 ?
+                CBCharacteristicWriteType.WithoutResponse :
+                CBCharacteristicWriteType.WithResponse;
+
+            var tcs = new TaskCompletionSource<ICharacteristic>();
+            EventHandler<CBCharacteristicEventArgs> h = null;
+            h = (object sender, CBCharacteristicEventArgs args) =>
+            {
+                    _parentDevice.WroteCharacteristicValue -= h;
+                    tcs.SetResult(this);
+            };
+
+            if (t == CBCharacteristicWriteType.WithResponse)
+            {
+                _parentDevice.WroteCharacteristicValue += h;
+            }
+            else
+            {
+                throw new NotImplementedException("Don't support such behavior");
+            }
+
+            _parentDevice.WriteValue (nsdata, descriptor, t);
+
+            return tcs.Task;
+        }
+
 		public void Write (byte[] data) 
 		{
 			if (!CanWrite) {

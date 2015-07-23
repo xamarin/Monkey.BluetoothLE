@@ -137,8 +137,8 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			} else {
 				switch (androidBleDevice.State) {
 				case DeviceState.Disconnected:
-					androidBleDevice.Disconnect ();
-					this.ConnectToDevice (androidBleDevice);
+                    var success = androidBleDevice._gatt.Connect();
+                    Console.WriteLine(string.Format("Re connection attempt is {0}", success));
 					break;
 				}
 			}
@@ -148,7 +148,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		{
 			((Device) device).Disconnect();
 		}
-
 	}
 }
 
