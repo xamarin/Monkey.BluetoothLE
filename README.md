@@ -6,7 +6,7 @@ Monkey.Robotics greatly simplifies the task of building complex [.NET Microframe
 
 ![Xamarin Robotics](https://github.com/xamarin/Xamarin.Robotics/raw/master/Support%20Files/Images/Architectural_Overview.png)
 
-Monkey.Robotics is a full-stack framework that aims to make Robotics and Wearable development much easier by providing a foundation that provides core functionality both for bulding both mobile apps that are Wearables/Robotics aware, as well as [.NET Micro Framework](http://netmf.com) based applications that run on microcontrollers such as the Netduino and use peripherals such as sensors, servor, actuators, motor drivers, etc.
+Monkey.Robotics is a full-stack framework that aims to make Robotics and Wearable development much easier by providing a foundation that provides core functionality both for building both mobile apps that are Wearables/Robotics aware, as well as [.NET Micro Framework](http://netmf.com) based applications that run on microcontrollers such as the Netduino and use peripherals such as sensors, servor, actuators, motor drivers, etc.
 
 ### See Monkey.Robotics in Action
 
