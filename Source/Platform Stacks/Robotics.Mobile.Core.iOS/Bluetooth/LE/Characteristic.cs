@@ -208,12 +208,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			}
 			return Guid.ParseExact (id, "d");
 		}
-
-
-		public Task<bool> WriteAsync (byte[] data)
-		{
-			throw new NotImplementedException ();
-		}
 	}
 }
 

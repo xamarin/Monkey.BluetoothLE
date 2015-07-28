@@ -10,6 +10,7 @@ using CoreBluetooth;
 using CoreFoundation;
 using Foundation;
 #else
+using MonoTouch.Foundation;
 using MonoTouch.CoreBluetooth;
 using MonoTouch.CoreFoundation;
 #endif
@@ -69,7 +70,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				NSString localName = null;
 
 				try {
-					localName = e.AdvertisementData[CoreBluetooth.CBAdvertisement.DataLocalNameKey] as NSString;
+					localName = e.AdvertisementData[CBAdvertisement.DataLocalNameKey] as NSString;
 				} catch {
 					
 				}
@@ -82,7 +83,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 
 					try {
-						var result = e.AdvertisementData.ObjectForKey (new NSString ("kCBAdvDataServiceData")) as NSMutableDictionary;
+						var result = e.AdvertisementData["kCBAdvDataServiceData"] as NSMutableDictionary;
 
 						var data = result [result.Keys [0]] as NSData;
 
@@ -94,7 +95,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 					}
 					finally {
 						this._discoveredDevices.Add (d);
-						this.DeviceDiscovered(this, new DeviceDiscoveredEventArgs() { Device = d, RSSI = (int)e.RSSI, ScanRecords = data.ToArray() });
+						this.DeviceDiscovered(this, new DeviceDiscoveredEventArgs() { Device = d, RSSI = (int)e.RSSI, ScanRecords = scanRecord });
 					}
 
 				}
