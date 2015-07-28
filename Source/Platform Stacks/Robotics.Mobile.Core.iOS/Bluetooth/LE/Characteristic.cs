@@ -210,6 +210,10 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		}
 
 
+		public Task<bool> WriteAsync (byte[] data)
+		{
+			throw new NotImplementedException ();
+		}
 	}
 }
 

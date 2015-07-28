@@ -80,6 +80,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 					byte[] scanRecord = null;
 
+
 					try {
 						var result = e.AdvertisementData.ObjectForKey (new NSString ("kCBAdvDataServiceData")) as NSMutableDictionary;
 
@@ -93,11 +94,8 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 					}
 					finally {
 						this._discoveredDevices.Add (d);
-					
-
-						this.DeviceDiscovered (this, new DeviceDiscoveredEventArgs () { Device = d, ScanRecords = scanRecord });
+						this.DeviceDiscovered(this, new DeviceDiscoveredEventArgs() { Device = d, RSSI = (int)e.RSSI, ScanRecords = data.ToArray() });
 					}
-
 
 				}
 			};
