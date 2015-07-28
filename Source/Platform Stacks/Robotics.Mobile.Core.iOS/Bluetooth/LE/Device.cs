@@ -16,8 +16,9 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		public override event EventHandler ServicesDiscovered = delegate {};
 
 		protected CBPeripheral _nativeDevice;
+	
 
-		public Device (CBPeripheral nativeDevice)
+		public Device (CBPeripheral nativeDevice, NSString localName = null)
 		{
 			this._nativeDevice = nativeDevice;
 
@@ -68,6 +69,10 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 					}
 				}			
 			};
+
+			_name = localName == null ? _nativeDevice.Name : localName.ToString();
+
+
 		}
 
 		public override Guid ID {
@@ -82,11 +87,13 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			}
 		}
 
+		string _name;
 		public override string Name {
 			get {
-				return this._nativeDevice.Name;
+				return _name;
 			}
 		}
+
 
 		public override int Rssi {
 			get {

@@ -59,25 +59,46 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			_current = new Adapter ();
 		}
 
-		protected Adapter ()
+		public Adapter ()
 		{
 			this._central = new CBCentralManager (DispatchQueue.CurrentQueue);
 
 			_central.DiscoveredPeripheral += (object sender, CBDiscoveredPeripheralEventArgs e) => {
 				Console.WriteLine ("DiscoveredPeripheral: " + e.Peripheral.Name);
-				Device d = new Device(e.Peripheral);
+
+				NSString localName = null;
+
+				try {
+					localName = e.AdvertisementData[CoreBluetooth.CBAdvertisement.DataLocalNameKey] as NSString;
+				} catch {
+					
+				}
+
+				Device d = new Device(e.Peripheral, localName);
+
 				if(!ContainsDevice(this._discoveredDevices, e.Peripheral ) ){
 
-					byte[] scandata = null;
+					byte[] scanRecord = null;
 
-					var advDataService = e.AdvertisementData.Where (item => new NSString ("kCBAdvDataServiceData").Equals (item.Key)) as KeyValuePair<NSObject, NSObject>;
+					try {
+						var result = e.AdvertisementData.ObjectForKey (new NSString ("kCBAdvDataServiceData")) as NSMutableDictionary;
 
-					NSMutableDictionary result = advDataService.Value as NSMutableDictionary;
+						var data = result [result.Keys [0]] as NSData;
 
-					var data = result[result.Keys[0]] as NSData;
+						scanRecord = data.ToArray ();
 
-					this._discoveredDevices.Add (d);
-					this.DeviceDiscovered(this, new DeviceDiscoveredEventArgs() { Device = d, RSSI = (int)e.RSSI, ScanRecords = data });
+					} catch
+					{
+						
+					}
+					finally {
+						this._discoveredDevices.Add (d);
+					
+
+						this.DeviceDiscovered (this, new DeviceDiscoveredEventArgs () { Device = d, ScanRecords = scanRecord });
+					}
+
+
 				}
 			};
 
@@ -122,6 +143,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 					ErrorMessage = e.Error.Description
 				});
 			};
+
 
 		}
 			
