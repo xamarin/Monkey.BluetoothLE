@@ -144,6 +144,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		byte[] Parse (byte[] scanRecord)
 		{
 
+
 			var recs = AdRecord.Parse (scanRecord);
 
 			var servicesData = from rec in recs
@@ -151,7 +152,8 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				select rec;
 
 
-			return servicesData.First().Data.Skip(2).ToArray();
+
+			return servicesData.Any() ? servicesData.First().Data.Skip(2).ToArray() : new byte[0];
 		}
 
 		public class AdRecord {
