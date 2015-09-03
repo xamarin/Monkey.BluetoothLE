@@ -1,5 +1,6 @@
 using System;
 using Android.Bluetooth;
+using System.Diagnostics;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -71,10 +72,11 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			base.OnCharacteristicRead (gatt, characteristic, status);
 
 			Console.WriteLine ("OnCharacteristicRead: " + characteristic.GetStringValue (0));
+			var f = new CharacteristicReadEventArgs () { 
+				Characteristic = new Characteristic (characteristic, gatt, this)};
+			Debug.WriteLine ("OnCharacteristicRead" + f);
 
-			this.CharacteristicValueUpdated (this, new CharacteristicReadEventArgs () { 
-				Characteristic = new Characteristic (characteristic, gatt, this) }
-			);
+			this.CharacteristicValueUpdated (this, f);
 		}
 
 		public override void OnCharacteristicChanged (BluetoothGatt gatt, BluetoothGattCharacteristic characteristic)
@@ -82,10 +84,11 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			base.OnCharacteristicChanged (gatt, characteristic);
 
 			Console.WriteLine ("OnCharacteristicChanged: " + characteristic.GetStringValue (0));
+			var f = new CharacteristicReadEventArgs () { 
+				Characteristic = new Characteristic (characteristic, gatt, this)};
+			Debug.WriteLine ("OnCharacteristicChanged" + f);
 
-			this.CharacteristicValueUpdated (this, new CharacteristicReadEventArgs () { 
-				Characteristic = new Characteristic (characteristic, gatt, this) }
-			);
+			this.CharacteristicValueUpdated (this, f);
 		}
 
 		public override void OnCharacteristicWrite (BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, GattStatus status)
