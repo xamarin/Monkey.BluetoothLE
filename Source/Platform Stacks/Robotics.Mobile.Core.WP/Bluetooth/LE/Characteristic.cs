@@ -51,6 +51,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
             {
                 if(_descriptors == null)
                 {
+                    this._descriptors = new List<IDescriptor>();
                     foreach (KnownDescriptor kd in KnownDescriptors.GetDescriptors())
                     {
                         var d = _gattCharacteristicWithValue.NativeCharacteristic.GetDescriptors(kd.ID)[0];
@@ -112,17 +113,20 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
             if (CanRead)
             {
                 Console.WriteLine("** Characteristic.RequestValue, PropertyType = Read, requesting read");
-                _gattCharacteristicWithValue.NativeCharacteristic.ValueChanged += ValueChanged;
 
-                //TODO .... is this enough?
+                if (_gattCharacteristicWithValue.NativeCharacteristic.CharacteristicProperties == GattCharacteristicProperties.Notify)
+                    _gattCharacteristicWithValue.NativeCharacteristic.ValueChanged += ValueChanged;
+
+                //should only read once
 
                 successful = true;
             }
             if (CanUpdate)
             {
                 Console.WriteLine("** Characteristic.RequestValue, PropertyType = Notify, requesting updates");
-
-                RegisterForUpdates();
+                if (_gattCharacteristicWithValue.NativeCharacteristic.CharacteristicProperties == GattCharacteristicProperties.Notify)
+                    _gattCharacteristicWithValue.NativeCharacteristic.ValueChanged += ValueChanged;
+                //RegisterForUpdates();
             }
         }
 
@@ -132,12 +136,17 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
             if (this.Descriptors.Count > 0)
             {
-                //TODO
+                this.ValueUpdated(this, new CharacteristicReadEventArgs()
+                    {
+                        Characteristic = this, //we just want to send the new value
+                    });
 
             }
             else
             {
                 Console.WriteLine("RequestValue, FAILED: _nativeCharacteristic.Descriptors was empty, not sure why");
+
+
             }
 
         }
@@ -150,7 +159,22 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         void ValueChanged(GattCharacteristic sender, GattValueChangedEventArgs args)
         {
+            //so here's the data
             Debug.WriteLine("Characteristic Value Changed");
+
+            var count = args.CharacteristicValue.Length;
+            byte[] buffer = new byte[count];
+            var data = String.Empty;
+
+            DataReader.FromBuffer(args.CharacteristicValue).ReadBytes(buffer);
+
+            this._gattCharacteristicWithValue.Value = buffer;
+
+            //and notify
+            this.ValueUpdated(this, new CharacteristicReadEventArgs()
+                {
+                    Characteristic = this,
+                });
         }
 
         public async Task<ICharacteristic> ReadAsync()
@@ -191,7 +215,12 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
             var buffer = dataWriter.DetachBuffer();
 
-            await _gattCharacteristicWithValue.NativeCharacteristic.WriteValueAsync(buffer, GattWriteOption.WriteWithoutResponse);
+            _gattCharacteristicWithValue.NativeCharacteristic.WriteValueAsync(buffer, GattWriteOption.WriteWithoutResponse);
+
+
+           // var status = await _gattCharacteristicWithValue.NativeCharacteristic.WriteValueAsync(buffer, GattWriteOption.WriteWithoutResponse);
+
+          //  Debug.WriteLine("Write status: " + status.ToString());
         }
 
         public bool CheckGattProperty (GattCharacteristicProperties gattProperty)
@@ -220,9 +249,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
         public Guid ID { get { return NativeCharacteristic.Uuid; } }
 
-        public string Uuid { get { return NativeCharacteristic.Uuid.ToString(); }
-        }
-
-
+        public string Uuid { get { return NativeCharacteristic.Uuid.ToString(); } }
     }
 }

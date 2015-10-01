@@ -155,18 +155,22 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			}
 		}
 		// removes listener after first response received
-		void UpdatedRead (object sender, CBCharacteristicEventArgs e) {
-			this.ValueUpdated (this, new CharacteristicReadEventArgs () {
-				Characteristic = new Characteristic(e.Characteristic, _parentDevice)
-			});
+		void UpdatedRead (object sender, CBCharacteristicEventArgs e) 
+        {
+			this.ValueUpdated (this, new CharacteristicReadEventArgs () 
+                {
+				    Characteristic = new Characteristic(e.Characteristic, _parentDevice)
+			    });
 			_parentDevice.UpdatedCharacterteristicValue -= UpdatedRead;
 		}
 
 		// continues to listen indefinitely
-		void UpdatedNotify(object sender, CBCharacteristicEventArgs e) {
-			this.ValueUpdated (this, new CharacteristicReadEventArgs () {
-				Characteristic = new Characteristic(e.Characteristic, _parentDevice)
-			});
+		void UpdatedNotify(object sender, CBCharacteristicEventArgs e)
+        {
+			this.ValueUpdated (this, new CharacteristicReadEventArgs () 
+                {
+				    Characteristic = new Characteristic(e.Characteristic, _parentDevice)
+			    });
 		}
 
 		//TODO: this is the exact same as ServiceUuid i think

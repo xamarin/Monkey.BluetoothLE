@@ -89,10 +89,10 @@
     <AssemblyName>XamarinRoboticsMobileRobotrolleriOS</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="monotouch" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="monotouch" />
     <Reference Include="Xamarin.Forms.Platform.iOS">
       <HintPath>..\packages\Xamarin.Forms.1.2.3.6257\lib\MonoTouch10\Xamarin.Forms.Platform.iOS.dll</HintPath>
     </Reference>

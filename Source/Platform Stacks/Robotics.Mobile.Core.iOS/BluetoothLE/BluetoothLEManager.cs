@@ -18,7 +18,6 @@ namespace Robotics.Mobile.Core.iOS
 		public event EventHandler<CBPeripheralErrorEventArgs> DeviceDisconnected = delegate {};
 		public event EventHandler ScanTimeoutElapsed = delegate {};
 
-
 		/// <summary>
 		/// Whether or not we're currently scanning for peripheral devices
 		/// </summary>
