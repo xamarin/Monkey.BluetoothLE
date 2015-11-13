@@ -72,7 +72,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				try {
 					localName = e.AdvertisementData[CBAdvertisement.DataLocalNameKey] as NSString;
 				} catch {
-					
+					localName = new NSString(e.Peripheral.Name);
 				}
 
 				Device d = new Device(e.Peripheral, localName);
@@ -83,15 +83,20 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 
 					try {
-						var result = e.AdvertisementData["kCBAdvDataServiceData"] as NSMutableDictionary;
 
-						var data = result [result.Keys [0]] as NSData;
+						Console.WriteLine ("ScanRecords: " + e.AdvertisementData.ToString());
+
+						NSError error = null;
+
+						var soft = Clean(e.AdvertisementData);
+
+						var data = NSJsonSerialization.Serialize(soft, 0x00, out error);
 
 						scanRecord = data.ToArray ();
 
-					} catch
+					} catch (Exception exception)
 					{
-						
+						Console.WriteLine ("ScanRecords to byte[] failed");
 					}
 					finally {
 						this._discoveredDevices.Add (d);
@@ -234,6 +239,52 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 					return true;
 			}
 			return false;
+		}
+
+		NSDictionary Clean (NSDictionary dict)
+		{
+			var result = new NSMutableDictionary ();
+
+			foreach (var item in dict.Keys) {
+
+				var obj = dict [item];
+
+				// Si la clef est de type CBUUID, on utilisera l'id en NSString a la place
+				var itemAsCBUUID = item as CBUUID;
+				var key = itemAsCBUUID == null ? new NSString (item.Description) : new NSString (itemAsCBUUID.Uuid);
+
+				// La valeur doit etre transformée
+				NSObject value = null;
+
+				if (obj as NSDictionary != null) // Cas d'un NSDictionary... Recursivité
+				{
+					value = Clean (obj as NSDictionary);
+				} 
+				else if (obj as NSData != null) // Cas d'un NSDictionary... Stringify
+				{
+					var data = obj as NSData;
+
+					var networkBites = data.ToArray ();
+
+					var str = BitConverter.ToString(networkBites).Replace("-","");
+
+					value = new NSString (str);
+
+				} 
+				else if (obj as NSNull != null) // Cas d'un NSNull, on skip
+				{
+					// Do not...
+
+				} else // Sinon on remet l'objet sous format string
+				{
+					value = new NSString(obj.Description);
+				}
+
+				result.SetObject (value, key);
+
+			}
+
+			return result.Copy() as NSDictionary;
 		}
 	}
 }

@@ -63,7 +63,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		}
 
 		//TODO: scan for specific service type eg. HeartRateMonitor
-		public async void StartScanningForDevices (Guid serviceUuid)
+		public void StartScanningForDevices (Guid serviceUuid)
 		{
 			StartScanningForDevices ();
 //			throw new NotImplementedException ("Not implemented on Android yet, look at _adapter.StartLeScan() overload");
@@ -113,7 +113,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 //				List<AdElement> ads = AdParser.ParseAdData (scanRecord);
 
-				this.DeviceDiscovered (this, new DeviceDiscoveredEventArgs { Device = device, RSSI = rssi, ScanRecords = Parse(scanRecord) });
+				this.DeviceDiscovered (this, new DeviceDiscoveredEventArgs { Device = device, RSSI = rssi, ScanRecords = scanRecord });
 			}
 		}
 
@@ -140,58 +140,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			((Device) device).Disconnect();
 		}
 
-		// TODO : to remove
-		byte[] Parse (byte[] scanRecord)
-		{
 
-
-			var recs = AdRecord.Parse (scanRecord);
-
-			var servicesData = from rec in recs
-					where rec.Type == 22
-				select rec;
-
-
-
-			return servicesData.Any() ? servicesData.First().Data.Skip(2).ToArray() : new byte[0];
-		}
-
-		public class AdRecord {
-
-			public byte[] Data { get ; private set ;}
-			public int Type { get ; private set ;}
-
-			public AdRecord(byte[] data, int type) {
-				Data = data;
-				Type = type;
-			}
-
-			// ...
-
-			public static List<AdRecord> Parse(byte[] scanRecord) {
-				List<AdRecord> records = new List<AdRecord>();
-
-				int index = 0;
-				while (index < scanRecord.Length) {
-
-					int length = scanRecord[index++];
-					//Done once we run out of records
-					if (length == 0) break;
-
-					int type = scanRecord[index];
-					//Done if our record isn't a valid type
-					if (type == 0) break;
-
-					byte[] data = scanRecord.Skip (index + 1).Take (length - 1).ToArray();// Arrays.copyOfRange(scanRecord, index+1, index+length);
-
-					records.Add(new AdRecord(data, type));
-					//Advance
-					index += length;
-				}
-
-				return records;
-			}
-		}
 	}
 }
 
