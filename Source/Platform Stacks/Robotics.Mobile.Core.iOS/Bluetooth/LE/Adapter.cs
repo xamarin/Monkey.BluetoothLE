@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 #if __UNIFIED__
 using CoreBluetooth;
@@ -90,10 +92,18 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 						var soft = Clean(e.AdvertisementData);
 
-						var data = NSJsonSerialization.Serialize(soft, 0x00, out error);
+						Console.WriteLine ("ScanRecords cleaned: " + soft.ToString());
 
-						scanRecord = data.ToArray ();
+						var binFormatter = new BinaryFormatter();
+						var mStream = new MemoryStream();
+						binFormatter.Serialize(mStream, soft);
 
+						//This gives you the byte array.
+
+
+
+						scanRecord = mStream.ToArray();
+						 
 					} catch (Exception exception)
 					{
 						Console.WriteLine ("ScanRecords to byte[] failed");
@@ -241,9 +251,9 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			return false;
 		}
 
-		NSDictionary Clean (NSDictionary dict)
+		Dictionary<string, object> Clean (NSDictionary dict)
 		{
-			var result = new NSMutableDictionary ();
+			var result = new Dictionary<string, object> ();
 
 			foreach (var item in dict.Keys) {
 
@@ -251,10 +261,10 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 				// Si la clef est de type CBUUID, on utilisera l'id en NSString a la place
 				var itemAsCBUUID = item as CBUUID;
-				var key = itemAsCBUUID == null ? new NSString (item.Description) : new NSString (itemAsCBUUID.Uuid);
+				var key = itemAsCBUUID == null ? item.Description : itemAsCBUUID.Uuid;
 
 				// La valeur doit etre transformée
-				NSObject value = null;
+				object value = null;
 
 				if (obj as NSDictionary != null) // Cas d'un NSDictionary... Recursivité
 				{
@@ -268,7 +278,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 					var str = BitConverter.ToString(networkBites).Replace("-","");
 
-					value = new NSString (str);
+					value = str;
 
 				} 
 				else if (obj as NSNull != null) // Cas d'un NSNull, on skip
@@ -277,14 +287,14 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 				} else // Sinon on remet l'objet sous format string
 				{
-					value = new NSString(obj.Description);
+					value = obj.Description;
 				}
 
-				result.SetObject (value, key);
+				result.Add (key, value);
 
 			}
 
-			return result.Copy() as NSDictionary;
+			return result;
 		}
 	}
 }
