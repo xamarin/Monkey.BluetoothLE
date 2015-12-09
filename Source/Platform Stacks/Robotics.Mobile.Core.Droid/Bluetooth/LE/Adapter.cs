@@ -111,9 +111,18 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				
 				this._discoveredDevices.Add	(device);
 
-//				List<AdElement> ads = AdParser.ParseAdData (scanRecord);
+				var parsedRecords = scanRecord;
 
-				this.DeviceDiscovered (this, new DeviceDiscoveredEventArgs { Device = device, RSSI = rssi, ScanRecords = scanRecord });
+				try {
+
+					parsedRecords = scanRecord.Skip (34).Take (7).ToArray();
+					
+				} catch (Exception) {
+					
+				}
+
+
+				this.DeviceDiscovered (this, new DeviceDiscoveredEventArgs { Device = device, RSSI = rssi, ScanRecords = parsedRecords });
 			}
 		}
 
