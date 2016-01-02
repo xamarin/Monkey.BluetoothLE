@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using Android.Bluetooth;
 using System.Threading.Tasks;
+using System.Linq;
+using Android.Content;
+using Java.Interop;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -21,6 +24,8 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		protected BluetoothAdapter _adapter;
 		protected GattCallback _gattCallback;
 
+        public TimeSpan ScanTimeout { get; set; }
+
 		public bool IsScanning {
 			get { return this._isScanning; }
 		} protected bool _isScanning;
@@ -37,48 +42,56 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			}
 		} protected IList<IDevice> _connectedDevices = new List<IDevice>();
 
+        private Context _appContext;
 
-		public Adapter ()
+		public Adapter (Context appContext)
 		{
-			var appContext = Android.App.Application.Context;
+            ScanTimeout = TimeSpan.FromSeconds(10); // default timeout is 10 seconds
+            _appContext = appContext;
 			// get a reference to the bluetooth system service
-			this._manager = (BluetoothManager) appContext.GetSystemService("bluetooth");
+            this._manager = appContext.GetSystemService("bluetooth").JavaCast<BluetoothManager>();
 			this._adapter = this._manager.Adapter;
 
 			this._gattCallback = new GattCallback (this);
 
 			this._gattCallback.DeviceConnected += (object sender, DeviceConnectionEventArgs e) => {
-				this._connectedDevices.Add ( e.Device);
-				this.DeviceConnected (this, e);
+                if (ConnectedDevices.Find((BluetoothDevice)e.Device.NativeDevice) == null)
+                {
+                    _connectedDevices.Add ( e.Device);
+				    this.DeviceConnected (this, e);
+                }
 			};
 
 			this._gattCallback.DeviceDisconnected += (object sender, DeviceConnectionEventArgs e) => {
-				// TODO: remove the disconnected device from the _connectedDevices list
-				// i don't think this will actually work, because i'm created a new underlying device here.
-				//if(this._connectedDevices.Contains(
-				this.DeviceDisconnected (this, e);
+                var device = ConnectedDevices.Find((BluetoothDevice)e.Device.NativeDevice);
+                if (device != null)
+                {
+                    _connectedDevices.Remove(device);
+				    this.DeviceDisconnected (this, e);
+                }
 			};
 		}
 
 		//TODO: scan for specific service type eg. HeartRateMonitor
-		public async void StartScanningForDevices (Guid serviceUuid)
+		public void StartScanningForDevices (Guid serviceUuid)
 		{
 			StartScanningForDevices ();
 //			throw new NotImplementedException ("Not implemented on Android yet, look at _adapter.StartLeScan() overload");
 		}
+
 		public async void StartScanningForDevices ()
 		{
 			Console.WriteLine ("Adapter: Starting a scan for devices.");
 
 			// clear out the list
-			this._discoveredDevices = new List<IDevice> ();
+            _discoveredDevices.Clear();
 
 			// start scanning
 			this._isScanning = true;
 			this._adapter.StartLeScan (this);
 
-			// in 10 seconds, stop the scan
-			await Task.Delay (10000);
+			// after the given timeout, stop the scan
+            await Task.Delay (ScanTimeout);
 
 			// if we're still scanning
 			if (this._isScanning) {
@@ -103,38 +116,28 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 //			if(!this._discoveredDevices.Contains(device) ) {
 //				this._discoveredDevices.Add (device );
 //			}
-			Device device = new Device (bleDevice, null, null, rssi);
 
-			if (!DeviceExistsInDiscoveredList (bleDevice))
-				this._discoveredDevices.Add	(device);
-			// TODO: in the cross platform API, cache the RSSI
-			// TODO: shouldn't i only raise this if it's not already in the list?
-			this.DeviceDiscovered (this, new DeviceDiscoveredEventArgs { Device = device });
+            if (DiscoveredDevices.Find(bleDevice) == null)
+            {
+                var device = new Device (bleDevice, null, null, rssi);
+                this._discoveredDevices.Add(device);
+                // TODO: in the cross platform API, cache the RSSI
+                this.DeviceDiscovered(this, new DeviceDiscoveredEventArgs { Device = device });
+            }
 		}
-
-		protected bool DeviceExistsInDiscoveredList(BluetoothDevice device)
-		{
-			foreach (var d in this._discoveredDevices) {
-				// TODO: verify that address is unique
-				if (device.Address == ((BluetoothDevice)d.NativeDevice).Address)
-					return true;
-			}
-			return false;
-		}
-
 
 		public void ConnectToDevice (IDevice device)
 		{
 			// returns the BluetoothGatt, which is the API for BLE stuff
 			// TERRIBLE API design on the part of google here.
-			((BluetoothDevice)device.NativeDevice).ConnectGatt (Android.App.Application.Context, true, this._gattCallback);
+            var androidDevice = device as Device;
+            androidDevice.Connect(_appContext, _gattCallback);
 		}
 
 		public void DisconnectDevice (IDevice device)
 		{
 			((Device) device).Disconnect();
 		}
-
 	}
 }
 
