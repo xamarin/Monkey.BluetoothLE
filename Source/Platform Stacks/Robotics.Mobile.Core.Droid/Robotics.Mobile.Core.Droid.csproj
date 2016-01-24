@@ -50,6 +50,7 @@
     <Compile Include="Bluetooth\LE\Service.cs" />
     <Compile Include="Bluetooth\LE\Adapter.cs" />
     <Compile Include="Bluetooth\LE\GattCallback.cs" />
+    <Compile Include="Bluetooth\LE\Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
