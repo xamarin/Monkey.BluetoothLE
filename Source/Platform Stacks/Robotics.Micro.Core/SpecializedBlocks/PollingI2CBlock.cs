@@ -11,7 +11,7 @@ namespace Robotics.Micro.SpecializedBlocks
     {
         public Port UpdateFrequency { get; private set; }
 
-        readonly Thread th;
+        readonly BlockThread th;
         Timer timer;
 
         public PollingI2CBlock (byte address, int clockRateKhz = DefaultClockRate)
@@ -20,14 +20,13 @@ namespace Robotics.Micro.SpecializedBlocks
             UpdateFrequency = AddPort ("UpdateFrequency", Units.Frequency, 1);
             UpdateFrequency.ValueChanged += UpdateFrequency_ValueChanged;
 
-            th = new Thread ((ThreadStart)delegate {
+            th = BlockThread.Start (delegate {
                 timer = new Timer (Timer_Tick, null, 89, PeriodMillis);
 
                 for (; ; ) {
-                    Thread.Sleep (3129);
+                    BlockThread.Sleep (3129);
                 }
             });
-            th.Start ();
         }
 
         int PeriodMillis

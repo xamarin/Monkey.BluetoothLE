@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 
 namespace Robotics.Micro
 {
@@ -68,7 +67,7 @@ namespace Robotics.Micro
         {
             var t = (long)(Time () * 1000.0 + 0.5);
             var msg = t + " " +
-                Name + "[" + Thread.CurrentThread.ManagedThreadId + "]: " + 
+                Name + "[" + BlockThread.CurrentId + "]: " + 
                 text;
 #if MF_FRAMEWORK_VERSION_V4_3
             Microsoft.SPOT.Debug.Print (msg);
@@ -78,5 +77,47 @@ namespace Robotics.Micro
         }
 
 	}
+
+    public delegate void BlockThreadProc();
+
+    public class BlockThread
+    {
+#if MF_FRAMEWORK_VERSION_V4_3
+        System.Threading.Thread thread;
+        public static BlockThread Start()
+        {
+            var t = new System.Threading.Thread ((ThreadStart)delegate {
+                proc ();
+            });
+            t.Start ();
+            return new BlockThread { thread = t };
+        }
+        public static int CurrentId
+        {
+            get
+            {
+                return Thread.CurrentThread.ManagedThreadId;
+            }
+        }
+#else
+        System.Threading.Tasks.Task task;
+        public static BlockThread Start(BlockThreadProc proc)
+        {
+            var t = System.Threading.Tasks.Task.Factory.StartNew(
+                () => proc(),
+                System.Threading.Tasks.TaskCreationOptions.LongRunning);
+            return new BlockThread { task = t };
+        }
+
+        public static int CurrentId
+        {
+            get
+            {
+                var ido = System.Threading.Tasks.Task.CurrentId;
+                return ido.HasValue ? (int)ido : -1;
+            }
+        }
+#endif
+    }
 }
 

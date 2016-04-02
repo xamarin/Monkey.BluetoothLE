@@ -15,7 +15,7 @@ namespace Robotics.Micro.Generators
 		public InputPort DutyCycleInput { get; private set; }
 		public InputPort FrequencyInput { get; private set; }
 
-		Thread th;
+		BlockThread th;
 
 		public SoftPwm ()
 		{
@@ -23,17 +23,16 @@ namespace Robotics.Micro.Generators
 			DutyCycleInput = AddInput ("DutyCycleInput", Units.Ratio, 0.5);
             FrequencyInput = AddInput ("FrequencyInput", Units.Frequency, 1);
 
-			th = new Thread ((ThreadStart)delegate {
+			th = BlockThread.Start (delegate {
 
 				for (;;) {
 					Output.Value = 1;
-					Thread.Sleep (OnTimeMillis);
+					BlockThread.Sleep (OnTimeMillis);
 					Output.Value = 0;
-					Thread.Sleep (OffTimeMillis);
+					BlockThread.Sleep (OffTimeMillis);
 				}
 
 			});
-			th.Start ();
 		}
 
 		int OnTimeMillis
