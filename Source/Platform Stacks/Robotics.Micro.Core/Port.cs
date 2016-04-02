@@ -6,7 +6,7 @@ using System.Diagnostics;
 using Microsoft.SPOT;
 using PortList = System.Collections.ArrayList;
 #else
-using PortList = System.Collections.Generic.List<Robotics.Port>;
+using PortList = System.Collections.Generic.List<Robotics.Micro.Port>;
 #endif
 
 namespace Robotics.Micro
@@ -82,7 +82,7 @@ namespace Robotics.Micro
 #if MF_FRAMEWORK_VERSION_V4_3
 						Debug.Print (ex.ToString ());
 #else
-						Console.WriteLine (ex);
+						Debug.WriteLine (ex);
 #endif
                     }
 				}
