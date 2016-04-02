@@ -3,7 +3,7 @@ using Robotics.Micro.SpecializedBlocks;
 
 namespace Robotics.Micro.Sensors.Location
 {
-    public class Grove3AxisDigitalCompass : PollingI2CBlock
+    public sealed class Grove3AxisDigitalCompass : PollingI2CBlock
     {
         public const byte DefaultAddress = 0x1E;
 
@@ -39,6 +39,8 @@ namespace Robotics.Micro.Sensors.Location
             
             SetScale ();
             SetMeasurementMode (MEASUREMENT_CONTINUOUS);
+
+            StartPolling();
         }
 
         byte[] readBuffer = new byte[6];

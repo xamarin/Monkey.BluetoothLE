@@ -3,7 +3,7 @@ using Robotics.Micro.SpecializedBlocks;
 
 namespace Robotics.Micro.Sensors.Location
 {
-    public class Bmp085 : PollingI2CBlock
+    public sealed class Bmp085 : PollingI2CBlock
     {
         public OutputPort Temperature { get; private set; }
 
@@ -19,6 +19,7 @@ namespace Robotics.Micro.Sensors.Location
             : base (address, clockRateKhz)
         {
             Temperature = AddOutput ("Temperature", Units.Temperature);
+            StartPolling();
         }
 
         protected override void Poll ()

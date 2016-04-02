@@ -11,17 +11,20 @@ namespace Robotics.Micro.SpecializedBlocks
     {
         public Port UpdateFrequency { get; private set; }
 
-        readonly BlockThread th;
+        BlockThread th;
         Timer timer;
 
-        public PollingI2CBlock (byte address, int clockRateKhz = DefaultClockRate)
-            : base (address, clockRateKhz)
+        public PollingI2CBlock(byte address, int clockRateKhz = DefaultClockRate)
+            : base(address, clockRateKhz)
         {
-            UpdateFrequency = AddPort ("UpdateFrequency", Units.Frequency, 1);
+            UpdateFrequency = AddPort("UpdateFrequency", Units.Frequency, 1);
             UpdateFrequency.ValueChanged += UpdateFrequency_ValueChanged;
+        }
 
+        protected void StartPolling()
+        {
             th = BlockThread.Start (delegate {
-                timer = new Timer (Timer_Tick, null, 89, PeriodMillis);
+                timer = new Timer (Timer_Tick, null, 97, PeriodMillis);
 
                 for (; ; ) {
                     BlockThread.Sleep (3129);
