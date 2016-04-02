@@ -227,8 +227,17 @@
     <Compile Include="..\Robotics.Mobile.Core\Messaging\Message.cs">
       <Link>Messaging\Message.cs</Link>
     </Compile>
+    <Compile Include="Devices\WindowsIoT\AnalogInputPin.cs" />
+    <Compile Include="Devices\WindowsIoT\DigitalInputPin.cs" />
+    <Compile Include="Devices\WindowsIoT\DigitalOutputPin.cs" />
+    <Compile Include="Devices\WindowsIoT\PwmOutputPin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Robotics.Micro.Core.WindowsIoT.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsIoT, Version=10.0.10586.0">
+      <Name>Windows IoT Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

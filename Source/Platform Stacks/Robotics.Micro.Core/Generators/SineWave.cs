@@ -14,6 +14,8 @@ namespace Robotics.Micro.Generators
             FrequencyInput = AddInput ("FrequencyInput", Units.Frequency, frequency);
             AmplitudeInput = AddInput ("AmplitudeInput", Units.Scalar, amplitude);
             OffsetInput = AddInput ("OffsetInput", Units.Scalar, offset);
+
+            StartPolling();
         }
 
         protected override double Generate (double time)

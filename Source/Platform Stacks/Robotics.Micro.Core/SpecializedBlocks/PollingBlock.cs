@@ -13,14 +13,17 @@ namespace Robotics.Micro.SpecializedBlocks
 
         public Port UpdateFrequency { get; private set; }
 
-        readonly BlockThread th;
+        BlockThread th;
         Timer timer;
 
-        public PollingBlock (double updateFrequency = DefaultUpdateFrequency)
+        public PollingBlock(double updateFrequency = DefaultUpdateFrequency)
         {
-            UpdateFrequency = AddPort ("UpdateFrequency", Units.Frequency, updateFrequency);
+            UpdateFrequency = AddPort("UpdateFrequency", Units.Frequency, updateFrequency);
             UpdateFrequency.ValueChanged += UpdateFrequency_ValueChanged;
+        }
 
+        protected void StartPolling ()
+        { 
             th = BlockThread.Start (delegate {
                 timer = new Timer (Timer_Tick, null, 89, PeriodMillis);
 
