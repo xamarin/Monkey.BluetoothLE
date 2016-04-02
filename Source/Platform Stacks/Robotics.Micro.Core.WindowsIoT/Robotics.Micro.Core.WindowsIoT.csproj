@@ -155,6 +155,39 @@
     <Compile Include="..\Robotics.Micro.Core\Scopes\IScope.cs">
       <Link>Scopes\IScope.cs</Link>
     </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Sensors\Buttons\IButton.cs">
+      <Link>Sensors\Buttons\IButton.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Sensors\Buttons\PushButton.cs">
+      <Link>Sensors\Buttons\PushButton.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Sensors\Light\GenericAmbientLightSensor.cs">
+      <Link>Sensors\Light\GenericAmbientLightSensor.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Sensors\Light\IAmbientLightSensor.cs">
+      <Link>Sensors\Light\IAmbientLightSensor.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Sensors\Location\Bmp085.cs">
+      <Link>Sensors\Location\Bmp085.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Sensors\Location\Grove3AxisDigitalCompass.cs">
+      <Link>Sensors\Location\Grove3AxisDigitalCompass.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Sensors\Motion\IAccelerometer.cs">
+      <Link>Sensors\Motion\IAccelerometer.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Sensors\Motion\Memsic2125.cs">
+      <Link>Sensors\Motion\Memsic2125.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Sensors\Proximity\IRangeFinder.cs">
+      <Link>Sensors\Proximity\IRangeFinder.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Sensors\Proximity\SharpGP2D12.cs">
+      <Link>Sensors\Proximity\SharpGP2D12.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Sensors\Temperature\Thermistor.cs">
+      <Link>Sensors\Temperature\Thermistor.cs</Link>
+    </Compile>
     <Compile Include="..\Robotics.Micro.Core\SpecializedBlocks\CelsiusToFahrenheit.cs">
       <Link>SpecializedBlocks\CelsiusToFahrenheit.cs</Link>
     </Compile>
@@ -185,9 +218,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Robotics.Micro.Core.WindowsIoT.rd.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Sensors\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
