@@ -107,7 +107,7 @@ namespace Robotics.Micro.Motors
             WriteByte (PCA9685_MODE1, newmode); // go to sleep
             WriteByte (PCA9685_PRESCALE, prescale); // set the prescaler
             WriteByte (PCA9685_MODE1, oldmode);
-            System.Threading.Thread.Sleep (5); // OMG
+            BlockThread.Sleep (5); // OMG
             WriteByte (PCA9685_MODE1, (byte)(oldmode | 0xA1));
         }
 

@@ -215,6 +215,18 @@
     <Compile Include="..\Robotics.Micro.Core\Units.cs">
       <Link>Units.cs</Link>
     </Compile>
+    <Compile Include="..\Robotics.Mobile.Core\Messaging\Control.cs">
+      <Link>Messaging\Control.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Mobile.Core\Messaging\ControlClient.cs">
+      <Link>Messaging\ControlClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Mobile.Core\Messaging\ControlServer.cs">
+      <Link>Messaging\ControlServer.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Mobile.Core\Messaging\Message.cs">
+      <Link>Messaging\Message.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Robotics.Micro.Core.WindowsIoT.rd.xml" />
   </ItemGroup>
