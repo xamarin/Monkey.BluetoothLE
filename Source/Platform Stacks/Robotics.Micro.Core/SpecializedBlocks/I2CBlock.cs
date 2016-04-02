@@ -3,6 +3,8 @@ using System;
 #if MF_FRAMEWORK_VERSION_V4_3
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
+#elif WINDOWS_UWP
+using Windows.Devices.I2c;
 #endif
 
 namespace Robotics.Micro.SpecializedBlocks
@@ -12,10 +14,12 @@ namespace Robotics.Micro.SpecializedBlocks
         public const int DefaultClockRate = 400;
         const int TransactionTimeout = 1000;
 
-		#if MF_FRAMEWORK_VERSION_V4_3
+#if MF_FRAMEWORK_VERSION_V4_3
         I2CDevice.Configuration i2cConfig;
         I2CDevice i2cDevice;
-		#endif
+#elif WINDOWS_UWP
+        I2cDevice i2cDevice;
+#endif
 
         public byte Address { get; private set; }
 
@@ -58,7 +62,7 @@ namespace Robotics.Micro.SpecializedBlocks
 			return (short)(ushort)((readBuffer[0] << 8) | readBuffer[1]);
         }
 
-		#if MF_FRAMEWORK_VERSION_V4_3
+#if MF_FRAMEWORK_VERSION_V4_3
 
         void Connect ()
         {
@@ -117,9 +121,32 @@ namespace Robotics.Micro.SpecializedBlocks
             }
         }
 
-		#else
+#elif WINDOWS_UWP
 
-		void Connect ()
+        void Connect()
+        {
+            if (i2cDevice != null)
+                return;
+            var i2cc = I2cController.GetDefaultAsync().GetResults();
+            var settings = new I2cConnectionSettings(Address);
+            i2cDevice = i2cc.GetDevice(settings);
+        }
+
+        void Read(byte[] readBuffer)
+        {
+            Connect();
+            i2cDevice.Read(readBuffer);
+        }
+
+        void Write(byte[] writeBuffer)
+        {
+            Connect();
+            i2cDevice.Write(writeBuffer);
+        }
+
+#else
+
+        void Connect ()
 		{
 			throw new NotSupportedException ();
 		}
@@ -134,6 +161,6 @@ namespace Robotics.Micro.SpecializedBlocks
 			throw new NotSupportedException ();
 		}
 
-		#endif
+#endif
     }
 }
