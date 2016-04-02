@@ -116,8 +116,32 @@
     <Compile Include="..\Robotics.Micro.Core\Connection.cs">
       <Link>Connection.cs</Link>
     </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Generators\Constant.cs">
+      <Link>Generators\Constant.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Generators\Generator.cs">
+      <Link>Generators\Generator.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Generators\IPwm.cs">
+      <Link>Generators\IPwm.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Generators\SineWave.cs">
+      <Link>Generators\SineWave.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Generators\SoftPwm.cs">
+      <Link>Generators\SoftPwm.cs</Link>
+    </Compile>
     <Compile Include="..\Robotics.Micro.Core\InputPort.cs">
       <Link>InputPort.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Motors\AdafruitMotorShield.cs">
+      <Link>Motors\AdafruitMotorShield.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Motors\HBridgeMotor.cs">
+      <Link>Motors\HBridgeMotor.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Motors\IDCMotor.cs">
+      <Link>Motors\IDCMotor.cs</Link>
     </Compile>
     <Compile Include="..\Robotics.Micro.Core\OutputPort.cs">
       <Link>OutputPort.cs</Link>
@@ -125,11 +149,44 @@
     <Compile Include="..\Robotics.Micro.Core\Port.cs">
       <Link>Port.cs</Link>
     </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Scopes\DebugScope.cs">
+      <Link>Scopes\DebugScope.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\Scopes\IScope.cs">
+      <Link>Scopes\IScope.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\SpecializedBlocks\CelsiusToFahrenheit.cs">
+      <Link>SpecializedBlocks\CelsiusToFahrenheit.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\SpecializedBlocks\DutyCycleMeter.cs">
+      <Link>SpecializedBlocks\DutyCycleMeter.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\SpecializedBlocks\I2CBlock.cs">
+      <Link>SpecializedBlocks\I2CBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\SpecializedBlocks\LookupTable.cs">
+      <Link>SpecializedBlocks\LookupTable.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\SpecializedBlocks\PollingBlock.cs">
+      <Link>SpecializedBlocks\PollingBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\SpecializedBlocks\PollingI2CBlock.cs">
+      <Link>SpecializedBlocks\PollingI2CBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\SpecializedBlocks\Switch.cs">
+      <Link>SpecializedBlocks\Switch.cs</Link>
+    </Compile>
+    <Compile Include="..\Robotics.Micro.Core\SpecializedBlocks\Transform.cs">
+      <Link>SpecializedBlocks\Transform.cs</Link>
+    </Compile>
     <Compile Include="..\Robotics.Micro.Core\Units.cs">
       <Link>Units.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Robotics.Micro.Core.WindowsIoT.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Sensors\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

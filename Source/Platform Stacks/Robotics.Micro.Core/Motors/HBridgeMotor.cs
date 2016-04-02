@@ -1,5 +1,4 @@
 using System;
-using Microsoft.SPOT;
 using Robotics.Micro.Generators;
 
 namespace Robotics.Micro.Motors
@@ -80,6 +79,7 @@ namespace Robotics.Micro.Motors
             }
         }
 
+#if MF_FRAMEWORK_VERSION_V4_3
         public static HBridgeMotor CreateForNetduino (Microsoft.SPOT.Hardware.Cpu.PWMChannel enable, Microsoft.SPOT.Hardware.Cpu.Pin a1, Microsoft.SPOT.Hardware.Cpu.Pin a2)
         {
             var leftPwm = new Robotics.Micro.Devices.PwmOutputPin (enable);
@@ -88,5 +88,6 @@ namespace Robotics.Micro.Motors
             leftMotor.A2Output.ConnectTo (new Robotics.Micro.Devices.DigitalOutputPin (a2).Input);
             return leftMotor;
         }
+#endif
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using Microsoft.SPOT;
 using Robotics.Micro.SpecializedBlocks;
 
 namespace Robotics.Micro.Motors
