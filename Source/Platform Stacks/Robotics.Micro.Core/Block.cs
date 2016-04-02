@@ -99,8 +99,15 @@ namespace Robotics.Micro
                 return Thread.CurrentThread.ManagedThreadId;
             }
         }
+        public static void Sleep (int milliseconds)
+        {
+            System.Threading.Thread.Sleep(milliseconds);
+        }
 #else
+#pragma warning disable 414 // Store a ref
         System.Threading.Tasks.Task task;
+#pragma warning restore 414
+
         public static BlockThread Start(BlockThreadProc proc)
         {
             var t = System.Threading.Tasks.Task.Factory.StartNew(
@@ -116,6 +123,11 @@ namespace Robotics.Micro
                 var ido = System.Threading.Tasks.Task.CurrentId;
                 return ido.HasValue ? (int)ido : -1;
             }
+        }
+
+        public static void Sleep (int milliseconds)
+        {
+            System.Threading.Tasks.Task.Delay(milliseconds).Wait();
         }
 #endif
     }
