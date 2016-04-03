@@ -32,6 +32,7 @@ namespace Robotics.Micro.Core.WindowsIoTTests
             {
                 new TestButtonDirectToLed (),
                 new TestPushButton (),
+                new TestPwmToLed (),
             };
         }
 

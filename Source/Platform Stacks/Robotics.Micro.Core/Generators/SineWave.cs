@@ -2,7 +2,7 @@ using System;
 
 namespace Robotics.Micro.Generators
 {
-    public class SineWave : Generator
+    public sealed class SineWave : Generator
     {
         public InputPort FrequencyInput { get; private set; }
         public InputPort AmplitudeInput { get; private set; }
@@ -16,6 +16,11 @@ namespace Robotics.Micro.Generators
             OffsetInput = AddInput ("OffsetInput", Units.Scalar, offset);
 
             StartPolling();
+        }
+
+        public void Stop ()
+        {
+            StopPolling();
         }
 
         protected override double Generate (double time)

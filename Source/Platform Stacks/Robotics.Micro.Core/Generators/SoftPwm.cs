@@ -35,6 +35,17 @@ namespace Robotics.Micro.Generators
 			});
 		}
 
+        public void Stop()
+        {
+            var t = th;
+            th = null;
+
+            if (t != null)
+            {
+                t.Stop();
+            }
+        }
+
 		int OnTimeMillis
 		{
 			get
