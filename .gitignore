@@ -112,3 +112,5 @@ Backup*/
 UpgradeLog*.XML
 
 Resource.designer.cs
+Source/Platform Stacks/UpgradeLog.htm
+Source/Platform Stacks/Robotics.Micro.Core.WindowsIoT/project.lock.json

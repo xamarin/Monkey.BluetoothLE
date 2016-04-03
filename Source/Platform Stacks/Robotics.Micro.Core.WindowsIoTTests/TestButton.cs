@@ -6,8 +6,8 @@ namespace Robotics.Micro.Core.WindowsIoTTests
 {
     public class TestButtonDirectToLed : Test
     {
-        int buttonHardware = 1;
-        int ledHardware = 2;
+        int buttonHardware = 23;
+        int ledHardware = 24;
         DigitalInputPin button;
         DigitalOutputPin led;
 
@@ -36,8 +36,8 @@ namespace Robotics.Micro.Core.WindowsIoTTests
 
     public class TestPushButton : Test
     {
-        int buttonHardware = 1;
-        int ledHardware = 2;
+        int buttonHardware = 23;
+        int ledHardware = 24;
         DigitalInputPin button;
         DigitalOutputPin led;
 
