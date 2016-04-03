@@ -18,7 +18,7 @@ namespace Robotics.Micro.Devices
 		{
             Analog = AddPort("Analog", Units.Ratio, 0.0);
 
-            var inputc = AdcController.GetDefaultAsync().GetResults();
+            var inputc = AdcController.GetDefaultAsync().AsTask().Result;
             if (inputc == null)
             {
                 Error("No Default ADC Controller");

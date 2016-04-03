@@ -17,7 +17,15 @@ namespace Robotics.Micro.Devices
             DutyCycleInput = AddInput("DutyCycleInput", Units.Ratio, dutyCycle);
             FrequencyInput = AddInput("FrequencyInput", Units.Frequency, frequencyHz);
 
-            var pwmc = PwmController.GetDefaultAsync().GetResults();
+            PwmController pwmc = null;
+            try
+            {
+                pwmc = PwmController.GetDefaultAsync().AsTask().Result;
+            }
+            catch (Exception ex)
+            {
+                Error(ex.Message);
+            }
             if (pwmc == null) {
                 Error("No Default PWM Controller");
             }

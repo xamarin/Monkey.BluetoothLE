@@ -127,7 +127,7 @@ namespace Robotics.Micro.SpecializedBlocks
         {
             if (i2cDevice != null)
                 return;
-            var i2cc = I2cController.GetDefaultAsync().GetResults();
+            var i2cc = I2cController.GetDefaultAsync().AsTask().Result;
             var settings = new I2cConnectionSettings(Address);
             i2cDevice = i2cc.GetDevice(settings);
         }
