@@ -29,7 +29,10 @@ namespace Robotics.Micro.Devices
 
                 DutyCycleInput.ValueChanged += (s, e) =>
                 {
-                    pwm.SetActiveDutyCyclePercentage(DutyCycleInput.Value * 100.0);
+                    if (pwm != null)
+                    {
+                        pwm.SetActiveDutyCyclePercentage(DutyCycleInput.Value * 100.0);
+                    }
                 };
 
                 FrequencyInput.ValueChanged += (s, e) =>
@@ -38,6 +41,17 @@ namespace Robotics.Micro.Devices
                 };
 
                 pwm.Start();
+            }
+        }
+
+        public void Stop ()
+        {
+            var p = pwm;
+            pwm = null;
+
+            if (p != null)
+            {                
+                p.Dispose();
             }
         }
     }

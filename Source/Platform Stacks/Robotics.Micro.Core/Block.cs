@@ -108,17 +108,34 @@ namespace Robotics.Micro
         {
             System.Threading.Thread.Sleep(milliseconds);
         }
+        public void Stop ()
+        {
+            // Cannot stop on Netduino
+        }
 #else
 #pragma warning disable 414 // Store a ref
         System.Threading.Tasks.Task task;
+        System.Threading.CancellationTokenSource cts;
 #pragma warning restore 414
+
+        public void Stop ()
+        {
+            if (cts != null)
+            {
+                cts.Cancel();
+                cts = null;
+            }
+        }
 
         public static BlockThread Start(BlockThreadProc proc)
         {
+            var cts = new System.Threading.CancellationTokenSource();
             var t = System.Threading.Tasks.Task.Factory.StartNew(
                 () => proc(),
-                System.Threading.Tasks.TaskCreationOptions.LongRunning);
-            return new BlockThread { task = t };
+                cts.Token,
+                System.Threading.Tasks.TaskCreationOptions.LongRunning,
+                System.Threading.Tasks.TaskScheduler.Default);
+            return new BlockThread { task = t, cts = cts };
         }
 
         public static int CurrentId

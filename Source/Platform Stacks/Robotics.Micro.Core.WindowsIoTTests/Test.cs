@@ -9,6 +9,7 @@ namespace Robotics.Micro.Core.WindowsIoTTests
     public abstract class Test
     {
         public abstract string Title { get; }
-        public abstract void Run ();
+        public abstract void Start ();
+        public abstract void Stop ();
     }
 }

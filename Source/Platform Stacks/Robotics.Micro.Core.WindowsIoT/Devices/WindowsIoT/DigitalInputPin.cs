@@ -21,14 +21,35 @@ namespace Robotics.Micro.Devices
             else {
                 pin = pinc.OpenPin(pinNumber);
                 pin.SetDriveMode(GpioPinDriveMode.Input);
-
-                pin.ValueChanged += (s, e) =>
+                if (glitchFilter)
                 {
-                    Output.Value = pin.Read() == GpioPinValue.High ? 1.0 : 0.0;
-                };
+                    pin.DebounceTimeout = TimeSpan.FromMilliseconds(10);
+                }
+
+                pin.ValueChanged += Pin_ValueChanged;
 
                 Output.Value = pin.Read() == GpioPinValue.High ? 1.0 : 0.0;
             }
 		}
+
+        public void Stop ()
+        {
+            var p = pin;
+            pin = null;
+
+            if (p != null)
+            {
+                p.ValueChanged -= Pin_ValueChanged;
+                p.Dispose();
+            }
+        }
+
+        private void Pin_ValueChanged(GpioPin sender, GpioPinValueChangedEventArgs args)
+        {
+            if (pin != null)
+            {
+                Output.Value = pin.Read() == GpioPinValue.High ? 1.0 : 0.0;
+            }
+        }
     }
 }

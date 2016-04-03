@@ -34,9 +34,25 @@ namespace Robotics.Micro.Devices
             }
         }
 
+        public void Stop ()
+        {
+            var i = input;
+            input = null;
+
+            if (i != null)
+            {
+                i.Dispose();
+            }
+
+            StopPolling();
+        }
+
         protected override void Poll ()
         {
-            Analog.Value = input.ReadRatio ();
+            if (input != null)
+            {
+                Analog.Value = input.ReadRatio();
+            }
         }
     }
 }

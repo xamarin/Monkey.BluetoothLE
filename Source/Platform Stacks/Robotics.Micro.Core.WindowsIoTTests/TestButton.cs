@@ -8,6 +8,8 @@ namespace Robotics.Micro.Core.WindowsIoTTests
     {
         int buttonHardware = 1;
         int ledHardware = 2;
+        DigitalInputPin button;
+        DigitalOutputPin led;
 
         public override string Title {
             get {
@@ -15,14 +17,20 @@ namespace Robotics.Micro.Core.WindowsIoTTests
             }
         }
 
-        public override void Run ()
+        public override void Start ()
         {
             // Create the blocks
-            var button = new DigitalInputPin (buttonHardware);
-            var led = new DigitalOutputPin (ledHardware);
+            button = new DigitalInputPin (buttonHardware);
+            led = new DigitalOutputPin (ledHardware);
 
             // Connect them
             button.Output.ConnectTo (led.Input);
+        }
+
+        public override void Stop()
+        {
+            button.Stop();
+            led.Stop();
         }
     }
 
@@ -30,6 +38,8 @@ namespace Robotics.Micro.Core.WindowsIoTTests
     {
         int buttonHardware = 1;
         int ledHardware = 2;
+        DigitalInputPin button;
+        DigitalOutputPin led;
 
         public override string Title {
             get {
@@ -37,12 +47,12 @@ namespace Robotics.Micro.Core.WindowsIoTTests
             }
         }
 
-        public override void Run ()
+        public override void Start ()
         {
             // Create the blocks
-            var button = new DigitalInputPin (buttonHardware);
+            button = new DigitalInputPin (buttonHardware);
             var pushButton = new PushButton ();
-            var led = new DigitalOutputPin (ledHardware);
+            led = new DigitalOutputPin (ledHardware);
 
             // Connect them
             button.Output.ConnectTo (pushButton.DigitalInput);
@@ -54,6 +64,12 @@ namespace Robotics.Micro.Core.WindowsIoTTests
                 ledState = 1 - ledState;
                 led.Input.Value = ledState;
             };
+        }
+
+        public override void Stop()
+        {
+            button.Stop();
+            led.Stop();
         }
     }
 }

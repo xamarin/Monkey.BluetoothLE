@@ -33,6 +33,17 @@ namespace Robotics.Micro.SpecializedBlocks
             });
         }
 
+        protected void StopPolling ()
+        {
+            var t = th;
+            th = null;
+
+            if (t != null)
+            {
+                t.Stop();
+            }
+        }
+
         int PeriodMillis
         {
             get

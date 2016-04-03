@@ -27,9 +27,23 @@ namespace Robotics.Micro.Devices
 
                 Input.ValueChanged += (s, e) =>
                 {
-                    pin.Write(Input.Value >= HighMinValue ? GpioPinValue.High : GpioPinValue.Low);
+                    if (pin != null)
+                    {
+                        pin.Write(Input.Value >= HighMinValue ? GpioPinValue.High : GpioPinValue.Low);
+                    }
                 };
             }
 		}
+
+        public void Stop()
+        {
+            var p = pin;
+            pin = null;
+
+            if (p != null)
+            {                
+                p.Dispose();
+            }
+        }
     }
 }

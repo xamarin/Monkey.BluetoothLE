@@ -41,13 +41,17 @@ namespace Robotics.Micro.Core.WindowsIoTTests
         }
 
         private void testList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        {            
             var t = e.AddedItems.OfType<Test>().FirstOrDefault();
-            if (t != null)
+            if (t != null && t != LastTest)
             {
-                Task.Run(() => { t.Run(); });
+                if (LastTest != null)
+                {
+                    LastTest.Stop();
+                }
+
+                Task.Run(() => { t.Start(); });
                 LastTest = t;
-                testList.IsEnabled = false;
                 title.Text = "Running " + t.Title;
             }
         }
