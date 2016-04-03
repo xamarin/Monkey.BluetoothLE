@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,9 +23,33 @@ namespace Robotics.Micro.Core.WindowsIoTTests
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public static Test LastTest = null; // keep in memory
+
         public MainPage()
         {
             this.InitializeComponent();
+            testList.ItemsSource = new Test[]
+            {
+                new TestButtonDirectToLed (),
+                new TestPushButton (),
+            };
+        }
+
+        private void testList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            
+        }
+
+        private void testList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var t = e.AddedItems.OfType<Test>().FirstOrDefault();
+            if (t != null)
+            {
+                Task.Run(() => { t.Run(); });
+                LastTest = t;
+                testList.IsEnabled = false;
+                title.Text = "Running " + t.Title;
+            }
         }
     }
 }
