@@ -63,6 +63,11 @@ namespace Robotics.Micro
 #endif
 		}
 
+        protected void Error (string message)
+        {
+            DebugWriteLine("ERROR! " + message);
+        }
+
         protected void DebugWriteLine (string text = "")
         {
             var t = (long)(Time () * 1000.0 + 0.5);

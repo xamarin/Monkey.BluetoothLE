@@ -18,20 +18,27 @@ namespace Robotics.Micro.Devices
             FrequencyInput = AddInput("FrequencyInput", Units.Frequency, frequencyHz);
 
             var pwmc = PwmController.GetDefaultAsync().GetResults();
-            pwmc.SetDesiredFrequency(frequencyHz);
-
-            pwm = pwmc.OpenPin(pinNumber);
-            pwm.SetActiveDutyCyclePercentage(DutyCycleInput.Value * 100.0);
-
-            DutyCycleInput.ValueChanged += (s, e) => {
-                pwm.SetActiveDutyCyclePercentage(DutyCycleInput.Value * 100.0);
-            };
-
-            FrequencyInput.ValueChanged += (s, e) => {
+            if (pwmc == null) {
+                Error("No Default PWM Controller");
+            }
+            else {
                 pwmc.SetDesiredFrequency(frequencyHz);
-            };
 
-            pwm.Start ();
+                pwm = pwmc.OpenPin(pinNumber);
+                pwm.SetActiveDutyCyclePercentage(DutyCycleInput.Value * 100.0);
+
+                DutyCycleInput.ValueChanged += (s, e) =>
+                {
+                    pwm.SetActiveDutyCyclePercentage(DutyCycleInput.Value * 100.0);
+                };
+
+                FrequencyInput.ValueChanged += (s, e) =>
+                {
+                    pwmc.SetDesiredFrequency(frequencyHz);
+                };
+
+                pwm.Start();
+            }
         }
     }
 }

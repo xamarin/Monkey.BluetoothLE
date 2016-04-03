@@ -16,14 +16,22 @@ namespace Robotics.Micro.Devices
         public AnalogInputPin (int channelNumber, double updateFrequency = DefaultUpdateFrequency)
             : base (updateFrequency)
 		{
+            Analog = AddPort("Analog", Units.Ratio, 0.0);
+
             var inputc = AdcController.GetDefaultAsync().GetResults();
-            input = inputc.OpenChannel (channelNumber);
+            if (inputc == null)
+            {
+                Error("No Default ADC Controller");
+            }
+            else {
+                input = inputc.OpenChannel(channelNumber);
 
-            var initialValue = input.ReadRatio ();
-            
-            Analog = AddPort ("Analog", Units.Ratio, initialValue);
+                var initialValue = input.ReadRatio();
 
-            StartPolling();
+                Analog.Value = initialValue;
+
+                StartPolling();
+            }
         }
 
         protected override void Poll ()

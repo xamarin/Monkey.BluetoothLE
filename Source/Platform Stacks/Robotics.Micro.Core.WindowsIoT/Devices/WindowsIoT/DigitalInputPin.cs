@@ -11,16 +11,24 @@ namespace Robotics.Micro.Devices
 
         public DigitalInputPin (int pinNumber, bool glitchFilter = false)
 		{
-            pin = GpioController.GetDefault().OpenPin(pinNumber);
-            pin.SetDriveMode(GpioPinDriveMode.Input);
+            Output = AddPort("Output", Units.Digital, 0.0);
 
-            var initialValue = pin.Read () == GpioPinValue.High ? 1.0 : 0.0;
-            
-            Output = AddPort ("Output", Units.Digital, initialValue);
+            var pinc = GpioController.GetDefault();
+            if (pinc == null)
+            {
+                Error("No Default GPIO Controller");
+            }
+            else {
+                pin = pinc.OpenPin(pinNumber);
+                pin.SetDriveMode(GpioPinDriveMode.Input);
 
-            pin.ValueChanged += (s, e) => {
+                pin.ValueChanged += (s, e) =>
+                {
+                    Output.Value = pin.Read() == GpioPinValue.High ? 1.0 : 0.0;
+                };
+
                 Output.Value = pin.Read() == GpioPinValue.High ? 1.0 : 0.0;
-            };
+            }
 		}
     }
 }

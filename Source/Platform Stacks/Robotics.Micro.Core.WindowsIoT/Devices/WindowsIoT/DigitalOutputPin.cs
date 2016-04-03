@@ -15,13 +15,21 @@ namespace Robotics.Micro.Devices
 		{
             Input = AddInput ("Input", Units.Digital, initialValue);
 
-            pin = GpioController.GetDefault().OpenPin(pinNumber);
-            pin.Write(initialValue >= HighMinValue ? GpioPinValue.High : GpioPinValue.Low);
-            pin.SetDriveMode(GpioPinDriveMode.Output);
+            var pinc = GpioController.GetDefault();
+            if (pinc == null)
+            {
+                Error("No Default GPIO Controller");
+            }
+            else {
+                pin = pinc.OpenPin(pinNumber);
+                pin.Write(initialValue >= HighMinValue ? GpioPinValue.High : GpioPinValue.Low);
+                pin.SetDriveMode(GpioPinDriveMode.Output);
 
-            Input.ValueChanged += (s, e) => {
-                pin.Write (Input.Value >= HighMinValue ? GpioPinValue.High : GpioPinValue.Low);
-            };
+                Input.ValueChanged += (s, e) =>
+                {
+                    pin.Write(Input.Value >= HighMinValue ? GpioPinValue.High : GpioPinValue.Low);
+                };
+            }
 		}
     }
 }
