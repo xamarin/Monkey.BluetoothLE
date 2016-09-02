@@ -66,7 +66,8 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			StartScanningForDevices ();
 //			throw new NotImplementedException ("Not implemented on Android yet, look at _adapter.StartLeScan() overload");
 		}
-		public async void StartScanningForDevices ()
+		
+		public async void StartScanningForDevices (int timeOutSeconds = 10)
 		{
 			Console.WriteLine ("Adapter: Starting a scan for devices.");
 
@@ -78,12 +79,13 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			this._adapter.StartLeScan (this);
 
 			// in 10 seconds, stop the scan
-			await Task.Delay (10000);
+			await Task.Delay(TimeSpan.FromSeconds(timeOutSeconds));
 
 			// if we're still scanning
 			if (this._isScanning) {
 				Console.WriteLine ("BluetoothLEManager: Scan timeout has elapsed.");
-				this._adapter.StopLeScan (this);
+				// Use the method, because it also updates the _isScanning portion.
+				StopScanningForDevices();
 				this.ScanTimeoutElapsed (this, new EventArgs ());
 			}
 		}
