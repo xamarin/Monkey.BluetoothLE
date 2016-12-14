@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -36,9 +36,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="BluetoothLE\" />
-    <Folder Include="Bluetooth\" />
-    <Folder Include="Bluetooth\LE\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,7 +60,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\Robotics.Mobile.Core\Robotics.Mobile.Core.csproj">
+    <ProjectReference Include="..\Monkey.BluetoothLE.Core\Monkey.BluetoothLE.Core.csproj">
       <Project>{65733427-B647-4556-A87C-20937496780A}</Project>
       <Name>Robotics.Mobile.Core</Name>
     </ProjectReference>
