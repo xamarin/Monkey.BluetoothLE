@@ -11,8 +11,8 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 	// Source: https://developer.bluetooth.org/gatt/services/Pages/ServicesHome.aspx
 	public static class KnownServices
 	{
-		private static Dictionary<Guid, KnownService> _items;
-		private static object _lock = new object();
+		private static Dictionary<Guid, KnownService> items;
+		private static object myLock = new object();
 
 		static KnownServices ()
 		{
@@ -21,13 +21,14 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		public static KnownService Lookup(Guid id)
 		{
-			lock (_lock) {
-				if (_items == null)
+			lock (myLock)
+            {
+				if (items == null)
 					LoadItemsFromJson ();
 			}
 
-			if (_items.ContainsKey (id))
-				return _items [id];
+			if (items.ContainsKey (id))
+				return items [id];
 			else
 				return new KnownService { Name = "Unknown", ID = Guid.Empty };
 
@@ -35,18 +36,23 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		public static void LoadItemsFromJson()
 		{
-			_items = new Dictionary<Guid, KnownService> ();
+			items = new Dictionary<Guid, KnownService> ();
 			//TODO: switch over to ServiceStack.Text when it gets bound.
 			KnownService service;
-			string itemsJson = ResourceLoader.GetEmbeddedResourceString (typeof(KnownServices).GetTypeInfo ().Assembly, "KnownServices.json");
-			var json = JValue.Parse (itemsJson);
-			foreach (var item in json.Children() ) {
+
+            string itemsJson = ResourceLoader.GetEmbeddedResourceString (typeof(KnownServices).GetTypeInfo ().Assembly, "KnownServices.json");
+
+            var json = JValue.Parse (itemsJson);
+
+            foreach (var item in json.Children() )
+            {
 				JProperty prop = item as JProperty;
-				service = new KnownService () { Name = prop.Value.ToString(), ID = Guid.ParseExact (prop.Name, "d") };
-				_items.Add (service.ID, service);
+
+                service = new KnownService () { Name = prop.Value.ToString(), ID = Guid.ParseExact (prop.Name, "d") };
+
+                items.Add (service.ID, service);
 			}
 		}
-
 	}
 
 	public struct KnownService
@@ -54,6 +60,4 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		public string Name;
 		public Guid ID;
 	}
-
 }
-

@@ -27,6 +27,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 //		void EnumerateDescriptors ();
 
 		void StartUpdates();
+
 		void StopUpdates();
 
 		Task<ICharacteristic> ReadAsync ();
@@ -35,4 +36,3 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 	}
 }
-

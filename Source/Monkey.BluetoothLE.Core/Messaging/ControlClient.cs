@@ -73,7 +73,7 @@ namespace Robotics.Messaging
 			this.stream = stream;
 			scheduler = TaskScheduler.FromCurrentSynchronizationContext ();
 		}
-
+			
 		Task GetVariablesAsync ()
 		{
 			Debug.WriteLine ("ControlClient.GetVariablesAsync");
@@ -157,9 +157,9 @@ namespace Robotics.Messaging
 						}
 					}
 					break;
-					//				default:
-					//					Debug.WriteLine ("Ignoring message: " + m.Operation);
-					//					break;
+//				default:
+//					Debug.WriteLine ("Ignoring message: " + m.Operation);
+//					break;
 				}
 			}
 		}

@@ -27,7 +27,5 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		void StopScanningForDevices ();
 		void ConnectToDevice (IDevice device);
 		void DisconnectDevice (IDevice device);
-
 	}
 }
-

@@ -9,4 +9,3 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		string Name { get; }
 	}
 }
-

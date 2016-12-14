@@ -166,7 +166,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				// [TO20131211@1634] It seems that setting the notification above isn't enough. You have to set the NOTIFY
 				// descriptor as well, otherwise the receiver will never get the updates. I just grabbed the first (and only)
 				// descriptor that is associated with the characteristic, which is the NOTIFY descriptor. This seems like a really
-				// odd way to do things to me, but I'm a Bluetooth newbie. Google has a example here (but ono real explaination as
+				// odd way to do things to me, but I'm a Bluetooth newbie. Google has a example here (but no real explaination as
 				// to what is going on):
 				// http://developer.android.com/guide/topics/connectivity/bluetooth-le.html#notification
 				//

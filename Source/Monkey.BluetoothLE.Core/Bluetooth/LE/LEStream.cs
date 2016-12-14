@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using System.Linq;
 using System.Diagnostics;
 using System.Threading;
 using System.Collections.Generic;
@@ -37,14 +36,18 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		async Task InitializeAsync ()
 		{
 			Debug.WriteLine ("LEStream: Looking for service " + ServiceId + "...");
-			service = await device.GetServiceAsync (ServiceId);
-			Debug.WriteLine ("LEStream: Got service: " + service.ID);
+
+            service = await device.GetServiceAsync (ServiceId);
+
+            Debug.WriteLine ("LEStream: Got service: " + service.ID);
 
 			Debug.WriteLine ("LEStream: Getting characteristics...");
-			receive = await service.GetCharacteristicAsync (ReceiveCharId);
+
+            receive = await service.GetCharacteristicAsync (ReceiveCharId);
 			transmit = await service.GetCharacteristicAsync (TransmitCharId);
 			reset = await service.GetCharacteristicAsync (ResetCharId);
-			Debug.WriteLine ("LEStream: Got characteristics");
+
+            Debug.WriteLine ("LEStream: Got characteristics");
 
 			receive.ValueUpdated += HandleReceiveValueUpdated;
 			receive.StartUpdates ();
@@ -58,18 +61,18 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 //			Debug.WriteLine ("Receive.Value: " + string.Join (" ", bytes.Select (x => x.ToString ("X2"))));
 
-			lock (readBuffer) {
-				if (readBuffer.Count + bytes.Length > ReadBufferSize) {
+			lock (readBuffer)
+            {
+				if (readBuffer.Count + bytes.Length > ReadBufferSize)
 					readBuffer.RemoveRange (0, ReadBufferSize / 2);
-				}
-				readBuffer.AddRange (bytes);
+
+                readBuffer.AddRange (bytes);
 			}
 
 			reset.Write (new byte[] { 1 });
 
 			dataReceived.Set ();
 		}
-
 
 		#region implemented abstract members of Stream
 
@@ -95,7 +98,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				}
 				await Task.Run (() => dataReceived.WaitOne ());
 			}
-
 			return 0;
 		}
 
@@ -147,24 +149,14 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				return false;
 			}
 		}
-		public override bool CanWrite {
-			get {
-				return true;
-			}
-		}
-		public override long Length {
-			get {
-				return 0;
-			}
-		}
-		public override long Position {
-			get {
-				return 0;
-			}
-			set {
-			}
+        public override bool CanWrite => true;
+
+        public override long Length => 0;
+
+        public override long Position {
+			get { return 0;	}
+			set { }
 		}
 		#endregion
 	}
 }
-

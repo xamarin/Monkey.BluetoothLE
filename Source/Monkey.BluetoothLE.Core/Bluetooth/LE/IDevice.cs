@@ -35,4 +35,3 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		void DiscoverServices();
 	}
 }
-

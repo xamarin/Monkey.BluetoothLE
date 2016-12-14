@@ -12,10 +12,8 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		bool IsPrimary { get; } // iOS only?
 		IList<ICharacteristic> Characteristics { get; }
 
-
 		ICharacteristic FindCharacteristic (KnownCharacteristic characteristic);
 		//IDictionary<Guid, ICharacteristic> Characteristics { get; }
 		void DiscoverCharacteristics ();
-
 	}
 }
