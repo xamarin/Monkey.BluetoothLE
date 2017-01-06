@@ -129,13 +129,17 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			}
 			EventHandler<CharacteristicReadEventArgs> updated = null;
 			updated = (object sender, CharacteristicReadEventArgs e) => {
-				// it may be other characteristics, so we need to test
-				var c = e.Characteristic;
-				tcs.SetResult(c);
-				if (this._gattCallback != null) {
-					// wire up the characteristic value updating on the gattcallback
-					this._gattCallback.CharacteristicValueUpdated -= updated;
-				}
+                // it may be other characteristics, so we need to test
+                if (e.Characteristic.ID == this.ID)
+                {
+                    var c = e.Characteristic;
+                    tcs.SetResult(c);
+                    if (this._gattCallback != null)
+                    {
+                        // wire up the characteristic value updating on the gattcallback
+                        this._gattCallback.CharacteristicValueUpdated -= updated;
+                    }
+                }
 			};
 
 
