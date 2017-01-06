@@ -90,10 +90,14 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			}
 			EventHandler<CBCharacteristicEventArgs> updated = null;
 			updated = (object sender, CBCharacteristicEventArgs e) => {
-				Console.WriteLine(".....UpdatedCharacterteristicValue");
-				var c = new Characteristic(e.Characteristic, parentDevice);
-				tcs.SetResult(c);
-				parentDevice.UpdatedCharacterteristicValue -= updated;
+				// it may be other characteristics, so we need to test
+				if (e.Characteristic.UUID.ToString() == this.Uuid)
+				{
+					Console.WriteLine(".....UpdatedCharacterteristicValue");
+					var c = new Characteristic(e.Characteristic, parentDevice);
+					tcs.SetResult(c);
+					parentDevice.UpdatedCharacterteristicValue -= updated;
+				}
 			};
 
 			parentDevice.UpdatedCharacterteristicValue += updated;
@@ -160,20 +164,28 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		// removes listener after first response received
 		void UpdatedRead (object sender, CBCharacteristicEventArgs e) 
         {
-			this.ValueUpdated (this, new CharacteristicReadEventArgs () 
-                {
-				    Characteristic = new Characteristic(e.Characteristic, parentDevice)
-			    });
-			parentDevice.UpdatedCharacterteristicValue -= UpdatedRead;
+			// it may be other characteristics, so we need to test
+			if (e.Characteristic.UUID.ToString() == this.Uuid)
+			{
+				this.ValueUpdated(this, new CharacteristicReadEventArgs()
+				{
+					Characteristic = new Characteristic(e.Characteristic, parentDevice)
+				});
+				parentDevice.UpdatedCharacterteristicValue -= UpdatedRead;
+			}
 		}
 
 		// continues to listen indefinitely
 		void UpdatedNotify(object sender, CBCharacteristicEventArgs e)
         {
-			this.ValueUpdated (this, new CharacteristicReadEventArgs () 
-                {
-				    Characteristic = new Characteristic(e.Characteristic, parentDevice)
-			    });
+			// it may be other characteristics, so we need to test
+			if (e.Characteristic.UUID.ToString() == this.Uuid)
+			{
+				this.ValueUpdated(this, new CharacteristicReadEventArgs()
+				{
+					Characteristic = new Characteristic(e.Characteristic, parentDevice)
+				});
+			}
 		}
 
 		//TODO: this is the exact same as ServiceUuid i think
