@@ -9,15 +9,15 @@ namespace Robotics.Micro.Sensors.Temperature
         /// </summary>
         public InputPort AnalogInput { get; private set; }
 
+		/// <summary>
+		/// Fixed offset to apply to the temperature.
+		/// </summary>
+		public InputPort TemperatureOffset { get; private set; }
+
         /// <summary>
         /// Measured temperature.
         /// </summary>
         public OutputPort Temperature { get; private set; }
-
-        /// <summary>
-        /// The maximum value that AnalogInput can attain.
-        /// </summary>
-        public ConfigPort AnalogMaximum { get; private set; }
 
         /// <summary>
         /// Resistance of the resistor placed in series with the Thermistor.
@@ -42,10 +42,10 @@ namespace Robotics.Micro.Sensors.Temperature
 		public Thermistor ()
         {
             AnalogInput = AddInput ("AnalogInput", Units.Ratio, 0);
+			TemperatureOffset = AddInput ("TemperatureOffset", Units.Temperature, 0);
             Temperature = AddOutput ("Temperature", Units.Temperature);
 
             PullupResistance = AddConfig ("PullupResistance", Units.Resistance, 10000);
-			AnalogMaximum = AddConfig ("AnalogMaximum", Units.Scalar, 1.0);
 
             CalibrationA = AddConfig ("CalibrationA", Units.Scalar, 0.001129148);
             CalibrationB = AddConfig ("CalibrationB", Units.Scalar, 0.000234125);
@@ -60,19 +60,18 @@ namespace Robotics.Micro.Sensors.Temperature
         {
             var eps = 1.0e-6;
 
-            // R => P*A/(-A + M)
-            // M = 1
-
             // Make sure the max is positive
 			var analog = AnalogInput.Value;
-			var m = AnalogMaximum.Value;
-
-			if (analog >= m)
+			if (analog < eps)
 			{
-				analog = m - eps;
+				analog = eps;
+			}
+			else if (analog >= 1 - eps)
+			{
+				analog = 1 - eps;
 			}
 
-            var thermistorResistance = System.Math.Max (PullupResistance.Value * analog / (m - analog), eps);
+			var thermistorResistance = System.Math.Max (PullupResistance.Value / (1.0 / analog - 1.0), eps);
 
             var logR = System.Math.Log (thermistorResistance);
 
@@ -82,7 +81,7 @@ namespace Robotics.Micro.Sensors.Temperature
 
             var kelvin = oneOverKelvin > 0 ? 1 / oneOverKelvin : 1 / eps;
 
-            var celsius = kelvin - 270;
+			var celsius = kelvin - 273.15 + TemperatureOffset.Value;
 
             Temperature.Value = celsius;
         }
