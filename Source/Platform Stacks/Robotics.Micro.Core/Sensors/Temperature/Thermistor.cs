@@ -15,15 +15,14 @@ namespace Robotics.Micro.Sensors.Temperature
         public OutputPort Temperature { get; private set; }
 
         /// <summary>
-        /// The maximum value that AnalogInput can attain. For a
-        /// 10-bit ADC, this is 1023.
+        /// The maximum value that AnalogInput can attain.
         /// </summary>
         public ConfigPort AnalogMaximum { get; private set; }
 
         /// <summary>
         /// Resistance of the resistor placed in series with the Thermistor.
         /// </summary>
-        public ConfigPort PullupResistance { get; private set; }
+		public ConfigPort PullupResistance { get; private set; }
 
         /// <summary>
         /// Steinhart-Hart A parameter.
@@ -46,6 +45,7 @@ namespace Robotics.Micro.Sensors.Temperature
             Temperature = AddOutput ("Temperature", Units.Temperature);
 
             PullupResistance = AddConfig ("PullupResistance", Units.Resistance, 10000);
+			AnalogMaximum = AddConfig ("AnalogMaximum", Units.Scalar, 1.0);
 
             CalibrationA = AddConfig ("CalibrationA", Units.Scalar, 0.001129148);
             CalibrationB = AddConfig ("CalibrationB", Units.Scalar, 0.000234125);
@@ -64,9 +64,15 @@ namespace Robotics.Micro.Sensors.Temperature
             // M = 1
 
             // Make sure the max is positive
-            var analog = System.Math.Max (AnalogInput.Value, 0);
+			var analog = AnalogInput.Value;
+			var m = AnalogMaximum.Value;
 
-            var thermistorResistance = System.Math.Max (PullupResistance.Value * analog / (1 - analog), eps);
+			if (analog >= m)
+			{
+				analog = m - eps;
+			}
+
+            var thermistorResistance = System.Math.Max (PullupResistance.Value * analog / (m - analog), eps);
 
             var logR = System.Math.Log (thermistorResistance);
 
