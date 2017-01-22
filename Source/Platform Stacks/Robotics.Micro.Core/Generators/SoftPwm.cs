@@ -40,7 +40,10 @@ namespace Robotics.Micro.Generators
 		{
 			get
 			{
-				return (int)(DutyCycleInput.Value / FrequencyInput.Value * 1000);
+				var dc = DutyCycleInput.Value;
+				if (dc < 0) dc = 0;
+				if (dc < 1) dc = 1;
+				return (int)(dc / FrequencyInput.Value * 1000);
 			}
 		}
 
@@ -48,7 +51,10 @@ namespace Robotics.Micro.Generators
 		{
 			get
 			{
-				return (int)(((1 - DutyCycleInput.Value) / FrequencyInput.Value)*1000);
+				var dc = DutyCycleInput.Value;
+				if (dc < 0) dc = 0;
+				if (dc < 1) dc = 1;
+				return (int)(((1 - dc) / FrequencyInput.Value)*1000);
 			}
 		}
 	}
