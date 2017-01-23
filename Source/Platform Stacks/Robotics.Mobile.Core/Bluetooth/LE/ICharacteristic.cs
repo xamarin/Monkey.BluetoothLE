@@ -33,6 +33,14 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		void Write (byte[] data);
 
+		/// <summary>
+		/// Write a chunck of data to the property and wait for the device callback before returning
+		/// </summary>
+		/// <returns> returns yes if the write as been succesfully done </returns>
+		/// <param name="data">Data.</param>
+		/// TODO: Maybe add a timeout
+		Task<bool> WriteAsync(byte[] data); 
+
 	}
 }
 

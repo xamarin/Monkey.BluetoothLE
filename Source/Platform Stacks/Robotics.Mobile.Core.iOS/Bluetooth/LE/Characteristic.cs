@@ -130,6 +130,27 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			return;
 		}
 
+		public async Task<bool> WriteAsync (byte[] data)
+		{
+			var tcs = new TaskCompletionSource<bool> ();
+
+			EventHandler<CBCharacteristicEventArgs> wroteCharacteristicValue = (sender, e) => tcs.TrySetResult(true);
+
+			_parentDevice.WroteCharacteristicValue += wroteCharacteristicValue;
+
+			Write (data);
+
+			//timeout : 3 secondes
+			Task.Delay (3000).ContinueWith(t => tcs.TrySetResult(false));
+
+			var result = await tcs.Task;
+
+			_parentDevice.WroteCharacteristicValue -= wroteCharacteristicValue;
+
+			return result;
+
+		}
+
 		public void StartUpdates ()
 		{
 			// TODO: should be bool RequestValue? compare iOS API for commonality
@@ -187,8 +208,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			}
 			return Guid.ParseExact (id, "d");
 		}
-
-
 	}
 }
 

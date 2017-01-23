@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Android.Bluetooth;
 using System.Threading.Tasks;
+using Robotics.Mobile.Core.Bluetooth;
+using System.Linq;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -61,7 +63,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		}
 
 		//TODO: scan for specific service type eg. HeartRateMonitor
-		public async void StartScanningForDevices (Guid serviceUuid)
+		public void StartScanningForDevices (Guid serviceUuid)
 		{
 			StartScanningForDevices ();
 //			throw new NotImplementedException ("Not implemented on Android yet, look at _adapter.StartLeScan() overload");
@@ -105,11 +107,23 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 //			}
 			Device device = new Device (bleDevice, null, null, rssi);
 
-			if (!DeviceExistsInDiscoveredList (bleDevice))
+			if (!DeviceExistsInDiscoveredList (bleDevice)) {
+				
 				this._discoveredDevices.Add	(device);
-			// TODO: in the cross platform API, cache the RSSI
-			// TODO: shouldn't i only raise this if it's not already in the list?
-			this.DeviceDiscovered (this, new DeviceDiscoveredEventArgs { Device = device });
+
+				var parsedRecords = scanRecord;
+
+				try {
+
+					parsedRecords = scanRecord.Skip (34).Take (7).ToArray();
+					
+				} catch (Exception) {
+					
+				}
+
+
+				this.DeviceDiscovered (this, new DeviceDiscoveredEventArgs { Device = device, RSSI = rssi, ScanRecords = parsedRecords });
+			}
 		}
 
 		protected bool DeviceExistsInDiscoveredList(BluetoothDevice device)
@@ -134,6 +148,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		{
 			((Device) device).Disconnect();
 		}
+
 
 	}
 }

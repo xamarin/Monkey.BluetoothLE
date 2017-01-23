@@ -117,6 +117,27 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			Console.WriteLine(".....Write");
 		}
 
+		public async Task<bool> WriteAsync (byte[] data)
+		{
+
+			var tcs = new TaskCompletionSource<bool> ();
+
+			EventHandler<CharacteristicReadEventArgs> writeSuccess = (sender, e) => tcs.TrySetResult(true);
+
+			this._gattCallback.CharacteristicValueWritten += writeSuccess;
+
+			Write (data);
+
+			//timeout : 3 secondes
+			Task.Delay (3000).ContinueWith(t => tcs.TrySetResult(false));
+
+			var result = await tcs.Task;
+
+			this._gattCallback.CharacteristicValueWritten -= writeSuccess;
+
+			return result;
+
+		}
 
 
 		// HACK: UNTESTED - this API has only been tested on iOS

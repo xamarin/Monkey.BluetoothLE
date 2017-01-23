@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Diagnostics;
+using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 #if __UNIFIED__
 using CoreBluetooth;
 using CoreFoundation;
+using Foundation;
 #else
+using MonoTouch.Foundation;
 using MonoTouch.CoreBluetooth;
 using MonoTouch.CoreFoundation;
 #endif
@@ -57,16 +62,57 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			_current = new Adapter ();
 		}
 
-		protected Adapter ()
+		public Adapter ()
 		{
 			this._central = new CBCentralManager (DispatchQueue.CurrentQueue);
 
 			_central.DiscoveredPeripheral += (object sender, CBDiscoveredPeripheralEventArgs e) => {
 				Console.WriteLine ("DiscoveredPeripheral: " + e.Peripheral.Name);
-				Device d = new Device(e.Peripheral);
+
+				NSString localName = null;
+
+				try {
+					localName = e.AdvertisementData[CBAdvertisement.DataLocalNameKey] as NSString;
+				} catch {
+					localName = new NSString(e.Peripheral.Name);
+				}
+
+				Device d = new Device(e.Peripheral, localName);
+
 				if(!ContainsDevice(this._discoveredDevices, e.Peripheral ) ){
-					this._discoveredDevices.Add (d);
-					this.DeviceDiscovered(this, new DeviceDiscoveredEventArgs() { Device = d });
+
+					byte[] scanRecord = null;
+
+
+					try {
+
+						Console.WriteLine ("ScanRecords: " + e.AdvertisementData.ToString());
+
+						NSError error = null;
+
+						var soft = Clean(e.AdvertisementData);
+
+						Console.WriteLine ("ScanRecords cleaned: " + soft.ToString());
+
+						var binFormatter = new BinaryFormatter();
+						var mStream = new MemoryStream();
+						binFormatter.Serialize(mStream, soft);
+
+						//This gives you the byte array.
+
+
+
+						scanRecord = mStream.ToArray();
+						 
+					} catch (Exception exception)
+					{
+						Console.WriteLine ("ScanRecords to byte[] failed");
+					}
+					finally {
+						this._discoveredDevices.Add (d);
+						this.DeviceDiscovered(this, new DeviceDiscoveredEventArgs() { Device = d, RSSI = (int)e.RSSI, ScanRecords = scanRecord });
+					}
+
 				}
 			};
 
@@ -111,6 +157,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 					ErrorMessage = e.Error.Description
 				});
 			};
+
 
 		}
 			
@@ -202,6 +249,52 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 					return true;
 			}
 			return false;
+		}
+
+		Dictionary<string, object> Clean (NSDictionary dict)
+		{
+			var result = new Dictionary<string, object> ();
+
+			foreach (var item in dict.Keys) {
+
+				var obj = dict [item];
+
+				// Si la clef est de type CBUUID, on utilisera l'id en NSString a la place
+				var itemAsCBUUID = item as CBUUID;
+				var key = itemAsCBUUID == null ? item.Description : itemAsCBUUID.Uuid;
+
+				// La valeur doit etre transformée
+				object value = null;
+
+				if (obj as NSDictionary != null) // Cas d'un NSDictionary... Recursivité
+				{
+					value = Clean (obj as NSDictionary);
+				} 
+				else if (obj as NSData != null) // Cas d'un NSDictionary... Stringify
+				{
+					var data = obj as NSData;
+
+					var networkBites = data.ToArray ();
+
+					var str = BitConverter.ToString(networkBites).Replace("-","");
+
+					value = str;
+
+				} 
+				else if (obj as NSNull != null) // Cas d'un NSNull, on skip
+				{
+					// Do not...
+
+				} else // Sinon on remet l'objet sous format string
+				{
+					value = obj.Description;
+				}
+
+				result.Add (key, value);
+
+			}
+
+			return result;
 		}
 	}
 }

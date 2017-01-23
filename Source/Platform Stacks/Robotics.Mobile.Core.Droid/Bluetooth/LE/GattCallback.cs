@@ -1,5 +1,6 @@
 using System;
 using Android.Bluetooth;
+using System.Diagnostics;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -10,6 +11,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		public event EventHandler<DeviceConnectionEventArgs> DeviceDisconnected = delegate {};
 		public event EventHandler<ServicesDiscoveredEventArgs> ServicesDiscovered = delegate {};
 		public event EventHandler<CharacteristicReadEventArgs> CharacteristicValueUpdated = delegate {};
+		public event EventHandler<CharacteristicReadEventArgs> CharacteristicValueWritten = delegate {};
 
 		protected Adapter _adapter;
 
@@ -70,10 +72,11 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			base.OnCharacteristicRead (gatt, characteristic, status);
 
 			Console.WriteLine ("OnCharacteristicRead: " + characteristic.GetStringValue (0));
+			var f = new CharacteristicReadEventArgs () { 
+				Characteristic = new Characteristic (characteristic, gatt, this)};
+			Debug.WriteLine ("OnCharacteristicRead" + f);
 
-			this.CharacteristicValueUpdated (this, new CharacteristicReadEventArgs () { 
-				Characteristic = new Characteristic (characteristic, gatt, this) }
-			);
+			this.CharacteristicValueUpdated (this, f);
 		}
 
 		public override void OnCharacteristicChanged (BluetoothGatt gatt, BluetoothGattCharacteristic characteristic)
@@ -81,10 +84,22 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			base.OnCharacteristicChanged (gatt, characteristic);
 
 			Console.WriteLine ("OnCharacteristicChanged: " + characteristic.GetStringValue (0));
+			var f = new CharacteristicReadEventArgs () { 
+				Characteristic = new Characteristic (characteristic, gatt, this)};
+			Debug.WriteLine ("OnCharacteristicChanged" + f);
 
-			this.CharacteristicValueUpdated (this, new CharacteristicReadEventArgs () { 
-				Characteristic = new Characteristic (characteristic, gatt, this) }
-			);
+			this.CharacteristicValueUpdated (this, f);
+		}
+
+		public override void OnCharacteristicWrite (BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, GattStatus status)
+		{
+			base.OnCharacteristicWrite (gatt, characteristic, status);
+
+			if (null != this.CharacteristicValueWritten) {
+				this.CharacteristicValueWritten(this, new CharacteristicReadEventArgs () { 
+					Characteristic = new Characteristic (characteristic, gatt, this) }
+				);
+			}
 		}
 	}
 }
