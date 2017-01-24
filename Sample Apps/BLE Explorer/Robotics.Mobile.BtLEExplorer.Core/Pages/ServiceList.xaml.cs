@@ -13,6 +13,7 @@ namespace Robotics.Mobile.BtLEExplorer
 		IDevice device;
 
 		ObservableCollection<IService> services;
+		Dictionary<Guid, IService> guidToServices;
 
 		public ServiceList (IAdapter adapter, IDevice device)
 		{
@@ -20,6 +21,7 @@ namespace Robotics.Mobile.BtLEExplorer
 			this.adapter = adapter;
 			this.device = device;
 			this.services = new ObservableCollection<IService> ();
+			this.guidToServices = new Dictionary<Guid, IService> ();
 			listView.ItemsSource = services;
 
 			// when device is connected
@@ -33,7 +35,11 @@ namespace Robotics.Mobile.BtLEExplorer
 					if (services.Count == 0)
 						Device.BeginInvokeOnMainThread(() => {
 							foreach (var service in device.Services) {
-								services.Add(service);
+								if (!guidToServices.ContainsKey(service.ID))
+								{
+									services.Add(service);
+									guidToServices.Add(service.ID, service);
+								}
 							}
 						});
 				};
