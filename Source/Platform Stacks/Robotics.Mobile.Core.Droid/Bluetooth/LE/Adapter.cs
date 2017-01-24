@@ -127,7 +127,11 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		{
 			// returns the BluetoothGatt, which is the API for BLE stuff
 			// TERRIBLE API design on the part of google here.
-			((BluetoothDevice)device.NativeDevice).ConnectGatt (Android.App.Application.Context, true, this._gattCallback);
+
+			// Not using autoConnect flag because there are compatibility issue
+			// found on HTC One (M7) in Android 5.0.2
+			var gatt = ((BluetoothDevice)device.NativeDevice).ConnectGatt (Android.App.Application.Context, false, this._gattCallback);
+			gatt.Connect ();
 		}
 
 		public void DisconnectDevice (IDevice device)
