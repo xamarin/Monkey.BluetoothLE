@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Android.Bluetooth;
 using System.Threading.Tasks;
+using Java.Util;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -19,7 +20,6 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		// class members
 		protected BluetoothManager _manager;
 		protected BluetoothAdapter _adapter;
-		protected GattCallback _gattCallback;
 
 		public bool IsScanning {
 			get { return this._isScanning; }
@@ -44,38 +44,30 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			// get a reference to the bluetooth system service
 			this._manager = (BluetoothManager) appContext.GetSystemService("bluetooth");
 			this._adapter = this._manager.Adapter;
-
-			this._gattCallback = new GattCallback (this);
-
-			this._gattCallback.DeviceConnected += (object sender, DeviceConnectionEventArgs e) => {
-				this._connectedDevices.Add ( e.Device);
-				this.DeviceConnected (this, e);
-			};
-
-			this._gattCallback.DeviceDisconnected += (object sender, DeviceConnectionEventArgs e) => {
-				// TODO: remove the disconnected device from the _connectedDevices list
-				// i don't think this will actually work, because i'm created a new underlying device here.
-				//if(this._connectedDevices.Contains(
-				this.DeviceDisconnected (this, e);
-			};
 		}
 
-		//TODO: scan for specific service type eg. HeartRateMonitor
-		public async void StartScanningForDevices (Guid serviceUuid)
-		{
-			StartScanningForDevices ();
-//			throw new NotImplementedException ("Not implemented on Android yet, look at _adapter.StartLeScan() overload");
-		}
-		public async void StartScanningForDevices ()
+        public async void StartScanningForDevices ()
+        {
+            this.StartScanningForDevices(Guid.Empty);
+        }
+
+        public async void StartScanningForDevices (Guid serviceUuid)
 		{
 			Console.WriteLine ("Adapter: Starting a scan for devices.");
 
 			// clear out the list
 			this._discoveredDevices = new List<IDevice> ();
 
+            UUID[] serviceUuids = null;
+            if (serviceUuid != Guid.Empty)
+            {
+                serviceUuids = new UUID[1];
+                serviceUuids[0] = UUID.FromString(serviceUuid.ToString());
+            }
+
 			// start scanning
 			this._isScanning = true;
-			this._adapter.StartLeScan (this);
+            this._adapter.StartLeScan (serviceUuids, this);
 
 			// in 10 seconds, stop the scan
 			await Task.Delay (10000);
@@ -125,16 +117,37 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		public void ConnectToDevice (IDevice device)
 		{
-			// returns the BluetoothGatt, which is the API for BLE stuff
-			// TERRIBLE API design on the part of google here.
-			((BluetoothDevice)device.NativeDevice).ConnectGatt (Android.App.Application.Context, true, this._gattCallback);
+			var androidBleDevice = (Device)device;
+			if (androidBleDevice._gatt == null) {
+				var gattCallback = new GattCallback (androidBleDevice);
+				gattCallback.DeviceConnected += (object sender, DeviceConnectionEventArgs e) => {
+					this._connectedDevices.Add (e.Device);
+					this.DeviceConnected (this, e);
+				};
+
+				gattCallback.DeviceDisconnected += (object sender, DeviceConnectionEventArgs e) => {
+					this._connectedDevices.Remove (e.Device);
+					this.DeviceDisconnected (this, e);
+				};
+
+				androidBleDevice.GattCallback = gattCallback;
+				androidBleDevice._gatt = ((BluetoothDevice)device.NativeDevice).ConnectGatt (Android.App.Application.Context, false, gattCallback);
+				var success = androidBleDevice._gatt.Connect ();
+				Console.WriteLine(string.Format("Initial connection attempt is {0}", success));
+			} else {
+				switch (androidBleDevice.State) {
+				case DeviceState.Disconnected:
+                    var success = androidBleDevice._gatt.Connect();
+                    Console.WriteLine(string.Format("Re connection attempt is {0}", success));
+					break;
+				}
+			}
 		}
 
 		public void DisconnectDevice (IDevice device)
 		{
 			((Device) device).Disconnect();
 		}
-
 	}
 }
 

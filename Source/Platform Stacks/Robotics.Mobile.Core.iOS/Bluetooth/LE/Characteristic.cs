@@ -17,6 +17,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 	public class Characteristic : ICharacteristic
 	{
 		public event EventHandler<CharacteristicReadEventArgs> ValueUpdated = delegate {};
+		public event EventHandler<CharacteristicWrittenEventArgs> ValueWritten = delegate {};
 
 		protected CBCharacteristic _nativeCharacteristic;
 		CBPeripheral _parentDevice;
@@ -36,7 +37,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		public byte[] Value {
 			get { 
-				if (_nativeCharacteristic.Value == null)
+				if (this._nativeCharacteristic.Value == null || this._nativeCharacteristic.Value.Length == 0)
 					return null;
 				return this._nativeCharacteristic.Value.ToArray(); 
 			}
@@ -111,6 +112,40 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			return tcs.Task;
 		}
 
+        public Task<ICharacteristic> WriteAsync(byte[] data)
+        {
+            if (!CanWrite) {
+                throw new InvalidOperationException ("Characteristic does not support WRITE");
+            }
+            var nsdata = NSData.FromArray (data);
+            var descriptor = (CBCharacteristic)_nativeCharacteristic;
+
+            var t = (Properties & CharacteristicPropertyType.AppleWriteWithoutResponse) != 0 ?
+                CBCharacteristicWriteType.WithoutResponse :
+                CBCharacteristicWriteType.WithResponse;
+
+            var tcs = new TaskCompletionSource<ICharacteristic>();
+            EventHandler<CBCharacteristicEventArgs> h = null;
+            h = (object sender, CBCharacteristicEventArgs args) =>
+            {
+                    _parentDevice.WroteCharacteristicValue -= h;
+                    tcs.SetResult(this);
+            };
+
+            if (t == CBCharacteristicWriteType.WithResponse)
+            {
+                _parentDevice.WroteCharacteristicValue += h;
+            }
+            else
+            {
+                throw new NotImplementedException("Don't support such behavior");
+            }
+
+            _parentDevice.WriteValue (nsdata, descriptor, t);
+
+            return tcs.Task;
+        }
+
 		public void Write (byte[] data) 
 		{
 			if (!CanWrite) {
@@ -122,6 +157,11 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			var t = (Properties & CharacteristicPropertyType.AppleWriteWithoutResponse) != 0 ?
 				CBCharacteristicWriteType.WithoutResponse :
 				CBCharacteristicWriteType.WithResponse;
+
+            if (t == CBCharacteristicWriteType.WithResponse)
+            {
+                _parentDevice.WroteCharacteristicValue += this.UpdatedWrite;
+            }
 
 			_parentDevice.WriteValue (nsdata, descriptor, t);
 
@@ -175,6 +215,15 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				Characteristic = new Characteristic(e.Characteristic, _parentDevice)
 			});
 		}
+
+        public void UpdatedWrite (object sender, CBCharacteristicEventArgs e)
+        {
+            this.ValueWritten(this, new CharacteristicWrittenEventArgs()
+            {
+                Characteristic = new Characteristic(e.Characteristic, _parentDevice)
+            });
+            _parentDevice.WroteCharacteristicValue -= this.UpdatedWrite;
+        }
 
 		//TODO: this is the exact same as ServiceUuid i think
 		public static Guid CharacteristicUuidToGuid ( CBUUID uuid)

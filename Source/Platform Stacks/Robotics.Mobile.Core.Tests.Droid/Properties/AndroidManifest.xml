@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionName="0.1" package="robotics.mobile.core.tests" android:versionCode="1">
+	<uses-sdk android:minSdkVersion="18" android:targetSdkVersion="21" />
+	<application android:icon="@drawable/icon" android:label="Robotics Mobile Core Tests">
+		<uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
+	</application>
+	<uses-permission android:name="android.permission.BLUETOOTH" />
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+	<!-- For Xamarin Insights: Enable android native crash reports. -->
+	<uses-permission android:name="android.permission.READ_LOGS" />
+	<uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" />
+</manifest>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Diagnostics;
+using Foundation;
 
 #if __UNIFIED__
 using CoreBluetooth;
@@ -63,8 +64,8 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 			_central.DiscoveredPeripheral += (object sender, CBDiscoveredPeripheralEventArgs e) => {
 				Console.WriteLine ("DiscoveredPeripheral: " + e.Peripheral.Name);
-				Device d = new Device(e.Peripheral);
-				if(!ContainsDevice(this._discoveredDevices, e.Peripheral ) ){
+                if(!ContainsDevice(this._discoveredDevices, e.Peripheral ) ){
+                    Device d = new Device(e.Peripheral);
 					this._discoveredDevices.Add (d);
 					this.DeviceDiscovered(this, new DeviceDiscoveredEventArgs() { Device = d });
 				}
@@ -82,7 +83,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				// when a peripheral gets connected, add that peripheral to our running list of connected peripherals
 				if(!ContainsDevice(this._connectedDevices, e.Peripheral ) ){
 					Device d = new Device(e.Peripheral);
-					this._connectedDevices.Add (new Device(e.Peripheral));
+					this._connectedDevices.Add (d);
 					// raise our connected event
 					this.DeviceConnected ( sender, new DeviceConnectionEventArgs () { Device = d } );
 				}			
@@ -101,7 +102,12 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 					this._connectedDevices.Remove(foundDevice);
 
 				// raise our disconnected event
-				this.DeviceDisconnected (sender, new DeviceConnectionEventArgs() { Device = new Device(e.Peripheral) });
+                IDevice deviceForEvent = foundDevice;
+                if (deviceForEvent == null)
+                {
+                    deviceForEvent = new Device(e.Peripheral);
+                }
+                this.DeviceDisconnected (sender, new DeviceConnectionEventArgs() { Device = deviceForEvent });
 			};
 
 			_central.FailedToConnectPeripheral += (object sender, CBPeripheralErrorEventArgs e) => {
