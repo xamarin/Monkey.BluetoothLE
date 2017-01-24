@@ -34,6 +34,18 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			initTask = InitializeAsync ();
 		}
 
+        /// <summary>Allow user to break out of an async read</summary>
+        /// <remarks>
+        /// Using the cancelation token alone will not break if the user is 
+        /// currently waiting on the dataReceived event
+        /// </remarks>
+        public void CancelRead() {
+            this.receive.StopUpdates();
+            this.receive.ValueUpdated -= this.HandleReceiveValueUpdated;
+            this.dataReceived.Set();
+        }
+
+
 		async Task InitializeAsync ()
 		{
 			Debug.WriteLine ("LEStream: Looking for service " + ServiceId + "...");

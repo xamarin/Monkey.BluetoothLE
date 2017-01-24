@@ -86,7 +86,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		}
 
 		public bool CanRead {get{return (this.Properties & CharacteristicPropertyType.Read) != 0; }}
-		public bool CanUpdate {get{return (this.Properties & CharacteristicPropertyType.Notify) != 0; }}
+        public bool CanUpdate { get { return (this.Properties & (CharacteristicPropertyType.Notify | CharacteristicPropertyType.Indicate)) != 0; } }
 		public bool CanWrite {get{return (this.Properties & (CharacteristicPropertyType.WriteWithoutResponse | CharacteristicPropertyType.AppleWriteWithoutResponse)) != 0; }}
 
 		public Task<ICharacteristic> ReadAsync() 
