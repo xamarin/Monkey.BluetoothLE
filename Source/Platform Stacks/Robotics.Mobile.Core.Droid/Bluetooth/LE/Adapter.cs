@@ -20,6 +20,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		protected BluetoothManager _manager;
 		protected BluetoothAdapter _adapter;
 		protected GattCallback _gattCallback;
+		protected IDictionary<Guid, IDevice> _guidToDevice = new Dictionary<Guid, IDevice>();
 
 		public bool IsScanning {
 			get { return this._isScanning; }
@@ -33,10 +34,11 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		public IList<IDevice> ConnectedDevices {
 			get {
-				return this._connectedDevices;
+				var devices = new List<IDevice> (_guidToDevice.Count);
+				devices.AddRange (this._guidToDevice.Values);
+				return devices;
 			}
-		} protected IList<IDevice> _connectedDevices = new List<IDevice>();
-
+		}
 
 		public Adapter ()
 		{
@@ -48,14 +50,12 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			this._gattCallback = new GattCallback (this);
 
 			this._gattCallback.DeviceConnected += (object sender, DeviceConnectionEventArgs e) => {
-				this._connectedDevices.Add ( e.Device);
+				this._guidToDevice.Add (e.Device.ID, e.Device);
 				this.DeviceConnected (this, e);
 			};
 
 			this._gattCallback.DeviceDisconnected += (object sender, DeviceConnectionEventArgs e) => {
-				// TODO: remove the disconnected device from the _connectedDevices list
-				// i don't think this will actually work, because i'm created a new underlying device here.
-				//if(this._connectedDevices.Contains(
+				this._guidToDevice.Remove (e.Device.ID);
 				this.DeviceDisconnected (this, e);
 			};
 		}
