@@ -183,12 +183,14 @@
 	"f000aa53-0451-4000-b000-000000000000":"TI SensorTag Gyroscope Sample Rate",
 	"f000aa61-0451-4000-b000-000000000000":"TI SensorTag Test Data",
 	"f000aa62-0451-4000-b000-000000000000":"TI SensorTag Test Configuration",
+	"f000c0e1-0451-4000-b000-000000000000":"TI Serial Port Data",
+	"f000c0e2-0451-4000-b000-000000000000":"TI Serial Port Status",
+	"f000c0e3-0451-4000-b000-000000000000":"TI Serial Port Config",
 	"f000ccc1-0451-4000-b000-000000000000":"TI SensorTag Connection Parameters",
 	"f000ccc2-0451-4000-b000-000000000000":"TI SensorTag Connection Request Parameters",
 	"f000ccc3-0451-4000-b000-000000000000":"TI SensorTag Connection Request Disconnect",
 	"f000ffc1-0451-4000-b000-000000000000":"TI SensorTag OAD Image Identify",
 	"f000ffc2-0451-4000-b000-000000000000":"TI SensorTag OAD Image Block",
-
 
 	"713d0001-503e-4c75-ba94-3148f18d941e":"RedBearLabs Biscuit Read",
 	"713d0002-503e-4c75-ba94-3148f18d941e":"RedBearLabs Biscuit TX_DATA_CHAR_UUID Notify",
