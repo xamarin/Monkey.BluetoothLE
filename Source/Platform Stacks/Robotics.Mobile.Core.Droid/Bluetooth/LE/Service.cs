@@ -7,22 +7,12 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 	public class Service : IService
 	{
 		protected BluetoothGattService _nativeService;
-		/// <summary>
-		/// we have to keep a reference to this because Android's api is weird and requires
-		/// the GattServer in order to do nearly anything, including enumerating services
-		/// </summary>
-		protected BluetoothGatt _gatt;
-		/// <summary>
-		/// we also track this because of gogole's weird API. the gatt callback is where
-		/// we'll get notified when services are enumerated
-		/// </summary>
-		protected GattCallback _gattCallback;
+		protected Device _device;
 
-		public Service (BluetoothGattService nativeService, BluetoothGatt gatt, GattCallback _gattCallback)
+		public Service (BluetoothGattService nativeService, Device device)
 		{
 			this._nativeService = nativeService;
-			this._gatt = gatt;
-			this._gattCallback = _gattCallback;
+			this._device = device;
 		}
 
 		public Guid ID {
@@ -54,7 +44,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 				if (this._characteristics == null) {
 					this._characteristics = new List<ICharacteristic> ();
 					foreach (var item in this._nativeService.Characteristics) {
-						this._characteristics.Add (new Characteristic (item, this._gatt, this._gattCallback));
+						this._characteristics.Add (new Characteristic (item, this._device));
 					}
 				}
 				return this._characteristics;
@@ -66,7 +56,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			//TODO: why don't we look in the internal list _chacateristics?
 			foreach (var item in this._nativeService.Characteristics) {
 				if ( string.Equals(item.Uuid.ToString(), characteristic.ID.ToString()) ) {
-					return new Characteristic(item, this._gatt, this._gattCallback);
+					return new Characteristic(item, this._device);
 				}
 			}
 			return null;

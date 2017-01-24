@@ -8,6 +8,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 	{
 		// events
 		event EventHandler<CharacteristicReadEventArgs> ValueUpdated;
+		event EventHandler<CharacteristicWrittenEventArgs> ValueWritten;
 
 		// properties
 		Guid ID { get; }

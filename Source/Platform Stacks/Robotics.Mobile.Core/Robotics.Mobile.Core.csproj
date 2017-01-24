@@ -54,6 +54,7 @@
     <Compile Include="Messaging\Control.cs" />
     <Compile Include="Messaging\ControlClient.cs" />
     <Compile Include="Messaging\ControlServer.cs" />
+    <Compile Include="Bluetooth\LE\CharacteristicWrittenEventArgs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
