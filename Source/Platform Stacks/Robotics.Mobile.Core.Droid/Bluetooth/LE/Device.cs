@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Android.Bluetooth;
 using System.Linq;
+using Android.Content;
+using System.Threading.Tasks;
 
 namespace Robotics.Mobile.Core.Bluetooth.LE
 {
@@ -21,27 +23,15 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		/// we also track this because of gogole's weird API. the gatt callback is where
 		/// we'll get notified when services are enumerated
 		/// </summary>
-		protected GattCallback _gattCallback;
+        private GattCallback _gattCallback;
 
-		public Device (BluetoothDevice nativeDevice, BluetoothGatt gatt, 
+		internal Device (BluetoothDevice nativeDevice, BluetoothGatt gatt, 
 			GattCallback gattCallback, int rssi) : base ()
 		{
 			this._nativeDevice = nativeDevice;
-			this._gatt = gatt;
-			this._gattCallback = gattCallback;
+            _gatt = gatt;
+            SetGattCallback(gattCallback);
 			this._rssi = rssi;
-
-			// when the services are discovered on the gatt callback, cache them here
-			if (this._gattCallback != null) {
-				this._gattCallback.ServicesDiscovered += (s, e) => {
-					var services = this._gatt.Services;
-					this._services = new List<IService> ();
-					foreach (var item in services) {
-						this._services.Add (new Service (item, this._gatt, this._gattCallback));
-					}
-					this.ServicesDiscovered (this, e);
-				};
-			}
 		}
 
 		public override Guid ID {
@@ -66,11 +56,14 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			}
 		}
 
-		public override int Rssi {
-			get {
-				return this._rssi;
-			}
-		} protected int _rssi;
+        protected int _rssi;
+        public override int Rssi
+        {
+            get
+            {
+                return _rssi;
+            }
+        }
 
 		public override object NativeDevice 
 		{
@@ -79,15 +72,13 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			}
 		}
 
-		// TODO: investigate the validity of this. Android API seems to indicate that the
-		// bond state is available, rather than the connected state, which are two different 
-		// things. you can be bonded but not connected.
-		public override DeviceState State {
-			get {
-				return this.GetState ();
-			}
-		}
+        private DeviceState _state;
 
+        public override DeviceState State
+        {
+            get { return _state; }
+		}
+            
 		//TODO: strongly type IService here
 		public override IList<IService> Services
 		{
@@ -98,34 +89,74 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 
 		public override void DiscoverServices ()
 		{
-			this._gatt.DiscoverServices ();
+            if (_gatt != null)
+                _gatt.DiscoverServices();
 		}
 
-		public void Disconnect ()
-		{
-			this._gatt.Disconnect ();
-			this._gatt.Dispose ();
-		}
+        internal async void Connect(Context context, GattCallback callback)
+        {
+            if (_gatt != null)
+            {
+                // connection attempt is already in progress, abort it
+                Disconnect();
+                await Task.Delay(1500);
+            }
+
+            SetGattCallback(callback);
+            _gatt = _nativeDevice.ConnectGatt (context, true, callback);
+        }
+
+		internal void Disconnect ()
+        {
+            lock (this)
+            {
+                if (_gatt != null)
+                {
+                    _gattCallback.OnDeviceDisconnected(this);
+                    _gatt.Disconnect();
+                    _gatt.Close();
+                    _gatt = null;
+                    SetGattCallback(null);
+                    _services.Clear();
+                }
+                SetState(DeviceState.Disconnected);
+            }
+        }
 
 		#endregion
 
 		#region internal methods
 
-		protected DeviceState GetState()
-		{
-			switch (this._nativeDevice.BondState) {
-			case Bond.Bonded:
-				return DeviceState.Connected;
-			case Bond.Bonding:
-				return DeviceState.Connecting;
-			case Bond.None:
-			default:
-				return DeviceState.Disconnected;
-			}
-		}
+        internal void SetState(DeviceState state)
+        {
+            _state = state;
+        }
 
-
+        internal void SetGattCallback(GattCallback callback)
+        {
+            // remove event handler from the old callback
+            if (_gattCallback != null)
+                _gattCallback.ServicesDiscovered -= gattCallback_ServicesDiscovered;
+            _gattCallback = callback; // set the current callback
+            // when the services are discovered on the gatt callback, cache them here
+            if (_gattCallback != null)
+                _gattCallback.ServicesDiscovered += gattCallback_ServicesDiscovered;
+        }
+            
 		#endregion
+
+        void gattCallback_ServicesDiscovered (object sender, ServicesDiscoveredEventArgs e)
+        {
+            if (_gatt != null)
+            {
+                var services = this._gatt.Services;
+                this._services = new List<IService>();
+                foreach (var item in services)
+                {
+                    this._services.Add(new Service(item, _gatt, _gattCallback));
+                }
+                this.ServicesDiscovered(this, e);
+            }
+        }
 	}
 }
-

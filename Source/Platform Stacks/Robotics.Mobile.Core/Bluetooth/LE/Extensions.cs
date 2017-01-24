@@ -51,7 +51,8 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		        if (e.Device.ID == device.ID)
 		        {
 					adapter.DeviceConnected -= h;
-          			tcs.SetResult (e.Device);
+                    if (tcs.Task.IsCompleted == false)
+                        tcs.SetResult (e.Device);
 				}
 			};
 			adapter.DeviceConnected += h;
@@ -67,7 +68,7 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 		public static Task<IService> GetServiceAsync (this IDevice device, Guid id)
 		{
 			if (device.Services.Count > 0) {
-				return Task.FromResult (device.Services.First (x => x.ID == id));
+				return Task.FromResult (device.Services.FirstOrDefault(x => x.ID == id));
 			}
 
 			var tcs = new TaskCompletionSource<IService> ();
@@ -75,10 +76,12 @@ namespace Robotics.Mobile.Core.Bluetooth.LE
 			h = (sender, e) => {
 				device.ServicesDiscovered -= h;
 				try {
-					var s = device.Services.First (x => x.ID == id);
-					tcs.SetResult (s);
+					var s = device.Services.FirstOrDefault(x => x.ID == id);
+                    if (!tcs.Task.IsCompleted)
+					    tcs.SetResult (s);
 				} catch (Exception ex) {
-					tcs.SetException (ex);
+                    if (!tcs.Task.IsCompleted)
+					    tcs.SetException (ex);
 				}
 			};
 			device.ServicesDiscovered += h;
