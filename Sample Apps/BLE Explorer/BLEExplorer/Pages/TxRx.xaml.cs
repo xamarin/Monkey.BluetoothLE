@@ -1,6 +1,4 @@
 ﻿using Robotics.Mobile.Core.Bluetooth.LE;
-using System.Diagnostics;
-using Windows.Storage.Streams;
 using Xamarin.Forms;
 
 namespace BLEExplorer.Pages
@@ -16,7 +14,7 @@ namespace BLEExplorer.Pages
 
             var result = characteristic.Properties & CharacteristicPropertyType.Notify;
 
-            if(characteristic.CanRead )
+            if(characteristic.CanRead)
             {
                 characteristic.StartUpdates();
                 characteristic.ValueUpdated += CharacteristicValueUpdated;
@@ -24,13 +22,10 @@ namespace BLEExplorer.Pages
 
             if ((characteristic.Properties & CharacteristicPropertyType.Notify) != 0)
             {
-
-
                 
             }
 
             btnSend.Clicked += BtnSendClicked;
-        
         }
 
         void BtnSendClicked(object sender, System.EventArgs e)
