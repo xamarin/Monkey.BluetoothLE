@@ -35,7 +35,7 @@ Check out the [API Documentation](API%20Docs/) for reference and API browsing.
 
 ## Samples
 
-* [Bluetooth Browser](https://github.com/conceptdev/xamarin-forms-samples/tree/master/BluetoothTISensor) using a _TI SensorTag_.
+* [BluetoothLE Explorer](https://github.com/xamarin/Monkey.Robotics/tree/master/Sample%20Apps/BLE%20Explorer) using a _TI SensorTag_.
 
 * [HeartRateMonitor](https://github.com/conceptdev/xamarin-forms-samples/tree/master/BluetoothHeartRateMonitor) built in Xamarin.Forms.
 
