@@ -2,7 +2,7 @@
 
 Monkey.BluetoothLE greatly simplifies the task of using BluetoothLE communications in Xamarin apps.
 
-![BluetoothLE overview](Images/Images/Architectural_Overview.png)
+![BluetoothLE overview](Images/Architectural_Overview.png)
 
 ### Beta
 
@@ -15,7 +15,7 @@ The _Mobile Stack_ is built in C# and runs on iOS, Android, and UWP via the [Xam
 
 The following diagram illustrates the topology of the entire stack:
 
-![Stack Topography](Images/Images/Platform_Stack_Topography.png)
+![Stack Topography](Images/Platform_Stack_Topography.png)
 
 ### Mobile Stack
 
