@@ -2,11 +2,11 @@
 
 Monkey.BluetoothLE greatly simplifies the task of using BluetoothLE communications in Xamarin apps.
 
-![BluetoothLE overview](https://github.com/xamarin/Xamarin.Robotics/raw/master/Support%20Files/Images/Architectural_Overview.png)
+![BluetoothLE overview](Images/Images/Architectural_Overview.png)
 
 ### Beta
 
-> Please Note: Monkey.BluetoothLE is still a beta/work in progress and is not officially supported by Xamarin. It's a passion project put together by folks that love C# and Robotics. We're working on the docs as you read this. If you run into any issues, please file them [here](https://github.com/xamarin/Monkey.Robotics/issues). Thanks for trying it out!
+> Please Note: Monkey.BluetoothLE is still a beta/work in progress and is not officially supported by Xamarin. It's a passion project put together by folks that love C# and Robotics. We're working on the docs as you read this. If you run into any issues, please file them [on GitHub](https://github.com/xamarin/Monkey.Robotics/issues). Thanks for trying it out!
 
 ## Overview
  
@@ -15,7 +15,7 @@ The _Mobile Stack_ is built in C# and runs on iOS, Android, and UWP via the [Xam
 
 The following diagram illustrates the topology of the entire stack:
 
-![Stack Topography](https://github.com/xamarin/Xamarin.Robotics/raw/master/Support%20Files/Images/Platform_Stack_Topography.png)
+![Stack Topography](Images/Images/Platform_Stack_Topography.png)
 
 ### Mobile Stack
 
