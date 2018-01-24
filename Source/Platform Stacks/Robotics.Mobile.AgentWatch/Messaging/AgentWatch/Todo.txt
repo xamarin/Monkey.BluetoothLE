@@ -1,2 +1,0 @@
- * move this to a separate library, probably one library per device
- * add watch api data to ReceiveMessage

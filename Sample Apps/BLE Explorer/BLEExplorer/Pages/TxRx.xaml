@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BLEExplorer.Pages.TxRx">
+  <Grid x:Name="MainGrid" Margin="4">
+    
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="auto"/>
+    </Grid.RowDefinitions>
+    
+    <StackLayout>
+
+      <Label Text="Enter Message:" />
+      
+      <Entry x:Name="entryMessage" />
+      
+      <Button x:Name="btnSend" Text="Send Message" />
+
+      <StackLayout Orientation="Horizontal">
+        <Label Text="Clear on send" />
+        <Switch x:Name="switchAutoClear" IsToggled="true" />
+        <Label Text="Send as UTF8" />
+        <Switch x:Name="switchTextFormat" IsToggled="true" />
+      </StackLayout>
+
+      <Button x:Name="btnSweep" Text="Byte Sweep (0-255)" />
+      
+      <Label x:Name="lblStatus" />
+    </StackLayout>
+
+    <Label Text="Received:" Grid.Row="1" />
+    <Entry x:Name="entryReceived" Grid.Row="2" />
+    
+    <StackLayout Orientation="Horizontal" Grid.Row="3">
+      <Switch x:Name="switchShowAsText" IsToggled="false" />
+
+    </StackLayout>
+  </Grid>
+  
+  
+</ContentPage>

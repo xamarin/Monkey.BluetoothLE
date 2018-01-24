@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Robotics.Mobile.BtLEExplorer"
+             x:Class="BLEExplorer.Pages.DeviceList"
+             Title="Device List">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:GuidConverter x:Key="guidConverter"/>
+      <local:EmptyStringConverter x:Key="strConverter"/>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <Button x:Name="ScanHrmButton" Text="Scan HRM" BackgroundColor="Red" />
+    <Button x:Name="ScanAllButton" Text="Scan All" BackgroundColor="Aqua" Grid.Column="1"/>    
+    
+    <ListView x:Name="listView" ItemSelected="OnItemSelected" Grid.Row="1" Grid.ColumnSpan="2">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+              <StackLayout Padding="5,0,0,0" VerticalOptions="StartAndExpand" Orientation="Vertical">
+                <Label Text="{Binding Name, Converter={StaticResource strConverter}}" YAlign="Center" Font="Medium" />
+                <Label Text="{Binding Path=ID, Converter={StaticResource guidConverter}}" YAlign="Center" Font="Micro" />
+              </StackLayout>
+            </StackLayout>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </Grid>
+
+
+</ContentPage>
